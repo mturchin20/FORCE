@@ -11,7 +11,7 @@
 
 
 
-<title>README.utf8</title>
+<title>Example 1</title>
 
 <script>/*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -164,101 +164,6 @@ window.buildTabsets("TOC");
 
 
 
-<script>
-$(document).ready(function () {
-
-// move toc-ignore selectors from section div to header
-$('div.section.toc-ignore')
-.removeClass('toc-ignore')
-.children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-// establish options
-var options = {
-selectors: "h1,h2,h3",
-theme: "bootstrap3",
-context: '.toc-content',
-hashGenerator: function (text) {
-return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-},
-ignoreSelector: ".toc-ignore",
-scrollTo: 0
-};
-options.showAndHide = true;
-options.smoothScroll = true;
-
-// tocify
-var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
-
-<style type="text/css">
-
-#TOC {
-margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-position: relative;
-width: 100%;
-}
-}
-
-
-.toc-content {
-padding-left: 30px;
-padding-right: 40px;
-}
-
-div.main-container {
-max-width: 1200px;
-}
-
-div.tocify {
-width: 20%;
-max-width: 260px;
-max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-div.tocify {
-width: 25%;
-}
-}
-
-@media (max-width: 767px) {
-div.tocify {
-width: 100%;
-max-width: none;
-}
-}
-
-.tocify ul, .tocify li {
-line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-font-size: 0.90em;
-padding-left: 25px;
-text-indent: 0;
-}
-
-.tocify .list-group-item {
-border-radius: 0px;
-}
-
-
-</style>
-
-<!-- setup 3col/9col grid for toc_float and main content -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
 
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -299,21 +204,25 @@ border-radius: 0px;
 
 
 
+<h1 class="title toc-ignore">Example 1</h1>
 
 </div>
 
 
-<div id="analysis" class="section level1">
-<h1>Analysis</h1>
-<p>Save your R Markdown analyses here. To create a new one, run</p>
-<pre><code>wflow_open(&quot;filename.Rmd&quot;)</code></pre>
-<p>Alternatively in RStudio, you can use the dropdown menu: <code>File</code> -&gt; <code>New File</code> -&gt; <code>R Markdown...</code> -&gt; <code>From Template</code> -&gt; <code>Analysis Template</code>.</p>
-<p>To render your file, run</p>
-<pre><code>wflow_build()</code></pre>
-<p>This will create the HTML file in the website directory <code>docs/</code>. The figures will be created in both <code>analysis/figures</code> and <code>docs/figures</code>. Alternatively in RStudio, you can click on the <code>Knit HTML</code> button. This has the added benefit of displaying your file in the Viewer pane.</p>
-<p>When you are ready to add the analysis to your research website, add and commit the R Markdown file using Git. Then render the HTML, add, and commit it, run</p>
-<pre><code>wflow_commit()</code></pre>
-<p>Run <code>vignette(&quot;getting-started&quot;, &quot;workflowr&quot;)</code> for more details.</p>
+<div id="would" class="section level1">
+<h1>Would</h1>
+<div id="you" class="section level2">
+<h2>You</h2>
+<div id="look" class="section level3">
+<h3>Look</h3>
+<div id="at" class="section level4">
+<h4>At</h4>
+</div>
+<div id="that" class="section level4">
+<h4>That</h4>
+</div>
+</div>
+</div>
 </div>
 
 <hr>
@@ -342,8 +251,6 @@ dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
 -->
 
 
-</div>
-</div>
 
 </div>
 

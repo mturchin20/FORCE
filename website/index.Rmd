@@ -5,14 +5,14 @@ output:
     toc: false
 ---
 
-Homepage for the Ramachandran Lab project `MultiEthnic GWAS`.
+Homepage for the Ramachandran Lab project `FORCE`.
 
 * [Example 1][example1]
 * [Example 2][example2]
 
 Github [repo][gitrepo1] page
 
-[example1]: https://mturchin20.github.io/MultiEthnicGWAS/Example1.html
-[example2]: https://mturchin20.github.io/MultiEthnicGWAS/Example2.html
-[gitrepo1]: https://github.com/mturchin20/MultiEthnicGWAS
+[example1]: https://mturchin20.github.io/Ramachandran_FORCE/Example1.html
+[example2]: https://mturchin20.github.io/Ramachandran_FORCE/Example2.html
+[gitrepo1]: https://github.com/mturchin20/Ramachandran_FORCE
 
