@@ -1,4 +1,4 @@
-# MultiEthnicGWAS
+# FORCE
 
 A [workflowr][] project.
 
