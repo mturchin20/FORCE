@@ -554,30 +554,30 @@ done
 #	write.table(Data3.cov, "/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.cov.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);"
 
 #From https://unix.stackexchange.com/questions/55392/in-bash-is-it-possible-to-use-an-integer-variable-in-the-loop-control-of-a-for
-module load R/3.3.1; for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | grep Waist`; do
+module load R/3.3.1; for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | grep BMI`; do
 	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep Exonic | grep -v Plus`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep Exonic | grep 20kb`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 			ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`
-			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/FORCE/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | wc | awk '{ print $1 }'`	
-#			NumPaths=20
+#			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/FORCE/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | wc | awk '{ print $1 }'`	
+			NumPaths=1
 			
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k
-#StdOut=/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/Waist/Exonic/slurm/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Waist.Exonic.Pathways3621.slurm.output			
-			for (( PathNum=3631; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
+			
+			for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+1 )); do
 				sbatch -t 72:00:00 --mem 38g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/FORCE/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/FORCE/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Pathways${PathNum}.slurm.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
 				echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"feather\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); sourceCpp(\\\"/users/mturchin/LabMisc/RamachandranLab/FORCE/Vs1/FORCE.mtEdits.vs1.cpp\\\"); neg.is.na <- Negate(is.na); \
 				Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); \
 				Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); \
 				Data3.cov <- as.matrix(read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/FORCE/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.cov.txt\\\", header=F)); \ 
 				X <- Data3; X.cov <- Data3.cov; \
-				Y <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/FORCE/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.raw.Phenos.Transformed.txt\\\", header=T); Y.Height <- Y\\\$Height; \
-				Y.Height.noNAs <- Y.Height[neg.is.na(Y.Height)]; X.Height.noNAs <- X[neg.is.na(Y.Height),]; X.cov.Height.noNAs <- X.cov[neg.is.na(Y.Height),neg.is.na(Y.Height)]; \
+				Y <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/FORCE/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.raw.Phenos.Transformed.txt\\\", header=T); Y.Pheno <- Y\\\$$i; \ 
+				Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; X.Pheno.noNAs <- X[neg.is.na(Y.Pheno),]; X.cov.Pheno.noNAs <- X.cov[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; \
 				Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/FORCE/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt\\\", header=F); \
 				Pathways.Regions <- list(); Counter1 = 1; \
-				for (i in $PathNum:($PathNum+10)) { Pathways.Regions[[Counter1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), \\\",\\\")))); Counter1 = Counter1 + 1; }; \	
-				cores = detectCores(); FORCE.output <- FORCE(t(X.Height.noNAs),Y.Height.noNAs,as.matrix(X.cov.Height.noNAs),Pathways.Regions,cores=cores); \
+				for (i in $PathNum:($PathNum+1)) { Pathways.Regions[[Counter1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), \\\",\\\")))); Counter1 = Counter1 + 1; }; \	
+				cores = detectCores(); FORCE.output <- FORCE(t(X.Pheno.noNAs),Y.Pheno.noNAs,as.matrix(X.cov.Pheno.noNAs),Pathways.Regions,cores=cores); \
 				write.table(FORCE.output\\\$Est, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/FORCE/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.FORCE.${i}.${k}.Paths${PathNum}.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); \
 				write.table(FORCE.output\\\$Eigenvalues, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/FORCE/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.FORCE.${i}.${k}.Paths${PathNum}.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); \
 				write.table(FORCE.output\\\$PVE, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/FORCE/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.FORCE.${i}.${k}.Paths${PathNum}.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\"")
@@ -585,6 +585,11 @@ module load R/3.3.1; for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'p
 		done; 
 	done; 
 done
+				for (i in $PathNum:($PathNum+10)) { 
+					Pathways.Regions[[1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), \\\",\\\")))); Counter1 = Counter1 + 1;
+					K <- 1/nrow(X) * tcrossprod(as.matrix(X.Height.noNAs[,Pathways.Regions[[1]]])); 
+					FORCE.output.temp <- FORCE(t(X.Height.noNAs),Y.Height.noNAs,as.matrix(X.cov.Height.noNAs),Pathways.Regions,cores=cores); \
+				}; \	
 				
 #		Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); \
 #		X.sub <- X[,as.numeric(as.character(Pathways.Regions))]; \
@@ -592,32 +597,38 @@ done
 #				print(c(dim(X), dim(X.cov), length(Y.Height), \\\"nana\\\", length(neg.is.na(Y.Height)))); \
 #				Y.Height.noNAs <- Y.Height[!is.na(Y.Height)]; X.Height.noNAs <- X[!is.na(Y.Height),]; X.cov.Height.noNAs <- X.cov[!is.na(Y.Height),!is.na(Y.Height)]; \
 #		FORCE.output <- FORCE(t(X),Y.Height,as.matrix(X.cov),Pathways.Regions); \
+#				eval(parse(text=paste(\\\"Y.Pheno <- Y\\\$\\\", \\\"$i\\\", sep=\\\"\\\"))); \ 
+#				Y.Height <- Y\\\$Height; \
+				
+#				Pathways.Regions <- list(); Counter1 = 1; \
+#				for (i in $PathNum:($PathNum+10)) { Pathways.Regions[[Counter1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), \\\",\\\")))); Counter1 = Counter1 + 1; }; \	
+#				cores = detectCores(); FORCE.output <- FORCE(t(X.Height.noNAs),Y.Height.noNAs,as.matrix(X.cov.Height.noNAs),Pathways.Regions,cores=cores); \
 
-		library("data.table"); library("feather"); library("Rcpp"); library("RcppArmadillo"); sourceCpp("/users/mturchin/LabMisc/RamachandranLab/FORCE/Vs1/FORCE.mtEdits.vs1.cpp"); neg.is.na <- Negate(is.na); 
-		ptm <- proc.time();
-		Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); 
-		print(proc.time() - ptm); ptm <- proc.time();	
-		Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); 
-		Data3.cov <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.cov.txt", header=F)
-		print(proc.time() - ptm); 	
-		X <- Data3; 
-		X.cov <- as.matrix(Data3.cov);
-		Y <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.txt", header=T); Y.Height <- Y$Height; 
-		Y.Height.noNAs <- Y.Height[neg.is.na(Y.Height)]; X.Height.noNAs <- X[neg.is.na(Y.Height),]; X.cov.Height.noNAs <- X.cov[neg.is.na(Y.Height),neg.is.na(Y.Height)];
-		Y.Height.noNAs <- Y.Height[!is.na(Y.Height)];
-		X.Height.noNAs <- X[!is.na(Y.Height),];
-		X.cov.Height.noNAs <- X.cov[!is.na(Y.Height),!is.na(Y.Height)]; 
-		Pathways <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.Exonic.txt", header=F); 
-		Pathways.Regions <- list(); Counter1 = 1;
-		for (i in 1:12) {
-			Pathways.Regions[[Counter1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), ",")))); 
-			Counter1 = Counter1 + 1;
-		}		
-		ptm <- proc.time(); FORCE.output <- FORCE(t(X.Height.noNAs),Y.Height.noNAs,as.matrix(X.cov.Height.noNAs),Pathways.Regions); print(proc.time() - ptm);	
-		write.table(FORCE.output\$Est, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.FORCE.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); \
-		write.table(FORCE.output\$Eigenvalues, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.FORCE.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); \
-		write.table(FORCE.output\$PVE, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.FORCE.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);")
-
+#		library("data.table"); library("feather"); library("Rcpp"); library("RcppArmadillo"); sourceCpp("/users/mturchin/LabMisc/RamachandranLab/FORCE/Vs1/FORCE.mtEdits.vs1.cpp"); neg.is.na <- Negate(is.na); 
+#		ptm <- proc.time();
+#		Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); 
+#		print(proc.time() - ptm); ptm <- proc.time();	
+#		Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); 
+#		Data3.cov <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.cov.txt", header=F)
+#		print(proc.time() - ptm); 	
+#		X <- Data3; 
+#		X.cov <- as.matrix(Data3.cov);
+#		Y <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.txt", header=T); Y.Height <- Y$Height; 
+#		Y.Height.noNAs <- Y.Height[neg.is.na(Y.Height)]; X.Height.noNAs <- X[neg.is.na(Y.Height),]; X.cov.Height.noNAs <- X.cov[neg.is.na(Y.Height),neg.is.na(Y.Height)];
+#		Y.Height.noNAs <- Y.Height[!is.na(Y.Height)];
+#		X.Height.noNAs <- X[!is.na(Y.Height),];
+#		X.cov.Height.noNAs <- X.cov[!is.na(Y.Height),!is.na(Y.Height)]; 
+#		Pathways <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.Exonic.txt", header=F); 
+#		Pathways.Regions <- list(); Counter1 = 1;
+#		for (i in 1:12) {
+#			Pathways.Regions[[Counter1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), ",")))); 
+#			Counter1 = Counter1 + 1;
+#		}		
+#		ptm <- proc.time(); FORCE.output <- FORCE(t(X.Height.noNAs),Y.Height.noNAs,as.matrix(X.cov.Height.noNAs),Pathways.Regions); print(proc.time() - ptm);	
+#		write.table(FORCE.output\$Est, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.FORCE.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); \
+#		write.table(FORCE.output\$Eigenvalues, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.FORCE.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); \
+#		write.table(FORCE.output\$PVE, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/FORCE/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.FORCE.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);")
+#
 #		sourceCpp("/users/mturchin/LabMisc/RamachandranLab/FORCE/FORCE.cpp");
 #		Pathways.Regions[[1]] <- c(1,2,3,4,5)
 #		Pathways.Regions[[2]] <- c(4,7,8,1,3,4,6)
