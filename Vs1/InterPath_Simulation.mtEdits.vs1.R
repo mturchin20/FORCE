@@ -8,8 +8,6 @@ rm(list = ls(all = TRUE))
 library(doParallel)
 library(Rcpp)
 library(RcppArmadillo)
-#library(Rcpp, lib="/users/mturchin/data/mturchin/Software/Module_R-3.4.0")
-#library(RcppArmadillo, lib="/users/mturchin/data/mturchin/Software/Module_R-3.4.0")
 library(RcppParallel)
 library(CompQuadForm)
 library(Matrix)
@@ -17,7 +15,7 @@ library(MASS)
 library(truncnorm)
 
 ### Load in the MAPIT Functions ###
-sourceCpp("/users/mturchin/LabMisc/RamachandranLab/FORCE/FORCE.cpp") 
+sourceCpp("/users/mturchin/LabMisc/RamachandranLab/InterPath/InterPath.cpp") 
 
 ### Set the OpenMP Envrionment ###
 Sys.setenv("PKG_CXXFLAGS"="-fopenmp")
@@ -75,7 +73,7 @@ cores = detectCores()
 
 ### Run MAPIT: Full Version with Satterthwaite Method###
 ptm <- proc.time() #Start clock
-vc.mod = FORCE(t(X),y,regions,cores = cores)
+vc.mod = InterPath(t(X),y,regions,cores = cores)
 proc.time() - ptm #Stop clock
 
 ### Apply Davies Exact Method ###

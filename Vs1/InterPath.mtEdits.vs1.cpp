@@ -28,20 +28,20 @@ arma::mat ComputePCs(arma::mat X,int top = 10){
 
 ////////////////////////////////////////////////////////////////////////////
 
-//Below are functions for FORCE using two hypothesis testing strategies:
-//(1) FORCE using the Normal or Z-Test
-//(2) FORCE using the Davies Method
+//Below are functions for InterPath using two hypothesis testing strategies:
+//(1) InterPath using the Normal or Z-Test
+//(2) InterPath using the Davies Method
 
 ////////////////////////////////////////////////////////////////////////////
 
-// List FORCE(mat X,vec y,mat GSM,List regions,int cores = 1){
 // [[Rcpp::export]]
-List FORCE(mat X,vec y,mat GSM,mat K,List regions,int cores = 1){
+List InterPath(mat X,vec y,mat GSM,List regions,int cores = 1){
+// List InterPath(mat X,vec y,mat GSM,mat K,uvec j,int cores = 1){
     int i;
     const int n = X.n_cols;
     const int nsnp = X.n_rows;
     const int p = regions.size();
-//    const int p = 1;
+//    const in p = 1;
 
     //Set up the vectors to save the outputs
     NumericVector sigma_est(p);
@@ -59,7 +59,7 @@ List FORCE(mat X,vec y,mat GSM,mat K,List regions,int cores = 1){
 	uvec j = regions[i];
         
         //Compute K covariance matrices
-//	mat K = GetLinearKernel(X.rows(j-1));//Create the linear kernel
+	mat K = GetLinearKernel(X.rows(j-1));//Create the linear kernel
         mat G = (GSM*nsnp-K*j.n_elem)/(nsnp-j.n_elem-1);
         
         //Transform K and G using projection M

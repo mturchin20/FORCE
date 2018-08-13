@@ -1,4 +1,4 @@
-# FORCE
+# InterPath
 
 A [workflowr][] project.
 
