@@ -41,6 +41,7 @@ conda install julia
 ##conda install r-cpgen -- failed, install via 'install.packages("cpgen")'
 ##conda install docker -- failed
 #20180815 NOTE -- re-install for movement into 'InterPath' from 'FORCE'
+#From https://stackoverflow.com/questions/42231764/how-can-i-rename-a-conda-environment (but 'cloning' didn't seem to really work in the end?....see comments from 'MultiEthnicGWAS' too)
 ###conda install R perl java-jdk
 ###conda install git plink bedtools vcftools vcftools bwa samtools picard gatk imagemagick gnuplot eigensoft tabix
 ###conda install r-base r-devtools 
@@ -443,13 +444,26 @@ done
 #	gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.raw
 #	gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.pruned.raw
 
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chr1_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.fam | awk '{ print $1 }' | sed 's/_/ /g' > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.FIDIIDs
+
+#From https://stats.stackexchange.com/questions/11000/how-does-r-handle-missing-values-in-lm (for lm(..., na.action=na.exclude))
 for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
         echo $ancestry1 $ancestry2 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt 
 
-	join <(cat /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sort -k 1,1) | awk '{ print $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $10 "\t" $11 "\t" $12 "\t" $13 "\t" $14 "\t" $15 "\t" $16 "\t" $17 "\t" $18 "\t" $19 "\t" $20 "\t" $21 "\t" $22 "\t" $23 }' | grep -v FID | R -q -e "Data1 <- read.table(file('stdin'), header=F); for (i in 3:6) { Data1 <- cbind(Data1, residuals(lm(Data1[,i] ~ Data1[,10] + Data1[,11] + Data1[,12] + Data1[,13] + Data1[,14] + Data1[,15] + Data1[,16] + Data1[,17] + Data1[,18] + Data1[,19], na.action=na.exclude))); }; write.table(Data1, file=\"\", quote=FALSE, row.name=FALSE, col.name=FALSE);" | grep -v \> | cat <(echo "FID IID Height BMI Waist Hip FID IID SEX ANCESTRY AGE PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10 Height BMI Waist Hip") -  | perl -lane 'print $F[0], "\t", $F[1], "\t", join("\t", @F[$#F-3..$#F]);' > /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.top10resids.txt 
+	join <(cat /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sort -k 1,1) | awk '{ print $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $10 "\t" $11 "\t" $12 "\t" $13 "\t" $14 "\t" $15 "\t" $16 "\t" $17 "\t" $18 "\t" $19 "\t" $20 "\t" $21 "\t" $22 "\t" $23 }' | grep -v FID | R -q -e "Data1 <- read.table(file('stdin'), header=F); for (i in 3:6) { Data1 <- cbind(Data1, residuals(lm(Data1[,i] ~ Data1[,10] + Data1[,11] + Data1[,12] + Data1[,13] + Data1[,14] + Data1[,15] + Data1[,16] + Data1[,17] + Data1[,18] + Data1[,19], na.action=na.exclude))); }; write.table(Data1, file=\"\", quote=FALSE, row.name=FALSE, col.name=FALSE);" | grep -v \> | grep -v Height | cat <(echo "FID IID Height BMI Waist Hip FID IID SEX ANCESTRY AGE PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10 Height BMI Waist Hip") -  | perl -lane 'print $F[0], "\t", $F[1], "\t", join("\t", @F[$#F-3..$#F]);' > /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.top10resids.txt 
+
+done
+
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+        echo $ancestry1 $ancestry2 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt 
+
+	join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.txt | awk '{ print $1 "_" $2 }' | sort) | grep -v ANCESTRY | cat <(echo "FID_IID FID IID SEX ANCESTRY AGE PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10") - | perl -lane 'print join("\t", @F[1..$#F]);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt 
 
 done
 
@@ -700,16 +714,16 @@ done;
 ##mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.mtEdits.SingleRun.vs3.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/OLD1.InterPath.mtEdits.SingleRun.vs3.wCovs.vs1.cpp
 
 #Original Vs1 Run (where issues and wonky plots were observed)
-module load R/3.3.1; sleep 25200; for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | grep -E 'Height|BMI'`; do
+module load R/3.3.1; sleep 25200; for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | grep -E 'Height|BMI' | head -n 1`; do
 	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep African`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep -v Plus`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep -v Plus | head -n 1`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 			NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'` 
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | wc | awk '{ print $1 }'`	
 #			NumPaths=2
 			
-			echo $i $ancestry1 $ancestry2 $ancestry3 $k; for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
-				sbatch -t 72:00:00 --mem 10g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Pathways${PathNum}.slurm.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
+			echo $i $ancestry1 $ancestry2 $ancestry3 $k; for (( PathNum=801; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
+			       sbatch -t 72:00:00 --mem 10g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.PCadj.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.PCadj.Pathways${PathNum}.slurm.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
 				echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); sourceCpp(\\\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.mtEdits.SingleRun.vs2.cpp\\\"); neg.is.na <- Negate(is.na); \
 				Pathways.Regions <- list(); cores = detectCores(); InterPath.output <- list(); InterPath.output\\\$Est <- c(); InterPath.output\\\$Eigenvalues <- c(); InterPath.output\\\$PVE <- c(); \
 				Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt\\\", header=F); \
@@ -770,9 +784,9 @@ for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);'
 			for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
 				R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
 				Pathways <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt\", header=F); \ 
-				InterPath.output.Est <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Paths${PathNum}.Est.txt\", header=F); \
-				InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Paths${PathNum}.Eigenvalues.txt\", header=F); \
-				InterPath.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Paths${PathNum}.PVE.txt\", header=F); \
+				InterPath.output.Est <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.PCadj.Paths${PathNum}.Est.txt\", header=F); \
+				InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.PCadj.Paths${PathNum}.Eigenvalues.txt\", header=F); \
+				InterPath.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.PCadj.Paths${PathNum}.PVE.txt\", header=F); \
 				Results1 <- c(); Counter1 <- 1; for (i in $PathNum:($PathNum+9)) { \
 					if (neg.is.na(InterPath.output.Est[Counter1,1])) { \ 
 						Lambda <- sort(InterPath.output.Eigenvalues[,Counter1], decreasing=TRUE); \
@@ -782,7 +796,7 @@ for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);'
 						Counter1 = Counter1 + 1; \
 					}; \
 				}; write.table(Results1, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
-			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.AllPaths.Results.txt.pre.gz
+			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.PCadj.AllPaths.Results.txt.pre.gz
 			duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 		done;
 	done;
@@ -808,6 +822,42 @@ done;
 #					Results1 <- rbind(Results1, c(as.character(Pathways[i,1]), InterPath.output.Est[Counter1,1], InterPath.output.PVE[Counter1,1], pVal)); 
 #					Counter1 = Counter1 + 1; 
 #				};
+
+#From `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.vs2.R` onwards, copied/edited recal procedure from Isabella & Lorin
+for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep African`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep -v Plus | head -n 1`; do
+			SECONDS=0;
+			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+			
+			echo $i $ancestry1 $ancestry2 $ancestry3 $k
+			R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
+			InterPath.AllPaths.output <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.PCadj.AllPaths.Results.txt.pre.gz\", header=F); \ 
+			pVals <- InterPath.AllPaths.output[,ncol(InterPath.AllPaths.output)]; InterPath.AllPaths.output.pVals[InterPath.AllPaths.output.pVals >= 0]; \
+			quants <- qchisq(pVals, df=1, lower.tail=FALSE); \
+			quants.medn <- median(quants); m <- 0.4549; \
+			pVals <- pchisq((quants/quants.medn) * m, def=1, lower.tail=FALSE); \
+			InterPath.AllPaths.output[,ncol(InterPath.AllPaths.output)] <- pVals; \
+			write.table(InterPath.AllPaths.output, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.PCadj.AllPaths.Results.Recal.txt.pre.gz
+
+
+			write.table(Results1, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
+			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.PCadj.AllPaths.Results.txt.pre.gz
+			duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
+		done;
+	done;
+done;
+
+  pvals = davies.pvals[davies.pvals>=0]; summary(pvals)
+  q = qchisq(pvals,df=1,lower.tail = FALSE); summary(q)
+  gs = median(q); m = 0.4549; summary((q/gs)*m)
+  pvals = pchisq((q/gs)*m,df=1,lower.tail = FALSE)
+
+
+
+
+
 
 #for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | grep Height`; do
@@ -872,6 +922,13 @@ done;
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.Height.*.AllPaths.Results.txt.pre.gz /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Rnd1/.
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/*AllStrats.AllPaths.Results.pre.QQplots.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Rnd1/.
 
+
+
+
+
+
+
+
 for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);')`; do
 	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
 		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep Exonic | grep ExonicPlus | grep 20kb`; do
@@ -886,9 +943,14 @@ for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);'
 			fi
 
 			cd  /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k 
-			tar -cvzf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/PrevRuns/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.AllPaths.Est.tar.gz ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Paths*.Est.txt 
-			tar -cvzf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/PrevRuns/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.AllPaths.Eigenvalues.tar.gz ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Paths*.Eigenvalues.txt 
-			tar -cvzf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/PrevRuns/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.AllPaths.PVE.tar.gz ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Paths*.PVE.txt 
+#			tar -cvzf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/PrevRuns/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.AllPaths.Est.tar.gz ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Paths*.Est.txt 
+#			tar -cvzf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/PrevRuns/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.AllPaths.Eigenvalues.tar.gz ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Paths*.Eigenvalues.txt 
+#			tar -cvzf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/PrevRuns/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.AllPaths.PVE.tar.gz ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Paths*.PVE.txt 
+
+			slurmstffhr
+
+
+
 
 			duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 		done;
@@ -969,25 +1031,25 @@ done;
 #		print(InterPath.output.Eigenvalues[,1]); \
 
 #With Explicit Covariates Matrix Z setup
-module load R/3.3.1; sleep 25200; for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | grep Height`; do
+module load R/3.3.1; sleep 25200; for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | grep -E 'Height|BMI'`; do
 	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep African`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep NonSyn`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep -v Plus`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'` 
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | wc | awk '{ print $1 }'`	
-#			NumPaths=952
+#			NumPaths=2
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k
 			
 			for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
-				sbatch -t 72:00:00 --mem 12g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Pathways${PathNum}.slurm.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
+				sbatch -t 72:00:00 --mem 10g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.wCov.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.wCov.Pathways${PathNum}.slurm.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
 				echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); sourceCpp(\\\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.mtEdits.SingleRun.vs2.wCovs.vs1.cpp\\\"); neg.is.na <- Negate(is.na); \
-				Y <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.txt\\\", header=T); Covars <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt\", header=T); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt\\\", header=F); \
+				Y <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.txt\\\", header=T); Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\\\", header=T); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt\\\", header=F); \
 				Pathways.Regions <- list(); cores = detectCores(); InterPath.output <- list(); InterPath.output\\\$Est <- c(); InterPath.output\\\$Eigenvalues <- c(); InterPath.output\\\$PVE <- c(); Y.Pheno <- Y\\\$$i; \
 				for (i in $PathNum:($PathNum+9)) { \
 					Data3 <- fread(paste(\\\"cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\\\", as.character(i), \\\".txt\\\", sep=\\\"\\\"), header=T); Data3.cov <- as.matrix(read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.cov.txt\\\", header=F)); Pathways.Regions[[1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), \\\",\\\")))); \ 
 					Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); \ 
 					InterPath.output.temp <- list(); X <- Data3; X.cov <- Data3.cov; rm(Data3); rm(Data3.cov); Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; X.Pheno.noNAs <- X[neg.is.na(Y.Pheno),]; X.cov.Pheno.noNAs <- X.cov[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z <- Covars[neg.is.na(Y.Pheno),(ncol(Covars)-9):ncol(Covars)]; \
 					if (length(Pathways.Regions[[1]]) > 1) { K <- 1/nrow(X.Pheno.noNAs) * tcrossprod(as.matrix(X.Pheno.noNAs)); \
-						InterPath.output.temp <- InterPath(t(X.Pheno.noNAs),Y.Pheno.noNAs,as.matrix(X.cov.Pheno.noNAs),K,Z,Pathways.Regions,nrow(X.Pheno.noNAs),as.numeric(as.character($NumSNPs)),cores=cores); InterPath.output\\\$Est <- c(InterPath.output\\\$Est, InterPath.output.temp\\\$Est); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, InterPath.output.temp\\\$Eigenvalues); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, InterPath.output.temp\\\$PVE); } else { InterPath.output\\\$Est <- c(InterPath.output\\\$Est, NA); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, rep(NA, length(Y.Pheno.noNAs))); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, NA);};};\
+						InterPath.output.temp <- InterPath(t(X.Pheno.noNAs),Y.Pheno.noNAs,as.matrix(X.cov.Pheno.noNAs),K,t(as.matrix(Z)),Pathways.Regions,nrow(X.Pheno.noNAs),as.numeric(as.character($NumSNPs)),cores=cores); InterPath.output\\\$Est <- c(InterPath.output\\\$Est, InterPath.output.temp\\\$Est); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, InterPath.output.temp\\\$Eigenvalues); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, InterPath.output.temp\\\$PVE); } else { InterPath.output\\\$Est <- c(InterPath.output\\\$Est, NA); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, rep(NA, length(Y.Pheno.noNAs))); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, NA);};};\
 				write.table(InterPath.output\\\$Est, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.wCov.Paths${PathNum}.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); \
 				write.table(InterPath.output\\\$Eigenvalues, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.wCov.Paths${PathNum}.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); \
 				write.table(InterPath.output\\\$PVE, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.wCov.Paths${PathNum}.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\"")
@@ -998,7 +1060,19 @@ done
 	
 
 
+#Recalibration step implementation on vs1 runs
 
+
+
+
+
+
+
+
+#20180820
+#Vs2 Runs (moving towards using epistatic interaction models) 
+
+#NOTE -- copy and pasted `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.vs2.cpp` & `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.vs2.R` from associated Slack channel and from Lorin's code posted on 20180731
 
 
 
@@ -1441,6 +1515,128 @@ Hip     446
 (InterPath) [  mturchin@login002  ~/LabMisc/RamachandranLab/InterPath]$join <(cat /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sort -k 1,1) | awk '{ print $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $10 "\t" $11 "\t" $12 "\t" $13 "\t" $14 "\t" $15 "\t" $16 "\t" $17 "\t" $18 "\t" $19 "\t" $20 "\t" $21 "\t" $22 "\t" $23 }' | grep FID
 FID     IID     Height  BMI     Waist   Hip     SEX     ANCESTRY        AGE     PC1     PC2     PC3     PC4     PC5     PC6     PC7     PC8     PC9     PC10
 FID     IID     Height  BMI     Waist   Hip     SEX     ANCESTRY        AGE     PC1     PC2     PC3     PC4     PC5     PC6     PC7     PC8     PC9     PC10
+#20180820
+(InterPath) [  mturchin@login002  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chr1_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.fam | head -n 10
+1001592_1001592 1001592_1001592 0 0 0 -9
+1002560_1002560 1002560_1002560 0 0 0 -9
+1003036_1003036 1003036_1003036 0 0 0 -9
+1004593_1004593 1004593_1004593 0 0 0 -9
+1008167_1008167 1008167_1008167 0 0 0 -9
+1009965_1009965 1009965_1009965 0 0 0 -9
+1010953_1010953 1010953_1010953 0 0 0 -9
+1012491_1012491 1012491_1012491 0 0 0 -9
+1013297_1013297 1013297_1013297 0 0 0 -9
+1013636_1013636 1013636_1013636 0 0 0 -9
+(InterPath) [  mturchin@login002  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.FIDIIDs | head -n 10
+1001592 1001592
+1002560 1002560
+1003036 1003036
+1004593 1004593
+1008167 1008167
+1009965 1009965
+1010953 1010953
+1012491 1012491
+1013297 1013297
+1013636 1013636
+(InterPath) [  mturchin@login002  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chr1_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.fam | tail -n 10
+6008418_6008418 6008418_6008418 0 0 0 -9
+6010753_6010753 6010753_6010753 0 0 0 -9
+6011864_6011864 6011864_6011864 0 0 0 -9
+6014349_6014349 6014349_6014349 0 0 0 -9
+6018726_6018726 6018726_6018726 0 0 0 -9
+6021711_6021711 6021711_6021711 0 0 0 -9
+6023159_6023159 6023159_6023159 0 0 0 -9
+6024552_6024552 6024552_6024552 0 0 0 -9
+6025294_6025294 6025294_6025294 0 0 0 -9
+6025455_6025455 6025455_6025455 0 0 0 -9
+(InterPath) [  mturchin@login002  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.FIDIIDs | tail -n 10
+6008418 6008418
+6010753 6010753
+6011864 6011864
+6014349 6014349
+6018726 6018726
+6021711 6021711
+6023159 6023159
+6024552 6024552
+6025294 6025294
+6025455 6025455
+(InterPath) [  mturchin@login002  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt | head -n 10
+FID     IID     SEX     ANCESTRY        AGE     PC1     PC2     PC3     PC4     PC5     PC6     PC7     PC8     PC9     PC10
+1001592 1001592 1 African 45 0.04010937 -0.06472882 -0.01579029 -0.0028063 0.00672054 -0.01071403 -0.004161221 0.02206256 0.04384965 -0.04821377
+1002560 1002560 0 African 49 -0.05246519 -0.09301313 0.03203676 0.01590448 -0.06281703 -0.01510241 0.05077683 0.004314775 -0.0129375 -0.0155569
+1003036 1003036 0 African 41 0.05604095 0.01899383 0.004137209 -0.05324963 -0.005971676 -0.003017448 -0.004951464 -0.006294852 -0.01491296 0.004271876
+1004593 1004593 0 African 50 0.04044754 0.04018205 0.004412988 0.051949 0.002875837 0.01332061 0.01493853 0.002691042 0.001538728 -0.008088887
+1008167 1008167 0 African 59 0.03080848 -0.09631819 -0.02496982 0.01417764 0.02021924 -0.005031504 0.003485892 0.03258397 0.02134949 0.006985639
+1009965 1009965 0 African 58 0.05294918 0.05247505 0.0107574 0.03858143 0.004743263 0.01621968 0.02457712 -0.005881776 -0.01046 0.0151324
+1010953 1010953 1 African 48 0.04929234 0.02053753 0.01234649 -0.04077462 -0.01188147 -0.0006558676 -0.009392189 -0.004736571 -0.003848354 0.01392407
+1012491 1012491 0 African 41 -0.415706 0.009725911 0.1694342 -0.02152109 0.124938 -0.06456354 0.04600945 0.01419852 0.009809398 -0.03911038
+1013297 1013297 1 African 46 0.03162186 0.04584261 -0.0113241 0.02832364 0.01017347 0.01959432 0.0002467427 0.006316162 0.01381216 -0.0051383
+(InterPath) [  mturchin@login002  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.txt | head -n 10
+FID IID Height BMI Waist Hip
+1001592 1001592 0.118664115101393 1.17841032424695 1.24353357925829 1.89450422410686
+1002560 1002560 0.734183319747881 2.04290941388721 1.4416885105281 1.8805781156021
+1003036 1003036 0.217969859995042 1.82585180750194 1.85728627141396 1.94552746926506
+1004593 1004593 -0.0567068367051468 1.17620744874895 1.13275845670766 1.37836394899338
+1008167 1008167 0.322764805585384 0.15175399426104 0.0479378611405927 0.0196024993412122
+1009965 1009965 -1.17248489348928 1.28457721261652 1.28787234250449 1.42107036024099
+1010953 1010953 -2.3492759185006 0.600994502398072 0.498626444501437 -0.166021390280289
+1012491 1012491 1.0238031036417 -0.370391689731401 0.587105771979022 0.304346330032523
+1013297 1013297 -0.157620896463327 0.509608883879002 0.526718205408012 0.130864454904108
+(InterPath) [  mturchin@login002  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt | head -n 10
+FID     IID     SEX     ANCESTRY        AGE     PC1     PC2     PC3     PC4     PC5     PC6     PC7     PC8     PC9     PC10
+1001592 1001592 1       African 45      0.04010937      -0.06472882     -0.01579029     -0.0028063      0.00672054      -0.01071403     -0.004161221    0.02206256      0.04384965      -0.04821377
+1002560 1002560 0       African 49      -0.05246519     -0.09301313     0.03203676      0.01590448      -0.06281703     -0.01510241     0.05077683      0.004314775     -0.0129375      -0.0155569
+1003036 1003036 0       African 41      0.05604095      0.01899383      0.004137209     -0.05324963     -0.005971676    -0.003017448    -0.004951464    -0.006294852    -0.01491296     0.004271876
+1004593 1004593 0       African 50      0.04044754      0.04018205      0.004412988     0.051949        0.002875837     0.01332061      0.01493853      0.002691042     0.001538728     -0.008088887
+1008167 1008167 0       African 59      0.03080848      -0.09631819     -0.02496982     0.01417764      0.02021924      -0.005031504    0.003485892     0.03258397      0.02134949      0.006985639
+1009965 1009965 0       African 58      0.05294918      0.05247505      0.0107574       0.03858143      0.004743263     0.01621968      0.02457712      -0.005881776    -0.01046        0.0151324
+1010953 1010953 1       African 48      0.04929234      0.02053753      0.01234649      -0.04077462     -0.01188147     -0.0006558676   -0.009392189    -0.004736571    -0.003848354    0.01392407
+1012491 1012491 0       African 41      -0.415706       0.009725911     0.1694342       -0.02152109     0.124938        -0.06456354     0.04600945      0.01419852      0.009809398     -0.03911038
+1013297 1013297 1       African 46      0.03162186      0.04584261      -0.0113241      0.02832364      0.01017347      0.01959432      0.0002467427    0.006316162     0.01381216      -0.0051383
+(InterPath) [  mturchin@login002  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.txt | head -n 10
+FID IID Height BMI Waist Hip
+1001592 1001592 0.118664115101393 1.17841032424695 1.24353357925829 1.89450422410686
+1002560 1002560 0.734183319747881 2.04290941388721 1.4416885105281 1.8805781156021
+1003036 1003036 0.217969859995042 1.82585180750194 1.85728627141396 1.94552746926506
+1004593 1004593 -0.0567068367051468 1.17620744874895 1.13275845670766 1.37836394899338
+1008167 1008167 0.322764805585384 0.15175399426104 0.0479378611405927 0.0196024993412122
+1009965 1009965 -1.17248489348928 1.28457721261652 1.28787234250449 1.42107036024099
+1010953 1010953 -2.3492759185006 0.600994502398072 0.498626444501437 -0.166021390280289
+1012491 1012491 1.0238031036417 -0.370391689731401 0.587105771979022 0.304346330032523
+1013297 1013297 -0.157620896463327 0.509608883879002 0.526718205408012 0.130864454904108
+(InterPath) [  mturchin@login002  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.txt | tail -n 10
+6008418 6008418 0.982149466245254 1.8348408914847 1.90215382198857 1.7746508525584
+6010753 6010753 -2.14872618535448 -0.112070836661497 -0.101954153468391 -0.657232980242345
+6011864 6011864 -1.05915623212098 1.73280000459313 1.4416885105281 1.55669008893538
+6014349 6014349 -1.6506530741247 1.01323377099938 -0.382815612615648 0.436144212003557
+6018726 6018726 1.82079001431327 1.21554668507235 1.38362419075144 1.62866290673721
+6021711 6021711 0.591590115197903 -0.313927165407927 0.116665723858939 -0.393853203047272
+6023159 6023159 0.180081946610816 0.67332717198737 0.222343460859681 1.30968233210111
+6024552 6024552 0.761755798679409 1.00128624289528 1.29887607899065 1.42313443202277
+6025294 6025294 -0.37373188626138 1.91986810870986 2.03468262436548 2.09352649294885
+6025455 6025455 1.11598780644384 -0.60759044566529 -0.3396295383116 -0.404174127710831
+(InterPath) [  mturchin@login002  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt | head -n 10
+FID     IID     SEX     ANCESTRY        AGE     PC1     PC2     PC3     PC4     PC5     PC6     PC7     PC8     PC9     PC10
+1001592 1001592 1       African 45      0.04010937      -0.06472882     -0.01579029     -0.0028063      0.00672054      -0.01071403     -0.004161221    0.02206256      0.04384965      -0.04821377
+1002560 1002560 0       African 49      -0.05246519     -0.09301313     0.03203676      0.01590448      -0.06281703     -0.01510241     0.05077683      0.004314775     -0.0129375      -0.0155569
+1003036 1003036 0       African 41      0.05604095      0.01899383      0.004137209     -0.05324963     -0.005971676    -0.003017448    -0.004951464    -0.006294852    -0.01491296     0.004271876
+1004593 1004593 0       African 50      0.04044754      0.04018205      0.004412988     0.051949        0.002875837     0.01332061      0.01493853      0.002691042     0.001538728     -0.008088887
+1008167 1008167 0       African 59      0.03080848      -0.09631819     -0.02496982     0.01417764      0.02021924      -0.005031504    0.003485892     0.03258397      0.02134949      0.006985639
+1009965 1009965 0       African 58      0.05294918      0.05247505      0.0107574       0.03858143      0.004743263     0.01621968      0.02457712      -0.005881776    -0.01046        0.0151324
+1010953 1010953 1       African 48      0.04929234      0.02053753      0.01234649      -0.04077462     -0.01188147     -0.0006558676   -0.009392189    -0.004736571    -0.003848354    0.01392407
+1012491 1012491 0       African 41      -0.415706       0.009725911     0.1694342       -0.02152109     0.124938        -0.06456354     0.04600945      0.01419852      0.009809398     -0.03911038
+1013297 1013297 1       African 46      0.03162186      0.04584261      -0.0113241      0.02832364      0.01017347      0.01959432      0.0002467427    0.006316162     0.01381216      -0.0051383
+(InterPath) [  mturchin@login002  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt | tail -n 10
+6008418 6008418 0       African 53      -0.05630276     -0.08667724     0.07282399      0.03140086      -0.1160429      -0.05296765     0.04631429      -0.09186453     0.001412289     -0.07666399
+6010753 6010753 1       African 44      0.01078697      -0.1036524      -0.004505102    0.02005242      -0.02876383     -0.01757235     0.04441196      0.0574596       -0.0127933      0.02429221
+6011864 6011864 0       African 49      0.03284634      -0.1009702      -0.02701615     0.01283153      0.04012466      -0.0006517096   -0.01007781     -0.01583565     0.01192305      0.008451749
+6014349 6014349 1       African 49      0.01818009      0.03198973      0.0005825137    0.05307932      -0.01055752     -0.05562142     -0.07428205     0.01018994      -0.01069136     -0.01446091
+6018726 6018726 1       African 64      0.05402393      0.02063491      0.01087056      -0.03448014     -0.007878176    -0.00722104     -0.01175685     -0.001874121    0.001628825     0.01807416
+6021711 6021711 0       African 43      -0.2581659      -0.02012493     -0.09674245     0.009629706     0.01726518      -0.004650545    0.06122912      -0.001842116    -0.05859597     0.004980408
+6023159 6023159 1       African 55      0.0560072       0.04890589      0.01140521      0.04719828      0.003705662     0.02530067      0.02440856      0.009025501     0.008926544     -0.005566456
+6024552 6024552 0       African 57      -0.04452432     -0.09559        0.06703958      0.01933989      -0.1068556      -0.0386704      0.06353684      -0.04127274     -0.01821965     -0.03980357
+6025294 6025294 1       African 50      0.06248499      0.0175956       0.009511427     -0.05038411     -0.005810936    -0.003879298    -0.005019973    -0.006737438    -0.006394164    -0.001246517
+6025455 6025455 0       African 45      0.02788425      -0.1059086      -0.02180886     0.0008563429    0.03900867      0.006091423     -0.002064998    0.006942791     0.01616838      0.01242587
 
 
 

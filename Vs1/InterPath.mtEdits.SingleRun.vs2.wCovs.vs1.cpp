@@ -53,7 +53,7 @@ List InterPath(mat X,vec y,mat GSM,mat K,mat Z,List regions,int n,int nsnp,int c
     //Pre-compute the Linear GSM
 //    mat GSM = GetLinearKernel(X);
     
-    omp_set_num_threads(cores);
+//    omp_set_num_threads(cores);
     for(i=0; i<p; i++){
         //Pre-compute the Linear GSM
 	uvec j = regions[i];
@@ -65,6 +65,7 @@ List InterPath(mat X,vec y,mat GSM,mat K,mat Z,List regions,int n,int nsnp,int c
         //Transform K and G using projection M
 	mat b = zeros(n,q+1);
 	b.col(0) = ones<vec>(n); b.cols(1,q) = Z.t();
+        mat btb_inv = inv(b.t()*b);
         mat Kc = K-b*btb_inv*(b.t()*K)-(K*b)*btb_inv*b.t()+b*btb_inv*(b.t()*(K*b))*btb_inv*b.t();
         mat Gc = G-b*btb_inv*(b.t()*G)-(G*b)*btb_inv*b.t()+b*btb_inv*(b.t()*(G*b))*btb_inv*b.t();
         vec yc = (eye<mat>(n,n)-(b*btb_inv)*b.t())*y;
