@@ -74,8 +74,8 @@ List InterPath(mat X,vec y,mat GSM,mat K,List regions,int n,int nsnp,int cores =
         
         q(0) = as_scalar(yc.t()*Kc*yc);
         q(1) = as_scalar(yc.t()*Gc*yc);
-        q(2) = as_scalar(yc.t()*yc);
-        
+        q(2) = as_scalar(yc.t()*(eye<mat>(n,n)-(b*btb_inv)*b.t())*yc);
+
         S(0,0) = as_scalar(accu(Kc.t()%Kc));
         S(0,1) = as_scalar(accu(Kc.t()%Kc));
         S(0,2) = as_scalar(accu(Kc.t()%(eye<mat>(n,n)-(b*btb_inv)*b.t())));
