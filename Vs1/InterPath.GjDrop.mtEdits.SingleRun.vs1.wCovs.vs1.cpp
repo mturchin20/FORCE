@@ -72,6 +72,7 @@ List InterPath(mat X,vec y,mat GSM,mat G,mat Z,List regions,int n,int nsnp,int c
 //        b.col(0) = ones<vec>(n); b.cols(1,j.n_elem) = trans(X.rows(j-1));
         mat b = zeros(n,q+1);
         b.col(0) = ones<vec>(n); b.cols(1,q) = Z.t();
+	mat btb_inv = inv(b.t()*b);
 	mat Kc = K-b*btb_inv*(b.t()*K)-(K*b)*btb_inv*b.t()+b*btb_inv*(b.t()*(K*b))*btb_inv*b.t();
         vec yc = (eye<mat>(n,n)-(b*btb_inv)*b.t())*y;
         
