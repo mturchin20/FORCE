@@ -744,7 +744,7 @@ done
 
 #From https://blog.rstudio.com/2016/03/29/feather/, https://blog.dominodatalab.com/the-r-data-i-o-shootout/, https://stackoverflow.com/questions/1727772/quickly-reading-very-large-tables-as-dataframes
 
-module load R/3.3.1; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
+module load R/3.3.1; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep Indian`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		
@@ -754,8 +754,16 @@ module load R/3.3.1; for j in `cat <(echo $UKBioBankPops | perl -lane 'print joi
 	ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); print(proc.time() - ptm); \ 
 	Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3.sd[which(Data3.sd==0)] <- 1; Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); \
 	ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm); \
-	write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.noFix.edit.noFix.cov.txt\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
+	write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
 done 
+
+#20181028 NOTE -- the 'noFix' thing I believe was just to account for this single SNP that past previous filters in the Chinese subset that was causing the entire covariance matrix just to be NA; I had previously looked into this and only found 1 SNP that appeared fix in any population (and then subsequently realized this single SNP may have been messing up the original covariance matrix; running the above code produced a correct covariance matrix for Chinese subset). So just soft linking the other files to the new filename schema even though I don't believe anything would actually change between the two versions of the files
+#20181028 NOTE -- there is an extremely small difference in the values if I rerun the covarianc calculations (like at the <10e-8 order of magnitude), but since I'm practically rerunning the start of the Vs2 code from the getgo now, I'm just going to rerun everything with the 'noFix' in the output, and go from there (eg rerun everything with the 'new', barely any different 'noFix' versions) 
+##ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.cov.txt /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt
+##ln -s /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.cov.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt
+##ln -s /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.cov.txt /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt
+##ln -s /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.cov.txt /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt
+##ln -s /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/ukb_chrAll_v2.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.cov.txt /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/ukb_chrAll_v2.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt
 
 #Indn: 13253.066; 
 
@@ -1509,27 +1517,109 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 #20180820
 #Vs2 Runs (moving towards using epistatic interaction models) 
 
+all Chinese
+
+654095               63      batch  mturchin ccmb-condo 2018-10-30T12:18:09 2018-10-30T13:10:55   00:00:48          8     FAILED      1:0                 Height African African Exonic 1711
+654095.batch      batch                      ccmb-condo 2018-10-30T13:10:49 2018-10-30T13:10:55   00:00:48          8     FAILED      1:0
+654126               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:11:35   00:00:16          8     FAILED      1:0                 Height African African Exonic 2021
+654126.batch      batch                      ccmb-condo 2018-10-30T13:11:33 2018-10-30T13:11:35   00:00:16          8     FAILED      1:0
+654133               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:11:37   00:00:16          8     FAILED      1:0                 Height African African Exonic 2091
+654133.batch      batch                      ccmb-condo 2018-10-30T13:11:35 2018-10-30T13:11:37   00:00:16          8     FAILED      1:0
+654135               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:11:39   00:00:16          8     FAILED      1:0                 Height African African Exonic 2111
+654135.batch      batch                      ccmb-condo 2018-10-30T13:11:37 2018-10-30T13:11:39   00:00:16          8     FAILED      1:0
+654137               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:11:41   00:00:16          8     FAILED      1:0                 Height African African Exonic 2131
+654137.batch      batch                      ccmb-condo 2018-10-30T13:11:39 2018-10-30T13:11:41   00:00:16          8     FAILED      1:0
+654138               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:11:43   00:00:16          8     FAILED      1:0                 Height African African Exonic 2141
+654138.batch      batch                      ccmb-condo 2018-10-30T13:11:41 2018-10-30T13:11:43   00:00:16          8     FAILED      1:0
+654139               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:11:44   00:00:08          8     FAILED      1:0                 Height African African Exonic 2151
+654139.batch      batch                      ccmb-condo 2018-10-30T13:11:43 2018-10-30T13:11:44   00:00:08          8     FAILED      1:0
+654140               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:11:47   00:00:24          8     FAILED      1:0                 Height African African Exonic 2161
+654140.batch      batch                      ccmb-condo 2018-10-30T13:11:44 2018-10-30T13:11:47   00:00:24          8     FAILED      1:0
+654141               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:11:49   00:00:16          8     FAILED      1:0                 Height African African Exonic 2171
+654141.batch      batch                      ccmb-condo 2018-10-30T13:11:47 2018-10-30T13:11:49   00:00:16          8     FAILED      1:0
+654142               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:11:51   00:00:16          8     FAILED      1:0                 Height African African Exonic 2181
+654142.batch      batch                      ccmb-condo 2018-10-30T13:11:49 2018-10-30T13:11:51   00:00:16          8     FAILED      1:0
+654152               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:11:53   00:00:16          8     FAILED      1:0                 Height African African Exonic 2281
+654152.batch      batch                      ccmb-condo 2018-10-30T13:11:51 2018-10-30T13:11:53   00:00:16          8     FAILED      1:0
+654154               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:11:55   00:00:16          8     FAILED      1:0                 Height African African Exonic 2301
+654154.batch      batch                      ccmb-condo 2018-10-30T13:11:53 2018-10-30T13:11:55   00:00:16          8     FAILED      1:0
+654156               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:11:57   00:00:16          8     FAILED      1:0                 Height African African Exonic 2321
+654156.batch      batch                      ccmb-condo 2018-10-30T13:11:55 2018-10-30T13:11:57   00:00:16          8     FAILED      1:0
+654159               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:11:59   00:00:16          8     FAILED      1:0                 Height African African Exonic 2351
+654159.batch      batch                      ccmb-condo 2018-10-30T13:11:57 2018-10-30T13:11:59   00:00:16          8     FAILED      1:0
+654160               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:12:01   00:00:16          8     FAILED      1:0                 Height African African Exonic 2361
+654160.batch      batch                      ccmb-condo 2018-10-30T13:11:59 2018-10-30T13:12:01   00:00:16          8     FAILED      1:0
+654161               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:12:02   00:00:08          8     FAILED      1:0                 Height African African Exonic 2371
+654161.batch      batch                      ccmb-condo 2018-10-30T13:12:01 2018-10-30T13:12:02   00:00:08          8     FAILED      1:0
+654162               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:12:04   00:00:16          8     FAILED      1:0                 Height African African Exonic 2381
+654162.batch      batch                      ccmb-condo 2018-10-30T13:12:02 2018-10-30T13:12:04   00:00:16          8     FAILED      1:0
+654163               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:12:06   00:00:16          8     FAILED      1:0                 Height African African Exonic 2391
+654163.batch      batch                      ccmb-condo 2018-10-30T13:12:04 2018-10-30T13:12:06   00:00:16          8     FAILED      1:0
+654164               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:12:08   00:00:16          8     FAILED      1:0                 Height African African Exonic 2401
+654164.batch      batch                      ccmb-condo 2018-10-30T13:12:06 2018-10-30T13:12:08   00:00:16          8     FAILED      1:0
+654168               63      batch  mturchin ccmb-condo 2018-10-30T12:18:10 2018-10-30T13:12:10   00:00:16          8     FAILED      1:0                 Height African African Exonic 2441
+654168.batch      batch                      ccmb-condo 2018-10-30T13:12:08 2018-10-30T13:12:10   00:00:16          8     FAILED      1:0
+654212               63      batch  mturchin ccmb-condo 2018-10-30T12:18:11 2018-10-30T13:12:59   00:00:16          8     FAILED      1:0                 Height African African Exonic 2881
+654212.batch      batch                      ccmb-condo 2018-10-30T13:12:57 2018-10-30T13:12:59   00:00:16          8     FAILED      1:0
+654263               63      batch  mturchin ccmb-condo 2018-10-30T12:18:11 2018-10-30T13:13:31   00:00:16          8     FAILED      1:0                 Height African African Exonic 3391
+654263.batch      batch                      ccmb-condo 2018-10-30T13:13:29 2018-10-30T13:13:31   00:00:16          8     FAILED      1:0
+654280               63      batch  mturchin ccmb-condo 2018-10-30T12:18:12 2018-10-30T13:13:46   00:00:16          8     FAILED      1:0                 Height African African Exonic 3561
+654280.batch      batch                      ccmb-condo 2018-10-30T13:13:44 2018-10-30T13:13:46   00:00:16          8     FAILED      1:0
+654293               63      batch  mturchin ccmb-condo 2018-10-30T12:18:12 2018-10-30T13:13:48   00:00:16          8     FAILED      1:0                 Height African African Exonic 3691
+654293.batch      batch                      ccmb-condo 2018-10-30T13:13:46 2018-10-30T13:13:48   00:00:16          8     FAILED      1:0
+654299               63      batch  mturchin ccmb-condo 2018-10-30T12:18:12 2018-10-30T13:13:50   00:00:16          8     FAILED      1:0                 Height African African Exonic 3751
+654299.batch      batch                      ccmb-condo 2018-10-30T13:13:48 2018-10-30T13:13:50   00:00:16          8     FAILED      1:0
+654301               63      batch  mturchin ccmb-condo 2018-10-30T12:18:12 2018-10-30T13:13:51   00:00:08          8     FAILED      1:0                 Height African African Exonic 3771
+654301.batch      batch                      ccmb-condo 2018-10-30T13:13:50 2018-10-30T13:13:51   00:00:08          8     FAILED      1:0
+654303               63      batch  mturchin ccmb-condo 2018-10-30T12:18:12 2018-10-30T13:13:53   00:00:16          8     FAILED      1:0                 Height African African Exonic 3791
+654305               63      batch  mturchin ccmb-condo 2018-10-30T12:18:12 2018-10-30T13:13:54   00:00:08          8     FAILED      1:0                 Height African African Exonic 3811
+654305.batch      batch                      ccmb-condo 2018-10-30T13:13:53 2018-10-30T13:13:54   00:00:08          8     FAILED      1:0
+654306               63      batch  mturchin ccmb-condo 2018-10-30T12:18:12 2018-10-30T13:13:56   00:00:16          8     FAILED      1:0                 Height African African Exonic 3821
+654306.batch      batch                      ccmb-condo 2018-10-30T13:13:54 2018-10-30T13:13:56   00:00:16          8     FAILED      1:0
+654307               63      batch  mturchin ccmb-condo 2018-10-30T12:18:12 2018-10-30T13:13:58   00:00:16          8     FAILED      1:0                 Height African African Exonic 3831
+654307.batch      batch                      ccmb-condo 2018-10-30T13:13:56 2018-10-30T13:13:58   00:00:16          8     FAILED      1:0
+654308               63      batch  mturchin ccmb-condo 2018-10-30T12:18:12 2018-10-30T13:13:59   00:00:08          8     FAILED      1:0                 Height African African Exonic 3841
+654308.batch      batch                      ccmb-condo 2018-10-30T13:13:58 2018-10-30T13:13:59   00:00:08          8     FAILED      1:0
+654309               63      batch  mturchin ccmb-condo 2018-10-30T12:18:12 2018-10-30T13:14:01   00:00:16          8     FAILED      1:0                 Height African African Exonic 3851
+654309.batch      batch                      ccmb-condo 2018-10-30T13:13:59 2018-10-30T13:14:01   00:00:16          8     FAILED      1:0
+654313               63      batch  mturchin ccmb-condo 2018-10-30T12:18:12 2018-10-30T13:14:03   00:00:16          8     FAILED      1:0                 Height African African Exonic 3891
+654313.batch      batch                      ccmb-condo 2018-10-30T13:14:01 2018-10-30T13:14:03   00:00:16          8     FAILED      1:0
+654321               63      batch  mturchin ccmb-condo 2018-10-30T12:18:12 2018-10-30T13:14:04   00:00:08          8     FAILED      1:0                 Height African African Exonic 3971
+654321.batch      batch                      ccmb-condo 2018-10-30T13:14:03 2018-10-30T13:14:04   00:00:08          8     FAILED      1:0
+654352               63      batch  mturchin ccmb-condo 2018-10-30T12:18:13 2018-10-30T13:14:21   00:00:16          8     FAILED      1:0                 Height African African Exonic 4281
+654352.batch      batch                      ccmb-condo 2018-10-30T13:14:19 2018-10-30T13:14:21   00:00:16          8     FAILED      1:0
+654368               63      batch  mturchin ccmb-condo 2018-10-30T12:18:13 2018-10-30T13:14:36   00:00:16          8     FAILED      1:0                 Height African African Exonic 4441
+654368.batch      batch                      ccmb-condo 2018-10-30T13:14:34 2018-10-30T13:14:36   00:00:16          8     FAILED      1:0
+654381               63      batch  mturchin ccmb-condo 2018-10-30T12:18:13 2018-10-30T13:14:38   00:00:16          8     FAILED      1:0                 Height African African Exonic 4571
+654381.batch      batch                      ccmb-condo 2018-10-30T13:14:36 2018-10-30T13:14:38   00:00:16          8     FAILED      1:0
+654391               63      batch  mturchin ccmb-condo 2018-10-30T12:18:13 2018-10-30T13:14:39   00:00:08          8     FAILED      1:0                 Height African African Exonic 4671
+654391.batch      batch                      ccmb-condo 2018-10-30T13:14:38 2018-10-30T13:14:39   00:00:08          8     FAILED      1:0
+654393               63      batch  mturchin ccmb-condo 2018-10-30T12:18:16 2018-10-30T13:14:41   00:00:16          8     FAILED      1:0                      BMI African African Exonic 11
+654393.batch      batch                      ccmb-condo 2018-10-30T13:14:39 2018-10-30T13:14:41   00:00:16          8     FAILED      1:0
+654394               63      batch  mturchin ccmb-condo 2018-10-30T12:18:16 2018-10-30T13:14:42   00:00:08          8     FAILED      1:0                      BMI African African Exonic 21
+654394.batch      batch                      ccmb-condo 2018-10-30T13:14:41 2018-10-30T13:14:42   00:00:08          8     FAILED      1:0
+654396               63      batch  mturchin ccmb-condo 2018-10-30T12:18:16 2018-10-30T13:14:44   00:00:16          8     FAILED      1:0                      BMI African African Exonic 41
+654396.batch      batch                      ccmb-condo 2018-10-30T13:14:42 2018-10-30T13:14:44   00:00:16          8     FAILED      1:0
+654397               63      batch  mturchin ccmb-condo 2018-10-30T12:18:16 2018-10-30T13:14:45   00:00:08          8     FAILED      1:0                      BMI African African Exonic 51
+654397.batch      batch                      ccmb-condo 2018-10-30T13:14:44 2018-10-30T13:14:45   00:00:08          8     FAILED      1:0
+654398               63      batch  mturchin ccmb-condo 2018-10-30T12:18:16 2018-10-30T13:14:48   00:00:24          8     FAILED      1:0                      BMI African African Exonic 61
+654398.batch      batch                      ccmb-condo 2018-10-30T13:14:45 2018-10-30T13:14:48   00:00:24          8     FAILED      1:0
+654401               63      batch  mturchin ccmb-condo 2018-10-30T12:18:16 2018-10-30T13:14:50   00:00:16          8     FAILED      1:0                      BMI African African Exonic 91
+654401.batch      batch                      ccmb-condo 2018-10-30T13:14:48 2018-10-30T13:14:50   00:00:16          8     FAILED      1:0
+654402               63      batch  mturchin ccmb-condo 2018-10-30T12:18:16 2018-10-30T13:14:52   00:00:16          8     FAILED      1:0                     BMI African African Exonic 101
+654402.batch      batch                      ccmb-condo 2018-10-30T13:14:50 2018-10-30T13:14:52   00:00:16          8     FAILED      1:0
+654414               63      batch  mturchin ccmb-condo 2018-10-30T12:18:16 2018-10-30T13:14:54   00:00:16          8     FAILED      1:0                     BMI African African Exonic 221
+654414.batch      batch                      ccmb-condo 2018-10-30T13:14:52 2018-10-30T13:14:54   00:00:16          8     FAILED      1:0
+654835               63      batch  mturchin ccmb-condo 2018-10-30T12:18:22 2018-10-30T13:43:55   00:00:48          8     FAILED      1:0                    BMI African African Exonic 4431
+654835.batch      batch                      ccmb-condo 2018-10-30T13:43:49 2018-10-30T13:43:55   00:00:48          8     FAILED      1:0
+654868               63      batch  mturchin ccmb-condo 2018-10-30T12:19:24 2018-10-30T13:44:24   00:00:32          8     FAILED      1:0               Height African African ExonicPlus 61
+654868.batch      batch                      ccmb-condo 2018-10-30T13:44:20 2018-10-30T13:44:24   00:00:32          8     FAILED      1:0
+654884               63      batch  mturchin ccmb-condo 2018-10-30T12:19:24 2018-10-30T13:44:54   00:00:24          8     FAILED      1:0              Height African African ExonicPlus 221
+654884.batch      batch                      ccmb-condo 2018-10-30T13:44:51 2018-10-30T13:44:54   00:00:24          8     FAILED      1:0
 
 
-(InterPath) [  mturchin@login004  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/BMI/NonSyn/slurm/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.BMI.NonSyn.Vs2.GjDrop_wCov_GK.Pathways4721.slurm.error
-Loading required package: foreach
-Loading required package: iterators
-Loading required package: parallel
-
-Attaching package: 'RcppParallel'
-
-The following object is masked from 'package:Rcpp':
-
-    LdFlags
-
-Error in rep(NA, nrow(InterPath.output$Eigenvalues)) :
-  invalid 'times' argument
-Execution halted
 
 
-
-602584               63      batch  mturchin ccmb-condo 2018-10-27T00:14:25 2018-10-27T00:20:55   00:00:32          4     FAILED      1:0                  Waist Chinese Chinese NonSyn 3311
-602584.batch      batch                      ccmb-condo 2018-10-27T00:20:47 2018-10-27T00:20:55   00:00:32          4     FAILED      1:0
 
 
 
@@ -1537,23 +1627,23 @@ Execution halted
 #NOTE -- copy and pasted `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp` & `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.Vs2.R` from associated Slack channel and from Lorin's code posted on 20180731
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.GG.cpp
-module load R/3.3.1; sleep 25200; for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | grep -v -E 'Height|BMI'`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 6 | tail -n 1`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep -v Plus | tail -n 1`; do
+module load R/3.3.1; sleep 25200; for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | grep -E 'Height|BMI'`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Chinese | head -n 1 | tail -n 1`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep Plus`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'` 
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | wc | awk '{ print $1 }'`	
-#			NumPaths=3312
+#			NumPaths=2
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k
 			
 			LpCnt=1; LpCnt2=1; for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
-				sbatch -t 36:00:00 -n 4 -N 1 --mem 81g -A ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Vs2.GjDrop_wCov_GK.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Vs2.GjDrop_wCov_GK.Pathways${PathNum}.slurm.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
+				sbatch -t 36:00:00 -n 8 -N 1 --mem 16g --account ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Vs2.GjDrop_wCov_GK.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Vs2.GjDrop_wCov_GK.Pathways${PathNum}.slurm.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
 				echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); sourceCpp(\\\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp\\\"); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
 				Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\\\", header=T); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt\\\", header=F); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.${k}.txt\\\", header=F); Y.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways1.txt.gz\\\", header=T); Y.Check.Pheno <- Y.Check\\\$$i; Y.Check.Pheno.noNAs <- Y.Check.Pheno[neg.is.na(Y.Check.Pheno)]; \
 				Pathways.Regions <- list(); cores = detectCores(); InterPath.output <- list(); InterPath.output\\\$Est <- c(); InterPath.output\\\$Eigenvalues <- c(); InterPath.output\\\$PVE <- c(); \ 
 				for (i in $PathNum:($PathNum+9)) { Y <- c(); Y.Pheno <- c(); Y.Pheno.noNAs <- c(); \
 					if (i > nrow(Pathways)) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, nrow(InterPath.output\\\$Eigenvalues)); } else if (neg.is.true(Pathways.Check[i,ncol(Pathways.Check)])) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, length(Y.Check.Pheno.noNAs)); } else { Pathways.Regions[[1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), \\\",\\\")))); \
 					Y <- read.table(paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways\\\", i, \\\".txt.gz\\\", sep=\\\"\\\"), header=T); Y.Pheno <- Y\\\$$i; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; }; \ 
-					if (length(Pathways.Regions[[1]]) > 1) { Data3 <- fread(cmd=paste(\\\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\\\", as.character(i), \\\".txt.gz\\\", sep=\\\"\\\"), header=T); Data3.cov <- as.matrix(read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.cov.txt\\\", header=F)); \ 
+					if (length(Pathways.Regions[[1]]) > 1) { Data3 <- fread(cmd=paste(\\\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\\\", as.character(i), \\\".txt.gz\\\", sep=\\\"\\\"), header=T); Data3.cov <- as.matrix(read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt\\\", header=F)); \ 
 					Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); \ 
 					InterPath.output.temp <- list(); X <- Data3; X.cov <- Data3.cov; rm(Data3); rm(Data3.cov); X.Pheno.noNAs <- X[neg.is.na(Y.Pheno),]; X.cov.Pheno.noNAs <- X.cov[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z <- Covars[neg.is.na(Y.Pheno),(ncol(Covars)-9):ncol(Covars)]; \
 					G <- 1/nrow(X.Pheno.noNAs) * tcrossprod(as.matrix(X.Pheno.noNAs)); \
@@ -1565,43 +1655,6 @@ module load R/3.3.1; sleep 25200; for i in `cat <(echo "Height BMI Waist Hip" | 
 done
 #				LpCnt2=$((LpCnt2+1)); if [  $LpCnt2 == 5 ] ; then LpCnt2=1; fi
 #				LpCnt=LpCnt+1; if [ $LpCnt == 100 ] ; then LpCnt=1; sleep 30; fi
-
-
-
-
-
-
-
-
-
-
-for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | grep -v -E 'Height|BMI' | grep Hip`; do
-        for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 3 | tail -n 1`; do
-                for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep -v Plus | head -n 1`; do
-                        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`
-                        NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | wc | awk '{ print $1 }'`
-#                       NumPaths=2
-                        echo $i $ancestry1 $ancestry2 $ancestry3 $k
-
-                        LpCnt=1; LpCnt2=1; for (( PathNum=391; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
-                                R -q -e "library(\"data.table\"); library(\"doParallel\"); library(\"Rcpp\"); library(\"RcppArmadillo\"); library(\"RcppParallel\"); sourceCpp(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp\"); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
-                                Covars <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\", header=T); Pathways <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt\", header=F); Pathways.Check <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.${k}.txt\", header=F); Y.Check <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways1.txt.gz\", header=T); Y.Check.Pheno <- Y.Check\$$i; Y.Check.Pheno.noNAs <- Y.Check.Pheno[neg.is.na(Y.Check.Pheno)]; \
-                                Pathways.Regions <- list(); cores = detectCores(); InterPath.output <- list(); InterPath.output\$Est <- c(); InterPath.output\$Eigenvalues <- c(); InterPath.output\$PVE <- c(); \
-                                for (i in $PathNum:($PathNum+9)) { Y <- c(); Y.Pheno <- c(); Y.Pheno.noNAs <- c(); \
-                                        if (i > nrow(Pathways)) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, nrow(InterPath.output\$Eigenvalues)); } else if (neg.is.true(Pathways.Check[i,ncol(Pathways.Check)])) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, length(Y.Check.Pheno.noNAs)); } else { Pathways.Regions[[1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), \",\")))); \
-                                        Y <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways\", i, \".txt.gz\", sep=\"\"), header=T); Y.Pheno <- Y\$$i; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; }; \
-                                        if (length(Pathways.Regions[[1]]) > 1) { Data3 <- fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\", as.character(i), \".txt.gz\", sep=\"\"), header=T); Data3.cov <- as.matrix(read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.cov.txt\", header=F)); \
-                                        Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); \
-                                        InterPath.output.temp <- list(); X <- Data3; X.cov <- Data3.cov; rm(Data3); rm(Data3.cov); X.Pheno.noNAs <- X[neg.is.na(Y.Pheno),]; X.cov.Pheno.noNAs <- X.cov[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z <- Covars[neg.is.na(Y.Pheno),(ncol(Covars)-9):ncol(Covars)]; \
-                                        G <- 1/nrow(X.Pheno.noNAs) * tcrossprod(as.matrix(X.Pheno.noNAs)); \
-                                        InterPath.output.temp <- InterPath(t(X.Pheno.noNAs),Y.Pheno.noNAs,as.matrix(X.cov.Pheno.noNAs),G,t(as.matrix(Z)),Pathways.Regions,nrow(X.Pheno.noNAs),as.numeric(as.character($NumSNPs)),cores=cores); InterPath.output\$Est <- c(InterPath.output\$Est, InterPath.output.temp\$Est); InterPath.output\$Eigenvalues <- cbind(InterPath.output\$Eigenvalues, InterPath.output.temp\$Eigenvalues); InterPath.output\$PVE <- c(InterPath.output\$PVE, InterPath.output.temp\$PVE); } else { InterPath.output\$Est <- c(InterPath.output\$Est, NA); InterPath.output\$Eigenvalues <- cbind(InterPath.output\$Eigenvalues, rep(NA, length(Y.Pheno.noNAs))); InterPath.output\$PVE <- c(InterPath.output\$PVE, NA);};}; \
-                                write.table(InterPath.output\$Est, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.GjDrop_wCov_GK.Paths${PathNum}.Est.txt\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\$Eigenvalues, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.GjDrop_wCov_GK.Paths${PathNum}.Eigenvalues.txt\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\$PVE, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.GjDrop_wCov_GK.Paths${PathNum}.PVE.txt\", quote=FALSE, row.name=FALSE, col.name=FALSE);"
-                        done; sleep 2
-                done;
-        done;
-done
-
-
 
 #cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/*/*/slurm/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.*.Vs2.GjDrop_wCov_GK.Pathways4721.slurm.error | vi -
 
@@ -1620,10 +1673,29 @@ done
 #				write.table(InterPath.output\\\$Eigenvalues, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.GjDrop_wCov_GG.Paths${PathNum}.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); \
 #				write.table(InterPath.output\\\$PVE, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.GjDrop_wCov_GG.Paths${PathNum}.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\"")
 
+#Vs2 Error File Hack Check
+
+for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);')`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep Chinese`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/*error | grep _GK | awk '{ print $5 }' | sort | uniq -c
+			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/*error | grep _GK | awk '{ print $5 }' | sort | uniq -c
+
+		done;
+	done;
+done;
+		
+
+
+
+
 #Vs2 Results Collection
-for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | grep -E "Height|BMI"`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep -v Plus`; do
+for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);')`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep Chinese`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 			SECONDS=0;
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -1638,14 +1710,14 @@ for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);'
 				InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.GjDrop_wCov_GK.Paths${PathNum}.Eigenvalues.txt\", header=F); \
 				InterPath.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.GjDrop_wCov_GK.Paths${PathNum}.PVE.txt\", header=F); \
 				Results1 <- c(); Counter1 <- 1; for (i in $PathNum:($PathNum+9)) { \
-					if (neg.is.na(InterPath.output.Est[Counter1,1])) { \ 
+					if (i <= $NumPaths) { if (neg.is.na(InterPath.output.Est[Counter1,1])) { \ 
 						Lambda <- sort(InterPath.output.Eigenvalues[,Counter1], decreasing=TRUE); \
 						Davies.Output <- davies(InterPath.output.Est[Counter1,1], lambda=Lambda, acc=1e-8); \
 						pVal <- 2*min(1-Davies.Output\$Qq, Davies.Output\$Qq); \
 						Results1 <- rbind(Results1, c(as.character(Pathways[i,1]), InterPath.output.Est[Counter1,1], InterPath.output.PVE[Counter1,1], pVal)); \ 
 						Counter1 = Counter1 + 1; \
-					}; else { Results1 <- rbind(Results1, c(as.character(Pathways[i,1]), rep(NA, 3))); }; \
-				}; write.table(Results1, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
+					} else { Results1 <- rbind(Results1, c(as.character(Pathways[i,1]), rep(NA, 3))); }; \
+				};}; write.table(Results1, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
 			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.GjDrop_wCov_GK.AllPaths.Results.txt.pre.gz
 			duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 		done;
@@ -1901,12 +1973,10 @@ done
 566169               63      batch  mturchin ccmb-condo 2018-10-25T14:35:17 2018-10-25T19:25:06   00:23:04          4     FAILED      1:0         Height Chinese Chinese ExonicPlus20kb 1221
 566169.batch      batch                      ccmb-condo 2018-10-25T19:19:20 2018-10-25T19:25:06   00:23:04          4     FAILED      1:0
 
-
-
 #gene_i*pathway
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 module load R/3.4.3_mkl; sleep 25200; for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | grep -E 'Height|BMI'`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 5 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 6 | tail -n 1`; do
 		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep -v Plus | head -n 1`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'` 
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | wc | awk '{ print $1 }'`	
@@ -1914,7 +1984,7 @@ module load R/3.4.3_mkl; sleep 25200; for i in `cat <(echo "Height BMI Waist Hip
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k
 		
 			LpCnt=1; LpCnt2=1; for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
-			       sbatch -t 72:00:00 -n 8 -N 1-1 --mem 49g --account ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Vs2.GjDrop_wCov_geneG.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Vs2.GjDrop_wCov_geneG.Pathways${PathNum}.slurm.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
+			       sbatch -t 41:00:00 -n 4 -N 1-1 --mem 81g --account ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Vs2.GjDrop_wCov_geneG.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${i}.${k}.Vs2.GjDrop_wCov_geneG.Pathways${PathNum}.slurm.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
 				echo -e "R -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); sourceCpp(\\\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp\\\"); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
 				Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\\\", header=T); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.geneVSpath.${k}.txt\\\", header=F); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.${k}.txt\\\", header=F); Pathways.Regions <- list(); cores = detectCores(); \ 
 				for (i in $PathNum:($PathNum+9)) { Y <- c(); Y.Pheno <- c(); Y.Pheno.noNAs <- c(); InterPath.output <- list(); SkipFlag1 <- 0; \
