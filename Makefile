@@ -1,32 +1,23 @@
 MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 CURRENT_PATH := $(dir $(abspath $(MAKEFILE_LIST)))
 CURRENT_DIR := $(notdir $(patsubst %/,%,$(dir $(MKFILE_PATH))))
-HTML_FILES := $(patsubst %.Rmd, %.html ,$(wildcard $(CURRENT_PATH)website/*.Rmd)) \
-              $(patsubst %.md, %.html ,$(wildcard $(CURRENT_PATH)website/*.md))
-#HTML_FILES_OUTPUT := $(patsubst /website/, /docs/ , $(HTML_FILES))
+HTML_FILES := $(patsubst %.Rmd, %.html ,$(wildcard $(CURRENT_PATH)analysis/*.Rmd)) \
+              $(patsubst %.md, %.html ,$(wildcard $(CURRENT_PATH)analysis/*.md))
+#HTML_FILES_OUTPUT := $(patsubst /analysis/, /docs/ , $(HTML_FILES))
 
 all: html
 
 html: $(HTML_FILES)
 
 %.html: %.Rmd
-#	@echo $(MAKEFILE_LIST) $(MKFILE_PATH) $(CURRENT_PATH) $(CURRENT_DIR)
 	R --slave -e "set.seed(100);rmarkdown::render('$<')"
-	cp -p $(CURRENT_PATH)website/$(notdir $@) $(CURRENT_PATH)docs/$(notdir $@) 
-	head -n 16 $(CURRENT_PATH)docs/$(notdir $@) > $(CURRENT_PATH)docs/$(notdir $@).tmp1
-	cat $(CURRENT_PATH)docs/$(notdir $@) | perl -lane 'if ($$. == 1) { $$flag1 = 0; } my $$line1 = join(" ", @F); if ($$line1 eq "<style type=\"text/css\">code{white-space: pre;}</style>") { $$flag1 = 1; } if ($$flag1 == 1) { print join(" ", @F); }' > $(CURRENT_PATH)docs/$(notdir $@).tmp2
-	cat $(CURRENT_PATH)docs/$(notdir $@).tmp1 $(CURRENT_PATH)docs/20171127.CorrectHTML.html $(CURRENT_PATH)docs/$(notdir $@).tmp2 > $(CURRENT_PATH)docs/$(notdir $@)
-	rm $(CURRENT_PATH)docs/$(notdir $@).tmp1 $(CURRENT_PATH)docs/$(notdir $@).tmp2
+	cp -p $(CURRENT_PATH)analysis/$(notdir $@) $(CURRENT_PATH)docs/$(notdir $@) 
 
 %.html: %.md
 	R --slave -e "set.seed(100);rmarkdown::render('$<')"
-	cp -p $(CURRENT_PATH)website/$(notdir $@) $(CURRENT_PATH)docs/$(notdir $@) 
-	head -n 16 $(CURRENT_PATH)docs/$(notdir $@) > $(CURRENT_PATH)docs/$(notdir $@).tmp1
-	cat $(CURRENT_PATH)docs/$(notdir $@) | perl -lane 'if ($$. == 1) { $$flag1 = 0; } my $$line1 = join(" ", @F); if ($$line1 eq "<style type=\"text/css\">code{white-space: pre;}</style>") { $$flag1 = 1; } if ($$flag1 == 1) { print join(" ", @F); }' > $(CURRENT_PATH)docs/$(notdir $@).tmp2
-	cat $(CURRENT_PATH)docs/$(notdir $@).tmp1 $(CURRENT_PATH)docs/20171127.CorrectHTML.html $(CURRENT_PATH)docs/$(notdir $@).tmp2 > $(CURRENT_PATH)docs/$(notdir $@)
-	rm $(CURRENT_PATH)docs/$(notdir $@).tmp1 $(CURRENT_PATH)docs/$(notdir $@).tmp2
+	cp -p $(CURRENT_PATH)analysis/$(notdir $@) $(CURRENT_PATH)docs/$(notdir $@) 
 
 .PHONY: clean
 clean:
-	$(RM) $(patsubst /website/, /docs/ , $(HTML_FILES)) 
+	$(RM) $(patsubst /analysis/, /docs/ , $(HTML_FILES)) 
 
