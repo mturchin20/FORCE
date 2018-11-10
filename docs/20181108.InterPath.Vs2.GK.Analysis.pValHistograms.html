@@ -11,7 +11,7 @@
 
 
 
-<title>InterPath Workbook</title>
+<title>pathway*genome UKB pValue histograms</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,9 +19,6 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -172,101 +169,6 @@ $(document).ready(function () {
 
 
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -314,7 +216,7 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">InterPath Workbook</h1>
+<h1 class="title toc-ignore">pathway*genome UKB pValue histograms</h1>
 
 </div>
 
@@ -324,13 +226,12 @@ div.section {
 <ul>
 <li>
 <details>
-<p><summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p><summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </details>
 </li>
 <li>
 <details>
-<p><summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/mturchin20/InterPath/tree/a66f200adcbe9f7ba6663fc3dfc1778da1c3a1e8" target="_blank">a66f200</a> </summary></p>
+<p><summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/mturchin20/InterPath/tree/4bfd20f8b37eedf33c6e3cb8201cc356b1eee21b" target="_blank">4bfd20f</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -340,6 +241,7 @@ Ignored files:
     Ignored:    analysis/.20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.Rmd.swp
     Ignored:    analysis/.20181108.InterPath.Vs2.GK.Analysis.pValHistograms.Rmd.swp
     Ignored:    analysis/.index.Rmd.swp
+    Ignored:    images/
 
 Untracked files:
     Untracked:  FAILS.txt
@@ -357,166 +259,40 @@ Untracked files:
     Untracked:  Vs1/InterPath.GjOnly.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
     Untracked:  Vs1/InterPath.Source.Simulations.Vs2.R
     Untracked:  Vs1/InterPath.Source.Vs2.cpp
-    Untracked:  images/
+    Untracked:  analysis/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.Rmd
+    Untracked:  analysis/20181108.InterPath.Vs2.GK.Analysis.pValHistograms.Rmd
     Untracked:  temp1.error
     Untracked:  temp1.output
 
 Unstaged changes:
-    Modified:   .gitignore
     Modified:   InterPath.Workbook.vs1.sh
     Modified:   Vs1/InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
+    Modified:   analysis/index.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
 </details>
 </li>
 </ul>
-<details>
-<summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
-<ul>
-<table style="border-collapse:separate; border-spacing:5px;">
-<thead>
-<tr>
-<th style="text-align:left;">
-File
-</th>
-<th style="text-align:left;">
-Version
-</th>
-<th style="text-align:left;">
-Author
-</th>
-<th style="text-align:left;">
-Date
-</th>
-<th style="text-align:left;">
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Rmd
-</td>
-<td style="text-align:left;">
-<a href="https://github.com/mturchin20/InterPath/blob/a66f200adcbe9f7ba6663fc3dfc1778da1c3a1e8/analysis/index.Rmd" target="_blank">a66f200</a>
-</td>
-<td style="text-align:left;">
-mturchin20
-</td>
-<td style="text-align:left;">
-2018-11-10
-</td>
-<td style="text-align:left;">
-Updating website with first real content
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/mturchin20/InterPath/a66f200adcbe9f7ba6663fc3dfc1778da1c3a1e8/docs/index.html" target="_blank">a66f200</a>
-</td>
-<td style="text-align:left;">
-mturchin20
-</td>
-<td style="text-align:left;">
-2018-11-10
-</td>
-<td style="text-align:left;">
-Updating website with first real content
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Rmd
-</td>
-<td style="text-align:left;">
-<a href="https://github.com/mturchin20/InterPath/blob/806a8f1010bffe57db7b14808b5117c2be932218/analysis/index.Rmd" target="_blank">806a8f1</a>
-</td>
-<td style="text-align:left;">
-mturchin20
-</td>
-<td style="text-align:left;">
-2018-11-06
-</td>
-<td style="text-align:left;">
-Updating and moving website structure over to being based on workflowr skeleton
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/mturchin20/InterPath/806a8f1010bffe57db7b14808b5117c2be932218/docs/index.html" target="_blank">806a8f1</a>
-</td>
-<td style="text-align:left;">
-mturchin20
-</td>
-<td style="text-align:left;">
-2018-11-06
-</td>
-<td style="text-align:left;">
-Updating and moving website structure over to being based on workflowr skeleton
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/mturchin20/InterPath/eeeda423087a1a7df173dc1e7f83bdac56d3205d/docs/index.html" target="_blank">eeeda42</a>
-</td>
-<td style="text-align:left;">
-mturchin20
-</td>
-<td style="text-align:left;">
-2018-06-07
-</td>
-<td style="text-align:left;">
-working on Makefile/Rmarkdown/webpage issues
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/mturchin20/InterPath/87c99411178fc05366b049075a4959d6ded6c687/docs/index.html" target="_blank">87c9941</a>
-</td>
-<td style="text-align:left;">
-mturchin20
-</td>
-<td style="text-align:left;">
-2018-06-07
-</td>
-<td style="text-align:left;">
-Working on setting up initial structure and webpage-related materials
-</td>
-</tr>
-</tbody>
-</table>
-</ul>
-</details>
 <hr />
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>Webpage ‘workbook’ to collect data, results, figures/tables, and presentations for Ramachandran Lab <code>InterPath</code> project</p>
-</div>
-<div id="general-info" class="section level1">
-<h1>General Info</h1>
+<div id="toc" class="section level3">
+<h3>TOC:</h3>
 <ul>
-<li>Google Drive <a href="https://docs.google.com/document/d/1o4R6cjCe1WAWGcn8QN0JoxTNdBx8QJTCtjJchHVqXqA/edit">manuscript</a></li>
+<li><a href="#AfricanHist">African</a> (N = ~3080)</li>
+<li><a href="#British.Ran4kHist">British.Ran4k</a> (N = ~3824)</li>
+<li><a href="#CaribbeanHist">Caribbean</a> (N = ~3641)</li>
+<li><a href="#ChineseHist">Chinese</a> (N = ~1423)</li>
+<li><a href="#IndianHist">Indian</a> (N = ~5158)</li>
+<li><a href="#PakistaniHist">Pakistani</a> (N = ~1597)</li>
 </ul>
-</div>
-<div id="entries" class="section level1">
-<h1>Entries</h1>
+<hr />
 <ul>
-<li><p>20181108 – <a href="https://mturchin20.github.io/InterPath/20181108.InterPath.Vs2.GK.Analysis.pValHistograms.html">UKB G*K pValue Histograms</a></p></li>
-<li><p>20181102 – <a href="https://mturchin20.github.io/InterPath/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.html">UKB pathway*genome (G*K) First Round of Main Results</a></p></li>
+<li><p>African <a href="#AfricanHist"></a> <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.African.vs1.png" alt="GK African pVals Hist" /></p></li>
+<li><p>British.Ran4k <a href="#British.Ran4kHist"></a> <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.British.Ran4000.vs1.png" alt="GK British.Ran4k pVals Hist" /></p></li>
+<li><p>Caribbean <a href="#CaribbeanHist"></a> <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Caribbean.vs1.png" alt="GK Caribbean pVals Hist" /></p></li>
+<li><p>Chinese <a href="#ChineseHist"></a> <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Chinese.vs1.png" alt="GK Chinese pVals Hist" /></p></li>
+<li><p>Indian <a href="#IndianHist"></a> <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Indian.vs1.png" alt="GK Indian pVals Hist" /></p></li>
+<li><p>Pakistani <a href="#PakistaniHist"></a> <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Pakistani.vs1.png" alt="GK Pakistani pVals Hist" /></p></li>
 </ul>
 </div>
 
@@ -541,8 +317,6 @@ footer is added to webpages before the MathJax javascript. -->
 <hr>
 
 
-</div>
-</div>
 
 </div>
 

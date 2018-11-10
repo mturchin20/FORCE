@@ -1,0 +1,20 @@
+---
+title: "UKB First Round Main Results -- G*K"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: false
+---
+
+![UKBMainResults](../images/20181102.InterPath.Vs2.GK.Analysis.MainResults.vs1.png)
+
+20181108.InterPath.Vs2.GK.Analysis.pValHists.African.vs1.png)
+
+ * African N = ~3080
+ * British.Ran4k N = ~3824
+ * Caribbean N = ~3641
+ * Chinese N = ~1423
+ * Indian N = ~5158
+ * Pakistani N = ~1597
+
+

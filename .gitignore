@@ -12,7 +12,7 @@ blah*
 nana*
 docs/OLD/
 *BAD
-!docs/*jpeg
-!docs/*jpg
-!docs/*pdf
-!docs/*png
+!images/*jpeg
+!images/*jpg
+!images/*pdf
+!images/*png
