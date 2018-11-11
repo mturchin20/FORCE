@@ -16,27 +16,26 @@ p-value distribution of results found in UKB G*K first round [main results][2018
 
 ## African
  * N = ~3080 
-![GK African pVals Hist](../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.African.vs1.png)
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.African.vs1.png)
 
 ## British.Ran4k
  * N = ~3824
-![GK British.Ran4k pVals Hist](../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.British.Ran4000.vs1.png)
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.British.Ran4000.vs1.png)
 
 ## Caribbean
  * N = ~3641
-![GK Caribbean pVals Hist](../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Caribbean.vs1.png)
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Caribbean.vs1.png)
 
 ## Chinese 
  * N = ~1423
-![GK Chinese pVals Hist](../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Chinese.vs1.png)
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Chinese.vs1.png)
 
 ## Indian 
  * N = ~5158
-![GK Indian pVals Hist](../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Indian.vs1.png)
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Indian.vs1.png)
 
 ## Pakistani
  * N = ~1597
-![GK Pakistani pVals Hist](../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Pakistani.vs1.png)
-
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Pakistani.vs1.png)
 
 [20181102a]: https://mturchin20.github.io/InterPath/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.html
