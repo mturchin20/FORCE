@@ -11,7 +11,7 @@
 
 
 
-<title>pathway*genome UKB pValue histograms</title>
+<title>G*K UKB pValue histograms</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +19,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -169,6 +172,107 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -216,7 +320,7 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">pathway*genome UKB pValue histograms</h1>
+<h1 class="title toc-ignore">G*K UKB pValue histograms</h1>
 
 </div>
 
@@ -226,22 +330,23 @@ div.section {
 <ul>
 <li>
 <details>
-<p><summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p><summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </details>
 </li>
 <li>
 <details>
-<p><summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/mturchin20/InterPath/tree/4bfd20f8b37eedf33c6e3cb8201cc356b1eee21b" target="_blank">4bfd20f</a> </summary></p>
+<p><summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/mturchin20/InterPath/tree/868d177a71338910c6b69aaaf36e801ca586d4f9" target="_blank">868d177</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
     Ignored:    .InterPath.Workbook.vs1.sh.swp
+    Ignored:    .swp
     Ignored:    Vs1/.InterPath.GjDrop.mtEdits.SingleRun.vs1.cpp.swp
     Ignored:    Vs1/.InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp.swp
     Ignored:    analysis/.20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.Rmd.swp
     Ignored:    analysis/.20181108.InterPath.Vs2.GK.Analysis.pValHistograms.Rmd.swp
     Ignored:    analysis/.index.Rmd.swp
-    Ignored:    images/
+    Ignored:    images/pValHists/
 
 Untracked files:
     Untracked:  FAILS.txt
@@ -259,15 +364,14 @@ Untracked files:
     Untracked:  Vs1/InterPath.GjOnly.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
     Untracked:  Vs1/InterPath.Source.Simulations.Vs2.R
     Untracked:  Vs1/InterPath.Source.Vs2.cpp
-    Untracked:  analysis/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.Rmd
-    Untracked:  analysis/20181108.InterPath.Vs2.GK.Analysis.pValHistograms.Rmd
     Untracked:  temp1.error
     Untracked:  temp1.output
 
 Unstaged changes:
     Modified:   InterPath.Workbook.vs1.sh
     Modified:   Vs1/InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.Rmd
+    Modified:   analysis/20181108.InterPath.Vs2.GK.Analysis.pValHistograms.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
@@ -275,25 +379,48 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 </li>
 </ul>
 <hr />
-<div id="toc" class="section level3">
-<h3>TOC:</h3>
+<div id="summary" class="section level1">
+<h1>Summary</h1>
+<p>p-value distribution of results found in UKB G*K first round <a href="https://mturchin20.github.io/InterPath/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.html">main results</a></p>
+</div>
+<div id="ukb-populations" class="section level1">
+<h1>UKB Populations</h1>
+<div id="african" class="section level2">
+<h2>African</h2>
 <ul>
-<li><a href="#AfricanHist">African</a> (N = ~3080)</li>
-<li><a href="#British.Ran4kHist">British.Ran4k</a> (N = ~3824)</li>
-<li><a href="#CaribbeanHist">Caribbean</a> (N = ~3641)</li>
-<li><a href="#ChineseHist">Chinese</a> (N = ~1423)</li>
-<li><a href="#IndianHist">Indian</a> (N = ~5158)</li>
-<li><a href="#PakistaniHist">Pakistani</a> (N = ~1597)</li>
+<li>N = ~3080 <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.African.vs1.png" alt="GK African pVals Hist" /></li>
 </ul>
-<hr />
+</div>
+<div id="british.ran4k" class="section level2">
+<h2>British.Ran4k</h2>
 <ul>
-<li><p>African <a href="#AfricanHist"></a> <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.African.vs1.png" alt="GK African pVals Hist" /></p></li>
-<li><p>British.Ran4k <a href="#British.Ran4kHist"></a> <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.British.Ran4000.vs1.png" alt="GK British.Ran4k pVals Hist" /></p></li>
-<li><p>Caribbean <a href="#CaribbeanHist"></a> <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Caribbean.vs1.png" alt="GK Caribbean pVals Hist" /></p></li>
-<li><p>Chinese <a href="#ChineseHist"></a> <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Chinese.vs1.png" alt="GK Chinese pVals Hist" /></p></li>
-<li><p>Indian <a href="#IndianHist"></a> <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Indian.vs1.png" alt="GK Indian pVals Hist" /></p></li>
-<li><p>Pakistani <a href="#PakistaniHist"></a> <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Pakistani.vs1.png" alt="GK Pakistani pVals Hist" /></p></li>
+<li>N = ~3824 <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.British.Ran4000.vs1.png" alt="GK British.Ran4k pVals Hist" /></li>
 </ul>
+</div>
+<div id="caribbean" class="section level2">
+<h2>Caribbean</h2>
+<ul>
+<li>N = ~3641 <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Caribbean.vs1.png" alt="GK Caribbean pVals Hist" /></li>
+</ul>
+</div>
+<div id="chinese" class="section level2">
+<h2>Chinese</h2>
+<ul>
+<li>N = ~1423 <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Chinese.vs1.png" alt="GK Chinese pVals Hist" /></li>
+</ul>
+</div>
+<div id="indian" class="section level2">
+<h2>Indian</h2>
+<ul>
+<li>N = ~5158 <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Indian.vs1.png" alt="GK Indian pVals Hist" /></li>
+</ul>
+</div>
+<div id="pakistani" class="section level2">
+<h2>Pakistani</h2>
+<ul>
+<li>N = ~1597 <img src="../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Pakistani.vs1.png" alt="GK Pakistani pVals Hist" /></li>
+</ul>
+</div>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
@@ -317,6 +444,8 @@ footer is added to webpages before the MathJax javascript. -->
 <hr>
 
 
+</div>
+</div>
 
 </div>
 

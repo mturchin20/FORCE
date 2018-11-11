@@ -226,22 +226,23 @@ div.section {
 <ul>
 <li>
 <details>
-<p><summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p><summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </details>
 </li>
 <li>
 <details>
-<p><summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/mturchin20/InterPath/tree/4bfd20f8b37eedf33c6e3cb8201cc356b1eee21b" target="_blank">4bfd20f</a> </summary></p>
+<p><summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/mturchin20/InterPath/tree/868d177a71338910c6b69aaaf36e801ca586d4f9" target="_blank">868d177</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
     Ignored:    .InterPath.Workbook.vs1.sh.swp
+    Ignored:    .swp
     Ignored:    Vs1/.InterPath.GjDrop.mtEdits.SingleRun.vs1.cpp.swp
     Ignored:    Vs1/.InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp.swp
     Ignored:    analysis/.20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.Rmd.swp
     Ignored:    analysis/.20181108.InterPath.Vs2.GK.Analysis.pValHistograms.Rmd.swp
     Ignored:    analysis/.index.Rmd.swp
-    Ignored:    images/
+    Ignored:    images/pValHists/
 
 Untracked files:
     Untracked:  FAILS.txt
@@ -259,15 +260,14 @@ Untracked files:
     Untracked:  Vs1/InterPath.GjOnly.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
     Untracked:  Vs1/InterPath.Source.Simulations.Vs2.R
     Untracked:  Vs1/InterPath.Source.Vs2.cpp
-    Untracked:  analysis/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.Rmd
-    Untracked:  analysis/20181108.InterPath.Vs2.GK.Analysis.pValHistograms.Rmd
     Untracked:  temp1.error
     Untracked:  temp1.output
 
 Unstaged changes:
     Modified:   InterPath.Workbook.vs1.sh
     Modified:   Vs1/InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.Rmd
+    Modified:   analysis/20181108.InterPath.Vs2.GK.Analysis.pValHistograms.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
@@ -279,7 +279,6 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <img src="../images/20181102.InterPath.Vs2.GK.Analysis.MainResults.vs1.png" alt="UKBMainResults" />
 <p class="caption">UKBMainResults</p>
 </div>
-<p>20181108.InterPath.Vs2.GK.Analysis.pValHists.African.vs1.png)</p>
 <ul>
 <li>African N = ~3080</li>
 <li>British.Ran4k N = ~3824</li>

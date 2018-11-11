@@ -1,41 +1,42 @@
 ---
-title: "pathway*genome UKB pValue histograms"
+title: "G*K UKB pValue histograms"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
-    toc: false
+    toc: true
+    toc_float:
+      collapsed: false
 ---
 
-### TOC:
+# Summary
 
- * [African](#AfricanHist) (N = ~3080) 
- * [British.Ran4k](#British.Ran4kHist) (N = ~3824) 
- * [Caribbean](#CaribbeanHist) (N = ~3641)
- * [Chinese](#ChineseHist) (N = ~1423)
- * [Indian](#IndianHist) (N = ~5158)
- * [Pakistani](#PakistaniHist) (N = ~1597)
+p-value distribution of results found in UKB G*K first round [main results][20181102a]
 
-***
+# UKB Populations
 
- * African <a href="#AfricanHist"></a>
+## African
+ * N = ~3080 
 ![GK African pVals Hist](../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.African.vs1.png)
 
- * British.Ran4k <a href="#British.Ran4kHist"></a>
+## British.Ran4k
+ * N = ~3824
 ![GK British.Ran4k pVals Hist](../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.British.Ran4000.vs1.png)
 
- * Caribbean <a href="#CaribbeanHist"></a>
+## Caribbean
+ * N = ~3641
 ![GK Caribbean pVals Hist](../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Caribbean.vs1.png)
 
- * Chinese <a href="#ChineseHist"></a>
+## Chinese 
+ * N = ~1423
 ![GK Chinese pVals Hist](../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Chinese.vs1.png)
 
- * Indian <a href="#IndianHist"></a>
+## Indian 
+ * N = ~5158
 ![GK Indian pVals Hist](../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Indian.vs1.png)
 
- * Pakistani <a href="#PakistaniHist"></a>
+## Pakistani
+ * N = ~1597
 ![GK Pakistani pVals Hist](../images/pValHists/20181108.InterPath.Vs2.GK.Analysis.pValHists.Pakistani.vs1.png)
 
 
-
-
-
+[20181102a]: https://mturchin20.github.io/InterPath/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.html
