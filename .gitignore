@@ -16,3 +16,7 @@ docs/OLD/
 !images/*jpg
 !images/*pdf
 !images/*png
+!images/*/*jpeg
+!images/*/*jpg
+!images/*/*pdf
+!images/*/*png
