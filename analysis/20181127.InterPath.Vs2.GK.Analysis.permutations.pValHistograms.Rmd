@@ -1,0 +1,40 @@
+---
+title: "G*K UKB pValue histograms"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float:
+      collapsed: false
+---
+
+# Summary
+
+p-value distribution of the InterPath G*K model in the UKB subset with permuted phenotypes
+
+# UKB Populations
+
+## African
+ * N = ~3080 
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181204.InterPath.Vs2.GK.perm1.Analysis.pValHists.African.vs2.png)
+
+## British.Ran4k
+ * N = ~3824
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181204.InterPath.Vs2.GK.perm1.Analysis.pValHists.British.Ran4000.vs2.png)
+
+## Caribbean
+ * N = ~3641
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181204.InterPath.Vs2.GK.perm1.Analysis.pValHists.Caribbean.vs2.png)
+
+## Chinese 
+ * N = ~1423
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181204.InterPath.Vs2.GK.perm1.Analysis.pValHists.Chinese.vs2.png)
+
+## Indian 
+ * N = ~5158
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181204.InterPath.Vs2.GK.perm1.Analysis.pValHists.Indian.vs2.png)
+
+## Pakistani
+ * N = ~1597
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181204.InterPath.Vs2.GK.perm1.Analysis.pValHists.Pakistani.vs2.png)
+

@@ -11,7 +11,7 @@
 
 
 
-<title>InterPath Workbook</title>
+<title>G*K UKB pValue histograms</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -191,7 +191,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = true;
+    options.showAndHide = false;
     options.smoothScroll = true;
 
     // tocify
@@ -254,6 +254,12 @@ div.tocify {
   border-radius: 0px;
 }
 
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
 
 </style>
 
@@ -314,7 +320,7 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">InterPath Workbook</h1>
+<h1 class="title toc-ignore">G*K UKB pValue histograms</h1>
 
 </div>
 
@@ -324,7 +330,7 @@ div.section {
 <ul>
 <li>
 <details>
-<p><summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p><summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </details>
 </li>
 <li>
@@ -334,10 +340,9 @@ Great! You are using Git for version control. Tracking code development and conn
 <pre><code>
 Ignored files:
     Ignored:    .InterPath.Workbook.vs1.sh.swp
-    Ignored:    .swp
     Ignored:    Vs1/.InterPath.GjDrop.mtEdits.SingleRun.vs1.cpp.swp
     Ignored:    Vs1/.InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp.swp
-    Ignored:    analysis/.index.Rmd.swp
+    Ignored:    analysis/.20181204.InterPath.Vs2.GK.Analysis.FirstRoundResults.vs2.Rmd.swp
 
 Untracked files:
     Untracked:  FAILS.txt
@@ -365,145 +370,55 @@ Unstaged changes:
     Modified:   InterPath.Workbook.vs1.sh
     Modified:   Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
     Modified:   Vs1/InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
-    Modified:   analysis/index.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
 </details>
 </li>
 </ul>
-<details>
-<summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
-<ul>
-<table style="border-collapse:separate; border-spacing:5px;">
-<thead>
-<tr>
-<th style="text-align:left;">
-File
-</th>
-<th style="text-align:left;">
-Version
-</th>
-<th style="text-align:left;">
-Author
-</th>
-<th style="text-align:left;">
-Date
-</th>
-<th style="text-align:left;">
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/mturchin20/InterPath/868d177a71338910c6b69aaaf36e801ca586d4f9/docs/index.html" target="_blank">868d177</a>
-</td>
-<td style="text-align:left;">
-mturchin20
-</td>
-<td style="text-align:left;">
-2018-11-10
-</td>
-<td style="text-align:left;">
-Updating website with first real content
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Rmd
-</td>
-<td style="text-align:left;">
-<a href="https://github.com/mturchin20/InterPath/blob/806a8f1010bffe57db7b14808b5117c2be932218/analysis/index.Rmd" target="_blank">806a8f1</a>
-</td>
-<td style="text-align:left;">
-mturchin20
-</td>
-<td style="text-align:left;">
-2018-11-06
-</td>
-<td style="text-align:left;">
-Updating and moving website structure over to being based on workflowr skeleton
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/mturchin20/InterPath/806a8f1010bffe57db7b14808b5117c2be932218/docs/index.html" target="_blank">806a8f1</a>
-</td>
-<td style="text-align:left;">
-mturchin20
-</td>
-<td style="text-align:left;">
-2018-11-06
-</td>
-<td style="text-align:left;">
-Updating and moving website structure over to being based on workflowr skeleton
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/mturchin20/InterPath/eeeda423087a1a7df173dc1e7f83bdac56d3205d/docs/index.html" target="_blank">eeeda42</a>
-</td>
-<td style="text-align:left;">
-mturchin20
-</td>
-<td style="text-align:left;">
-2018-06-07
-</td>
-<td style="text-align:left;">
-working on Makefile/Rmarkdown/webpage issues
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/mturchin20/InterPath/87c99411178fc05366b049075a4959d6ded6c687/docs/index.html" target="_blank">87c9941</a>
-</td>
-<td style="text-align:left;">
-mturchin20
-</td>
-<td style="text-align:left;">
-2018-06-07
-</td>
-<td style="text-align:left;">
-Working on setting up initial structure and webpage-related materials
-</td>
-</tr>
-</tbody>
-</table>
-</ul>
-</details>
 <hr />
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>Webpage ‘workbook’ to collect data, results, figures/tables, and presentations for Ramachandran Lab <code>InterPath</code> project</p>
+<div id="summary" class="section level1">
+<h1>Summary</h1>
+<p>p-value distribution of the InterPath G*K model in the UKB subset with permuted phenotypes</p>
 </div>
-<div id="general-info" class="section level1">
-<h1>General Info</h1>
+<div id="ukb-populations" class="section level1">
+<h1>UKB Populations</h1>
+<div id="african" class="section level2">
+<h2>African</h2>
 <ul>
-<li>Google Drive <a href="https://docs.google.com/document/d/1o4R6cjCe1WAWGcn8QN0JoxTNdBx8QJTCtjJchHVqXqA/edit">manuscript</a></li>
+<li>N = ~3080 <img src="https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181204.InterPath.Vs2.GK.perm1.Analysis.pValHists.African.vs2.png" /></li>
 </ul>
 </div>
-<div id="entries" class="section level1">
-<h1>Entries</h1>
+<div id="british.ran4k" class="section level2">
+<h2>British.Ran4k</h2>
 <ul>
-<li><p>20181207 – <a href="https://mturchin20.github.io/InterPath/20181127.InterPath.Vs2.GK.Analysis.permutations.pValHistograms.html">UKB G*K Permutation pValue Histograms</a></p></li>
-<li><p>20181207 – <a href="https://mturchin20.github.io/InterPath/20181204.InterPath.Vs2.GK.Analysis.FirstRoundResults.vs2.html">UKB pathway*genome (G*K) First Round of Main Results (Updated)</a></p></li>
-<li><p>20181108 – <a href="https://mturchin20.github.io/InterPath/20181108.InterPath.Vs2.GK.Analysis.pValHistograms.html">UKB G*K pValue Histograms</a></p></li>
-<li><p>20181102 – <a href="https://mturchin20.github.io/InterPath/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.html">UKB pathway*genome (G*K) First Round of Main Results</a></p></li>
+<li>N = ~3824 <img src="https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181204.InterPath.Vs2.GK.perm1.Analysis.pValHists.British.Ran4000.vs2.png" /></li>
 </ul>
+</div>
+<div id="caribbean" class="section level2">
+<h2>Caribbean</h2>
+<ul>
+<li>N = ~3641 <img src="https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181204.InterPath.Vs2.GK.perm1.Analysis.pValHists.Caribbean.vs2.png" /></li>
+</ul>
+</div>
+<div id="chinese" class="section level2">
+<h2>Chinese</h2>
+<ul>
+<li>N = ~1423 <img src="https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181204.InterPath.Vs2.GK.perm1.Analysis.pValHists.Chinese.vs2.png" /></li>
+</ul>
+</div>
+<div id="indian" class="section level2">
+<h2>Indian</h2>
+<ul>
+<li>N = ~5158 <img src="https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181204.InterPath.Vs2.GK.perm1.Analysis.pValHists.Indian.vs2.png" /></li>
+</ul>
+</div>
+<div id="pakistani" class="section level2">
+<h2>Pakistani</h2>
+<ul>
+<li>N = ~1597 <img src="https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20181204.InterPath.Vs2.GK.perm1.Analysis.pValHists.Pakistani.vs2.png" /></li>
+</ul>
+</div>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
