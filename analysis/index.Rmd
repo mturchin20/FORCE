@@ -29,5 +29,5 @@ Webpage 'workbook' to collect data, results, figures/tables, and presentations f
 [20181102a]: https://mturchin20.github.io/InterPath/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.html
 [20181108a]: https://mturchin20.github.io/InterPath/20181108.InterPath.Vs2.GK.Analysis.pValHistograms.html
 [20181207a]: https://mturchin20.github.io/InterPath/20181204.InterPath.Vs2.GK.Analysis.FirstRoundResults.vs2.html 
-[20181207b]: https://mturchin20.github.io/InterPath/20181127.InterPath.Vs2.GK.Analysis.permutations.pValHistograms.html
+[20181207b]: https://mturchin20.github.io/InterPath/20181127.InterPath.Vs2.GK.perm1.Analysis.pValHistograms.html
 
