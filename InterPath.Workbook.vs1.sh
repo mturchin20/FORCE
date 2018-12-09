@@ -922,6 +922,33 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head
 	done;
 done;
 
+#20181207 -- Gene Desert Setup
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
+	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+	echo $ancestry1 $ancestry2
+
+done;
+
+cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | R -q -e "Data1 <- read.table(file('stdin'), header=F); head(Data1);"
+
+[  mturchin@node476  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); head(Data1);"
+> Data1 <- read.table(file('stdin'), header=F); head(Data1);
+       V1 V2        V3                  V4    V5
+1 R3HCC1L 10 100004799          downstream 76486
+2   LOXL4 10 100016196            intronic 76487
+3   LOXL4 10 100017453              exonic 76488
+4   LOXL4 10 100020880              exonic 76489
+5   LOXL4 10 100021983            intronic 76490
+6   LOXL4 10 100030768 intergenic_upstream 76491
+>
+>
+cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); chrs <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22); for (i in chrs[1]) { \
+	
+
+
+
+
+
 
 
 
@@ -1579,12 +1606,57 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 #20180820
 #Vs2 Runs (moving towards using epistatic interaction models) 
 
+1151049              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:12   00:17:14          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3151
+1151050              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3161
+1151051              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3171
+1151052              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:12   00:17:14          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3181
+1151053              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3191
+1151054              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3201
+1151055              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3211
+1151056              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3221
+1151057              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3231
+1151058              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3241
+1151059              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3251
+1151060              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3261
+1151061              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3271
+1151062              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3281
+1151063              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3291
+1151064              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3301
+1151065              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3311
+1151066              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3321
+1151067              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3331
+1151068              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3341
+1151069              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3351
+1151070              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:33   00:14:35          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3361
+1151071              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:33   00:14:35          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3371
+1151072              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:33   00:14:35          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3381
+1151073              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:33   00:14:35          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3391
+1151074              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3401
+1151075              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3411
+1151076              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3421
+1151077              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3431
+1151078              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3441
+1151079              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3451
+1151080              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3461
+1151081              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3471
+1151082              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3481
+1151083              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3491
+1151084              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3501
+1151085              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3511
+1156064              63      batch  mturchin ccmb-condo 2018-12-09T01:38:32 2018-12-09T06:22:14   00:14:26          1     FAILED      1:0               HipAdjBMI Indian ExonicPlus20kb 1311
+1156064.bat+      batch                      ccmb-condo 2018-12-09T06:07:48 2018-12-09T06:22:14   00:14:26          1     FAILED      1:0
+1156500              63      batch  mturchin ccmb-condo 2018-12-09T01:51:07 2018-12-09T06:20:09   00:00:40          1     FAILED      1:0                   WaistAdjBMI Pakistani NonSyn 721
+1156500.bat+      batch                      ccmb-condo 2018-12-09T06:19:29 2018-12-09T06:20:09   00:00:40          1     FAILED      1:0
+1156501              63      batch  mturchin ccmb-condo 2018-12-09T01:51:07 2018-12-09T06:20:09   00:00:40          1     FAILED      1:0                   WaistAdjBMI Pakistani NonSyn 731
+1156501.bat+      batch                      ccmb-condo 2018-12-09T06:19:29 2018-12-09T06:20:09   00:00:40          1     FAILED      1:0
+
+
 #pathway*remaining genome
 #NOTE -- copy and pasted `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp` & `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.Vs2.R` from associated Slack channel and from Lorin's code posted on 20180731
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.GG.cpp
 module load R/3.3.1; sleep 25200; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep Adj`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 4 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 1 | tail -n 1`; do
 		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; PhenoSeed1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | wc | awk '{ print $1 }'`	
@@ -1658,6 +1730,13 @@ done > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/DataRunChe
 > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/DataRunChecks/Vs2ErrorFileHackChecks.ErrorFileSizes.vs1.txt
 		
 ##			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/*error | grep _GK | awk '{ print $5 }' | sort | uniq -c | xargs echo $k
+
+
+
+
+
+
+
 
 
 
@@ -3074,6 +3153,18 @@ KEGG_PRIMARY_BILE_ACID_BIOSYNTHESIS     http://www.broadinstitute.org/gsea/msigd
    5158   30948  211478
    1597    9582   65477
 cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.ExonicPlus50kb.Simulations.Format.txt | awk '{ print $2 "\t" $1 "\t" $3 }' | head -n 10
+#20181207
+[  mturchin@node476  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); head(Data1);"
+> Data1 <- read.table(file('stdin'), header=F); head(Data1);
+       V1 V2        V3                  V4    V5
+1 R3HCC1L 10 100004799          downstream 76486
+2   LOXL4 10 100016196            intronic 76487
+3   LOXL4 10 100017453              exonic 76488
+4   LOXL4 10 100020880              exonic 76489
+5   LOXL4 10 100021983            intronic 76490
+6   LOXL4 10 100030768 intergenic_upstream 76491
+> 
+> 
 
 
 ~~~
