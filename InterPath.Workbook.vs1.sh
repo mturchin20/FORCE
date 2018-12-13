@@ -922,37 +922,49 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head
 	done;
 done;
 
-#20181207 -- Gene Desert Setup
+#20181207 -- Gene desert setup
 for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	echo $ancestry1 $ancestry2
 
 done;
 
-cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | R -q -e "Data1 <- read.table(file('stdin'), header=F); head(Data1);"
+#cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | R -q -e "Data1 <- read.table(file('stdin'), header=F); head(Data1);"
+#
+#[  mturchin@node476  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); head(Data1);"
+#> Data1 <- read.table(file('stdin'), header=F); head(Data1);
+#       V1 V2        V3                  V4    V5
+#1 R3HCC1L 10 100004799          downstream 76486
+#2   LOXL4 10 100016196            intronic 76487
+#3   LOXL4 10 100017453              exonic 76488
+#4   LOXL4 10 100020880              exonic 76489
+#5   LOXL4 10 100021983            intronic 76490
+#6   LOXL4 10 100030768 intergenic_upstream 76491
+#>
+#>
 
-[  mturchin@node476  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); head(Data1);"
-> Data1 <- read.table(file('stdin'), header=F); head(Data1);
-       V1 V2        V3                  V4    V5
-1 R3HCC1L 10 100004799          downstream 76486
-2   LOXL4 10 100016196            intronic 76487
-3   LOXL4 10 100017453              exonic 76488
-4   LOXL4 10 100020880              exonic 76489
-5   LOXL4 10 100021983            intronic 76490
-6   LOXL4 10 100030768 intergenic_upstream 76491
->
->
-cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); chrs <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22); for (i in chrs[1]) { \
+cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); WindowSize <- 25000; chrs <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22); Data1.deserts <- c(); for (i in chrs[1]) { \
+	Data1.sub <- Data1[Data1[,2]==i,]; Data1.sub.min <- min(Data1.sub[,3]); Data1.sub.max <- max(Data1.sub[,3]); Data1.sub.genic <- Data1[grepl(\"exonic\", Data1[,4]) | grepl(\"splicing\", Data1[,4]) | grepl(\"intronic\", Data1[,4]) | grepl(\"UTR\", Data1[,4]),]; Data1.window.mid <- Data1.sub.min + WindowSize; \
+	print(c(i,Data1.window.mid, Data1.sub.min, Data1.sub.max, WindowSize)); \
+	while(Data1.window.mid + WindowSize < Data1.sub.max) { \
+		Data1.window.start <- Data1.window.mid - WindowSize; Data1.window.end <- Data1.window.mid + WindowSize; \
+		Data1.sub.genic.window <- Data1.sub.genic[Data1.sub.genic[,5] >= Data1.window.start & Data1.sub.genic[,5] <= Data1.window.end,]; \
+		if (nrow(Data1.sub.genic.window) == 0) { \
+			Data1.deserts <- rbind(Data1.deserts, c(i, Data1.window.start, Data1.window.end, Data1.window.mid)); \
+		}; \
+		Data1.window.mid <- Data1.window.mid + (2 * WindowSize); \
+		print(Data1.window.mid); \
+	}; \
+}; print(Data1.deserts);"
+
+
+
+
+
+
+
+
 	
-
-
-
-
-
-
-
-
-
 #From https://unix.stackexchange.com/questions/55392/in-bash-is-it-possible-to-use-an-integer-variable-in-the-loop-control-of-a-for
 #Afr, Brit4k, Indn -- Hght, BMI / NonSyn, Exon, Exon+, Exon+20
 #Afr: 36g (now probably 8g?); Brit4k: 10g; Indn: 12g  
@@ -1606,57 +1618,12 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 #20180820
 #Vs2 Runs (moving towards using epistatic interaction models) 
 
-1151049              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:12   00:17:14          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3151
-1151050              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3161
-1151051              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3171
-1151052              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:12   00:17:14          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3181
-1151053              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3191
-1151054              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3201
-1151055              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3211
-1151056              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3221
-1151057              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3231
-1151058              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3241
-1151059              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3251
-1151060              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3261
-1151061              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3271
-1151062              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3281
-1151063              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3291
-1151064              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:37:22   00:17:24          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3301
-1151065              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3311
-1151066              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3321
-1151067              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3331
-1151068              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3341
-1151069              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3351
-1151070              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:33   00:14:35          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3361
-1151071              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:33   00:14:35          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3371
-1151072              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:33   00:14:35          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3381
-1151073              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:33   00:14:35          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3391
-1151074              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3401
-1151075              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3411
-1151076              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3421
-1151077              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3431
-1151078              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3441
-1151079              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3451
-1151080              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3461
-1151081              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3471
-1151082              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3481
-1151083              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3491
-1151084              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3501
-1151085              63      batch  mturchin ccmb-condo 2018-12-09T01:36:06 2018-12-09T03:34:23   00:14:25          1  NODE_FAIL      1:0                      HipAdjBMI Chinese NonSyn 3511
-1156064              63      batch  mturchin ccmb-condo 2018-12-09T01:38:32 2018-12-09T06:22:14   00:14:26          1     FAILED      1:0               HipAdjBMI Indian ExonicPlus20kb 1311
-1156064.bat+      batch                      ccmb-condo 2018-12-09T06:07:48 2018-12-09T06:22:14   00:14:26          1     FAILED      1:0
-1156500              63      batch  mturchin ccmb-condo 2018-12-09T01:51:07 2018-12-09T06:20:09   00:00:40          1     FAILED      1:0                   WaistAdjBMI Pakistani NonSyn 721
-1156500.bat+      batch                      ccmb-condo 2018-12-09T06:19:29 2018-12-09T06:20:09   00:00:40          1     FAILED      1:0
-1156501              63      batch  mturchin ccmb-condo 2018-12-09T01:51:07 2018-12-09T06:20:09   00:00:40          1     FAILED      1:0                   WaistAdjBMI Pakistani NonSyn 731
-1156501.bat+      batch                      ccmb-condo 2018-12-09T06:19:29 2018-12-09T06:20:09   00:00:40          1     FAILED      1:0
-
-
 #pathway*remaining genome
 #NOTE -- copy and pasted `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp` & `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.Vs2.R` from associated Slack channel and from Lorin's code posted on 20180731
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.GG.cpp
 module load R/3.3.1; sleep 25200; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep Adj`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 1 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 3 | tail -n 1`; do
 		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; PhenoSeed1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | wc | awk '{ print $1 }'`	
@@ -1664,19 +1631,19 @@ module load R/3.3.1; sleep 25200; for i in `cat <(echo "Height;1254 BMI;58923 Wa
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k
 			
 			LpCnt=1; LpCnt2=1; for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
-    sbatch -t 72:00:00 --mem 10g --account=ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.GjDrop_wCov_GK.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.GjDrop_wCov_GK.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
+    sbatch -t 72:00:00 -n 4 -N 1-1 --mem 28g --account=ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.GjDrop_wCov_GK_perm1.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.GjDrop_wCov_GK_perm1.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
 				echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); sourceCpp(\\\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp\\\"); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
 				Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\\\", header=T); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt\\\", header=F); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.${k}.txt\\\", header=F); Y.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways1.txt.gz\\\", header=T); Y.Check.Pheno <- Y.Check\\\$$Pheno1; Y.Check.Pheno.noNAs <- Y.Check.Pheno[neg.is.na(Y.Check.Pheno)]; Y.Seed <- $AncSeed1 + $PhenoSeed1; \
 				Pathways.Regions <- list(); cores = detectCores(); InterPath.output <- list(); InterPath.output\\\$Est <- c(); InterPath.output\\\$Eigenvalues <- c(); InterPath.output\\\$PVE <- c(); \ 
 				for (i in $PathNum:($PathNum+9)) { set.seed(Y.Seed); Y <- c(); Y.Pheno <- c(); Y.Pheno.noNAs <- c(); \
 					if (i > nrow(Pathways)) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, nrow(InterPath.output\\\$Eigenvalues)); } else if (neg.is.true(Pathways.Check[i,ncol(Pathways.Check)])) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, length(Y.Check.Pheno.noNAs)); } else { Pathways.Regions[[1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), \\\",\\\")))); \
-					Y <- read.table(paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways\\\", i, \\\".txt.gz\\\", sep=\\\"\\\"), header=T); Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; }; \ 
+				      Y <- read.table(paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways\\\", i, \\\".txt.gz\\\", sep=\\\"\\\"), header=T); Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; Y.Pheno.noNAs <- sample(Y.Pheno.noNAs);}; \ 
 					if (length(Pathways.Regions[[1]]) > 1) { Data3 <- fread(cmd=paste(\\\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\\\", as.character(i), \\\".txt.gz\\\", sep=\\\"\\\"), header=T); Data3.cov <- as.matrix(read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt\\\", header=F)); \ 
 					Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); \ 
 					InterPath.output.temp <- list(); X <- Data3; X.cov <- Data3.cov; rm(Data3); rm(Data3.cov); X.Pheno.noNAs <- X[neg.is.na(Y.Pheno),]; X.cov.Pheno.noNAs <- X.cov[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z <- Covars[neg.is.na(Y.Pheno),(ncol(Covars)-9):ncol(Covars)]; \
 					G <- 1/nrow(X.Pheno.noNAs) * tcrossprod(as.matrix(X.Pheno.noNAs)); \
 					InterPath.output.temp <- InterPath(t(X.Pheno.noNAs),Y.Pheno.noNAs,as.matrix(X.cov.Pheno.noNAs),G,t(as.matrix(Z)),Pathways.Regions,nrow(X.Pheno.noNAs),as.numeric(as.character($NumSNPs)),cores=cores); InterPath.output\\\$Est <- c(InterPath.output\\\$Est, InterPath.output.temp\\\$Est); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, InterPath.output.temp\\\$Eigenvalues); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, InterPath.output.temp\\\$PVE); } else { InterPath.output\\\$Est <- c(InterPath.output\\\$Est, NA); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, rep(NA, length(Y.Pheno.noNAs))); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, NA);};}; \
-			       write.table(InterPath.output\\\$Est, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.GjDrop_wCov_GK.Paths${PathNum}.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$Eigenvalues, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.GjDrop_wCov_GK.Paths${PathNum}.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$PVE, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.GjDrop_wCov_GK.Paths${PathNum}.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\"")
+		write.table(InterPath.output\\\$Est, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.GjDrop_wCov_GK_perm1.Paths${PathNum}.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$Eigenvalues, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.GjDrop_wCov_GK_perm1.Paths${PathNum}.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$PVE, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.GjDrop_wCov_GK_perm1.Paths${PathNum}.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\"")
 			done; sleep 2
 		done; 
 	done; 
@@ -3165,6 +3132,17 @@ cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputatio
 6   LOXL4 10 100030768 intergenic_upstream 76491
 > 
 > 
+#20181213
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];'  | head -n 10 | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data2 <- Data1[Data1[,3] < 1000,]; print(Data2); print(nrow(Data2)); if(nrow(Data2)==0) { print(\"yaya\");};"
+> Data1 <- read.table(file('stdin'), header=F); Data2 <- Data1[Data1[,3] < 1000,]; print(Data2); print(nrow(Data2)); if(nrow(Data2)==0) { print("yaya");};
+[1] V1 V2 V3 V4 V5
+<0 rows> (or 0-length row.names)
+[1] 0
+[1] "yaya"
+> 
+> 
+
+
 
 
 ~~~
