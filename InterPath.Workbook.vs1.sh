@@ -929,6 +929,13 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head
 
 done;
 
+#	print(c(i,Data1.window.mid, Data1.sub.min, Data1.sub.max, WindowSize)); \
+#	print(unique(Data1.sub[,4])); \
+#	print(unique(Data1.sub.genic[,4])); \
+#	print(setdiff(Data1.sub[,4], Data1.sub.genic[,4])); \
+#			Data1.deserts <- rbind(Data1.deserts, c(i, Data1.window.start, Data1.window.end, Data1.window.mid)); \
+#		print(Data1.window.mid); \
+
 #cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | R -q -e "Data1 <- read.table(file('stdin'), header=F); head(Data1);"
 #
 #[  mturchin@node476  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); head(Data1);"
@@ -943,17 +950,16 @@ done;
 #>
 #>
 
-cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); WindowSize <- 25000; chrs <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22); Data1.deserts <- c(); for (i in chrs[1]) { \
+WindowSize="25000"; cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); WindowSize <- $WindowSize; chrs <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22); Data1.deserts <- c(); for (i in chrs) { \
 	Data1.sub <- Data1[Data1[,2]==i,]; Data1.sub.min <- min(Data1.sub[,3]); Data1.sub.max <- max(Data1.sub[,3]); Data1.sub.genic <- Data1[grepl(\"exonic\", Data1[,4]) | grepl(\"splicing\", Data1[,4]) | grepl(\"intronic\", Data1[,4]) | grepl(\"UTR\", Data1[,4]),]; Data1.window.mid <- Data1.sub.min + WindowSize; \
-	print(c(i,Data1.window.mid, Data1.sub.min, Data1.sub.max, WindowSize)); \
 	while(Data1.window.mid + WindowSize < Data1.sub.max) { \
-		Data1.window.start <- Data1.window.mid - WindowSize; Data1.window.end <- Data1.window.mid + WindowSize; \
-		Data1.sub.genic.window <- Data1.sub.genic[Data1.sub.genic[,5] >= Data1.window.start & Data1.sub.genic[,5] <= Data1.window.end,]; \
+		Data1.window.start <- Data1.window.mid - WindowSize; Data1.window.end <- Data1.window.mid + WindowSize; Desert <- FALSE; \
+		Data1.sub.genic.window <- Data1.sub.genic[Data1.sub.genic[,3] >= Data1.window.start & Data1.sub.genic[,3] <= Data1.window.end,]; \
 		if (nrow(Data1.sub.genic.window) == 0) { \
-			Data1.deserts <- rbind(Data1.deserts, c(i, Data1.window.start, Data1.window.end, Data1.window.mid)); \
+			Desert <- TRUE; \
 		}; \
 		Data1.window.mid <- Data1.window.mid + (2 * WindowSize); \
-		print(Data1.window.mid); \
+		Data1.deserts <- rbind(Data1.deserts, c(i, Data1.window.start, Data1.window.end, Data1.window.mid, Desert)); \
 	}; \
 }; print(Data1.deserts);"
 
@@ -3141,6 +3147,37 @@ cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputatio
 [1] "yaya"
 > 
 > 
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); WindowSize <- 25000; chrs <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22); Data1.deserts <- c(); for (i in chrs[1]) { \
+>         Data1.sub <- Data1[Data1[,2]==i,]; Data1.sub.min <- min(Data1.sub[,3]); Data1.sub.max <- max(Data1.sub[,3]); Data1.sub.genic <- Data1[grepl(\"exonic\", Data1[,4]) | grepl(\"splicing\", Data1[,4]) | grepl(\"intronic\", Data1[,4]) | grepl(\"UTR\", Data1[,4]),]; Data1.window.mid <- Data1.sub.min + WindowSize; \
+>         print(c(i,Data1.window.mid, Data1.sub.min, Data1.sub.max, WindowSize)); \
+>         print(unique(Data1.sub[,4])); \
+>         print(unique(Data1.sub.genic[,4])); \
+>         print(setdiff(Data1.sub[,4], Data1.sub.genic[,4])); \
+>         while(Data1.window.mid + WindowSize < Data1.sub.max) { \
+>                 Data1.window.start <- Data1.window.mid - WindowSize; Data1.window.end <- Data1.window.mid + WindowSize; Desert <- FALSE; \
+>                 Data1.sub.genic.window <- Data1.sub.genic[Data1.sub.genic[,3] >= Data1.window.start & Data1.sub.genic[,3] <= Data1.window.end,]; \
+>                 if (nrow(Data1.sub.genic.window) == 0) { \
+>                         Desert <- TRUE; \
+>                 }; \
+>                 Data1.window.mid <- Data1.window.mid + (2 * WindowSize); \
+>                 Data1.deserts <- rbind(Data1.deserts, c(i, Data1.window.start, Data1.window.end, Data1.window.mid, Desert)); \
+>         }; \
+> }; print(Data1.deserts);"
+> Data1 <- read.table(file('stdin'), header=F); WindowSize <- 25000; chrs <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22); Data1.deserts <- c(); for (i in chrs[1]) {         Data1.sub <- Data1[Data1[,2]==i,]; Data1.sub.min <- min(Data1.sub[,3]); Data1.sub.max <- max(Data1.sub[,3]); Data1.sub.genic <- Data1[grepl("exonic", Data1[,4]) | grepl("splicing", Data1[,4]) | grepl("intronic", Data1[,4]) | grepl("UTR", Data1[,4]),]; Data1.window.mid <- Data1.sub.min + WindowSize;         print(c(i,Data1.window.mid, Data1.sub.min, Data1.sub.max, WindowSize));         print(unique(Data1.sub[,4]));         print(unique(Data1.sub.genic[,4]));         print(setdiff(Data1.sub[,4], Data1.sub.genic[,4]));         while(Data1.window.mid + WindowSize < Data1.sub.max) {                 Data1.window.start <- Data1.window.mid - WindowSize; Data1.window.end <- Data1.window.mid + WindowSize; Desert <- FALSE;                 Data1.sub.genic.window <- Data1.sub.genic[Data1.sub.genic[,3] >= Data1.window.start & Data1.sub.genic[,3] <= Data1.window.end,];                 if (nrow(Data1.sub.genic.window) == 0) {                         Desert <- TRUE;                 };                 Data1.window.mid <- Data1.window.mid + (2 * WindowSize);                 Data1.deserts <- rbind(Data1.deserts, c(i, Data1.window.start, Data1.window.end, Data1.window.mid, Desert));         }; }; print(Data1.deserts);
+[1]         1    754632    729632 249212878     25000
+ [1] intergenic_upstream   intergenic_downstream intronic             
+ [4] UTR5                  ncRNA_intronic        exonic               
+ [7] splicing              downstream            UTR3                 
+[10] upstream              ncRNA_exonic          upstream;downstream  
+[13] ncRNA_splicing       
+16 Levels: UTR3 UTR5 UTR5;UTR3 downstream exonic ... upstream;downstream
+ [1] UTR3                  intronic              exonic               
+ [4] UTR5                  ncRNA_exonic          ncRNA_intronic       
+ [7] splicing              exonic;splicing       ncRNA_splicing       
+[10] ncRNA_exonic;splicing UTR5;UTR3            
+16 Levels: UTR3 UTR5 UTR5;UTR3 downstream exonic ... upstream;downstream
+[1] "intergenic_upstream"   "intergenic_downstream" "downstream"           
+[4] "upstream"              "upstream;downstream"  
 
 
 
