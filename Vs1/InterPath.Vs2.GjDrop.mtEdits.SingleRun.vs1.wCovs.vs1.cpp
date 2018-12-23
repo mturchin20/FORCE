@@ -63,7 +63,8 @@ List InterPath(mat X,vec y,mat GSM,mat G,mat Z,List regions,int n,int nsnp,int c
     //Pre-compute the Linear GSM
 //    mat GSM = GetLinearKernel(X);
     
-//    omp_set_num_threads(cores);
+    omp_set_num_threads(cores);
+#pragma omp parallel for schedule(dynamic)
     for(i=0; i<p; i++){
         //Pre-compute the Linear GSM
         uvec j = regions[i];
@@ -90,8 +91,9 @@ List InterPath(mat X,vec y,mat GSM,mat G,mat Z,List regions,int n,int nsnp,int c
         
         q(0) = as_scalar(yc.t()*Kc*yc);
         q(1) = as_scalar(yc.t()*Qc*yc);
-        q(2) = as_scalar(yc.t()*yc);
-        
+//        q(2) = as_scalar(yc.t()*yc);
+  	q(2) = as_scalar(yc.t()*(eye<mat>(n,n)-(b*btb_inv)*b.t())*yc);
+
         S(0,0) = as_scalar(accu(Kc%Kc));
         S(0,1) = as_scalar(accu(Kc%Qc));
         S(0,2) = as_scalar(accu(Kc%(eye<mat>(n,n)-(b*btb_inv)*b.t())));
