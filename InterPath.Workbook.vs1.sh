@@ -1662,143 +1662,6 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 #20180820
 #Vs2 Runs (moving towards using epistatic interaction models) 
 
-
-
-1399402              63      batch  mturchin    default 2018-12-22T16:49:48 2018-12-22T17:23:24   00:00:31          1  NODE_FAIL      1:0                       Height Caribbean Exonic 4161
-1399403              63      batch  mturchin    default 2018-12-22T16:49:48 2018-12-22T17:23:24   00:00:31          1  NODE_FAIL      1:0                       Height Caribbean Exonic 4171
-1399404              63      batch  mturchin    default 2018-12-22T16:49:48 2018-12-22T17:23:24   00:00:31          1  NODE_FAIL      1:0                       Height Caribbean Exonic 4181
-
-1408446              63      batch  mturchin    default 2018-12-22T16:52:57 2018-12-22T22:40:13   00:02:03          1     FAILED      1:0                    HipAdjBMI Caribbean NonSyn 4651
-1408446.bat+      batch                         default 2018-12-22T22:38:10 2018-12-22T22:40:13   00:02:03          1     FAILED      1:0
-1408919              63      batch  mturchin    default 2018-12-22T16:53:06 2018-12-22T22:56:56   00:01:45          1     FAILED      1:0                    HipAdjBMI Caribbean Exonic 4691
-1408919.bat+      batch                         default 2018-12-22T22:55:11 2018-12-22T22:56:56   00:01:45          1     FAILED      1:0
-
-1413085              63      batch  mturchin    default 2018-12-22T16:54:59 2018-12-23T00:42:45   00:23:20          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3781
-1413086              63      batch  mturchin    default 2018-12-22T16:54:59 2018-12-23T00:42:45   00:23:20          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3791
-1413087              63      batch  mturchin    default 2018-12-22T16:54:59 2018-12-23T00:40:25   00:20:28          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3801
-1413088              63      batch  mturchin    default 2018-12-22T16:54:59 2018-12-23T00:40:25   00:20:28          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3811
-1413089              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:37:20   00:17:23          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3821
-1413090              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:37:20   00:17:23          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3831
-1413091              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:40:25   00:20:28          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3841
-1413092              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:40:25   00:20:28          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3851
-1413093              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:40:25   00:20:28          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3861
-1413094              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:40:25   00:20:28          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3871
-1413095              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:40:25   00:20:28          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3881
-1413096              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:40:25   00:20:28          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3891
-1413097              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:40:25   00:20:28          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3901
-1413098              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:40:25   00:20:28          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3911
-1413099              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:40:25   00:20:28          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3921
-1413100              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:45   00:22:48          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3931
-1413101              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:45   00:22:48          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3941
-1413102              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:45   00:22:48          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3951
-1413103              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:45   00:22:48          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3961
-1413104              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:45   00:22:48          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3971
-1413105              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:46   00:22:49          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3981
-1413106              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:46   00:22:49          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 3991
-1413107              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:46   00:22:49          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 4001
-1413108              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:46   00:22:49          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 4011
-1413109              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:46   00:22:49          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 4021
-1413110              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:45   00:22:48          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 4031
-1413111              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:45   00:22:48          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 4041
-1413112              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:45   00:22:48          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 4051
-1413113              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:46   00:22:49          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 4061
-1413114              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:46   00:22:49          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 4071
-1413115              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:46   00:22:49          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 4081
-1413116              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:46   00:22:49          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 4091
-1413117              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:46   00:22:49          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 4101
-1413118              63      batch  mturchin    default 2018-12-22T16:55:00 2018-12-23T00:42:46   00:22:49          1  NODE_FAIL      1:0                        BMI Chinese ExonicPlus 4111
-
-1433071              63      batch  mturchin    default 2018-12-22T22:23:29 2018-12-23T14:42:38   00:22:45          1  NODE_FAIL      1:0             WaistAdjBMI Indian ExonicPlus20kb 2651                                                  1433072              63      batch  mturchin    default 2018-12-22T22:23:29 2018-12-23T14:42:38   00:22:45          1  NODE_FAIL      1:0             WaistAdjBMI Indian ExonicPlus20kb 2661                                                  1433073              63      batch  mturchin    default 2018-12-22T22:23:29 2018-12-23T14:42:38   00:22:45          1  NODE_FAIL      1:0             WaistAdjBMI Indian ExonicPlus20kb 2671                                                  1438279              63      batch  mturchin    default 2018-12-23T01:51:04 2018-12-23T17:26:12   00:00:25          1  NODE_FAIL      1:0                            BMI Pakistani NonSyn 11                                                  1442487              63      batch  mturchin    default 2018-12-23T01:57:11 2018-12-23T18:42:13   00:00:51          1  NODE_FAIL      1:0                          Hip Pakistani NonSyn 4061                                                  1442488              63      batch  mturchin    default 2018-12-23T01:57:11 2018-12-23T18:42:13   00:00:51          1  NODE_FAIL      1:0                          Hip Pakistani NonSyn 4071
-1442489              63      batch  mturchin    default 2018-12-23T01:57:11 2018-12-23T18:42:13   00:00:51          1  NODE_FAIL      1:0                          Hip Pakistani NonSyn 4081
-1442491              63      batch  mturchin    default 2018-12-23T01:57:11 2018-12-23T18:42:13   00:00:51          1  NODE_FAIL      1:0                          Hip Pakistani NonSyn 4101
-1442644              63      batch  mturchin    default 2018-12-23T01:57:15 2018-12-23T18:44:40   00:00:43          1  NODE_FAIL      1:0                           Hip Pakistani Exonic 911
-1444399              63      batch  mturchin    default 2018-12-23T01:58:24 2018-12-23T20:13:57   00:54:39          1  NODE_FAIL      1:0                  WaistAdjBMI Pakistani NonSyn 4211
-1444465              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:40:29   00:21:11          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 161
-1444466              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:40:29   00:21:11          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 171
-1444467              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:23:03   00:03:45          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 181
-1444468              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:23:03   00:03:45          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 191
-1444469              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:23:03   00:03:45          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 201
-1444470              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:23:03   00:03:45          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 211
-1444471              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:40:29   00:21:11          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 221
-1444472              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:40:29   00:21:11          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 231
-1444473              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:43:13   00:23:55          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 241
-1444474              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:43:13   00:23:55          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 251
-1444475              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:43:13   00:23:55          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 261
-1444476              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:43:13   00:23:55          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 271
-1444477              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:34:36   00:15:18          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 281
-1444478              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:34:46   00:15:28          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 291
-1444479              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:34:36   00:15:18          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 301
-1444480              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:34:36   00:15:18          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 311
-1444481              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:34:36   00:15:18          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 321
-1444482              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:37:53   00:18:35          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 331
-1444483              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:26:49   00:07:31          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 341
-1444484              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:26:59   00:07:41          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 351
-1444485              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:26:59   00:07:41          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 361
-1444486              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:26:59   00:07:41          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 371
-1444487              63      batch  mturchin    default 2018-12-23T01:58:28 2018-12-23T19:26:59   00:07:41          1  NODE_FAIL      1:0                   WaistAdjBMI Pakistani Exonic 381
-1444739              63      batch  mturchin    default 2018-12-23T01:58:59 2018-12-23T19:26:49   00:00:35          1  NODE_FAIL      1:0                  WaistAdjBMI Pakistani Exonic 2881
-1444740              63      batch  mturchin    default 2018-12-23T01:58:59 2018-12-23T19:26:49   00:00:35          1  NODE_FAIL      1:0                  WaistAdjBMI Pakistani Exonic 2891
-1444741              63      batch  mturchin    default 2018-12-23T01:58:59 2018-12-23T19:26:49   00:00:35          1  NODE_FAIL      1:0                  WaistAdjBMI Pakistani Exonic 2901
-1444742              63      batch  mturchin    default 2018-12-23T01:58:59 2018-12-23T19:26:49   00:00:35          1  NODE_FAIL      1:0                  WaistAdjBMI Pakistani Exonic 2911
-1444743              63      batch  mturchin    default 2018-12-23T01:58:59 2018-12-23T19:26:49   00:00:35          1  NODE_FAIL      1:0                  WaistAdjBMI Pakistani Exonic 2921
-1444744              63      batch  mturchin    default 2018-12-23T01:58:59 2018-12-23T19:26:49   00:00:35          1  NODE_FAIL      1:0                  WaistAdjBMI Pakistani Exonic 2931
-1444745              63      batch  mturchin    default 2018-12-23T01:58:59 2018-12-23T19:26:49   00:00:35          1  NODE_FAIL      1:0                  WaistAdjBMI Pakistani Exonic 2941
-1444746              63      batch  mturchin    default 2018-12-23T01:58:59 2018-12-23T19:26:49   00:00:35          1  NODE_FAIL      1:0                  WaistAdjBMI Pakistani Exonic 2951
-1444747              63      batch  mturchin    default 2018-12-23T01:58:59 2018-12-23T19:26:49   00:00:35          1  NODE_FAIL      1:0                  WaistAdjBMI Pakistani Exonic 2961
-1444748              63      batch  mturchin    default 2018-12-23T01:58:59 2018-12-23T19:26:49   00:00:35          1  NODE_FAIL      1:0                  WaistAdjBMI Pakistani Exonic 2971
-1444749              63      batch  mturchin    default 2018-12-23T01:58:59 2018-12-23T19:26:49   00:00:35          1  NODE_FAIL      1:0                  WaistAdjBMI Pakistani Exonic 2981
-1444750              63      batch  mturchin    default 2018-12-23T01:58:59 2018-12-23T19:26:49   00:00:35          1  NODE_FAIL      1:0                  WaistAdjBMI Pakistani Exonic 2991
-1447762              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4521
-1447763              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4531
-1447764              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4541
-1447765              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4551
-1447766              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4561
-1447767              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4571
-1447768              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4581
-1447769              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4591
-1447770              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4601
-1447771              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4611
-1447772              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4621
-1447773              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4631
-1447774              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4641
-1447775              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4651
-1447776              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4661
-1447777              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4671
-1447778              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4681
-1447779              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4691
-1447780              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4701
-1447781              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4711
-1447782              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4721
-1447783              63      batch  mturchin    default 2018-12-23T02:04:52 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0            HipAdjBMI Pakistani ExonicPlus20kb 4731
-
-1450314              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0                            Height African NonSyn 1
-1450315              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:40:01   00:20:11          1  NODE_FAIL      1:0                           Height African NonSyn 11
-1450316              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0                           Height African NonSyn 21
-1450317              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0                           Height African NonSyn 31
-1450318              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0                           Height African NonSyn 41
-1450319              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0                           Height African NonSyn 51
-1450320              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0                           Height African NonSyn 61
-1450321              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0                           Height African NonSyn 71
-1450322              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0                           Height African NonSyn 81
-1450323              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0                           Height African NonSyn 91
-1450324              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0                          Height African NonSyn 101
-1450325              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0                          Height African NonSyn 111
-1450326              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:39:47   00:19:57          1  NODE_FAIL      1:0                          Height African NonSyn 121
-1450327              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:34:14   00:14:24          1  NODE_FAIL      1:0                          Height African NonSyn 131
-1450328              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:25:53   00:06:03          1  NODE_FAIL      1:0                          Height African NonSyn 141
-1450329              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:25:53   00:06:03          1  NODE_FAIL      1:0                          Height African NonSyn 151
-1450330              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:25:53   00:06:03          1  NODE_FAIL      1:0                          Height African NonSyn 161
-1450331              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:25:53   00:06:03          1  NODE_FAIL      1:0                          Height African NonSyn 171
-1450332              63      batch  mturchin    default 2018-12-23T12:19:27 2018-12-23T20:25:53   00:06:03          1  NODE_FAIL      1:0                          Height African NonSyn 181
-
-1458925              63      batch  mturchin    default 2018-12-23T12:22:46 2018-12-24T00:39:51   00:20:09          1  NODE_FAIL      1:0                WaistAdjBMI African ExonicPlus 1891
-1458926              63      batch  mturchin    default 2018-12-23T12:22:46 2018-12-24T00:39:51   00:20:09          1  NODE_FAIL      1:0                WaistAdjBMI African ExonicPlus 1901
-1458927              63      batch  mturchin    default 2018-12-23T12:22:46 2018-12-24T00:39:51   00:20:09          1  NODE_FAIL      1:0                WaistAdjBMI African ExonicPlus 1911
-1458928              63      batch  mturchin    default 2018-12-23T12:22:46 2018-12-24T00:39:51   00:20:09          1  NODE_FAIL      1:0                WaistAdjBMI African ExonicPlus 1921
-1458929              63      batch  mturchin    default 2018-12-23T12:22:46 2018-12-24T00:39:51   00:20:09          1  NODE_FAIL      1:0                WaistAdjBMI African ExonicPlus 1931
-1458930              63      batch  mturchin    default 2018-12-23T12:22:46 2018-12-24T00:39:51   00:20:09          1  NODE_FAIL      1:0                WaistAdjBMI African ExonicPlus 1941
-
-
 HipAdjBMI Caribbean Caribbean ExonicPlus
 Error in file(file, "rt") : cannot open the connection
 Calls: read.table -> file
@@ -1817,6 +1680,11 @@ Execution halted
 13 minutes and 46 seconds elapsed.
 
 
+
+~~~~perm1~~~~
+
+
+
 BMI Chinese Chinese Exonic
 Error in file(file, "rt") : cannot open the connection
 Calls: read.table -> file
@@ -1831,6 +1699,7 @@ In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/InterPath/BMI/Exonic/ukb_chrAll_v2.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths131.Est.txt': No such file or directory
 Execution halted
 6 minutes and 10 seconds elapsed.
+
 
 
 BMI Chinese Chinese ExonicPlus20kb
@@ -1852,6 +1721,7 @@ Execution halted
 19 minutes and 42 seconds elapsed.
 
 
+
 Hip African African Exonic
 Error in file(file, "rt") : cannot open the connection
 Calls: read.table -> file
@@ -1869,6 +1739,7 @@ In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Hip/Exonic/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Hip.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths3331.Est.txt': No such file or directory
 Execution halted
 6 minutes and 19 seconds elapsed.
+
 
 
 Hip British British.Ran4000 ExonicPlus
@@ -1890,6 +1761,7 @@ Execution halted
 24 minutes and 36 seconds elapsed.
 
 
+
 WaistAdjBMI Caribbean Caribbean NonSyn
 Error in file(file, "rt") : cannot open the connection
 Calls: read.table -> file
@@ -1907,6 +1779,7 @@ In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/WaistAdjBMI/NonSyn/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths2381.Est.txt': No such file or directory
 Execution halted
 6 minutes and 27 seconds elapsed.
+
 
 
 WaistAdjBMI Chinese Chinese NonSyn
@@ -1933,48 +1806,16 @@ Execution halted
 #NOTE -- copy and pasted `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp` & `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.Vs2.R` from associated Slack channel and from Lorin's code posted on 20180731
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.GG.cpp
-module load R/3.4.3_mkl; sleep 14400; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 4 | tail -n 1`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') |  tail -n 2`; do
+module load R/3.4.3_mkl; sleep 14400; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep Waist | grep Adj`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 5 | tail -n 1`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 1`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; PhenoSeed1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 #			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | wc | awk '{ print $1 }'`	
-			NumPaths=4702
+			NumPaths=4272
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k
 			
-			LpCnt=1; LpCnt2=1; for (( PathNum=4701; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
-  sbatch -t 72:00:00 --mem 10g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
-				echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); sourceCpp(\\\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp\\\"); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
-				Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\\\", header=T); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\\\", header=F); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.${k}.txt\\\", header=F); Y.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways1.noDups.txt.gz\\\", header=T); Y.Check.Pheno <- Y.Check\\\$$Pheno1; Y.Check.Pheno.noNAs <- Y.Check.Pheno[neg.is.na(Y.Check.Pheno)]; Y.Seed <- $AncSeed1 + $PhenoSeed1; \
-				Pathways.Regions <- list(); cores = detectCores(); InterPath.output <- list(); InterPath.output\\\$Est <- c(); InterPath.output\\\$Eigenvalues <- c(); InterPath.output\\\$PVE <- c(); \ 
-				for (i in $PathNum:($PathNum+9)) { set.seed(Y.Seed); Y <- c(); Y.Pheno <- c(); Y.Pheno.noNAs <- c(); \
-					if (i > nrow(Pathways)) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, nrow(InterPath.output\\\$Eigenvalues)); } else if (neg.is.true(Pathways.Check[i,ncol(Pathways.Check)])) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, length(Y.Check.Pheno.noNAs)); } else { Pathways.Regions[[1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), \\\",\\\")))); \
-					Y <- read.table(paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways\\\", i, \\\".noDups.txt.gz\\\", sep=\\\"\\\"), header=T); Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; }; \ 
-					if (length(Pathways.Regions[[1]]) > 1) { Data3 <- fread(cmd=paste(\\\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\\\", as.character(i), \\\".noDups.txt.gz\\\", sep=\\\"\\\"), header=T); Data3.cov <- as.matrix(read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt\\\", header=F)); \ 
-					Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); \ 
-					InterPath.output.temp <- list(); X <- Data3; X.cov <- Data3.cov; rm(Data3); rm(Data3.cov); X.Pheno.noNAs <- X[neg.is.na(Y.Pheno),]; X.cov.Pheno.noNAs <- X.cov[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z <- Covars[neg.is.na(Y.Pheno),(ncol(Covars)-9):ncol(Covars)]; \
-					G <- 1/nrow(X.Pheno.noNAs) * tcrossprod(as.matrix(X.Pheno.noNAs)); \
-					InterPath.output.temp <- InterPath(t(X.Pheno.noNAs),Y.Pheno.noNAs,as.matrix(X.cov.Pheno.noNAs),G,t(as.matrix(Z)),Pathways.Regions,nrow(X.Pheno.noNAs),as.numeric(as.character($NumSNPs)),cores=cores); InterPath.output\\\$Est <- c(InterPath.output\\\$Est, InterPath.output.temp\\\$Est); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, InterPath.output.temp\\\$Eigenvalues); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, InterPath.output.temp\\\$PVE); } else { InterPath.output\\\$Est <- c(InterPath.output\\\$Est, NA); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, rep(NA, length(Y.Pheno.noNAs))); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, NA);};}; \
-				write.table(InterPath.output\\\$Est, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Paths${PathNum}.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$Eigenvalues, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Paths${PathNum}.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$PVE, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Paths${PathNum}.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\"")
-			done; sleep 2
-		done; 
-	done; 
-done
-#				LpCnt2=$((LpCnt2+1)); if [ $LpCnt2 == 5 ] ; then LpCnt2=1; fi
-#				LpCnt=LpCnt+1; if [ $LpCnt == 100 ] ; then LpCnt=1; sleep 30; fi
-
-#Others: --mem 10g 
-#Brit.Ran10k: -n 4 -N 1-1 --mem 28g
-
-sleep 18000; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);')`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 3 | tail -n 1`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
-			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; PhenoSeed1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
-			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | wc | awk '{ print $1 }'`	
-#			NumPaths=2
-			echo $i $ancestry1 $ancestry2 $ancestry3 $k
-			
-			LpCnt=1; LpCnt2=1; for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
-  sbatch -t 72:00:00 -n 4 -N 1-1 --mem 28g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
+			LpCnt=1; LpCnt2=1; for (( PathNum=4021; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
+  sbatch -t 72:00:00 --mem 10g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
 				echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); sourceCpp(\\\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp\\\"); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
 				Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\\\", header=T); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\\\", header=F); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.${k}.txt\\\", header=F); Y.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways1.noDups.txt.gz\\\", header=T); Y.Check.Pheno <- Y.Check\\\$$Pheno1; Y.Check.Pheno.noNAs <- Y.Check.Pheno[neg.is.na(Y.Check.Pheno)]; Y.Seed <- $AncSeed1 + $PhenoSeed1; \
 				Pathways.Regions <- list(); cores = detectCores(); InterPath.output <- list(); InterPath.output\\\$Est <- c(); InterPath.output\\\$Eigenvalues <- c(); InterPath.output\\\$PVE <- c(); \ 
@@ -1996,8 +1837,6 @@ done
 
 #Others: --mem 10g 
 #Brit.Ran10k: -n 4 -N 1-1 --mem 28g
-
-#GjDrop + wCov + GK setup
 
 #GjDrop + wCov + GK setup
 #  sbatch -t 72:00:00 --mem 28g --account=ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
@@ -2044,8 +1883,8 @@ done > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/DataRunChe
 ##			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/*error | grep _GK | awk '{ print $5 }' | sort | uniq -c | xargs echo $k
 
 #Vs2 Results Collection
-for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000 | head -n 6 | tail -n 2`; do
+for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -v Height`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000 | grep -v Indian`; do
 		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 			SECONDS=0;
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
