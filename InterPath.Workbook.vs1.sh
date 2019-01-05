@@ -1746,13 +1746,55 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 #20180820
 #Vs2 Runs (moving towards using epistatic interaction models) 
 
+
+
+1762450              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:59   00:10:10          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4021
+1762451              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:59   00:10:10          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4031
+1762452              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:59   00:10:10          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4041
+1762453              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:59   00:10:10          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4051
+1762454              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:59   00:09:29          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4061
+1762455              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:59   00:09:29          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4071
+1762456              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:59   00:09:29          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4081
+1762457              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:59   00:09:29          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4091
+1762458              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:59   00:09:29          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4101
+1762459              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:59   00:09:29          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4111
+1762460              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:50   00:09:20          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4121
+1762461              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:50   00:09:20          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4131
+1762462              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:50   00:09:20          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4141
+1762463              63      batch  mturchin    default 2019-01-05T12:05:55 2019-01-05T12:28:50   00:09:20          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4151
+1764456              63      batch  mturchin    default 2019-01-05T12:07:14 2019-01-05T13:18:14   00:00:41          1  NODE_FAIL      1:0               HipAdjBMI African ExonicPlus20kb 271
+1764529              63      batch  mturchin    default 2019-01-05T12:07:15 2019-01-05T13:40:17   00:21:04          1  NODE_FAIL      1:0              HipAdjBMI African ExonicPlus20kb 1001
+1764680              63      batch  mturchin    default 2019-01-05T12:07:17 2019-01-05T13:29:14   00:00:42          1  NODE_FAIL      1:0              HipAdjBMI African ExonicPlus20kb 2511
+1764684              63      batch  mturchin    default 2019-01-05T12:07:17 2019-01-05T13:29:13   00:00:41          1  NODE_FAIL      1:0              HipAdjBMI African ExonicPlus20kb 2551
+1764686              63      batch  mturchin    default 2019-01-05T12:07:19 2019-01-05T13:29:14   00:00:42          1  NODE_FAIL      1:0              HipAdjBMI African ExonicPlus20kb 2571
+1764693              63      batch  mturchin    default 2019-01-05T12:07:19 2019-01-05T13:29:14   00:00:42          1  NODE_FAIL      1:0              HipAdjBMI African ExonicPlus20kb 2641
+1764695              63      batch  mturchin    default 2019-01-05T12:07:19 2019-01-05T13:29:14   00:00:42          1  NODE_FAIL      1:0              HipAdjBMI African ExonicPlus20kb 2661
+1764697              63      batch  mturchin    default 2019-01-05T12:07:19 2019-01-05T13:29:14   00:00:42          1  NODE_FAIL      1:0              HipAdjBMI African ExonicPlus20kb 2681
+1764698              63      batch  mturchin    default 2019-01-05T12:07:19 2019-01-05T13:29:14   00:00:42          1  NODE_FAIL      1:0              HipAdjBMI African ExonicPlus20kb 2691
+
+#perm1
+1766763              63      batch  mturchin    default 2019-01-05T12:09:38 2019-01-05T14:26:21   00:00:27          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4251
+1766764              63      batch  mturchin    default 2019-01-05T12:09:38 2019-01-05T14:26:21   00:00:27          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4261
+1766765              63      batch  mturchin    default 2019-01-05T12:09:38 2019-01-05T14:26:21   00:00:27          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4271
+1766766              63      batch  mturchin    default 2019-01-05T12:09:38 2019-01-05T14:26:21   00:00:27          1  NODE_FAIL      1:0                 Height African ExonicPlus20kb 4281
+1767164              63      batch  mturchin    default 2019-01-05T12:09:46 2019-01-05T14:40:20   00:00:22          1  NODE_FAIL      1:0                            BMI African NonSyn 3511 
+1767182              63      batch  mturchin    default 2019-01-05T12:09:46 2019-01-05T14:40:20   00:00:22          1  NODE_FAIL      1:0                            BMI African NonSyn 3691 
+1767184              63      batch  mturchin    default 2019-01-05T12:09:46 2019-01-05T14:40:20   00:00:22          1  NODE_FAIL      1:0                            BMI African NonSyn 3711 
+1767186              63      batch  mturchin    default 2019-01-05T12:09:46 2019-01-05T14:40:20   00:00:22          1  NODE_FAIL      1:0                            BMI African NonSyn 3731 
+1768780              63      batch  mturchin    default 2019-01-05T12:10:31 2019-01-05T15:19:31   00:00:40          1  NODE_FAIL      1:0                           Waist African NonSyn 731 
+1768782              63      batch  mturchin    default 2019-01-05T12:10:31 2019-01-05T15:19:31   00:00:40          1  NODE_FAIL      1:0                           Waist African NonSyn 751 
+1768792              63      batch  mturchin    default 2019-01-05T12:10:31 2019-01-05T15:19:31   00:00:40          1  NODE_FAIL      1:0                           Waist African NonSyn 851 
+1768793              63      batch  mturchin    default 2019-01-05T12:10:31 2019-01-05T15:19:31   00:00:40          1  NODE_FAIL      1:0                           Waist African NonSyn 861 
+
+
+
 #pathway*remaining genome
 #NOTE -- copy and pasted `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp` & `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.Vs2.R` from associated Slack channel and from Lorin's code posted on 20180731
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.GG.cpp
-module load R/3.4.3_mkl; sleep 14400; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);')`; do
+module load R/3.4.3_mkl; sleep 14400; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
 	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 1 | tail -n 1`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; PhenoSeed1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | wc | awk '{ print $1 }'`	
 #			NumPaths=2
@@ -1821,11 +1863,12 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep
 		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+			echo $k
 			
 #			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/*error | grep _GK | awk '{ print $5 }' | sort | uniq -c 
 #			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm/ | grep -v -E "Oct 30|Oct 31|Nov  1" | grep error$ | grep _GK | awk '{ print $5 }' | sort | uniq -c 
-#			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k | grep noDups | grep -v Jan | grep -v perm1 | wc
-#			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.*Regions.c2.${k}.Pathway*.noDups.txt.gz | grep -v Jan | wc
+			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k | grep noDups | grep -v Jan | wc
+			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.*Regions.c2.${k}.Pathway*.noDups.txt.gz | grep -v Jan | wc
 			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways*.noDups.txt.gz | grep -v Jan | wc
 
 		done 
