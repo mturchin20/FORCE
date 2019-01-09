@@ -474,6 +474,27 @@ done
 ~
 ~done
 
+#20190108 NOTE -- thinking about post-imputation QC (beyond just imputation quality score/missingness), and seems like the general consensus is that -- aside from the metrics mentioned just before -- most QC otherwise should be done before imputation and not much else done afterwards (eg see below biostars link)
+#From: https://www.biostars.org/p/6476/
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --freq --missing --hardy --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno
+
+done
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+	echo $ancestry1 $ancestry2
+
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.frq | awk '{ print $5 }' | R -q -e "Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,.009,.01,.025,.05,.075,.1,.2,.3,.4,.5,1)));"
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.imiss | awk '{ print $4 }' | sort | uniq -c 
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.lmiss | awk '{ print $3 }' | sort | uniq -c
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.hwe | awk '{ print $9 }' | R -q -e "Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,1e-20,1e-15,1e-10,1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,.01,.05,.1,.5,1)));"
+
+done
+
 for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -553,12 +574,6 @@ sleep 28800; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", 
 	
 	done;
 done;		
-
-
-
-
-
-
 		
 #		sbatch -t 48:00:00 --mem 2g --account=ccmb-condo -o temp2.output -e temp2.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh'; 
 #		echo -e "gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.*Regions.c2.${k}.Pathway*.txt");
@@ -919,15 +934,12 @@ done;
 #				Pathways.Regions <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), \",\")))); \
 #				write.table(Data3.temp, paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\", i, \".txt\", sep=\"\"), quote=FALSE, col.name=TRUE, row.name=FALSE); \
 
-
-
-
 #20181001 NOTE -- Was going to do the below setup for the 'Vs2 gene*pathway' runs, but each pathway covariance file post-gz was ~50Mb (+/- 25Mb) in African NonSyn, so overall just seemed like potentially creating 1-2Tb worth of information was not worth it; it was onlty taking 1-2 mins to create matrix per pathway so far too, so possibly fine to have this get created within code anyways
 #20181001 NOTE -- Changing mind again, going to keep this setup; however since it doesn't take particularly long to create these files, I will intend on deleting them after initial runs & results to preserve space; if I need to rerun and redo things, I can recreate them and rerun this code to do so
 #20190104 NOTE -- Just to be clear, don't think I've rerun the per-pathway cov matrices for the noDups versions yet for any of the populations and such yet (or with the African redo with the proper merging ChrAll files); can remove this note after get back to actually doing this 
-#20190105 NOTE -- Began rerunning everything from scratch now (edited all proper files, removed earlier versions of per-pathway covariance matrices)
-module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v -E 'Ran10000|Irish' | tail -n 2`; do
-	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+#20190105 NOTE -- Began rerunning everything from scratch now (edited all proper files, removed earlier versions of per-pathway covariance matrices; did not currently run Ran10000 & Irish pops however)
+module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v -E 'Ran10000|Irish' | tail -n 2 | tail -n 1`; do
+	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | tail -n 2`; do
         	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
 #		NumPaths=2
@@ -955,32 +967,25 @@ done
 #<10k: 10g?
 #>=10k: 20g?
 
-
-
-for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000 | head -n 1 | tail -n 1`; do
-	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000 | tail -n 2 | tail -n 1`; do
+	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		echo $i $ancestry1 $ancestry2 $ancestry3 $k
 	
 		gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/cov/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways*.noDups.cov.txt
 	done;
 done;
-for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | tail -n 3`; do
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | tail -n 1`; do
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		echo $i $ancestry1 $ancestry2 $ancestry3 $k
 	
-		rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/cov/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways*.noDups.cov.txt
+		rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/cov/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways*.noDups.cov.txt.gz
 	
 	done;
 done;
 
 #		rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/cov/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways*.cov.txt.gz
-
-
-
-
-
 
 #20181207 -- Gene desert setup
 for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
@@ -993,9 +998,10 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
 	done;
 done;
 
-for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-	for WindowSize in `cat <(echo "25000 500000" |  perl -lane 'print join("\n", @F);') | tail -n 1`; do 
+#	for WindowSize in `cat <(echo "25000 500000" |  perl -lane 'print join("\n", @F);') | head -n 1`; do 
+	for WindowSize in `cat <(echo "50000 125000 250000" |  perl -lane 'print join("\n", @F);')`; do 
 		SECONDS=0; echo $ancestry1 $ancestry2 $WindowSize
 
 		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); WindowSize <- $WindowSize; chrs <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22); Data1.deserts <- c(); for (i in chrs) { \
@@ -1028,7 +1034,8 @@ done;
 
 for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
 	echo $j; ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-	for WindowSize in `cat <(echo "25000 500000" |  perl -lane 'print join("\n", @F);')`; do 
+#	for WindowSize in `cat <(echo "25000 500000" |  perl -lane 'print join("\n", @F);')`; do 
+	for WindowSize in `cat <(echo "25000 50000 125000 250000 500000" |  perl -lane 'print join("\n", @F);')`; do 
 		echo $WindowSize
 
 		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.GeneDeserts.Window$WindowSize.txt | perl -lane 'print $F[$#F];' | sort | uniq -c 
@@ -1735,90 +1742,6 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 #20180820
 #Vs2 Runs (moving towards using epistatic interaction models) 
 
-Height British British.Ran10000 NonSyn
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths41.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths201.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths391.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths571.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths731.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths801.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths971.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths981.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths1101.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths1161.Est.txt': No such file or directory
-
-Height British British.Ran10000 Exonic
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/Exonic/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths651.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/Exonic/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths751.Est.txt': No such file or directory
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/Exonic/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths841.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/Exonic/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths931.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Height/Exonic/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths1051.Est.txt': No such file or directory
-
-BMI British British.Ran10000 NonSyn
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/BMI/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths191.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/BMI/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths221.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/BMI/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths231.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/BMI/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths241.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/BMI/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths281.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/BMI/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths1211.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/BMI/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths1271.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/BMI/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths1281.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/BMI/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths1291.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/BMI/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths1301.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/BMI/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths1311.Est.txt': No such file or directory
-
-Waist British British.Ran10000 Exonic
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Waist/Exonic/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Waist.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths551.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Waist/Exonic/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Waist.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths561.Est.txt': No such file or directory
-
-Hip British British.Ran10000 NonSyn
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/Hip/NonSyn/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Hip.NonSyn.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths121.Est.txt': No such file or directory
-
-HipAdjBMI British British.Ran10000 Exonic
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/HipAdjBMI/Exonic/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths501.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/HipAdjBMI/Exonic/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths571.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/HipAdjBMI/Exonic/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths891.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/HipAdjBMI/Exonic/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths991.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/HipAdjBMI/Exonic/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths1071.Est.txt': No such file or directory
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/HipAdjBMI/Exonic/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.Exonic.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths1171.Est.txt': No such file or directory
-
-
-
 #pathway*remaining genome
 #NOTE -- copy and pasted `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp` & `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.Vs2.R` from associated Slack channel and from Lorin's code posted on 20180731
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
@@ -1828,10 +1751,10 @@ module load R/3.4.3_mkl; sleep 14400; for i in `cat <(echo "Height;1254 BMI;5892
 		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; PhenoSeed1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 #			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
-			NumPaths=502
+			NumPaths=1172
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k
 			
-			LpCnt=1; LpCnt2=1; for (( PathNum=501; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
+			LpCnt=1; LpCnt2=1; for (( PathNum=1171; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
   sbatch -t 72:00:00 -n 4 -N 1-1 --mem 28g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
 				echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); sourceCpp(\\\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp\\\"); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
 				Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\\\", header=T); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\\\", header=F); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.${k}.txt\\\", header=F); Y.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways1.noDups.txt.gz\\\", header=T); Y.Check.Pheno <- Y.Check\\\$$Pheno1; Y.Check.Pheno.noNAs <- Y.Check.Pheno[neg.is.na(Y.Check.Pheno)]; Y.Seed <- $AncSeed1 + $PhenoSeed1; \
@@ -1906,7 +1829,7 @@ done
 #Vs2 Results Collection
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
 	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep Ran10000`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 2`; do
 			SECONDS=0;
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -3577,6 +3500,235 @@ African African Afr
 > 
 > 
       0       0       0
+#20190108
+[  mturchin@node425  ~/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb]$for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
+>         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+>         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>         echo $ancestry1 $ancestry2
+>
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.frq | awk '{ print $5 }' | R -q -e "Data1 <- r
+ead.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,.009,.01,.025,.05,.075,.1,.2,.3,.4,.5,1)));"
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.imiss | awk '{ print $4 }' | sort | uniq -c
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.lmiss | awk '{ print $3 }' | sort | uniq -c
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.hwe | awk '{ print $9 }' | R -q -e "Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,1e-20,1e-15,1e-10,1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,.01,.05,.1,.5,1)));"
+>
+> done
+African African
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,.009,.01,.025,.05,.075,.1,.2,.3,.4,.5,1)));
+       0%       25%       50%       75%      100%
+0.0001623 0.0704500 0.1711000 0.3122000 0.5000000
+
+   (0,0.009] (0.009,0.01] (0.01,0.025] (0.025,0.05] (0.05,0.075]  (0.075,0.1]
+         531         1519        32061        35067        29113        25773
+   (0.1,0.2]    (0.2,0.3]    (0.3,0.4]    (0.4,0.5]      (0.5,1]
+       84115        64640        52620        47402            0
+>
+>
+   3080 0
+      1 N_MISS
+ 372841 0
+      1 N_MISS
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,1e-20,1e-15,1e-10,1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,.01,.05,.1,.5,1)));
+       0%       25%       50%       75%      100%
+1.766e-36 1.356e-01 4.041e-01 7.183e-01 1.000e+00
+
+     (0,1e-20]  (1e-20,1e-15]  (1e-15,1e-10]  (1e-10,1e-08]  (1e-08,1e-07]
+             3              2              9              6             17
+ (1e-07,1e-06]  (1e-06,1e-05] (1e-05,0.0001] (0.0001,0.001]   (0.001,0.01]
+           204           1163           2673           5750          14895
+   (0.01,0.05]     (0.05,0.1]      (0.1,0.5]        (0.5,1]
+         28671          24829         137896         156723
+>
+>
+British British.Ran4000
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,.009,.01,.025,.05,.075,.1,.2,.3,.4,.5,1)));
+       0%       25%       50%       75%      100%
+0.0001308 0.0281100 0.0698200 0.2174000 0.5000000
+
+   (0,0.009] (0.009,0.01] (0.01,0.025] (0.025,0.05] (0.05,0.075]  (0.075,0.1]
+          76         1185       126479       123228        57934        37238
+   (0.1,0.2]    (0.2,0.3]    (0.3,0.4]    (0.4,0.5]      (0.5,1]
+       91028        62186        51719        47738            0
+>
+>  
+   3824 0
+      1 N_MISS
+ 598811 0
+      1 N_MISS
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,1e-20,1e-15,1e-10,1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,.01,.05,.1,.5,1)));
+        0%        25%        50%        75%       100%
+1.667e-110  2.889e-01  5.618e-01  8.301e-01  1.000e+00
+
+     (0,1e-20]  (1e-20,1e-15]  (1e-15,1e-10]  (1e-10,1e-08]  (1e-08,1e-07]
+             9              5              4              3              3
+ (1e-07,1e-06]  (1e-06,1e-05] (1e-05,0.0001] (0.0001,0.001]   (0.001,0.01]
+             2             26            103            597           4660
+   (0.01,0.05]     (0.05,0.1]      (0.1,0.5]        (0.5,1]
+         19692          25466         214675         333566
+>
+>
+British British.Ran10000
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,.009,.01,.025,.05,.075,.1,.2,.3,.4,.5,1)));
+       0%       25%       50%       75%      100%
+5.208e-05 2.797e-02 7.031e-02 2.182e-01 5.000e-01
+
+   (0,0.009] (0.009,0.01] (0.01,0.025] (0.025,0.05] (0.05,0.075]  (0.075,0.1]
+          61          918       126985       121722        57202        36988
+   (0.1,0.2]    (0.2,0.3]    (0.3,0.4]    (0.4,0.5]      (0.5,1]
+       91068        62127        51671        47675            0
+>
+>
+   9600 0
+      1 N_MISS
+ 596417 0
+      1 N_MISS
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,1e-20,1e-15,1e-10,1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,.01,.05,.1,.5,1)));
+        0%        25%        50%        75%       100%
+5.585e-274  2.693e-01  5.334e-01  7.897e-01  1.000e+00
+
+     (0,1e-20]  (1e-20,1e-15]  (1e-15,1e-10]  (1e-10,1e-08]  (1e-08,1e-07]
+            15              7              9              7              2
+ (1e-07,1e-06]  (1e-06,1e-05] (1e-05,0.0001] (0.0001,0.001]   (0.001,0.01]
+            16             52            154            770           5381
+   (0.01,0.05]     (0.05,0.1]      (0.1,0.5]        (0.5,1]
+         21855          27843         222885         317421
+>
+>
+Caribbean Caribbean
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,.009,.01,.025,.05,.075,.1,.2,.3,.4,.5,1)));
+       0%       25%       50%       75%      100%
+0.0001373 0.0554800 0.1545000 0.2991000 0.5000000
+
+   (0,0.009] (0.009,0.01] (0.01,0.025] (0.025,0.05] (0.05,0.075]  (0.075,0.1]
+        2859         3721        47154        40765        31288        27283
+   (0.1,0.2]    (0.2,0.3]    (0.3,0.4]    (0.4,0.5]      (0.5,1]
+       87512        66263        53515        47987            0
+>
+>
+   3641 0
+      1 N_MISS
+ 408347 0
+      1 N_MISS
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,1e-20,1e-15,1e-10,1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,.01,.05,.1,.5,1)));
+       0%       25%       50%       75%      100%
+1.037e-51 2.509e-01 5.189e-01 7.980e-01 1.000e+00
+
+     (0,1e-20]  (1e-20,1e-15]  (1e-15,1e-10]  (1e-10,1e-08]  (1e-08,1e-07]
+             4              1              4              5              7
+ (1e-07,1e-06]  (1e-06,1e-05] (1e-05,0.0001] (0.0001,0.001]   (0.001,0.01]
+            11             35            145            832           5189
+   (0.01,0.05]     (0.05,0.1]      (0.1,0.5]        (0.5,1]
+         17618          20490         152913         211093
+>
+>
+Chinese Chinese
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,.009,.01,.025,.05,.075,.1,.2,.3,.4,.5,1)));
+     0%     25%     50%     75%    100%
+0.00000 0.08468 0.19680 0.33800 0.50000
+
+   (0,0.009] (0.009,0.01] (0.01,0.025] (0.025,0.05] (0.05,0.075]  (0.075,0.1]
+        1240         1271        22169        28401        24220        22123
+   (0.1,0.2]    (0.2,0.3]    (0.3,0.4]    (0.4,0.5]      (0.5,1]
+       74718        62411        55063        52341            0
+>
+>
+   1423 0
+      1 N_MISS
+ 343958 0
+      1 N_MISS
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,1e-20,1e-15,1e-10,1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,.01,.05,.1,.5,1)));
+       0%       25%       50%       75%      100%
+7.007e-38 2.742e-01 5.487e-01 8.245e-01 1.000e+00
+
+     (0,1e-20]  (1e-20,1e-15]  (1e-15,1e-10]  (1e-10,1e-08]  (1e-08,1e-07]
+             2              0              3              1              2
+ (1e-07,1e-06]  (1e-06,1e-05] (1e-05,0.0001] (0.0001,0.001]   (0.001,0.01]
+             4             28             98            389           3031
+   (0.01,0.05]     (0.05,0.1]      (0.1,0.5]        (0.5,1]
+         12432          15469         125337         187162
+>
+>
+Indian Indian
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,.009,.01,.025,.05,.075,.1,.2,.3,.4,.5,1)));
+     0%     25%     50%     75%    100%
+0.00000 0.03674 0.11810 0.27320 0.50000
+
+   (0,0.009] (0.009,0.01] (0.01,0.025] (0.025,0.05] (0.05,0.075]  (0.075,0.1]
+         204         2386        86506        67497        41671        33550
+   (0.1,0.2]    (0.2,0.3]    (0.3,0.4]    (0.4,0.5]      (0.5,1]
+       95125        68448        56924        52258            0
+>
+>
+   5158 0
+      1 N_MISS
+ 504570 0
+      1 N_MISS
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,1e-20,1e-15,1e-10,1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,.01,.05,.1,.5,1)));
+        0%        25%        50%        75%       100%
+3.693e-134  1.531e-01  4.169e-01  7.223e-01  1.000e+00
+
+     (0,1e-20]  (1e-20,1e-15]  (1e-15,1e-10]  (1e-10,1e-08]  (1e-08,1e-07]
+             4              1              5              3              1
+ (1e-07,1e-06]  (1e-06,1e-05] (1e-05,0.0001] (0.0001,0.001]   (0.001,0.01]
+            27            151            642           3064          14875
+   (0.01,0.05]     (0.05,0.1]      (0.1,0.5]        (0.5,1]
+         38971          35643         195392         215791
+>
+>
+Irish Irish
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,.009,.01,.025,.05,.075,.1,.2,.3,.4,.5,1)));
+       0%       25%       50%       75%      100%
+0.0000431 0.0287000 0.0727500 0.2211000 0.5000000
+
+   (0,0.009] (0.009,0.01] (0.01,0.025] (0.025,0.05] (0.05,0.075]  (0.075,0.1]
+          78         1202       120485       118572        57307        37411
+   (0.1,0.2]    (0.2,0.3]    (0.3,0.4]    (0.4,0.5]      (0.5,1]
+       90921        61884        51568        47716            0
+>
+>
+  11601 0
+      1 N_MISS
+ 587144 0
+      1 N_MISS
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,1e-20,1e-15,1e-10,1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,.01,.05,.1,.5,1)));
+    0%    25%    50%    75%   100%
+0.0000 0.2641 0.5256 0.7833 1.0000
+
+     (0,1e-20]  (1e-20,1e-15]  (1e-15,1e-10]  (1e-10,1e-08]  (1e-08,1e-07]
+            21              6              8              4              3
+ (1e-07,1e-06]  (1e-06,1e-05] (1e-05,0.0001] (0.0001,0.001]   (0.001,0.01]
+            11             48            147            726           5481
+   (0.01,0.05]     (0.05,0.1]      (0.1,0.5]        (0.5,1]
+         22664          28038         222197         307789
+>
+>
+Pakistani Pakistani
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,.009,.01,.025,.05,.075,.1,.2,.3,.4,.5,1)));
+       0%       25%       50%       75%      100%
+0.0003131 0.0363200 0.1137000 0.2686750 0.5000000
+
+   (0,0.009] (0.009,0.01] (0.01,0.025] (0.025,0.05] (0.05,0.075]  (0.075,0.1]
+         424         2265        88763        70749        44912        34690
+   (0.1,0.2]    (0.2,0.3]    (0.3,0.4]    (0.4,0.5]      (0.5,1]
+       96218        68367        56905        52227            0
+>
+>  
+   1597 0
+      1 N_MISS
+ 515520 0
+      1 N_MISS
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,1]); table(cut(Data1[,1], c(0,1e-20,1e-15,1e-10,1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,.01,.05,.1,.5,1)));
+       0%       25%       50%       75%      100%
+1.374e-26 9.283e-02 3.062e-01 6.704e-01 1.000e+00
+
+     (0,1e-20]  (1e-20,1e-15]  (1e-15,1e-10]  (1e-10,1e-08]  (1e-08,1e-07]
+             1              1              0              0              1
+ (1e-07,1e-06]  (1e-06,1e-05] (1e-05,0.0001] (0.0001,0.001]   (0.001,0.01]
+            23            211           1136           5519          25244
+   (0.01,0.05]     (0.05,0.1]      (0.1,0.5]        (0.5,1]
+         57654          45092         199061         181577
+>
+>
 
 
 
