@@ -16,9 +16,13 @@ Webpage 'workbook' to collect data, results, figures/tables, and presentations f
 
 # Entries
 
- * 20181207 -- [UKB G\*K Permutation pValue Histograms][20181207b]
+ * 20190109 -- [UKB G\*K Permutation pValue Histograms (Updated)][20190109b]
+ 
+ * 20190109 -- [UKB G\*K pValue Histograms (Updated)][20190109a]
 
- * 20181207 -- [UKB pathway\*genome (G\*K) First Round of Main Results (Updated)][20181207a]
+ * 20181207 -- [UKB G\*K First Round of Main Results (Updated)][20181207a]
+ 
+ * 20181207 -- [UKB G\*K Permutation pValue Histograms][20181207b]
 
  * 20181108 -- [UKB G\*K pValue Histograms][20181108a]
 
@@ -28,6 +32,8 @@ Webpage 'workbook' to collect data, results, figures/tables, and presentations f
 [GoogleDriveManuscript]: https://docs.google.com/document/d/1o4R6cjCe1WAWGcn8QN0JoxTNdBx8QJTCtjJchHVqXqA/edit
 [20181102a]: https://mturchin20.github.io/InterPath/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.html
 [20181108a]: https://mturchin20.github.io/InterPath/20181108.InterPath.Vs2.GK.Analysis.pValHistograms.html
-[20181207a]: https://mturchin20.github.io/InterPath/20181204.InterPath.Vs2.GK.Analysis.FirstRoundResults.vs2.html 
 [20181207b]: https://mturchin20.github.io/InterPath/20181127.InterPath.Vs2.GK.perm1.Analysis.pValHistograms.html
+[20181207a]: https://mturchin20.github.io/InterPath/20181204.InterPath.Vs2.GK.Analysis.FirstRoundResults.vs3.html 
+[20190109a]: https://mturchin20.github.io/InterPath/20190109.InterPath.Vs2.GK.Analysis.pValHistograms.vs3.html
+[20190109b]: https://mturchin20.github.io/InterPath/20190109.InterPath.Vs2.GK.perm1.Analysis.pValHistograms.vs3.html
 

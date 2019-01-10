@@ -1,0 +1,41 @@
+---
+title: "G*K UKB pValue histograms"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float:
+      collapsed: false
+---
+
+# Summary
+
+p-value distribution of results found in UKB G*K first round [main results][20181207a]
+
+# UKB Populations
+
+## African
+ * N = ~3080 
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190103.InterPath.Vs2.GK.Analysis.pValHists.African.vs3.png)
+
+## British.Ran4k
+ * N = ~3824
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190103.InterPath.Vs2.GK.Analysis.pValHists.British.Ran4000.vs3.png)
+
+## Caribbean
+ * N = ~3641
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190103.InterPath.Vs2.GK.Analysis.pValHists.Caribbean.vs3.png)
+
+## Chinese 
+ * N = ~1423
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190103.InterPath.Vs2.GK.Analysis.pValHists.Chinese.vs3.png)
+
+## Indian 
+ * N = ~5158
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190103.InterPath.Vs2.GK.Analysis.pValHists.Indian.vs3.png)
+
+## Pakistani
+ * N = ~1597
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190103.InterPath.Vs2.GK.Analysis.pValHists.Pakistani.vs3.png)
+
+[20181207a]: https://mturchin20.github.io/InterPath/20181204.InterPath.Vs2.GK.Analysis.FirstRoundResults.vs3.html
