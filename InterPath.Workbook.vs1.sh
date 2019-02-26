@@ -1777,13 +1777,65 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 #20180820
 #Vs2 Runs (moving towards using epistatic interaction models) 
 
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep NODE
+2673844              63      batch  mturchin    default 2019-02-20T08:51:12 2019-02-21T00:27:21   00:37:08          4  NODE_FAIL      1:0               Height British.Ran10000 GD125000 661
+2673845              63      batch  mturchin    default 2019-02-20T08:51:12 2019-02-21T00:27:21   00:37:08          4  NODE_FAIL      1:0               Height British.Ran10000 GD125000 671
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep NODE
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep FAIL
+2674581              63      batch  mturchin    default 2019-02-20T08:51:39 2019-02-23T01:57:53   04:44:44          4     FAILED      9:0           HipAdjBMI British.Ran10000 GD125000 1761
+2674581.bat+      batch                         default 2019-02-23T00:46:42 2019-02-23T01:57:53   04:44:44          4     FAILED      9:0
+2674582              63      batch  mturchin    default 2019-02-20T08:51:39 2019-02-23T02:32:38   06:57:20          4     FAILED      9:0           HipAdjBMI British.Ran10000 GD125000 1771
+2674582.bat+      batch                         default 2019-02-23T00:48:18 2019-02-23T02:32:38   06:57:20          4     FAILED      9:0
+2674610              63      batch  mturchin    default 2019-02-20T08:51:42 2019-02-23T03:59:22   05:45:56          4     FAILED      9:0             HipAdjBMI British.Ran10000 GD500000 91
+2674610.bat+      batch                         default 2019-02-23T02:32:53 2019-02-23T03:59:22   05:45:56          4     FAILED      9:0
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep PEND | wc
+    746    8206  141740
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep PEND | wc
+   5176   56936  983440
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep PEND | wc
+   6969   76659 1324110
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep PEND | wc
+   8294   91234 1575860
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep FAIL
+2674581              63      batch  mturchin    default 2019-02-20T08:51:39 2019-02-23T01:57:53   04:44:44          4     FAILED      9:0           HipAdjBMI British.Ran10000 GD125000 1761
+2674581.bat+      batch                         default 2019-02-23T00:46:42 2019-02-23T01:57:53   04:44:44          4     FAILED      9:0
+2674582              63      batch  mturchin    default 2019-02-20T08:51:39 2019-02-23T02:32:38   06:57:20          4     FAILED      9:0           HipAdjBMI British.Ran10000 GD125000 1771
+2674582.bat+      batch                         default 2019-02-23T00:48:18 2019-02-23T02:32:38   06:57:20          4     FAILED      9:0
+2674610              63      batch  mturchin    default 2019-02-20T08:51:42 2019-02-23T03:59:22   05:45:56          4     FAILED      9:0             HipAdjBMI British.Ran10000 GD500000 91
+2674610.bat+      batch                         default 2019-02-23T02:32:53 2019-02-23T03:59:22   05:45:56          4     FAILED      9:0
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep PEND | wc
+   8219   90409 1561610
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep PEND | wc
+   7899   86889 1500810
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep FAIL
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep PEND | wc
+   7670   84370 1457300
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep FAIL
+2715423              63      batch  mturchin    default 2019-02-20T23:22:59 2019-02-25T01:11:25   09:31:20          4     FAILED      9:0         WaistAdjBMI British.Ran10000 GD125000 1491
+2715423.bat+      batch                         default 2019-02-24T22:48:35 2019-02-25T01:11:25   09:31:20          4     FAILED      9:0
+2715424              63      batch  mturchin    default 2019-02-20T23:22:59 2019-02-25T01:11:25   09:31:08          4     FAILED      9:0         WaistAdjBMI British.Ran10000 GD125000 1501
+2715424.bat+      batch                         default 2019-02-24T22:48:38 2019-02-25T01:11:25   09:31:08          4     FAILED      9:0
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep FAIL     
+2715423              63      batch  mturchin    default 2019-02-20T23:22:59 2019-02-25T01:11:25   09:31:20          4     FAILED      9:0         WaistAdjBMI British.Ran10000 GD125000 1491 
+2715423.bat+      batch                         default 2019-02-24T22:48:35 2019-02-25T01:11:25   09:31:20          4     FAILED      9:0                                                    
+2715424              63      batch  mturchin    default 2019-02-20T23:22:59 2019-02-25T01:11:25   09:31:08          4     FAILED      9:0         WaistAdjBMI British.Ran10000 GD125000 1501 
+2715424.bat+      batch                         default 2019-02-24T22:48:38 2019-02-25T01:11:25   09:31:08          4     FAILED      9:0                                                    
+2715462              63      batch  mturchin    default 2019-02-20T23:23:00 2019-02-25T03:33:38   09:28:44          4     FAILED      9:0         WaistAdjBMI British.Ran10000 GD125000 1881 
+2715462.bat+      batch                         default 2019-02-25T01:11:27 2019-02-25T03:33:38   09:28:44          4     FAILED      9:0                                                    
+2715609              63      batch  mturchin    default 2019-02-20T23:23:06 2019-02-25T11:50:33   04:37:32          4     FAILED      9:0           HipAdjBMI British.Ran10000 GD125000 1251 
+2715609.bat+      batch                         default 2019-02-25T10:41:10 2019-02-25T11:50:33   04:37:32          4     FAILED      9:0                                                    
+2715610              63      batch  mturchin    default 2019-02-20T23:23:06 2019-02-25T11:50:33   04:25:32          4     FAILED      9:0           HipAdjBMI British.Ran10000 GD125000 1261 
+2715610.bat+      batch                         default 2019-02-25T10:44:10 2019-02-25T11:50:33   04:25:32          4     FAILED      9:0                                                    
+
+
+
 #pathway*remaining genome
 #NOTE -- copy and pasted `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp` & `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.Vs2.R` from associated Slack channel and from Lorin's code posted on 20180731
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.GG.cpp
 module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37'`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -v African`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | tail -n 3 | head -n 2`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 3 | tail -n 1`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | tail -n 3 | tail -n 1`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; PhenoSeed1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
 #			NumPaths=2
@@ -1875,8 +1927,8 @@ done
 
 #Vs2 Results Collection
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | tail -n 2`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000 | grep -E 'African|Ran4000|Indian'`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | tail -n 3 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 1`; do
 			SECONDS=0;
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
