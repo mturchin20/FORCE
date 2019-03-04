@@ -11,7 +11,7 @@
 
 
 
-<title>InterPath Workbook</title>
+<title>UKB Gene Desert (Cis) p-Value histograms</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -288,7 +288,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = true;
+    options.showAndHide = false;
     options.smoothScroll = true;
 
     // tocify
@@ -351,6 +351,12 @@ div.tocify {
   border-radius: 0px;
 }
 
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
 
 </style>
 
@@ -411,7 +417,7 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">InterPath Workbook</h1>
+<h1 class="title toc-ignore">UKB Gene Desert (Cis) p-Value histograms</h1>
 
 </div>
 
@@ -460,17 +466,17 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommturchin20InterPathtree4c07ab0d1dd7ba71ae7a0f9fee24d63035c9bc30targetblank4c07ab0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/mturchin20/InterPath/tree/4c07ab0d1dd7ba71ae7a0f9fee24d63035c9bc30" target="_blank">4c07ab0</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommturchin20InterPathtree5170af622a6805994c0c425c1e87f94443a881bdtargetblank5170af6a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/mturchin20/InterPath/tree/5170af622a6805994c0c425c1e87f94443a881bd" target="_blank">5170af6</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcommturchin20InterPathtree4c07ab0d1dd7ba71ae7a0f9fee24d63035c9bc30targetblank4c07ab0a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcommturchin20InterPathtree5170af622a6805994c0c425c1e87f94443a881bdtargetblank5170af6a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -526,297 +532,60 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/mturchin20/InterPath/blob/4c07ab0d1dd7ba71ae7a0f9fee24d63035c9bc30/analysis/index.Rmd" target="_blank">4c07ab0</a>
-</td>
-<td>
-mturchin20
-</td>
-<td>
-2019-03-04
-</td>
-<td>
-Updating git pages
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/mturchin20/InterPath/4c07ab0d1dd7ba71ae7a0f9fee24d63035c9bc30/docs/index.html" target="_blank">4c07ab0</a>
-</td>
-<td>
-mturchin20
-</td>
-<td>
-2019-03-04
-</td>
-<td>
-Updating git pages
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/mturchin20/InterPath/blob/003c8e463c0e3659db9eb8dd38659c3707f1611f/analysis/index.Rmd" target="_blank">003c8e4</a>
-</td>
-<td>
-mturchin20
-</td>
-<td>
-2019-01-10
-</td>
-<td>
-Updating workbook webpages
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/mturchin20/InterPath/003c8e463c0e3659db9eb8dd38659c3707f1611f/docs/index.html" target="_blank">003c8e4</a>
-</td>
-<td>
-mturchin20
-</td>
-<td>
-2019-01-10
-</td>
-<td>
-Updating workbook webpages
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/mturchin20/InterPath/blob/15304a77729d2aa1c715cbf5e784148d0a7a129e/analysis/index.Rmd" target="_blank">15304a7</a>
-</td>
-<td>
-mturchin20
-</td>
-<td>
-2018-12-07
-</td>
-<td>
-Minor changes to recent git page project workbook updates
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/mturchin20/InterPath/15304a77729d2aa1c715cbf5e784148d0a7a129e/docs/index.html" target="_blank">15304a7</a>
-</td>
-<td>
-mturchin20
-</td>
-<td>
-2018-12-07
-</td>
-<td>
-Minor changes to recent git page project workbook updates
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/mturchin20/InterPath/blob/5065e4e67a7f7320e4647abc3305c0bee7ff2b8d/analysis/index.Rmd" target="_blank">5065e4e</a>
-</td>
-<td>
-mturchin20
-</td>
-<td>
-2018-12-07
-</td>
-<td>
-Adding updates to git page project workbook
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/mturchin20/InterPath/5065e4e67a7f7320e4647abc3305c0bee7ff2b8d/docs/index.html" target="_blank">5065e4e</a>
-</td>
-<td>
-mturchin20
-</td>
-<td>
-2018-12-07
-</td>
-<td>
-Adding updates to git page project workbook
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/mturchin20/InterPath/868d177a71338910c6b69aaaf36e801ca586d4f9/docs/index.html" target="_blank">868d177</a>
-</td>
-<td>
-mturchin20
-</td>
-<td>
-2018-11-10
-</td>
-<td>
-Updating website with first real content
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/mturchin20/InterPath/blob/806a8f1010bffe57db7b14808b5117c2be932218/analysis/index.Rmd" target="_blank">806a8f1</a>
-</td>
-<td>
-mturchin20
-</td>
-<td>
-2018-11-06
-</td>
-<td>
-Updating and moving website structure over to being based on workflowr skeleton
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/mturchin20/InterPath/806a8f1010bffe57db7b14808b5117c2be932218/docs/index.html" target="_blank">806a8f1</a>
-</td>
-<td>
-mturchin20
-</td>
-<td>
-2018-11-06
-</td>
-<td>
-Updating and moving website structure over to being based on workflowr skeleton
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/mturchin20/InterPath/eeeda423087a1a7df173dc1e7f83bdac56d3205d/docs/index.html" target="_blank">eeeda42</a>
-</td>
-<td>
-mturchin20
-</td>
-<td>
-2018-06-07
-</td>
-<td>
-working on Makefile/Rmarkdown/webpage issues
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/mturchin20/InterPath/87c99411178fc05366b049075a4959d6ded6c687/docs/index.html" target="_blank">87c9941</a>
-</td>
-<td>
-mturchin20
-</td>
-<td>
-2018-06-07
-</td>
-<td>
-Working on setting up initial structure and webpage-related materials
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
 </div>
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>Webpage ‘workbook’ to collect data, results, figures/tables, and presentations for Ramachandran Lab <code>InterPath</code> project</p>
+<div id="summary" class="section level1">
+<h1>Summary</h1>
+<p>p-Value distribution of UKB Gene Desert (Cis) first round <a href="https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Cis.Analysis.FirstRoundResults.vs1.html">main results</a></p>
 </div>
-<div id="general-info" class="section level1">
-<h1>General Info</h1>
+<div id="ukb-populations" class="section level1">
+<h1>UKB Populations</h1>
+<div id="african" class="section level2">
+<h2>African</h2>
 <ul>
-<li>Google Drive <a href="https://docs.google.com/document/d/1o4R6cjCe1WAWGcn8QN0JoxTNdBx8QJTCtjJchHVqXqA/edit">manuscript</a></li>
+<li>N = ~3080 <img src="https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.Cis.GDs.AllAvail.Analysis.pValHists.African.vs1.png" /></li>
 </ul>
 </div>
-<div id="entries" class="section level1">
-<h1>Entries</h1>
-<div id="pathway-vs.-genome-gk-results" class="section level2">
-<h2>Pathway vs. Genome (G*K) Results</h2>
+<div id="british.ran4k" class="section level2">
+<h2>British.Ran4k</h2>
 <ul>
-<li><p>20190303 – [UKB G*K – pVals vs. # of variants][20190303g]</p></li>
-<li><p>20190109 – <a href="https://mturchin20.github.io/InterPath/20190109.InterPath.Vs2.GK.perm1.Analysis.pValHistograms.vs4.html">UKB G*K Permutation p-Value Histograms (Updated)</a></p></li>
-<li><p>20190109 – <a href="https://mturchin20.github.io/InterPath/20190109.InterPath.Vs2.GK.Analysis.pValHistograms.vs4.html">UKB G*K p-Value Histograms (Updated)</a></p></li>
-<li><p>20181207 – <a href="https://mturchin20.github.io/InterPath/20181204.InterPath.Vs2.GK.Analysis.FirstRoundResults.vs4.html">UKB G*K First Round of Main Results (Updated)</a></p></li>
-<li><p>20181207 – <a href="https://mturchin20.github.io/InterPath/20181127.InterPath.Vs2.GK.perm1.Analysis.pValHistograms.html">UKB G*K Permutation p-Value Histograms</a></p></li>
-<li><p>20181108 – <a href="https://mturchin20.github.io/InterPath/20181108.InterPath.Vs2.GK.Analysis.pValHistograms.html">UKB G*K p-Value Histograms</a></p></li>
-<li><p>20181102 – <a href="https://mturchin20.github.io/InterPath/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.html">UKB pathway*genome (G*K) First Round of Main Results</a></p></li>
+<li>N = ~3824 <img src="https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.Cis.GDs.AllAvail.Analysis.pValHists.British.Ran4000.vs1.png" /></li>
 </ul>
 </div>
-<div id="gene-desert-gd-results" class="section level2">
-<h2>Gene Desert (GD) Results</h2>
+<div id="british.ran10k" class="section level2">
+<h2>British.Ran10k</h2>
 <ul>
-<li><p>20190303 – <a href="https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Cis.perm1.Analysis.pValHistograms.vs1.html">UKB Gene Desert Cis Permutation p-Value Histograms</a></p></li>
-<li><p>20190303 – <a href="https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Cis.Analysis.pValHistograms.vs1.html">UKB Gene Desert Cis p-Value Histograms</a></p></li>
-<li><p>20190303 – <a href="https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Cis.Analysis.FirstRoundResults.vs1.html">UKB Gene Desert Cis Main Results</a></p></li>
-<li><p>20190303 – <a href="https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Trans.perm1.Analysis.pValHistograms.vs1.html">UKB Gene Desert Trans Permutation p-Value Histograms</a></p></li>
-<li><p>20190303 – <a href="https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Trans.Analysis.pValHistograms.vs1.html">UKB Gene Desert Trans p-Value Histograms</a></p></li>
-<li><p>20190303 – <a href="https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Trans.Analysis.FirstRoundResults.vs1.html">UKB Gene Desert Trans Main Results</a></p></li>
+<li>N = ~9601 <img src="https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.Cis.GDs.AllAvail.Analysis.pValHists.British.Ran10000.vs1.png" /></li>
 </ul>
 </div>
-<div id="gene-vs.-pathway-kgene-results" class="section level2">
-<h2>Gene Vs. Pathway (K*gene) Results</h2>
+<div id="caribbean" class="section level2">
+<h2>Caribbean</h2>
+<ul>
+<li>N = ~3641 <img src="https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.Cis.GDs.AllAvail.Analysis.pValHists.Caribbean.vs1.png" /></li>
+</ul>
+</div>
+<div id="chinese" class="section level2">
+<h2>Chinese</h2>
+<ul>
+<li>N = ~1423 <img src="https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.Cis.GDs.AllAvail.Analysis.pValHists.Chinese.vs1.png" /></li>
+</ul>
+</div>
+<div id="indian" class="section level2">
+<h2>Indian</h2>
+<ul>
+<li>N = ~5158 <img src="https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.Cis.GDs.AllAvail.Analysis.pValHists.Indian.vs1.png" /></li>
+</ul>
+</div>
+<div id="pakistani" class="section level2">
+<h2>Pakistani</h2>
+<ul>
+<li>N = ~1597 <img src="https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.Cis.GDs.AllAvail.Analysis.pValHists.Pakistani.vs1.png" /></li>
+</ul>
 </div>
 </div>
 

@@ -11,7 +11,7 @@
 
 
 
-<title>UKB First Round Main Results -- Gene Deserts</title>
+<title>UKB First Round Main Results -- Gene Deserts (Trans)</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -313,7 +313,7 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">UKB First Round Main Results – Gene Deserts</h1>
+<h1 class="title toc-ignore">UKB First Round Main Results – Gene Deserts (Trans)</h1>
 
 </div>
 
@@ -362,17 +362,17 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommturchin20InterPathtreeb9c80515535b83c26fdacc134f769f3234c9dbbetargetblankb9c8051a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/mturchin20/InterPath/tree/b9c80515535b83c26fdacc134f769f3234c9dbbe" target="_blank">b9c8051</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommturchin20InterPathtree4c07ab0d1dd7ba71ae7a0f9fee24d63035c9bc30targetblank4c07ab0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/mturchin20/InterPath/tree/4c07ab0d1dd7ba71ae7a0f9fee24d63035c9bc30" target="_blank">4c07ab0</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcommturchin20InterPathtreeb9c80515535b83c26fdacc134f769f3234c9dbbetargetblankb9c8051a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcommturchin20InterPathtree4c07ab0d1dd7ba71ae7a0f9fee24d63035c9bc30targetblank4c07ab0a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -402,12 +402,9 @@ Untracked files:
     Untracked:  Vs1/InterPath.Source.Simulations.Vs2.R
     Untracked:  Vs1/InterPath.Source.Vs2.cpp
     Untracked:  Vs1/InterPath.Vs2.Kgene.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
-    Untracked:  analysis/20181204.InterPath.Vs2.GK.Analysis.FirstRoundResults.vs4.Rmd
-    Untracked:  analysis/20190109.InterPath.Vs2.GK.Analysis.pValHistograms.vs4.Rmd
-    Untracked:  analysis/20190109.InterPath.Vs2.GK.perm1.Analysis.pValHistograms.vs4.Rmd
-    Untracked:  analysis/20190303.InterPath.Vs2.GD.Trans.Analysis.FirstRoundResults.vs1.Rmd
-    Untracked:  analysis/20190303.InterPath.Vs2.GD.Trans.Analysis.pValHistograms.vs1.Rmd
-    Untracked:  analysis/20190303.InterPath.Vs2.GD.Trans.perm1.Analysis.pValHistograms.vs1.Rmd
+    Untracked:  analysis/20190303.InterPath.Vs2.GD.Cis.Analysis.FirstRoundResults.vs1.Rmd
+    Untracked:  analysis/20190303.InterPath.Vs2.GD.Cis.Analysis.pValHistograms.vs1.Rmd
+    Untracked:  analysis/20190303.InterPath.Vs2.GD.Cis.perm1.Analysis.pValHistograms.vs1.Rmd
     Untracked:  oiusdnfjnsdf
     Untracked:  temp1.error
     Untracked:  temp1.output
@@ -415,6 +412,9 @@ Untracked files:
 Unstaged changes:
     Modified:   InterPath.Workbook.vs1.sh
     Deleted:    Vs1/InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
+    Modified:   analysis/20190303.InterPath.Vs2.GD.Trans.Analysis.FirstRoundResults.vs1.Rmd
+    Modified:   analysis/20190303.InterPath.Vs2.GD.Trans.Analysis.pValHistograms.vs1.Rmd
+    Modified:   analysis/20190303.InterPath.Vs2.GD.Trans.perm1.Analysis.pValHistograms.vs1.Rmd
     Modified:   analysis/index.Rmd
 
 </code></pre>
@@ -428,9 +428,69 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/mturchin20/InterPath/blob/4c07ab0d1dd7ba71ae7a0f9fee24d63035c9bc30/analysis/20190303.InterPath.Vs2.GD.Trans.Analysis.FirstRoundResults.vs1.Rmd" target="_blank">4c07ab0</a>
+</td>
+<td>
+mturchin20
+</td>
+<td>
+2019-03-04
+</td>
+<td>
+Updating git pages
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/mturchin20/InterPath/4c07ab0d1dd7ba71ae7a0f9fee24d63035c9bc30/docs/20190303.InterPath.Vs2.GD.Trans.Analysis.FirstRoundResults.vs1.html" target="_blank">4c07ab0</a>
+</td>
+<td>
+mturchin20
+</td>
+<td>
+2019-03-04
+</td>
+<td>
+Updating git pages
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>

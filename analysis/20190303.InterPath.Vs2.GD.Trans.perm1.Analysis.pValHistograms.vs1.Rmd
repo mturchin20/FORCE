@@ -1,5 +1,5 @@
 ---
-title: "UKB Gene Desert permuted p-Value histograms"
+title: "UKB Gene Desert (Trans) permuted p-Value histograms"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
@@ -10,36 +10,36 @@ output:
 
 # Summary
 
-p-Value distribution of phenotype-permuted UKB Gene Desert first round [main results][20190303a]
+p-Value distribution of phenotype-permuted UKB Gene Desert (Trans) first round [main results][20190303a]
 
 # UKB Populations
 
 ## African
  * N = ~3080 
-![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.GK.perm1.Analysis.pValHists.African.vs4.png)
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190213.InterPath.Vs2.GDs.AllAvail.perm1.Analysis.pValHists.African.vs1.png)
 
 ## British.Ran4k
  * N = ~3824
-![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.GK.perm1.Analysis.pValHists.British.Ran4000.vs4.png)
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190213.InterPath.Vs2.GDs.AllAvail.perm1.Analysis.pValHists.British.Ran4000.vs1.png)
 
 ## British.Ran10k
  * N = ~9601
-![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.GK.perm1.Analysis.pValHists.British.Ran10000.vs4.png)
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190213.InterPath.Vs2.GDs.AllAvail.perm1.Analysis.pValHists.British.Ran10000.vs1.png)
 
 ## Caribbean
  * N = ~3641
-![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.GK.perm1.Analysis.pValHists.Caribbean.vs4.png)
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190213.InterPath.Vs2.GDs.AllAvail.perm1.Analysis.pValHists.Caribbean.vs1.png)
 
 ## Chinese 
  * N = ~1423
-![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.GK.perm1.Analysis.pValHists.Chinese.vs4.png)
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190213.InterPath.Vs2.GDs.AllAvail.perm1.Analysis.pValHists.Chinese.vs1.png)
 
 ## Indian 
  * N = ~5158
-![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.GK.perm1.Analysis.pValHists.Indian.vs4.png)
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190213.InterPath.Vs2.GDs.AllAvail.perm1.Analysis.pValHists.Indian.vs1.png)
 
 ## Pakistani
  * N = ~1597
-![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190228.InterPath.Vs2.GK.perm1.Analysis.pValHists.Pakistani.vs4.png)
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/pValHists/20190213.InterPath.Vs2.GDs.AllAvail.perm1.Analysis.pValHists.Pakistani.vs1.png)
 
 [20190303a]: https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Trans.Analysis.FirstRoundResults.vs1.html
