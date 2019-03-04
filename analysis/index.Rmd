@@ -16,6 +16,10 @@ Webpage 'workbook' to collect data, results, figures/tables, and presentations f
 
 # Entries
 
+## Pathway vs. Genome (G\*K) Results 
+
+ * 20190303 -- [UKB G\*K -- pVals vs. # of variants][20190303g]
+
  * 20190109 -- [UKB G\*K Permutation pValue Histograms (Updated)][20190109b]
  
  * 20190109 -- [UKB G\*K pValue Histograms (Updated)][20190109a]
@@ -29,11 +33,42 @@ Webpage 'workbook' to collect data, results, figures/tables, and presentations f
  * 20181102 -- [UKB pathway\*genome (G\*K) First Round of Main Results][20181102a]
 
 
+## Gene Desert (GD) Results
+
+ * 20190303 -- [UKB Gene Desert Cis Permutation pValue Histograms][20190303f]
+ 
+ * 20190303 -- [UKB Gene Desert Cis pValue Histograms][20190303e]
+
+ * 20190303 -- [UKB Gene Desert Cis Results][20190303d]
+ 
+ * 20190303 -- [UKB Gene Desert Trans Permutation pValue Histograms][20190303c]
+ 
+ * 20190303 -- [UKB Gene Desert Trans pValue Histograms][20190303b]
+
+ * 20190303 -- [UKB Gene Desert Trans Results][20190303a]
+
+
+## Gene Vs. Pathway (K\*gene) Results
+
+ 
+
+
 [GoogleDriveManuscript]: https://docs.google.com/document/d/1o4R6cjCe1WAWGcn8QN0JoxTNdBx8QJTCtjJchHVqXqA/edit
 [20181102a]: https://mturchin20.github.io/InterPath/20181102.InterPath.Vs2.GK.Analysis.FirstRoundResults.html
 [20181108a]: https://mturchin20.github.io/InterPath/20181108.InterPath.Vs2.GK.Analysis.pValHistograms.html
 [20181207b]: https://mturchin20.github.io/InterPath/20181127.InterPath.Vs2.GK.perm1.Analysis.pValHistograms.html
-[20181207a]: https://mturchin20.github.io/InterPath/20181204.InterPath.Vs2.GK.Analysis.FirstRoundResults.vs3.html 
-[20190109a]: https://mturchin20.github.io/InterPath/20190109.InterPath.Vs2.GK.Analysis.pValHistograms.vs3.html
-[20190109b]: https://mturchin20.github.io/InterPath/20190109.InterPath.Vs2.GK.perm1.Analysis.pValHistograms.vs3.html
+[20181207a]: https://mturchin20.github.io/InterPath/20181204.InterPath.Vs2.GK.Analysis.FirstRoundResults.vs4.html 
+[20190109a]: https://mturchin20.github.io/InterPath/20190109.InterPath.Vs2.GK.Analysis.pValHistograms.vs4.html
+[20190109b]: https://mturchin20.github.io/InterPath/20190109.InterPath.Vs2.GK.perm1.Analysis.pValHistograms.vs4.html
+
+
+
+[20190303a]: https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Trans.Analysis.FirstRoundResults.vs1.html 
+[20190303b]: https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Trans.Analysis.pValHistograms.vs1.html
+[20190303c]: https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Trans.perm1.Analysis.pValHistograms.vs1.html
+[20190303d]: https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Cis.Analysis.FirstRoundResults.vs1.html 
+[20190303e]: https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Cis.Analysis.pValHistograms.vs1.html
+[20190303f]: https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GD.Cis.perm1.Analysis.pValHistograms.vs1.html
+
+[20181207g]: https://mturchin20.github.io/InterPath/20190303.InterPath.Vs2.GK.Analysis.FirstRoundResults.vs4.pValsVsNumVars.vs1.html 
 

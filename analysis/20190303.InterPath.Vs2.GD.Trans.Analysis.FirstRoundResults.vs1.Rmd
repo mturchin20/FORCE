@@ -1,0 +1,33 @@
+---
+title: "UKB First Round Main Results -- Gene Deserts"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: false
+---
+
+## Main Results (Window Sizes 250kb & 1Mb) -- British.Ran10k, Caribbean, Chinese, & Pakistani
+
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/20190213.InterPath.Vs2.GDs.125_500.Analysis.vs1.png)
+
+## Main Results (Window Sizes 50kb, 250kb & 1Mb) -- African, British.Ran4k, & Indian
+
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/20190213.InterPath.Vs2.GDs.25_125_500.Analysis.vs1.png)
+
+## Permuted Results (Window Sizes 250kb & 1Mb) -- British.Ran10k, Caribbean, Chinese, & Pakistani
+
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/20190213.InterPath.Vs2.GDs.125_500.perm1.Analysis.vs1.png)
+
+## Permuted Results (Window Sizes 50kb, 250kb & 1Mb) -- African, British.Ran4k, & Indian
+
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/20190213.InterPath.Vs2.GDs.25_125_500.perm1.Analysis.vs1.png)
+
+ * African N = ~3080
+ * British.Ran4k N = ~3824
+ * British.Ran10k N = ~9601 
+ * Caribbean N = ~3641
+ * Chinese N = ~1423
+ * Indian N = ~5158
+ * Pakistani N = ~1597
+
+
