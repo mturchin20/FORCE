@@ -62,17 +62,23 @@ List InterPath(mat X,mat Yall,mat GSM,mat Z,List regions,int cores = 1){
     
     //Pre-compute the Linear GSM
 //    mat GSM = GetLinearKernel(X);
-    
+   
+//for(i=0; i<p; i++){	
+// 	uvec j = regions[i];
+//	cout << j << endl;
+//};
+
     omp_set_num_threads(cores);
-#pragma omp parallel for schedule(dynamic)
+pragma omp parallel for schedule(dynamic)
     for(i=0; i<p; i++){
         //Pre-compute the Linear GSM
         uvec j = regions[i];
 	vec y = Yall.col(i);
+//	cout << j << endl;
 
         //Compute K covariance matrices
-        mat G = GetLinearKernel(X.rows(j-1));//Create the linear kernel
-        mat K = (GSM*nsnp-G*j.n_elem)/(nsnp-j.n_elem-1);
+        mat K = GetLinearKernel(X.rows(j-1));//Create the linear kernel
+        mat G = (GSM*nsnp-K*j.n_elem)/(nsnp-j.n_elem-1);
 	mat Q = G%K;
         
         //Transform K and G using projection M
@@ -81,7 +87,7 @@ List InterPath(mat X,mat Yall,mat GSM,mat Z,List regions,int cores = 1){
         mat b = zeros(n,q+1);
         b.col(0) = ones<vec>(n); b.cols(1,q) = Z.t();        
 	mat btb_inv = inv(b.t()*b);
-        mat Kc = K-b*btb_inv*(b.t()*K)-(K*b)*btb_inv*b.t()+b*btb_inv*(b.t()*(K*b))*btb_inv*b.t();
+        mat Gc = G-b*btb_inv*(b.t()*G)-(G*b)*btb_inv*b.t()+b*btb_inv*(b.t()*(G*b))*btb_inv*b.t();
         mat Qc = Q-b*btb_inv*(b.t()*Q)-(Q*b)*btb_inv*b.t()+b*btb_inv*(b.t()*(Q*b))*btb_inv*b.t();
         vec yc = (eye<mat>(n,n)-(b*btb_inv)*b.t())*y;
         
@@ -89,13 +95,14 @@ List InterPath(mat X,mat Yall,mat GSM,mat Z,List regions,int cores = 1){
         vec q = zeros(3); //Create k-vector q to save
         mat S = zeros(3,3); //Create kxk-matrix S to save
         
-        q(0) = as_scalar(yc.t()*Kc*yc);
+        q(0) = as_scalar(yc.t()*Gc*yc);
         q(1) = as_scalar(yc.t()*Qc*yc);
-        q(2) = as_scalar(yc.t()*yc);
-        
-        S(0,0) = as_scalar(accu(Kc%Kc));
-        S(0,1) = as_scalar(accu(Kc%Qc));
-        S(0,2) = as_scalar(accu(Kc%(eye<mat>(n,n)-(b*btb_inv)*b.t())));
+//        q(2) = as_scalar(yc.t()*yc);
+	q(2) = as_scalar(yc.t()*(eye<mat>(n,n)-(b*btb_inv)*b.t())*yc);
+
+        S(0,0) = as_scalar(accu(Gc%Gc));
+        S(0,1) = as_scalar(accu(Gc%Qc));
+        S(0,2) = as_scalar(accu(Gc%(eye<mat>(n,n)-(b*btb_inv)*b.t())));
         
         S(1,0) = S(0,1);
         S(1,1) = as_scalar(accu(Qc%Qc));
@@ -128,12 +135,12 @@ List InterPath(mat X,mat Yall,mat GSM,mat Z,List regions,int cores = 1){
         vec eigval;
         mat eigvec;
         
-        eig_sym(eigval,eigvec,delta_null(0)*Kc+delta_null(1)*(eye<mat>(n,n)-(b*btb_inv)*b.t()));
+        eig_sym(eigval,eigvec,delta_null(0)*Gc+delta_null(1)*(eye<mat>(n,n)-(b*btb_inv)*b.t()));
         
         //Find the eigenvalues of the projection matrix
         vec evals;
         
-        eig_sym(evals, (eigvec.cols(find(eigval>0))*diagmat(sqrt(eigval(find(eigval>0))))*trans(eigvec.cols(find(eigval>0))))*(Sinv(1,0)*Kc+Sinv(1,1)*Qc+Sinv(1,2)*(eye<mat>(n,n)-(b*btb_inv)*b.t()))*(eigvec.cols(find(eigval>0))*diagmat(sqrt(eigval(find(eigval>0))))*trans(eigvec.cols(find(eigval>0)))));
+        eig_sym(evals, (eigvec.cols(find(eigval>0))*diagmat(sqrt(eigval(find(eigval>0))))*trans(eigvec.cols(find(eigval>0))))*(Sinv(1,0)*Gc+Sinv(1,1)*Qc+Sinv(1,2)*(eye<mat>(n,n)-(b*btb_inv)*b.t()))*(eigvec.cols(find(eigval>0))*diagmat(sqrt(eigval(find(eigval>0))))*trans(eigvec.cols(find(eigval>0)))));
         Lambda.col(i) = evals;
         
         //Save point estimates and SE of the epistasis component
