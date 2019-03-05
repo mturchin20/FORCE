@@ -1,0 +1,45 @@
+---
+title: "UKB G*K Permuted: p-Values vs. # of variants"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float:
+      collapsed: false
+---
+
+# Summary
+
+Phenotype-permuted UKB G*K first round [main results][20181207a]: p-Values vs. # of variants
+
+# UKB Populations
+
+## African
+ * N = ~3080 
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/ExploringZeros/20190303.InterPath.Vs2.GK.perm1.Analysis.pValsVsNumSNPs.African.vs2.png)
+
+## British.Ran4k
+ * N = ~3824
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/ExploringZeros/20190303.InterPath.Vs2.GK.perm1.Analysis.pValsVsNumSNPs.British.Ran4000.vs2.png)
+
+## British.Ran10k
+ * N = ~9601
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/ExploringZeros/20190303.InterPath.Vs2.GK.perm1.Analysis.pValsVsNumSNPs.British.Ran10000.vs2.png)
+
+## Caribbean
+ * N = ~3641
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/ExploringZeros/20190303.InterPath.Vs2.GK.perm1.Analysis.pValsVsNumSNPs.Caribbean.vs2.png)
+
+## Chinese 
+ * N = ~1423
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/ExploringZeros/20190303.InterPath.Vs2.GK.perm1.Analysis.pValsVsNumSNPs.Chinese.vs2.png)
+
+## Indian 
+ * N = ~5158
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/ExploringZeros/20190303.InterPath.Vs2.GK.perm1.Analysis.pValsVsNumSNPs.Indian.vs2.png)
+
+## Pakistani
+ * N = ~1597
+![](https://raw.githubusercontent.com/mturchin20/InterPath/master/images/ExploringZeros/20190303.InterPath.Vs2.GK.perm1.Analysis.pValsVsNumSNPs.Pakistani.vs2.png)
+
+[20181207a]: https://mturchin20.github.io/InterPath/20181204.InterPath.Vs2.GK.Analysis.FirstRoundResults.vs4.html
