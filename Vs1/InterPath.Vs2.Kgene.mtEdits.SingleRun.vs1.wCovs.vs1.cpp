@@ -68,25 +68,20 @@ List InterPath(mat X,mat Yall,mat GSM,mat Z,mat regions,int cores = 1){
 // 	uvec j = regions[i];
 //	cout << j << endl;
 //};
-	cout << regions << endl;
 
     omp_set_num_threads(cores);
 #pragma omp parallel for schedule(dynamic)
     for(i=0; i<p; i++){
         //Pre-compute the Linear GSM
-	cout << p << endl;
-	cout << i << endl;
         uvec j = find_finite(regions.row(i));
+	vec y = Yall.col(i);
 //	cout << regions.row(i) << endl;
 //	cout << j << endl;
-	vec y = Yall.col(i);
-	cout << "yah1" << endl;
 
         //Compute K covariance matrices
         mat K = GetLinearKernel(X.rows(j)); //Create the linear kernel
         mat G = (GSM*nsnp-K*j.n_elem)/(nsnp-j.n_elem-1);
 	mat Q = G%K;
-	cout << "yah1" << endl;
         
         //Transform K and G using projection M
 //        mat b = zeros(n,j.n_elem+1);
