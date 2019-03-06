@@ -8,6 +8,7 @@
 #define ARMA_64BIT_WORD 1
 #include <RcppArmadillo.h>
 #include <omp.h>
+#include <stdlib.h>
 using namespace Rcpp;
 using namespace arma;
 
@@ -47,17 +48,17 @@ arma::mat droprows(arma::mat X, uvec j){
 
 // List InterPath(mat X,vec y,List regions,int cores = 1){
 // [[Rcpp::export]]
-List InterPath(mat X,mat Yall,mat GSM,mat Z,List regions,int cores = 1){
+List InterPath(mat X,mat Yall,mat GSM,mat Z,mat regions,int cores = 1){
     int i;
     const int n = X.n_cols;
     const int nsnp = X.n_rows;
-    const int p = regions.size();
+    const int p = regions.n_rows;
 //    const int p = 1;
     const int q = Z.n_rows;
 
     //Set up the vectors to save the outputs
-    NumericVector sigma_est(p);
-    NumericVector pve(p);
+    vec sigma_est(p);
+    vec pve(p);
     mat Lambda(n,p);
     
     //Pre-compute the Linear GSM
@@ -67,23 +68,29 @@ List InterPath(mat X,mat Yall,mat GSM,mat Z,List regions,int cores = 1){
 // 	uvec j = regions[i];
 //	cout << j << endl;
 //};
+	cout << regions << endl;
 
     omp_set_num_threads(cores);
-pragma omp parallel for schedule(dynamic)
+#pragma omp parallel for schedule(dynamic)
     for(i=0; i<p; i++){
         //Pre-compute the Linear GSM
-        uvec j = regions[i];
-	vec y = Yall.col(i);
+	cout << p << endl;
+	cout << i << endl;
+        uvec j = find_finite(regions.row(i));
+//	cout << regions.row(i) << endl;
 //	cout << j << endl;
+	vec y = Yall.col(i);
+	cout << "yah1" << endl;
 
         //Compute K covariance matrices
-        mat K = GetLinearKernel(X.rows(j-1));//Create the linear kernel
+        mat K = GetLinearKernel(X.rows(j)); //Create the linear kernel
         mat G = (GSM*nsnp-K*j.n_elem)/(nsnp-j.n_elem-1);
 	mat Q = G%K;
+	cout << "yah1" << endl;
         
         //Transform K and G using projection M
 //        mat b = zeros(n,j.n_elem+1);
-//        b.col(0) = ones<vec>(n); b.cols(1,j.n_elem) = trans(X.rows(j-1));
+//        b.col(0) = ones<vec>(n); b.cols(1,j.n_elem) = trans(X.rows(j));
         mat b = zeros(n,q+1);
         b.col(0) = ones<vec>(n); b.cols(1,q) = Z.t();        
 	mat btb_inv = inv(b.t()*b);
