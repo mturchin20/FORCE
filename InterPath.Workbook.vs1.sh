@@ -2559,8 +2559,8 @@ done
 #mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.Kgene.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #20190228 NOTE -- moved 'gene*G' to 'K*gene' since it makes more sense and is more consistent with our terminology thus far (eg things changed elsewhere in between the first runs of these guys and eventually coming back to actually finish them)
 #20190301 NOTE -- Main updates prior to redo of runs seems to have been moving K (pathway-based covariance matrix) to the 'noFix.noDups' setup, whereas keeping the underlying genotype information for the 'gene' covariance matrices in the non-noDups original setup (since if two genes overlap SNPs in the pathway, want to make sure those overlapped SNPs are appropriately extracted twice for each gene individually during the process -- the background matrix of K should not have duplicates, but the material for which the gene-based covariance matrices come from should maintain the duplicate SNPs for the aforementioned reason). 
-module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | head -n 1`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | head -n 3 | tail -n 1`; do
+module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | tail -n 2 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | head -n 1 | tail -n 1`; do
 		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; PhenoSeed1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
@@ -2588,8 +2588,9 @@ module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;
 	done; 
 done
 
-#Others: -n 8 -N 1-1 --mem 41g (??) 
-#Brit.Ran4k, Indian: -n 8 -N 1-1 --mem 51g (??)
+#African, Carib (except for a few), Chinese, Pakistani: -n 8 -N 1-1 --mem 41g
+#Brit.Ran4k: -n 8 -N 1-1 --mem 51g
+#Indian:  -n 8 -N 1-1 --mem 61g
 #Brit.Ran10k: -n 8 -N 1-1 --mem 81g (??)
 
 #GjDrop + wCov + Kgene setup

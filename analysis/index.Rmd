@@ -16,7 +16,7 @@ Webpage 'workbook' to collect data, results, figures/tables, and presentations f
 
 # Entries
 
-## Pathway vs. Genome (G\*K) Results 
+### Pathway vs. Genome (G\*K) Results 
 
  * 20190303 -- [UKB G\*K: p-Values vs. # of variants][20190303g] ([Phenotype-permuted version][20190303h])
 
@@ -33,7 +33,7 @@ Webpage 'workbook' to collect data, results, figures/tables, and presentations f
  * 20181102 -- [UKB pathway\*genome (G\*K) First Round of Main Results][20181102a]
 
 
-## Gene Desert (GD) Results
+### Gene Desert (GD) Results
  
  * 20190303 -- [UKB Gene Desert Cis: p-Values vs. # of variants][20190303k] ([Phenotype-permuted version][20190303l])
 
@@ -52,7 +52,7 @@ Webpage 'workbook' to collect data, results, figures/tables, and presentations f
  * 20190303 -- [UKB Gene Desert Trans Main Results][20190303a]
 
 
-## Gene Vs. Pathway (K\*gene) Results
+### Gene Vs. Pathway (K\*gene) Results
 
  
 
