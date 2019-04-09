@@ -2575,106 +2575,35 @@ done
 	
 #	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.IntronicPlus20kb.noDups.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.IntronicPlus20kb.txt	
 
+
+
+
+
+
+
 #pathway*gene (K*gene)
 
-Height African African NonSyn
-23 minutes and 13 seconds elapsed.
-Height African African Exonic
-24 minutes and 9 seconds elapsed.
-Height African African ExonicPlus
-29 minutes and 16 seconds elapsed.
-Height African African ExonicPlus20kb
-33 minutes and 18 seconds elapsed.
-Height African African IntronicPlus20kb
-31 minutes and 55 seconds elapsed.
-Height British British.Ran4000 NonSyn
-26 minutes and 23 seconds elapsed.
-Height British British.Ran4000 Exonic
-27 minutes and 4 seconds elapsed.
-Height British British.Ran4000 ExonicPlus
-37 minutes and 54 seconds elapsed.
-Height British British.Ran4000 ExonicPlus20kb
-43 minutes and 25 seconds elapsed.
-
 Height British British.Ran4000 IntronicPlus20kb
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/Height/IntronicPlus20kb/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.IntronicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths595.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/Height/IntronicPlus20kb/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.IntronicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths596.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
 .
 .
 .
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/Height/IntronicPlus20kb/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Reg
 ions.Exonic.c2.InterPath.vs1.Height.IntronicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths959.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
 In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/Height/IntronicPlus20kb/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Reg
 ions.Exonic.c2.InterPath.vs1.Height.IntronicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths960.Est.txt': No such file or directory
 Execution halted
-41 minutes and 4 seconds elapsed.
-
-Height Caribbean Caribbean NonSyn
-25 minutes and 19 seconds elapsed.
 
 Height Caribbean Caribbean Exonic
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/Height/Exonic/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.Exonic.Vs2.noDups.GjDrop_wCov_Kgene.Paths419.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/Height/Exonic/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.Exonic.Vs2.noDups.GjDrop_wCov_Kgene.Paths420.Est.txt': No such file or directory
-Execution halted
 .
 .
 .
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/Height/Exonic/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.Exonic.Vs2.noDups.GjDrop_wCov_Kgene.Paths629.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/Height/Exonic/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.Exonic.Vs2.noDups.GjDrop_wCov_Kgene.Paths630.Est.txt': No such file or directory
-Execution halted
-26 minutes and 36 seconds elapsed.
-
-Height Caribbean Caribbean ExonicPlus
-32 minutes and 40 seconds elapsed.
-Height Caribbean Caribbean ExonicPlus20kb
-37 minutes and 6 seconds elapsed.
-Height Caribbean Caribbean IntronicPlus20kb
-35 minutes and 35 seconds elapsed.
-Height Chinese Chinese NonSyn
-14 minutes and 17 seconds elapsed.
-Height Chinese Chinese Exonic
-15 minutes and 14 seconds elapsed.
-Height Chinese Chinese ExonicPlus
-20 minutes and 42 seconds elapsed.
-Height Chinese Chinese ExonicPlus20kb
-23 minutes and 40 seconds elapsed.
-Height Chinese Chinese IntronicPlus20kb
-22 minutes and 51 seconds elapsed.
 
 
 BMI African African NonSyn
@@ -2683,35 +2612,16 @@ In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :
   Consider playing with 'lim' or 'acc'.
 Warning message:
 In log(pVals1) : NaNs produced
-Warning message:
-In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :
-  Consider playing with 'lim' or 'acc'.
-Warning message:
-In log(pVals1) : NaNs produced
-Warning message:
-In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :
-  Consider playing with 'lim' or 'acc'.
-Warning message:
-In log(pVals1) : NaNs produced
-.
-.
-.
-29 minutes and 31 seconds elapsed.
+(a lot)
+
 BMI African African Exonic
 Warning message:
 In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :
   Consider playing with 'lim' or 'acc'.
 Warning message:
 In log(pVals1) : NaNs produced
-30 minutes and 12 seconds elapsed.
-BMI African African ExonicPlus
-30 minutes and 39 seconds elapsed.
-BMI African African ExonicPlus20kb
-34 minutes and 2 seconds elapsed.
-BMI African African IntronicPlus20kb
-32 minutes and 50 seconds elapsed.
-BMI British British.Ran4000 NonSyn
-26 minutes and 25 seconds elapsed.
+
+
 BMI British British.Ran4000 Exonic
 Error in file(file, "rt") : cannot open the connection
 Calls: read.table -> file
@@ -2732,69 +2642,17 @@ Error in file(file, "rt") : cannot open the connection
 n file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/BMI/Exonic/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.Exonic.Vs2.noDups.GjDrop_wCov_Kgene.Paths1270.Est.txt': No such file or directory
 Execution halted
-27 minutes and 7 seconds elapsed.
+
 
 BMI British British.Ran4000 ExonicPlus
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/BMI/ExonicPlus/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths181.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/BMI/ExonicPlus/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths182.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/BMI/ExonicPlus/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths183.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
 .
 .
 .
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/BMI/ExonicPlus/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths339.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/BMI/ExonicPlus/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths340.Est.txt': No such file or directory
-Execution halted
-38 minutes and 11 seconds elapsed.
-BMI British British.Ran4000 ExonicPlus20kb
-43 minutes and 52 seconds elapsed.
-BMI British British.Ran4000 IntronicPlus20kb
-42 minutes and 18 seconds elapsed.
-BMI Caribbean Caribbean NonSyn
-26 minutes and 5 seconds elapsed.
-BMI Caribbean Caribbean Exonic
-27 minutes and 25 seconds elapsed.
-BMI Caribbean Caribbean ExonicPlus
-33 minutes and 1 seconds elapsed.
-BMI Caribbean Caribbean ExonicPlus20kb
-37 minutes and 32 seconds elapsed.
-BMI Caribbean Caribbean IntronicPlus20kb
-36 minutes and 25 seconds elapsed.
-BMI Chinese Chinese NonSyn
-14 minutes and 5 seconds elapsed.
-BMI Chinese Chinese Exonic
-15 minutes and 6 seconds elapsed.
-BMI Chinese Chinese ExonicPlus
-20 minutes and 48 seconds elapsed.
-BMI Chinese Chinese ExonicPlus20kb
-23 minutes and 51 seconds elapsed.
-BMI Chinese Chinese IntronicPlus20kb
-22 minutes and 57 seconds elapsed.
-
 
 
 WaistAdjBMI African African NonSyn
@@ -2803,443 +2661,39 @@ In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :
   Consider playing with 'lim' or 'acc'.
 Warning message:
 In log(pVals1) : NaNs produced
-Warning message:
-In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :
-  Consider playing with 'lim' or 'acc'.
-.
-.
-.
-Warning message:
-In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :  
-  Consider playing with 'lim' or 'acc'.
-Warning message:
-In log(pVals1) : NaNs produced
-30 minutes and 1 seconds elapsed.
-WaistAdjBMI African African Exonic
-Warning message:
-In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :
-  Consider playing with 'lim' or 'acc'.
-Warning message:
-In log(pVals1) : NaNs produced
-30 minutes and 39 seconds elapsed.
-WaistAdjBMI African African ExonicPlus
-30 minutes and 39 seconds elapsed.
-WaistAdjBMI African African ExonicPlus20kb
-34 minutes and 4 seconds elapsed.
-WaistAdjBMI African African IntronicPlus20kb
-32 minutes and 45 seconds elapsed.
-WaistAdjBMI British British.Ran4000 NonSyn
-26 minutes and 21 seconds elapsed.
-WaistAdjBMI British British.Ran4000 Exonic
-27 minutes and 23 seconds elapsed.
-WaistAdjBMI British British.Ran4000 ExonicPlus
-37 minutes and 58 seconds elapsed.
-WaistAdjBMI British British.Ran4000 ExonicPlus20kb
-43 minutes and 31 seconds elapsed.
-WaistAdjBMI British British.Ran4000 IntronicPlus20kb
-41 minutes and 56 seconds elapsed.
-WaistAdjBMI Caribbean Caribbean NonSyn
-26 minutes and 0 seconds elapsed.
-WaistAdjBMI Caribbean Caribbean Exonic
-27 minutes and 24 seconds elapsed.
-WaistAdjBMI Caribbean Caribbean ExonicPlus
-32 minutes and 58 seconds elapsed.
-WaistAdjBMI Caribbean Caribbean ExonicPlus20kb
-37 minutes and 19 seconds elapsed.
-WaistAdjBMI Caribbean Caribbean IntronicPlus20kb
-35 minutes and 51 seconds elapsed.
-WaistAdjBMI Chinese Chinese NonSyn
-13 minutes and 58 seconds elapsed.
-WaistAdjBMI Chinese Chinese Exonic
-14 minutes and 56 seconds elapsed.
-WaistAdjBMI Chinese Chinese ExonicPlus
-20 minutes and 41 seconds elapsed.
-WaistAdjBMI Chinese Chinese ExonicPlus20kb
-23 minutes and 44 seconds elapsed.
-WaistAdjBMI Chinese Chinese IntronicPlus20kb
-22 minutes and 40 seconds elapsed.
-WaistAdjBMI Indian Indian NonSyn
-37 minutes and 58 seconds elapsed.
-WaistAdjBMI Indian Indian Exonic
-39 minutes and 14 seconds elapsed.
-WaistAdjBMI Chinese Chinese ExonicPlus
-20 minutes and 41 seconds elapsed.
-WaistAdjBMI Chinese Chinese ExonicPlus20kb
-23 minutes and 44 seconds elapsed.
-WaistAdjBMI Chinese Chinese IntronicPlus20kb
-22 minutes and 40 seconds elapsed.
+(a lot)
 
-WaistAdjBMI Pakistani Pakistani NonSyn
-14 minutes and 44 seconds elapsed.
-WaistAdjBMI Pakistani Pakistani Exonic
-15 minutes and 36 seconds elapsed.
-WaistAdjBMI Pakistani Pakistani ExonicPlus
-25 minutes and 23 seconds elapsed.
-WaistAdjBMI Pakistani Pakistani ExonicPlus20kb
-29 minutes and 31 seconds elapsed.
-WaistAdjBMI Pakistani Pakistani IntronicPlus20kb
-28 minutes and 22 seconds elapsed.
 HipAdjBMI African African NonSyn
 Warning message:
 In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :
   Consider playing with 'lim' or 'acc'.
 Warning message:
 In log(pVals1) : NaNs produced
-Warning message:
-In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :
-  Consider playing with 'lim' or 'acc'.
-Warning message:
-In log(pVals1) : NaNs produced
-Warning message:
-In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :  
-  Consider playing with 'lim' or 'acc'.
-Warning message:
-In log(pVals1) : NaNs produced
-Warning message:
-In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :  
-  Consider playing with 'lim' or 'acc'.
-Warning message:
-In log(pVals1) : NaNs produced
-29 minutes and 55 seconds elapsed.
+
+
 HipAdjBMI African African Exonic
 Warning message:
 In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :  
   Consider playing with 'lim' or 'acc'.
 Warning message:
 In log(pVals1) : NaNs produced
-30 minutes and 8 seconds elapsed.
-HipAdjBMI African African ExonicPlus
-30 minutes and 34 seconds elapsed.
-HipAdjBMI African African ExonicPlus20kb
-34 minutes and 2 seconds elapsed.
-HipAdjBMI African African IntronicPlus20kb
-32 minutes and 50 seconds elapsed.
-HipAdjBMI British British.Ran4000 NonSyn
-26 minutes and 26 seconds elapsed.
-HipAdjBMI British British.Ran4000 Exonic
-27 minutes and 27 seconds elapsed.
-HipAdjBMI British British.Ran4000 ExonicPlus
-38 minutes and 19 seconds elapsed.
-HipAdjBMI British British.Ran4000 ExonicPlus20kb
-42 minutes and 16 seconds elapsed.
-HipAdjBMI Caribbean Caribbean NonSyn
-26 minutes and 40 seconds elapsed.
-HipAdjBMI Caribbean Caribbean Exonic
-27 minutes and 53 seconds elapsed.
-HipAdjBMI Caribbean Caribbean ExonicPlus
-33 minutes and 29 seconds elapsed.
+
+
 HipAdjBMI Caribbean Caribbean ExonicPlus20kb
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/HipAdjBMI/ExonicPlus20kb/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths971.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/HipAdjBMI/ExonicPlus20kb/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths972.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/HipAdjBMI/ExonicPlus20kb/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths973.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/HipAdjBMI/ExonicPlus20kb/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths974.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/HipAdjBMI/ExonicPlus20kb/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths975.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/HipAdjBMI/ExonicPlus20kb/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths976.Est.txt': No such file or directory
-n file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/HipAdjBMI/ExonicPlus20kb/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths978.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/HipAdjBMI/ExonicPlus20kb/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths979.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
   cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/HipAdjBMI/ExonicPlus20kb/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths980.Est.txt': No such file or directory
-Execution halted
-37 minutes and 34 seconds elapsed.
-HipAdjBMI Caribbean Caribbean IntronicPlus20kb
-36 minutes and 39 seconds elapsed.
-HipAdjBMI Chinese Chinese NonSyn
-14 minutes and 16 seconds elapsed.
-HipAdjBMI Chinese Chinese Exonic
-15 minutes and 14 seconds elapsed.
-HipAdjBMI Chinese Chinese ExonicPlus
-20 minutes and 54 seconds elapsed.
-HipAdjBMI Chinese Chinese ExonicPlus20kb
-23 minutes and 57 seconds elapsed.
-HipAdjBMI Chinese Chinese IntronicPlus20kb
-23 minutes and 2 seconds elapsed.
-HipAdjBMI Pakistani Pakistani NonSyn
-14 minutes and 43 seconds elapsed.
-HipAdjBMI Pakistani Pakistani Exonic
-15 minutes and 33 seconds elapsed.
-HipAdjBMI Pakistani Pakistani ExonicPlus
-25 minutes and 22 seconds elapsed.
-HipAdjBMI Pakistani Pakistani ExonicPlus20kb
-29 minutes and 29 seconds elapsed.
-HipAdjBMI Pakistani Pakistani IntronicPlus20kb
-28 minutes and 21 seconds elapsed.
-
-
-
-
 
 
 
 
 Redo all Indian?
-
-
-Height Indian Indian NonSyn
-48 minutes and 36 seconds elapsed.
-
-Height Indian Indian Exonic
-Warning message:
-In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :  
-  Consider playing with 'lim' or 'acc'.
-Warning message:
-In log(pVals1) : NaNs produced
-Warning message:
-In davies(InterPath.output.Est[i, 1], lambda = Lambda, acc = 1e-08) :  
-  Consider playing with 'lim' or 'acc'.
-Warning message:
-In log(pVals1) : NaNs produced
-.
-.
-.
-48 minutes and 16 seconds elapsed.
-
-Height Indian Indian ExonicPlus
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths158.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths159.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths160.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths1209.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths1210.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-.
-.
-.
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths1259.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths1260.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths4717.Est.txt': No such file or directory
-Execution halted
-43 minutes and 14 seconds elapsed.
-
-Height Indian Indian ExonicPlus20kb
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths671.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths672.Est.txt': No such file or directory
-Execution halted
-.
-.
-.
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths679.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths680.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths890.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths1256.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths1257.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths1258.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths1259.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths1260.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths4717.Est.txt': No such file or directory
-Execution halted
-47 minutes and 45 seconds elapsed.
-
-Height Indian Indian IntronicPlus20kb
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/IntronicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.IntronicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths858.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/Height/IntronicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.IntronicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths859.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-
-
-WaistAdjBMI Indian Indian NonSyn
-37 minutes and 58 seconds elapsed.
-WaistAdjBMI Indian Indian Exonic
-39 minutes and 14 seconds elapsed.
-WaistAdjBMI Indian Indian ExonicPlus
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/WaistAdjBMI/ExonicPlus/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths4714.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/WaistAdjBMI/ExonicPlus/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths4715.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/WaistAdjBMI/ExonicPlus/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths4716.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/WaistAdjBMI/ExonicPlus/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus.Vs2.noDups.GjDrop_wCov_Kgene.Paths4717.Est.txt': No such file or directory
-Execution halted
-42 minutes and 24 seconds elapsed.
-WaistAdjBMI Indian Indian ExonicPlus20kb
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/WaistAdjBMI/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths162.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/WaistAdjBMI/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths163.Est.txt': No such file or directory
-.
-.
-.
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/WaistAdjBMI/ExonicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths170.Est.txt': No such file or directory
-Execution halted
-48 minutes and 57 seconds elapsed.
-WaistAdjBMI Indian Indian IntronicPlus20kb
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/WaistAdjBMI/IntronicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.IntronicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths113.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/WaistAdjBMI/IntronicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.IntronicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths114.Est.txt': No such file or directory
-Execution halted
-Error in file(file, "rt") : cannot open the connection
-Calls: read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/WaistAdjBMI/IntronicPlus20kb/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.IntronicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.Paths115.Est.txt': No such
-
 
 
 
@@ -3323,17 +2777,17 @@ done
 #        val4 <- Test2(val3); \
 #        print(val4);\"")
 
-for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | tail -n 2`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish'`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 5`; do
+for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | tail -n 2 | head -n 1`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | head -n 1`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 5 | head -n 1`; do
 			SECONDS=0;
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
-#			NumPaths=2
+#			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
+			NumPaths=190
 
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k
-			for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+1 )); do
+			for (( PathNum=180; PathNum <= $NumPaths; PathNum=PathNum+1 )); do
 				CheckFlag1=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.${k}.txt | perl -sane 'if ($. == $PathNum2) { print $F[$#F]; }' -- -PathNum2=$PathNum`
 				if [ $CheckFlag1 == "TRUE" ] ; then
 					R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
@@ -3341,20 +2795,22 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 					InterPath.output.Est <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.Paths${PathNum}.Est.txt\", header=F); \
 					InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.Paths${PathNum}.Eigenvalues.txt\", header=F); \
 					InterPath.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.Paths${PathNum}.PVE.txt\", header=F); \
-					Results1 <- c(); pVals1 <- c(); Genes <- unlist(strsplit(as.character(Pathways.wGenes[$PathNum,4]), \",\")); WeirdFlag1 <- 0; for (i in 1:ncol(InterPath.output.Eigenvalues)) { \
+					write(paste(\"Main:\", $PathNum, \" (\", as.character(Pathways.wGenes[$PathNum,1]), \")\", sep=\"\"), stderr()); \
+					Results1 <- c(); Results2 <- c(); pVals1 <- c(); Genes <- unlist(strsplit(as.character(Pathways.wGenes[$PathNum,4]), \",\")); WeirdFlag1 <- 0; for (i in 1:ncol(InterPath.output.Eigenvalues)) { \
 						if (neg.is.na(InterPath.output.Est[i,1])) { \ 
+							write(i, stderr()); \
 							Lambda <- sort(InterPath.output.Eigenvalues[,i], decreasing=TRUE); \
 							Davies.Output <- davies(InterPath.output.Est[i,1], lambda=Lambda, acc=1e-8); \
 							pVal <- 2*min(1-Davies.Output\$Qq, Davies.Output\$Qq); \
-							Results1 <- c(Results1, paste(c(as.character(Genes[i]), InterPath.output.Est[i,1], InterPath.output.PVE[i,1], pVal), collapse=\",\")); \ 
+							Results1 <- c(Results1, paste(c(as.character(Genes[i]), InterPath.output.Est[i,1], Lambda[1], InterPath.output.PVE[i,1], pVal), collapse=\",\")); \ 
 							pVals1 <- c(pVals1, pVal); \ 
 							if (pVal == 0) { WeirdFlag1 <- 1; }; if (is.na(pVal)) { WeirdFlag1 <- 1; }; \
 						} else { Results1 <- c(Results1, paste(c(as.character(Genes[i]), rep(NA,3)), collapse=\",\")); pVals1 <- c(pVals1, NA); }; \
 					}; \ 
-					Chisq.Stat <- -2 * sum(log(pVals1), na.rm=TRUE); Chisq.pVal <- \"PH\"; if (Chisq.Stat == 0) { Chisq.pVal <- -9; } else { Chisq.pVal <- pchisq(Chisq.Stat, df=2*length(Results1), lower.tail=FALSE); Results1 <- c(as.character(Pathways.wGenes[$PathNum,1]), Chisq.pVal, paste(Results1, collapse=\";\"), WeirdFlag1); }; \ 
-					write.table(matrix(Results1, nrow=1), file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
+					Chisq.Stat <- -2 * sum(log(pVals1), na.rm=TRUE); Chisq.pVal <- \"PH\"; if (Chisq.Stat == 0) { Chisq.pVal <- -9; } else { Chisq.pVal <- pchisq(Chisq.Stat, df=2*length(Results1), lower.tail=FALSE); }; Results2 <- c(as.character(Pathways.wGenes[$PathNum,1]), Chisq.pVal, paste(Results1, collapse=\";\"), WeirdFlag1); \ 
+					write.table(matrix(Results2, nrow=1), file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
 				fi
-			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.gz
+			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.vs2.gz
 			duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 		done;
 	done;
