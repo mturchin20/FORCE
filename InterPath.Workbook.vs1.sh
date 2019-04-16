@@ -2548,6 +2548,34 @@ write.table(r3, file="", sep=";", quote=FALSE, col.names=FALSE, row.names=FALSE)
 ```
 
 for l in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+        for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 1`; do
+                for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+                        for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+                                ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; gene_set_library1=$l;
+#                               pValBonf=`echo ".05 / $NumPaths" | bc -l`
+                                pValBonf=.00001
+
+                                echo $gene_set_library1 $ancestry1 $ancestry2 $i $k $pValBonf
+
+                                if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/Analyses/ArchitectureExplore/enrichr ]; then
+                                        mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/Analyses/ArchitectureExplore/enrichr
+                                fi
+
+                                zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $5 } }' | perl -ane 'if ($. == 1) { if (eof()) { print $F[0], "\n"; } else { print $F[0], ","; } } elsif (eof()) { print $F[0], "\n"; } else { print $F[0], ","; }' | \ 
+                                R -q -e "library(\"httr\"); enrichr_retrieve = \"http://amp.pharm.mssm.edu/Enrichr/enrich\"; gene_set_library = \"$gene_set_library1\"; Data1 <- read.table(file('stdin'), header=F); genes1 <- strsplit(as.character(Data1[,1]), split=\",\"); \ 
+                                enrichr1 <- POST(\"http://amp.pharm.mssm.edu/Enrichr/addList\", body=list(list=paste(genes1, collapse=\"\n\"))); \
+                                userListId <- strsplit(strsplit(strsplit(content(enrichr1, as=\"text\"), split=\"\\n\")[[1]][3], split=\"\\\"\")[[1]][3], split=\": \")[[1]][2]; \
+                                string1 <- paste(enrichr_retrieve, \"?userListId=\", userListId, \"&backgroundType=\", gene_set_library, sep=\"\"); \
+                                enrichr1.GET <- GET(string1); enrichr1.GET.content <- content(enrichr1.GET); \
+                                enrichr1.GET.content.results <- c(); for (i in 1:length(enrichr1.GET.content[[1]])) { enrichr1.GET.content.temp <- enrichr1.GET.content[[1]][i]; genes.sub1 <- unlist(enrichr1.GET.content.temp[6]); enrichr1.GET.content.temp[6] <- paste(genes.sub1, collapse=\",\"); enrichr1.GET.content.results <- rbind(enrichr1.GET.content.results, unlist(enrichr1.GET.content.temp)); }; \
+                                write.table(enrichr1.GET.content.results, file=\"\", sep=\";\", quote=FALSE, col.names=FALSE, row.names=FALSE);" 
+                                
+                        done
+                done
+        done
+done
+| grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/Analyses/ArchitectureExplore/enrichr/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.Regions.c2.${k}.noDups.wResults.wGenes.GjDrop_wCov_GK.enrichr.$gene_set_library1.vs1.txt.gz 
+for l in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
 	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 1`; do
 		for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 1`; do
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
@@ -2561,25 +2589,27 @@ for l in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n",
 					mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/Analyses/ArchitectureExplore/enrichr
 				fi
 	
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $5 } }' | perl -ane 'if ($. == 1) { if (eof()) { print $F[0], "\n"; } else { print $F[0], ","; } } elsif (eof()) { print $F[0], "\n"; } else { print $F[0], ","; }' | \
-				R -q -e "library(\"httr\"); enrichr_retrieve = \"http://amp.pharm.mssm.edu/Enrichr/enrich\"; gene_set_library = \"$gene_set_library1\"; Data1 <- read.table(file('stdin'), header=F); genes1 <- strsplit(as.character(Data1[,1]), split=\",\"); \ 
-				genes1 <- c('PHF14', 'RBM3', 'MSL1', 'PHF21A', 'ARL10', 'INSR', 'JADE2', 'P2RX7', 'LINC00662', 'CCDC101', 'PPM1B', 'KANSL1L', 'CRYZL1', 'ANAPC16', 'TMCC1', 'CDH8', 'RBM11', 'CNPY2', 'HSPA1L', 'CUL2', 'PLBD2', 'LARP7', 'TECPR2', 'ZNF302', 'CUX1', 'MOB2', 'CYTH2', 'SEC22C', 'EIF4E3', 'ROBO2', 'ADAMTS9-AS2', 'CXXC1', 'LINC01314', 'ATF7', 'ATP5F1'); \
+				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $5 } }' | \ 
+				R -q -e "library(\"httr\"); enrichr_retrieve = \"http://amp.pharm.mssm.edu/Enrichr/enrich\"; gene_set_library = \"$gene_set_library1\"; Data1 <- read.table(file('stdin'), header=F); for (j in 1:nrow(Data1)) { genes1 <- strsplit(as.character(Data1[j,1]), split=\",\")[[1]]; \ 
+				print(genes1); \
+				genes1 <- c(\"AKAP9\",\"CACNG3\",\"CACNG2\",\"GNB5\",\"ADCY1\",\"ADCY2\",\"ADCY3\",\"ADCY5\",\"ADCY6\",\"ADCY7\",\"CHRNA1\",\"CHRNA2\",\"CHRNA3\",\"CHRNA4\",\"CHRNA5\",\"CHRNA7\",\"ADCY8\",\"CHRNB2\",\"CHRNB3\",\"CHRNB4\",\"CHRND\",\"CHRNE\",\"CHRNG\",\"ADCY9\",\"AP2M1\",\"AP2S1\",\"CREB1\",\"AP2A1\",\"AP2A2\",\"AP2B1\",\"DLG1\",\"ADCY4\",\"EPB41L1\",\"PLCB1\",\"GABBR1\",\"GABRA1\",\"GABRA2\",\"GABRA4\",\"GABRA5\",\"GABRA6\",\"GABRB1\",\"GABRB2\",\"GABRB3\",\"GABRG2\",\"GABRG3\",\"GABRR1\",\"GABRR2\",\"CACNG4\",\"GNAI1\",\"GNAI2\",\"GNAI3\",\"GNAL\",\"GNB1\",\"GNB2\",\"GNB3\",\"GNG7\",\"GNG10\",\"GNG11\",\"GNGT1\",\"GNGT2\",\"GRIA1\",\"GRIA2\",\"GRIA4\",\"GRIK1\",\"GRIK2\",\"GRIK3\",\"GRIK4\",\"GRIK5\",\"GRIN1\",\"GRIN2A\",\"GRIN2B\",\"GRIN2C\",\"GRIN2D\",\"HRAS\",\"KCNJ2\",\"KCNJ3\",\"KCNJ4\",\"KCNJ5\",\"KCNJ6\",\"KCNJ9\",\"KCNJ10\",\"KCNJ12\",\"KCNJ15\",\"KCNJ16\",\"MDM2\",\"MYO6\",\"NEFL\",\"NSF\",\"PDPK1\",\"GNG13\",\"PLCB2\",\"PLCB3\",\"GNG2\",\"CHRNA9\",\"PRKACB\",\"PRKCA\",\"PRKCB\",\"PRKCG\",\"MAPK1\",\"GNG12\",\"RAF1\",\"RASGRF1\",\"RASGRF2\",\"CACNG8\",\"GNB4\",\"RPS6KA1\",\"RPS6KA2\",\"RRAS\",\"BRAF\",\"CALM1\",\"CALM2\",\"CALM3\",\"GRIP2\",\"CAMK4\",\"CAMK2A\",\"CAMK2B\",\"CAMK2D\",\"NCALD\",\"CAMKK1\",\"ACTN2\",\"CHRNA6\",\"GNG8\",\"PICK1\",\"AKAP5\",\"GABBR2\"); \
+				print(genes1); \
 				enrichr1 <- POST(\"http://amp.pharm.mssm.edu/Enrichr/addList\", body=list(list=paste(genes1, collapse=\"\n\"))); \
 				userListId <- strsplit(strsplit(strsplit(content(enrichr1, as=\"text\"), split=\"\\n\")[[1]][3], split=\"\\\"\")[[1]][3], split=\": \")[[1]][2]; \
 				string1 <- paste(enrichr_retrieve, \"?userListId=\", userListId, \"&backgroundType=\", gene_set_library, sep=\"\"); \
 				enrichr1.GET <- GET(string1); enrichr1.GET.content <- content(enrichr1.GET); \
-				print(as.character(genes1)); \
-				print(content(enrichr1)); \
-				print(string1); \
-				print(enrichr1.GET); \
-				enrichr1.GET.content.results <- c(); for (i in 1:length(enrichr1.GET.content[[1]])) { enrichr1.GET.content.temp <- enrichr1.GET.content[[1]][i]; genes.sub1 <- unlist(enrichr1.GET.content.temp[6]); enrichr1.GET.content.temp[6] <- paste(genes.sub1, collapse=\",\"); enrichr1.GET.content.results <- rbind(enrichr1.GET.content.results, unlist(enrichr1.GET.content.temp)); }; \
-				write.table(enrichr1.GET.content.results, file=\"\", sep=\";\", quote=FALSE, col.names=FALSE, row.names=FALSE);" 
-	
+				enrichr1.GET.content.results <- c(); for (i in 1:20) { enrichr1.GET.content.temp <- enrichr1.GET.content[[1]][[i]]; genes.sub1 <- unlist(enrichr1.GET.content.temp[6]); enrichr1.GET.content.temp[6] <- paste(genes.sub1, collapse=\",\"); enrichr1.GET.content.results <- rbind(enrichr1.GET.content.results, unlist(enrichr1.GET.content.temp)); }; \
+				write.table(enrichr1.GET.content.results, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/Analyses/ArchitectureExplore/enrichr/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.Regions.c2.InterPath.vs1.$i.$k.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.enrichr.$gene_set_library1.\", j, \".txt\", sep=\"\"), sep=\";\", quote=FALSE, col.names=FALSE, row.names=FALSE);}; warnings();"
 			done 
 		done  
 	done 
 done
-| grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/Analyses/ArchitectureExplore/enrichr/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.Regions.c2.${k}.noDups.wResults.wGenes.GjDrop_wCov_GK.enrichr.$gene_set_library1.vs1.txt.gz 
+				
+#perl -ane 'if ($. == 1) { if (eof()) { print $F[0], "\n"; } else { print $F[0], ","; } } elsif (eof()) { print $F[0], "\n"; } else { print $F[0], ","; }' | \
+#				print(as.character(genes1)); \
+#				print(content(enrichr1)); \
+#				print(string1); \
+#				print(enrichr1.GET); \
 
 #			join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | sort -k 1,1) <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.txt.pre.gz | sort -k 1,1) | perl -lane 'my @vals1 = split(/,/, $F[2]); splice(@F, 3, 0, scalar(@vals1)); print join("\t", @F);' | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.wResults.GjDrop_wCov_GK.txt.gz
 #| awk '{ print $1 }' | sort | uniq -c
@@ -5481,6 +5511,12 @@ ExonicPlus20kb
 >         done
 > done | sort | uniq -c
     140 1
+[  mturchin@node1324  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/Analyses/ArchitectureExplore/enrichr/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.Regions.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.enrichr.GO_Biological_Process_2018.6.txt | sort -t\; -rg -k 5,5 | head -n 5 
+1;response to glucagon (GO:0033762);6.34803547940206e-41;-2.38477188374967;220.729342611;ADCY4,ADCY3,ADCY2,ADCY1,GNG12,ADCY8,ADCY7,GNG11,ADCY6,ADCY5,GNG13,GNG10,CREB1,GNG2,ADCY9,GNB2,GNG7,GNB1,GNB4,GNB3,GNG8,PRKACB;1.97847105774697e-38;7.71686529656592e-32;2.40508968409638e-29
+2;cellular response to glucagon stimulus (GO:0071377);2.94409200914803e-39;-1.6713116525091;148.280471495478;ADCY4,ADCY3,ADCY2,ADCY1,GNG12,ADCY8,ADCY7,GNG11,ADCY6,ADCY5,GNG13,GNG10,GNG2,ADCY9,GNB2,GNG7,GNB1,GNB4,GNB3,GNG8,PRKACB;6.88181507138353e-37;1.67514145870335e-30;3.91564315971908e-28
+3;chemical synaptic transmission (GO:0007268);8.265201310495e-48;-1.35241119809989;146.617643888911;CHRNA1,GABRB3,GRIA1,GRIA2,GABRB2,GABRB1,CHRNA3,CHRNA2,CHRNA5,CHRNA4,CHRNA7,GRIK5,CHRNA6,GRIK3,CHRNA9,GRIK4,GRIK1,GRIK2,AKAP5,CHRND,GABRR2,GABRR1,GRIN2A,CHRNG,CHRNE,MAPK1,GRIA4,CHRNB2,GABRA2,GABBR2,GABRA1,CHRNB4,CHRNB3,GABRA6,GABRA5,GABRA4,GRIN2C,GRIN2B,GABRG3,GABRG2,GRIN2D,DLG1,AKAP9;7.72796322531282e-45;6.83709656744607e-40;6.39268529056208e-37
+4;response to nicotine (GO:0035094);2.00849794143466e-26;-2.21885303212191;131.289146205926;CHRNA1,CHRNB2,CHRNA3,CHRNB4,CHRNB3,CHRNA2,CHRNA5,CHRNA4,CHRNA7,CHRNA6,CHRND,CHRNG,CHRNE,MAPK1;2.34743196905176e-24;1.27602543616859e-20;1.49135472852204e-18
+5;gamma-aminobutyric acid signaling pathway (GO:0007214);2.45998403662495e-27;-2.06160315308898;126.313688476067;GABRA2,GABRB3,GABBR2,GABRB2,GABRA1,GABRB1,GABBR1,GABRA6,GABRA5,GABRA4,GABRG3,GABRG2,GNAI2,GABRR1;3.745032924323e-25;4.74435303696031e-21;6.33710012793984e-19
 
 
 ~~~
