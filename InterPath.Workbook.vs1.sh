@@ -2785,6 +2785,9 @@ done
 #        print(val4);\"")
 
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | tail -n 4 | head -n 4`; do
+
+NEED TO EDIT TO CHECK WHETHER A GENE HAS GREATER THAN A SINGLE VARIANT AS GOING ACROSS THINGS SO THIS WAY NOT USING THAT GENE IN THE INFORMATION IF NEEDED/AS NECESSARY
+
 	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish'`; do
 		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 			SECONDS=0;
@@ -2820,6 +2823,8 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 		done;
 	done;
 done;
+						
+						VarCount <- length(strsplit(strsplit(val1, \";\")[[1]][i], \",\")[[1]]); if (neg.is.na(InterPath.output.Est[i,1]) && VarCount > 1) { \ 
 
 #					Pathways <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt\", header=F); \ 
 
