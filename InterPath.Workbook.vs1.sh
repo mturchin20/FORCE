@@ -2538,7 +2538,7 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep
 		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
 #			pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
-			pValBonf=.0001; pValCutoff="pVal0001";
+			pValBonf=.001; pValCutoff="pVal001";
 			echo $k $pValBonf
 
 			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $0 } }' | awk '{ print $1 "\t" $5 "\t" $13 }' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.ArchExplr.$pValCutoff.txt 
@@ -2657,24 +2657,6 @@ R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); 
 		}; grid.arrange(grobs=plotPoints1, ncol=4, as.table=FALSE); dev.off(); \
 	}; \
 "
-
-ggPlotData <- melt(Posteriors.marginals.DirAssoc.Subset.wDir[hclust(dist(Posteriors.marginals.DirAssoc.Subset[,2:5]))$order,])
-#ggPlotData$snp <- factor(ggPlotData$snp, levels=Posteriors.marginals.DirAssoc[,1][hclust(dist(Posteriors.marginals.DirAssoc[,2:5]))$order])
-ggPlotData$snp <- factor(ggPlotData$snp, levels=Posteriors.marginals.DirAssoc.Subset[,1][hclust(dist(Posteriors.marginals.DirAssoc.Subset[,2:5]))$order])
-
-#ggplot(ggPlotData, aes(variable, snp, value)) + geom_tile(aes(fill=value), colour="white") + scale_fill_gradient(low = "white", high="steelblue") + coord_flip() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
-ggplot(ggPlotData, aes(variable, snp, value)) + geom_tile(aes(fill=value), colour="white") + scale_fill_gradientn(colours=c("darkred", "white", "steelblue")) + coord_flip() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-dev.off()
-
-png("/mnt/lustre/home/mturchin20/Lab_Stuff/StephensLab/Multivariate/Production/Manuscript/Images/Figure1/Scrap/bmass.Manuscript.Figure1.Paneld.Suppl.flash_svd.NewPrev.WIP.vs1.png", height=3000, width=5000, res=300)
-plot_grid(ggplot(Data3b.flash.ldf.l.Melted, aes(variable, Pheno, value)) + geom_tile(aes(fill=value), colour="white") + scale_fill_gradientn(colours=c("darkred", "white", "steelblue"), na.value = "white") + coord_flip() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + geom_text(data=Data3b.flash.ldf.l.2.Melted, aes(label=round(as.numeric(value), digits=2), angle=90)) + labs(title="HaemgenRBC2016 NewSNPs -- Flash Pheno Loadings"), ggplot(Data3b.svd.l.Melted, aes(variable, Pheno, value)) + geom_tile(aes(fill=value), colour="white") + scale_fill_gradientn(colours=c("darkred", "white", "steelblue"), na.value = "white") + coord_flip() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + geom_text(data=Data3b.svd.l.2.Melted, aes(label=round(as.numeric(value), digits=2), angle=90)) + labs(title="HaemgenRBC2016 NewSNPs -- SVD Pheno Loadings"), ggplot(Data3d.flash.ldf.l.Melted, aes(variable, Pheno, value)) + geom_tile(aes(fill=value), colour="white") + scale_fill_gradientn(colours=c("darkred", "white", "steelblue"), na.value = "white") + coord_flip() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + geom_text(data=Data3d.flash.ldf.l.2.Melted, aes(label=round(as.numeric(value), digits=2), angle=90)) + labs(title="HaemgenRBC2016 PreviousSNPs -- Flash Pheno Loadings"), ggplot(Data3d.svd.l.Melted, aes(variable, Pheno, value)) + geom_tile(aes(fill=value), colour="white") + scale_fill_gradientn(colours=c("darkred", "white", "steelblue"), na.value = "white") + coord_flip() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + geom_text(data=Data3d.svd.l.2.Melted, aes(label=round(as.numeric(value), digits=2), angle=90)) + labs(title="HaemgenRBC2016 PreviousSNPs -- SVD Pheno Loadings"), nrow=2, ncol=2, align='v', labels=c('A', 'B', 'C', 'D')); 
-dev.off(); 
-
-
-
-/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.ArchExplr.pValBonf.txt
-
 
 
 
