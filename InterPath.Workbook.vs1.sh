@@ -2638,10 +2638,10 @@ done
 #			join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | sort -k 1,1) <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.txt.pre.gz | sort -k 1,1) | perl -lane 'my @vals1 = split(/,/, $F[2]); splice(@F, 3, 0, scalar(@vals1)); print join("\t", @F);' | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.wResults.GjDrop_wCov_GK.txt.gz
 #| awk '{ print $1 }' | sort | uniq -c
 
-#From https://stackoverflow.com/questions/24614391/intersect-all-possible-combinations-of-list-elements, http://www.di.fc.ul.pt/~jpn/r/GraphicalTools/Venn.html, https://rstudio-pubs-static.s3.amazonaws.com/13301_6641d73cfac741a59c0a851feb99e98b.html, http://www.sthda.com/english/wiki/ggplot2-quick-correlation-matrix-heatmap-r-software-and-data-visualization, https://cran.r-project.org/web/packages/egg/vignettes/Ecosystem.html, https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html, https://stackoverflow.com/questions/34838870/grid-arrange-from-gridextras-exiting-with-only-grobs-allowed-in-glist-afte/34839064, https://stackoverflow.com/questions/40877386/grid-arrange-ggplot2-plots-by-columns-instead-of-by-row-using-lists 
+#From https://stackoverflow.com/questions/24614391/intersect-all-possible-combinations-of-list-elements, http://www.di.fc.ul.pt/~jpn/r/GraphicalTools/Venn.html, https://rstudio-pubs-static.s3.amazonaws.com/13301_6641d73cfac741a59c0a851feb99e98b.html, http://www.sthda.com/english/wiki/ggplot2-quick-correlation-matrix-heatmap-r-software-and-data-visualization, https://cran.r-project.org/web/packages/egg/vignettes/Ecosystem.html, https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html, https://stackoverflow.com/questions/34838870/grid-arrange-from-gridextras-exiting-with-only-grobs-allowed-in-glist-afte/34839064, https://stackoverflow.com/questions/40877386/grid-arrange-ggplot2-plots-by-columns-instead-of-by-row-using-lists, https://stackoverflow.com/questions/51911009/show-na-values-change-the-color-range-ggplot2-in-r, https://stackoverflow.com/questions/38867430/add-labels-to-a-plot-made-by-grid-arrange-from-multiple-plots 
 R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"pValBonf\", \"pVal0001\", \"pVal001\"); \
 	for (i in DataTypes[3]) { \
-		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllStrats.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.ArchExplr.\", i, \".StratComp.vs1.png\", sep=\"\"), height=15750, width=9000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2)); \ 
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllStrats.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.ArchExplr.\", i, \".StratComp.vs1.png\", sep=\"\"), height=15750, width=9000, res=300); par(oma=c(1,2,2,1), mar=c(5,5,5,5)); \ 
 		plotPoints1 <- c(); for (j in UKBioBankPops) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; plotPoints2 <- list(); ListCounter1 <- 1; \	
 			for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")) { \
 				Data1 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", i, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".NonSyn.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.ArchExplr.\", i, \".txt\", sep=\"\"), header=F); \
@@ -2652,9 +2652,9 @@ R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); 
 				Paths1 <- list(\"NonSyn\" = as.character(Data1[,1]), \"Exonic\" = as.character(Data2[,1]), \"Genic\" = as.character(Data3[,1]), \"Genic20kb\" = as.character(Data4[,1]), \"Intronic20kb\" = as.character(Data5[,1])); \
 				Paths1.Overlap <- crossprod(table(stack(Paths1))); Paths1.Overlap[lower.tri(Paths1.Overlap, diag=FALSE)] <- NA; Paths1.Overlap.Melted <- melt(Paths1.Overlap); colnames(Paths1.Overlap.Melted)[1] <- \"ind.1\"; colnames(Paths1.Overlap.Melted)[2] <- \"ind.2\"; Paths1.Overlap.Melted\$ind.1 <- factor(Paths1.Overlap.Melted\$ind.1, levels=c(\"NonSyn\", \"Exonic\", \"Genic\", \"Genic20kb\", \"Intronic20kb\")); Paths1.Overlap.Melted\$ind.2 <- factor(Paths1.Overlap.Melted\$ind.2, levels=c(\"NonSyn\", \"Exonic\", \"Genic\", \"Genic20kb\", \"Intronic20kb\")); \ 
 				print(Paths1.Overlap); \
-				ggplot1 <- ggplot(Paths1.Overlap.Melted, aes(ind.1, ind.2, fill=value)) + geom_tile(aes(fill=value), colour=\"steelblue\") + scale_fill_gradient(low = \"steelblue\", high=\"darkred\") + theme(axis.text.x = element_text(angle = 90, hjust = 1)); plotPoints2[[paste(\"P\", as.character(ListCounter1), sep=\"\")]] <- ggplot1; ListCounter1 <- ListCounter1 + 1; \
-			}; plotPoints1 <- c(plotPoints1, plotPoints2); \
-		}; grid.arrange(grobs=plotPoints1, ncol=4, as.table=FALSE); dev.off(); \
+				ggplot1 <- ggplot(Paths1.Overlap.Melted, aes(ind.1, ind.2, fill=value)) + geom_tile(colour=\"white\") + scale_fill_gradient(low = \"steelblue\", high=\"darkred\", na.value=\"white\") + geom_text(aes(ind.1, ind.2, label = value), color = \"black\", size = 6) + theme_minimal() + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), panel.grid.major = element_blank(), panel.border = element_blank(), panel.background = element_blank(), axis.ticks = element_blank(), axis.text.x = element_text(angle = 90, hjust = 1)); plotPoints2[[paste(\"P\", as.character(ListCounter1), sep=\"\")]] <- ggplot1; ListCounter1 <- ListCounter1 + 1; \
+			}; plotPoints1 <- c(plotPoints1, plotPoints2); print(warnings()); \
+		};  arrangeGrob(grobs=plotPoints1, ncol=4, as.table=FALSE); dev.off(); \
 	}; \
 "
 
@@ -2798,7 +2798,7 @@ done
 #        print(val4);\"")
 
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | tail -n 4 | head -n 4`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | head -n 5 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish'`; do
 		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 			SECONDS=0;
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
@@ -2812,9 +2812,9 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 				if [ $CheckFlag1 == "TRUE" ] ; then
 					R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
 					Pathways.wGenes <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.geneVSpath.wGenes.${k}.txt\", header=F); \ 
-					InterPath.output.Est <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.Paths${PathNum}.Est.txt\", header=F); \
-					InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.Paths${PathNum}.Eigenvalues.txt\", header=F); \
-					InterPath.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.Paths${PathNum}.PVE.txt\", header=F); \
+					InterPath.output.Est <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Paths${PathNum}.Est.txt\", header=F); \
+					InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Paths${PathNum}.Eigenvalues.txt\", header=F); \
+					InterPath.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Paths${PathNum}.PVE.txt\", header=F); \
 					Results1 <- c(); Results2 <- c(); pVals1 <- c(); Genes <- unlist(strsplit(as.character(Pathways.wGenes[$PathNum,4]), \",\")); WeirdFlag1 <- 0; for (i in 1:ncol(InterPath.output.Eigenvalues)) { \
 						if (neg.is.na(InterPath.output.Est[i,1])) { \ 
 							Lambda <- sort(InterPath.output.Eigenvalues[,i], decreasing=TRUE); \
@@ -2828,7 +2828,7 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 					Chisq.Stat <- -2 * sum(log(pVals1), na.rm=TRUE); Chisq.pVal <- \"PH\"; if (Chisq.Stat == 0) { Chisq.pVal <- -9; } else { Chisq.pVal <- pchisq(Chisq.Stat, df=2*length(Results1), lower.tail=FALSE); }; Results2 <- c(as.character(Pathways.wGenes[$PathNum,1]), Chisq.pVal, paste(Results1, collapse=\";\"), WeirdFlag1); \ 
 					write.table(matrix(Results2, nrow=1), file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
 				fi
-			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.gz
+			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene_perm1.AllPaths.Results.txt.pre.gz
 			duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 		done;
 	done;
@@ -2984,6 +2984,12 @@ ln /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/ForIsabell
 ln /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/ForIsabella/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.ExonicPlus50kb.Simulations.Format.txt /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/ForIsabella/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Annovar.ExonicPlus50kb.Simulations.Format.txt
 ln /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/ForIsabella/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.ExonicPlus50kb.Simulations.Format.txt /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/ForIsabella/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Annovar.ExonicPlus50kb.Simulations.Format.txt
 ln /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/ForIsabella/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.ExonicPlus50kb.Simulations.Format.txt /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/ForIsabella/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Annovar.ExonicPlus50kb.Simulations.Format.txt
+
+
+
+
+
+
 
 
 
