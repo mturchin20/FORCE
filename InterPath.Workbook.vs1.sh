@@ -2157,7 +2157,7 @@ done;
 
 R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\"); \
 	for (i in DataTypes) { \
-		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllTypes.noDups.Rnd2Vrsns.\", as.character(i), \".IntronicSubsets.Results.vs2.png\", sep=\"\"), height=13500, width=9000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(6,4)); \
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllTypes.noDups.Rnd2Vrsns.\", as.character(i), \".IntronicSubsets.Results.vs2.png\", sep=\"\"), height=13500, width=9000, res=300); par(oma=c(1,12,8,1), mar=c(5,5,4,2), mfrow=c(6,4)); \
 		for (j in UKBioBankPops) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \	
 			for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")) { \
 				Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".Exonic.noDups.Vs2.\", i, \".AllPaths.Results.txt.pre.gz\", sep=\"\"), header=F); \	
@@ -2177,7 +2177,8 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 				points(-log10(xVals8[order(xVals8, decreasing=TRUE)]), -log10(Data8[order(Data8[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(11, \"PiYG\")[3],  cex=1.5); \ 
 				abline(0,1, lwd=2, col=\"BLACK\"); \
 				legend(\"topleft\", c(\"Exonic\", \"Gene20kb\", \"Intronic20kb\", \"Intronic20kb25%\", \"Intronic20kb50%\", \"Intronic20kb75%\"), pch=c(16,16,16,16,16,16), col=c(brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[5], brewer.pal(11, \"PiYG\")[5], brewer.pal(11, \"PiYG\")[4], brewer.pal(11, \"PiYG\")[3]), bg=\"transparent\", cex=1.5); \ 
-			}; \
+			}; mtext(\"Height\", side=3, outer=TRUE, at=.13, cex=3); mtext(\"BMI\", side=3, outer=TRUE, at=.38, cex=3); mtext(\"WaistAdjBMI\", side=3, outer=TRUE, at=.63, cex=3); mtext(\"HipAdjBMI\", side=3, outer=TRUE, at=.88, cex=3); \
+		 mtext(\"African\", side=2, line=4, outer=TRUE, at=.93, cex=3); mtext(\"Brit.Ran4k\", side=2, line=4, outer=TRUE, at=.75, cex=3); mtext(\"Caribbean\", side=2, line=4, outer=TRUE, at=.575, cex=3); mtext(\"Chinese\", side=2, line=4, outer=TRUE, at=.425, cex=3); mtext(\"Indian\", side=2, line=4, outer=TRUE, at=.25, cex=3); mtext(\"Pakistani\", side=2, line=4, outer=TRUE, at=.07, cex=3); \
 		}; dev.off(); \
 	}; \
 "
@@ -2187,14 +2188,8 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllTypes.noDups.Rnd2Vrsns.GjDrop_wCov_GK.IntronicSubsets.Results.vs2.png /users/mturchin/LabMisc/RamachandranLab/InterPath/images/paper/InterPath_Manuscript_Suppl_KG_QQPlots_IntronicSubsets_vs2.png
 
- InterPath_Manuscript_
-
-
-ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllTypes.noDups.Rnd2Vrsns.GjDrop_wCov_GK.Cis.GDs.25_125_500.Results.vs1.png /users/mturchin/LabMisc/RamachandranLab/InterPath/images/paper/InterPath_Manuscript_Main_GDs_All3CisMain_vs4.png
-ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllTypes.noDups.Rnd2Vrsns.GjDrop_wCov_GK_perm1.Cis.GDs.25_125_500.Results.vs1.png /users/mturchin/LabMisc/RamachandranLab/InterPath/images/paper/InterPath_Manuscript_Suppl_GDs_All3CisPerm1_vs4.png
-
 #On MacbookPro
-#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/images/paper/InterPath_Manuscript*GDs_All*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/images/paper/.
+#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/images/paper/InterPath_Manuscript*IntronicSubsets* /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/images/paper/.
 
 
 
