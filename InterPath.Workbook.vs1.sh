@@ -1425,8 +1425,8 @@ done;
 #for l in `cat <(echo "GjOnly GjOnly_wCov" | perl -lane 'print join("\n", @F);')`; do
 for l in `cat <(echo "Vs2.noDups.GjDrop_wCov_GK Vs2.noDups.GjDrop_wCov_GK_perm1 Vs2.noDups.GjDrop_wCov_Kgene Vs2.noDups.GjDrop_wCov_Kgene_perm1" | perl -lane 'print join("\n", @F);') | tail -n 2 | head -n 1`; do
 	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip'`; do
-		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
-			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 5`; do
+		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 6 | tail -n 1`; do
+			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
 				SECONDS=0;
 				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 				ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -1461,7 +1461,7 @@ done;
 #for l in `cat <(echo "GjOnly GjOnly_wCov" | perl -lane 'print join("\n", @F);')`; do
 for l in `cat <(echo "Vs2.noDups.GjDrop_wCov_GK Vs2.noDups.GjDrop_wCov_GK_perm1 Vs2.noDups.GjDrop_wCov_Kgene Vs2.noDups.GjDrop_wCov_Kgene_perm1" | perl -lane 'print join("\n", @F);') | tail -n 2 | head -n 1`; do
 	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip'`; do
-		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Indian`; do
+		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 6 | tail -n 1`; do
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
 				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 				ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -1483,6 +1483,31 @@ done;
 #for l in `cat <(echo "Vs2.GjDrop_wCov_GK Vs2.GjDrop_wCov_geneG" | perl -lane 'print join("\n", @F);')`; do
 #for l in `cat <(echo "Vs2.GjDrop_wCov_GK_perm1 Vs2.noDups.GjDrop_wCov_GK" | perl -lane 'print join("\n", @F);')`; do
 #for l in `cat <(echo "Vs2.noDups.GjDrop_wCov_GK Vs2.noDups.GjDrop_wCov_GK_perm1" | perl -lane 'print join("\n", @F);')`; do
+
+for l in `cat <(echo "Vs2.noDups.GjDrop_wCov_GK Vs2.noDups.GjDrop_wCov_GK_perm1 Vs2.noDups.GjDrop_wCov_Kgene Vs2.noDups.GjDrop_wCov_Kgene_perm1" | perl -lane 'print join("\n", @F);') | tail -n 2 | head -n 1`; do
+	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip'`; do
+		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 1 | tail -n 1`; do
+			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+				SECONDS=0;
+				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+				ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+				
+				echo $l $i $j $k
+				
+				cd  /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k 
+				
+				tar -xvzf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/PrevRuns/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.${l}.AllPaths.Est.tar.gz  
+				tar -xvzf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/PrevRuns/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.${l}.AllPaths.Eigenvalues.tar.gz 
+				tar -xvzf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/PrevRuns/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.${l}.AllPaths.PVE.tar.gz 
+	
+				duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
+			done;
+		done;
+	done;
+done;
+
+
+
 
 
 
@@ -2178,6 +2203,10 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 				abline(0,1, lwd=2, col=\"BLACK\"); \
 				legend(\"topleft\", c(\"Exonic\", \"Gene20kb\", \"Intronic20kb\", \"Intronic20kb25%\", \"Intronic20kb50%\", \"Intronic20kb75%\"), pch=c(16,16,16,16,16,16), col=c(brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[5], brewer.pal(11, \"PiYG\")[5], brewer.pal(11, \"PiYG\")[4], brewer.pal(11, \"PiYG\")[3]), bg=\"transparent\", cex=1.5); \ 
 			}; mtext(\"Height\", side=3, outer=TRUE, at=.13, cex=3); mtext(\"BMI\", side=3, outer=TRUE, at=.38, cex=3); mtext(\"WaistAdjBMI\", side=3, outer=TRUE, at=.63, cex=3); mtext(\"HipAdjBMI\", side=3, outer=TRUE, at=.88, cex=3); \
+
+
+
+
 		 mtext(\"African\", side=2, line=4, outer=TRUE, at=.93, cex=3); mtext(\"Brit.Ran4k\", side=2, line=4, outer=TRUE, at=.75, cex=3); mtext(\"Caribbean\", side=2, line=4, outer=TRUE, at=.575, cex=3); mtext(\"Chinese\", side=2, line=4, outer=TRUE, at=.425, cex=3); mtext(\"Indian\", side=2, line=4, outer=TRUE, at=.25, cex=3); mtext(\"Pakistani\", side=2, line=4, outer=TRUE, at=.07, cex=3); \
 		}; dev.off(); \
 	}; \
@@ -2793,6 +2822,21 @@ done
 
 #pathway*gene (K*gene)
 
+
+
+-rw-r--r--. 1 mturchin sramacha 6228 Apr 16 15:57 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways911.slurm.error
+-rw-r--r--. 1 mturchin sramacha 6228 Apr 16 16:10 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways951.slurm.error
+-rw-r--r--. 1 mturchin sramacha 6228 Apr 16 16:16 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways981.slurm.error
+-rw-r--r--. 1 mturchin sramacha 6230 Apr 16 16:31 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways1001.slurm.error
+-rw-r--r--. 1 mturchin sramacha 6230 Apr 16 16:41 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways1071.slurm.error
+-rw-r--r--. 1 mturchin sramacha 6230 Apr 16 16:53 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways1091.slurm.error
+-rw-r--r--. 1 mturchin sramacha 6230 Apr 16 17:14 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways1131.slurm.error
+-rw-r--r--. 1 mturchin sramacha 6230 Apr 16 17:24 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways1151.slurm.error
+
+ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.BMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways131.slurm.error
+
+
+
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.Kgene.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #20190228 NOTE -- moved 'gene*G' to 'K*gene' since it makes more sense and is more consistent with our terminology thus far (eg things changed elsewhere in between the first runs of these guys and eventually coming back to actually finish them)
@@ -2916,15 +2960,16 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep
 	echo $j
 	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip'`; do
 		echo $i
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-			echo $k
+#			echo $k
 		
 #			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ExonicPlus20kb | grep GjDrop_wCov_Kgene.Path | grep -v Apr | grep PVE | wc	
-#			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ExonicPlus20kb/slurm | grep GjDrop_wCov_Kgene.Path | grep error | awk '{ print $5 }' | awk '{ if (($1 >= 175) && ($1 <= 225)) { print "1" } else { print "0" }}' | sort | uniq -c
-#			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ExonicPlus20kb | grep GjDrop_wCov_Kgene.Path | grep PVE | awk '{ print $6 }' | sort | uniq -c
-			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.gz
+#			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm | grep GjDrop_wCov_Kgene_perm1.Path | grep error | awk '{ print $5 }' | awk '{ if (($1 >= 175) && ($1 <= 225)) { print "1" } else { print "0" }}' | sort | uniq -c
+#			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ExonicPlus20kb | grep GjDrop_wCov_Kgene_perm1.Path | grep PVE | awk '{ print $6 "\t" $7 }' | sort | uniq -c
+#			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.gz
+			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k | grep -v perm1 | grep Kgene | wc
 
 		done 
 	done
@@ -5647,6 +5692,134 @@ IntronicPlus20kb .00001056189269117025
 -rw-r--r--. 1 mturchin sramacha    91496 Mar 12 22:05 ukb_chrAll_v2.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.IntronicPlus20kb25.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.txt.pre.gz
 [  mturchin@node1153  ~/LabMisc/RamachandranLab/InterPath]$ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/*/ | grep IntronicPlus20kb25 | grep -v ^d | wc
      24     216    6074
+(InterPath) [  mturchin@login003  ~]$for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000`; do
+>         echo $j
+>         for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip'`; do
+>                 echo $i
+>                 for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+>                         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+>                         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+> #                       echo $k
+>
+> #                       ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ExonicPlus20kb | grep GjDrop_wCov_Kgene.Path | grep -v Apr | grep PVE | wc
+>                         ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm | grep GjDrop_wCov_Kgene_perm1.Path | grep error | awk '{ print $5 }' | awk '{ if (($1 >= 175) && ($1 <= 225)) { print "1" } else { print "0" }}' | sort | uniq -c
+> #                       ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ExonicPlus20kb | grep GjDrop_wCov_Kgene_perm1.Path | grep PVE | awk '{ print $6 "\t" $7 }' | sort | uniq -c
+> #                       ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.gz
+>
+>
+>                 done
+>         done
+> done
+African;African;Afr;472840
+Height
+    474 1
+BMI
+    474 1
+WaistAdjBMI
+    474 1
+HipAdjBMI
+    474 1
+British;British.Ran4000;Brit4k;138503
+Height
+    474 1
+BMI
+    474 1
+WaistAdjBMI
+    474 1
+HipAdjBMI
+    474 1
+Caribbean;Caribbean;Carib;328593
+Height
+    474 1
+BMI
+    474 1
+WaistAdjBMI
+    474 1
+HipAdjBMI
+    474 1
+Chinese;Chinese;Chi;842743
+Height
+    474 1
+BMI 
+    474 1
+WaistAdjBMI
+    474 1
+HipAdjBMI
+    474 1
+Indian;Indian;Indn;549281
+Height
+      8 0
+    466 1
+BMI
+      1 0
+    473 1
+WaistAdjBMI
+    474 1
+HipAdjBMI
+    474 1
+Pakistani;Pakistani;Pkstn;232849
+Height
+    474 1
+BMI
+    474 1
+WaistAdjBMI
+    474 1
+HipAdjBMI
+    474 1
+(InterPath) [  mturchin@login003  ~]$for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000`; do
+>         echo $j
+>         for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip'`; do
+>                 echo $i
+>                 for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+>                         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+>                         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+> #                       echo $k
+> 
+> #                       ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ExonicPlus20kb | grep GjDrop_wCov_Kgene.Path | grep -v Apr | grep PVE | wc
+>                         ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm | grep GjDrop_wCov_Kgene.Path | grep error | awk '{ print $5 }' | awk '{ if (($1 >= 175) && ($1 <= 225)) { print "1" } else { print "0" }}' | sort | uniq -c
+> #                       ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ExonicPlus20kb | grep GjDrop_wCov_Kgene_perm1.Path | grep PVE | awk '{ print $6 "\t" $7 }' | sort | uniq -c
+> #                       ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.gz
+> #                       ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i | grep -v perm1 | grep Kgene | grep ExonicPlus20kb | wc
+> 
+>                 done
+>         done
+> done
+African;African;Afr;472840
+Height
+BMI
+WaistAdjBMI
+HipAdjBMI
+British;British.Ran4000;Brit4k;138503
+Height
+BMI
+WaistAdjBMI
+HipAdjBMI
+Caribbean;Caribbean;Carib;328593
+Height
+BMI
+WaistAdjBMI
+HipAdjBMI
+Chinese;Chinese;Chi;842743
+Height
+BMI
+WaistAdjBMI
+HipAdjBMI
+Indian;Indian;Indn;549281
+Height
+    474 1
+BMI
+    474 1
+WaistAdjBMI
+    474 1
+HipAdjBMI
+    474 1
+Pakistani;Pakistani;Pkstn;232849
+Height
+BMI
+WaistAdjBMI
+HipAdjBMI
+
+
 
 
 ~~~
