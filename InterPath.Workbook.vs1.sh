@@ -1423,10 +1423,10 @@ done;
 
 #for l in `cat <(echo "yTyAdj GjDrop PCadj wCov GjDrop_wCov" | perl -lane 'print join("\n", @F);')`; do
 #for l in `cat <(echo "GjOnly GjOnly_wCov" | perl -lane 'print join("\n", @F);')`; do
-for l in `cat <(echo "Vs2.noDups.GjDrop_wCov_GK Vs2.noDups.GjDrop_wCov_GK_perm1 Vs2.noDups.GjDrop_wCov_Kgene Vs2.noDups.GjDrop_wCov_Kgene_perm1" | perl -lane 'print join("\n", @F);') | tail -n 2 | head -n 1`; do
+for l in `cat <(echo "Vs2.noDups.GjDrop_wCov_GK Vs2.noDups.GjDrop_wCov_GK_perm1 Vs2.noDups.GjDrop_wCov_Kgene Vs2.noDups.GjDrop_wCov_Kgene_perm1" | perl -lane 'print join("\n", @F);') | tail -n 2 | tail -n 1`; do
 	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip'`; do
-		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 6 | tail -n 1`; do
-			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
+		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
+			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				SECONDS=0;
 				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 				ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -2799,8 +2799,8 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 			echo $i
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
-	#			pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
-				pValBonf=.001; pValCutoff="pVal001";
+				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
+#				pValBonf=.0001; pValCutoff="pVal0001";
 				echo $k $pValBonf
 		
 				if [ ! -d /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff ] ; then
@@ -2808,8 +2808,6 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 					mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff
 				fi
 			
-				rm -rf /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/pVal01
-	
 				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $0 } }' | awk '{ print $1 "\t" $5 "\t" $13 }' | perl -slane 'if ($F[0] =~ /$pathType1/) { print join("\t", @F); }' -- -pathType1=$l > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt 
 	
 				if [ -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt ] ; then 
@@ -2878,22 +2876,6 @@ done
 
 
 #pathway*gene (K*gene)
-
-
-
--rw-r--r--. 1 mturchin sramacha 6228 Apr 16 15:57 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways911.slurm.error
--rw-r--r--. 1 mturchin sramacha 6228 Apr 16 16:10 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways951.slurm.error
--rw-r--r--. 1 mturchin sramacha 6228 Apr 16 16:16 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways981.slurm.error
--rw-r--r--. 1 mturchin sramacha 6230 Apr 16 16:31 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways1001.slurm.error
--rw-r--r--. 1 mturchin sramacha 6230 Apr 16 16:41 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways1071.slurm.error
--rw-r--r--. 1 mturchin sramacha 6230 Apr 16 16:53 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways1091.slurm.error
--rw-r--r--. 1 mturchin sramacha 6230 Apr 16 17:14 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways1131.slurm.error
--rw-r--r--. 1 mturchin sramacha 6230 Apr 16 17:24 ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways1151.slurm.error
-
-ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.BMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Pathways131.slurm.error
-
-
-
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.geneG.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.Kgene.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #20190228 NOTE -- moved 'gene*G' to 'K*gene' since it makes more sense and is more consistent with our terminology thus far (eg things changed elsewhere in between the first runs of these guys and eventually coming back to actually finish them)
@@ -2983,9 +2965,9 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 				if [ $CheckFlag1 == "TRUE" ] ; then
 					R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
 					Pathways.wGenes <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.geneVSpath.wGenes.${k}.txt\", header=F); \ 
-					InterPath.output.Est <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.Paths${PathNum}.Est.txt\", header=F); \
-					InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.Paths${PathNum}.Eigenvalues.txt\", header=F); \
-					InterPath.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.Paths${PathNum}.PVE.txt\", header=F); \
+					InterPath.output.Est <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Paths${PathNum}.Est.txt\", header=F); \
+					InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Paths${PathNum}.Eigenvalues.txt\", header=F); \
+					InterPath.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene_perm1.Paths${PathNum}.PVE.txt\", header=F); \
 					Results1 <- c(); Results2 <- c(); pVals1 <- c(); Genes <- unlist(strsplit(as.character(Pathways.wGenes[$PathNum,4]), \",\")); WeirdFlag1 <- 0; for (i in 1:ncol(InterPath.output.Eigenvalues)) { \
 						VarDrop <- c(NA); VarCount <- length(strsplit(strsplit(as.character(Pathways.wGenes[$PathNum,3]), \";\")[[1]][i], \",\")[[1]]); if (neg.is.na(InterPath.output.Est[i,1])) { \ 
 							if (VarCount == 1) { \
@@ -3003,7 +2985,7 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 					Chisq.Stat <- -2 * sum(log(pVals1), na.rm=TRUE); Chisq.pVal <- \"PH\"; if (Chisq.Stat == 0) { Chisq.pVal <- -9; } else { Chisq.pVal <- pchisq(Chisq.Stat, df=2*length(pVals1[neg.is.na(pVals1)]), lower.tail=FALSE); }; Results2 <- c(as.character(Pathways.wGenes[$PathNum,1]), Chisq.pVal, paste(Results1, collapse=\";\"), WeirdFlag1, length(Genes), length(Results1), length(Results1[neg.is.na(Results1)]), length(pVals1[neg.is.na(pVals1)]), paste(VarDrop, collapse=\",\")); \ 
 					write.table(matrix(Results2, nrow=1), file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
 				fi
-			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.gz
+			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene_perm1.AllPaths.Results.txt.pre.gz
 			duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 		done;
 	done;
@@ -3013,7 +2995,7 @@ done;
 
 #Errors Check
 /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/DataRunChecks/
-for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000`; do
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000 | grep Indian`; do
 	echo $j
 	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip'`; do
 		echo $i
@@ -3023,10 +3005,10 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep
 #			echo $k
 		
 #			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ExonicPlus20kb | grep GjDrop_wCov_Kgene.Path | grep -v Apr | grep PVE | wc	
-#			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm | grep GjDrop_wCov_Kgene_perm1.Path | grep error | awk '{ print $5 }' | awk '{ if (($1 >= 175) && ($1 <= 225)) { print "1" } else { print "0" }}' | sort | uniq -c
+			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/slurm | grep GjDrop_wCov_Kgene_perm1.Path | grep error | awk '{ print $5 }' | awk '{ if (($1 >= 175) && ($1 <= 225)) { print "1" } else { print "0" }}' | sort | uniq -c
 #			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ExonicPlus20kb | grep GjDrop_wCov_Kgene_perm1.Path | grep PVE | awk '{ print $6 "\t" $7 }' | sort | uniq -c
 #			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.gz
-			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k | grep -v perm1 | grep Kgene | wc
+#			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k | grep -v perm1 | grep Kgene | wc
 
 		done 
 	done
