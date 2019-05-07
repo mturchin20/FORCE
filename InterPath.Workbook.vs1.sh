@@ -2915,6 +2915,43 @@ for m in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n",
 	done | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/enrichr/20190427.KG.TopResults.AllPhenos.AllPops.AllStrategies.$pValCutoff.enrichr.$m.AllPathwayGenes.vs1.txt.gz
 done; 
 
+#The below file `20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.txt.gz` was downloaded from https://genome.ucsc.edu/cgi-bin/hgTables, selecting assembly Feb. 2009 (GRCh37/hg19), group Genes and Gene Predictions, track refSeq Genes, table refGene, and output format 'all fields from selected table'; same was done for hg1
+#From MacBook Peo
+#scp -p /Users/mturchin20/Documents/Work/LabMisc/Data/UCSC/20190507.UCSCTableBrowser_refSeq.hg*.DefaultOutput.txt.gz mturchin@ssh.ccv.brown.edu:/users/mturchin/Data2/UCSCGB/.
+
+rm -f /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.Condensed.txt.gz; for i in `zcat /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.txt.gz | perl -lane 'print $F[$#F-3];' | sort | uniq`; do echo $i; zcat /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.txt.gz | grep [^-a-zA-Z0-9.]$i[^-a-zA-Z0-9.] | perl -lane 'if ($. == 1) { @refIDs = ($F[1]); $txStart = $F[4]; $txEnd = $F[5]; } else { if ($F[4] < $txStart) { $txStart = $F[4]; } if ($F[5] > $txEnd) { $txEnd = $F[5]; } push(@refIDs, $F[1]); } if (eof()) { print $F[$#F-3], "\t", $., "\t", $F[2], "\t", $F[3], "\t", $txStart, "\t", $txEnd, "\t", join(",", @refIDs); }' | sed 's/chr//g' >> /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.Condensed.txt; done; gzip -f /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.Condensed.txt
+rm -f /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg18.DefaultOutput.Condensed.txt.gz; for i in `zcat /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg18.DefaultOutput.txt.gz | perl -lane 'print $F[$#F-3];' | sort | uniq`; do echo $i; zcat /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg18.DefaultOutput.txt.gz | grep [^-a-zA-Z0-9.]$i[^-a-zA-Z0-9.] | perl -lane 'if ($. == 1) { @refIDs = ($F[1]); $txStart = $F[4]; $txEnd = $F[5]; } else { if ($F[4] < $txStart) { $txStart = $F[4]; } if ($F[5] > $txEnd) { $txEnd = $F[5]; } push(@refIDs, $F[1]); } if (eof()) { print $F[$#F-3], "\t", $., "\t", $F[2], "\t", $F[3], "\t", $txStart, "\t", $txEnd, "\t", join(",", @refIDs); }' | sed 's/chr//g' >> /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg18.DefaultOutput.Condensed.txt; done; gzip -f /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg18.DefaultOutput.Condensed.txt
+
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);')`; do
+	echo $l
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
+		echo $j
+		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+		ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+		for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
+			echo $i
+			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
+#				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
+				pValBonf=.001; pValCutoff="pVal001";
+				echo $k $pValBonf
+		
+				if [ ! -d /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr ] ; then
+					mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr
+				fi
+
+				cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | awk '{ print $2 }' | sed 's/,/\n/g' | sort | uniq -c | sort -rg -k 1,1 > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.txt
+
+			done
+		done 
+	done 
+done 
+
+
+
+
+
+
 
 
 heatplots (fix/alter pop-based one too?)
@@ -2922,7 +2959,8 @@ transfers to gsheets (both top pathways + enrichr ones)
 kgene misc
 trsnfr sppl to sppl in ovrlf
 gthb, ovrlf misc
-
+gnn dstrb pthwy (mlTnc)
+Kgene K; Kgene genes (mtlThnc)
 
 
 
