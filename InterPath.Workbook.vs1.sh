@@ -2932,34 +2932,24 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 			echo $i
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
-				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
-#				pValBonf=.001; pValCutoff="pVal001";
+#				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
+				pValBonf=.001; pValCutoff="pVal001";
 				echo $k $pValBonf
 		
 				if [ ! -d /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr ] ; then
 					mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr
 				fi
 
-				cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | awk '{ print $2 }' | sed 's/,/\n/g' | sort | uniq -c | sort -rg -k 1,1 | awk '{ print $2 "\t" $1 }' | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1 <- cbind(Data1, Data1[,2] / sum(Data1[,2])); write.table(Data1, file=\"\", quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v \> > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.txt
+				cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | awk '{ print $2 }' | sed 's/,/\n/g' | sort | uniq -c | sort -rg -k 1,1 | awk -v ancestry2b=$ancestry2 '{ print $2 "\t" $1 "\t" ancestry2b }' | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1 <- cbind(Data1, Data1[,2] / sum(Data1[,2])); write.table(Data1, file=\"\", quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v \> > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.txt
+				join -a 1 -1 1 -2 1 -e NA2 -o 0 1.2 1.3 1.4 2.2 2.3 <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.txt | sort -k 1,1) <(zcat /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.Condensed.txt.gz | awk '{ print $1 "\t" $3 "\t" $5 }' | sort -k 1,1) | sort -g -k 5,5 -k 6,6 | perl -lane 'if ($F[4] =~ m/(\d+)(_.*)/) { $F[4] = $1; } print join("\t", @F);' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt 
 
 			done
 		done 
 	done 
 done 
 
-[  mturchin@node1106  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.txt | head -n 10
-      4 STAT3
-      4 PIK3R1
-      4 PIK3CA
-      4 GRB2
-      3 SOS1
-      3 SHC1
-      3 JUN
-      3 GAB1
-      3 FOS
-      3 AKT1
 
-
+join -a 1 -1 1 -2 1 -e NA -o 0 1.2 1.3 2.2
 
 
 
@@ -6057,6 +6047,88 @@ HipAdjBMI
      55 SIG
     105 ST
       9 WNT
+[  mturchin@node1106  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/*/*/GeneCountDistr/*wLoc* | grep NA2 | head -n 10
+NA 1 1 NA2 NA2
+NA 1 1 NA2 NA2
+NA 1 1 NA2 NA2
+NA 1 1 NA2 NA2
+NA 1 1 NA2 NA2
+NA 1 1 NA2 NA2
+NA 1 1 NA2 NA2
+NA 1 1 NA2 NA2
+NA 1 1 NA2 NA2
+NA 1 1 NA2 NA2
+[  mturchin@node1106  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/*/*/GeneCountDistr/*wLoc* | grep NA2 | wc
+    711    3555   18996
+[  mturchin@node1106  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/*/*/GeneCountDistr/*wLoc* | grep NA2 | grep -v "NA2 NA2" | wc
+    179     895    7242
+[  mturchin@node1106  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/*/*/GeneCountDistr/*wLoc* | grep NA2 | grep -v "NA2 NA2" |awk '{ print $1 }' | sort | uniq -c
+     14 CACNA2D1
+     14 CACNA2D2
+     14 CACNA2D3
+     14 CACNA2D4
+      1 CCNA2
+      8 CHRNA2
+     16 CTNNA2
+      5 DNA2
+      8 EFNA2
+     31 IFNA2
+     31 IFNA21
+      1 KCNA2
+     10 KPNA2
+     12 PLXNA2
+[  mturchin@node1106  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/*/*/GeneCountDistr/*wLoc* | grep -v NA2 | awk '{ print $4 }' | sort | uniq -c
+   4911 1
+   1719 10
+   3636 11
+   2777 12
+    748 13
+   1539 14
+   1427 15
+   1789 16
+   3241 17
+     24 17_ctg5_hap1
+    775 18
+   3181 19
+     16 19_gl000209_random
+   3059 2
+   1307 20
+    486 21
+   1093 22
+   2982 3
+   1927 4
+      3 4_ctg9_hap1
+   2628 5
+   2052 6
+     36 6_mann_hap4
+    126 6_qbl_hap6
+    992 6_ssto_hap7
+   2362 7
+   1415 8
+   2082 9
+[  mturchin@node1106  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/*/*/GeneCountDistr/*wLoc* | grep -v NA2 |perl -lane 'if ($F[3] =~ m/(\d+)(_.*)/) { $F[3] = $1; } print join("\t", @F);' | awk '{ print $4 }' | sort | uniq -c
+   4911 1
+   1719 10
+   3636 11
+   2777 12
+    748 13
+   1539 14
+   1427 15
+   1789 16
+   3265 17
+    775 18
+   3197 19
+   3059 2
+   1307 20
+    486 21
+   1093 22
+   2982 3
+   1930 4
+   2628 5
+   3206 6
+   2362 7
+   1415 8
+   2082 9
 
 
 
