@@ -2948,6 +2948,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 	done 
 done 
 
+#From: https://stackoverflow.com/questions/12496684/how-to-draw-a-line-or-add-a-text-outside-of-the-plot-area-in-r
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);')`; do
 	echo $l
 	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
@@ -2963,12 +2964,13 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 
 #			rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz 
 #			cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.*.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt | sort -g -k 5,5 -k 6,6 | grep -v ^NA | grep -v -w "NA2" | perl -lane 'if ($. == 1) { $gene1 = $F[0]; $geneCount1 = 1; } if ($F[0] ne $gene1) { $gene1 = $F[0]; $geneCount1++; } print join("\t", @F), "\t", $geneCount1;' | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz	
-			zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); \ 
+			zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1 <- Data1[Data1[,3] %in% c(\"African\", \"British.Ran4000\", \"Indian\"),]; \ 
+				Cols <- rep(\"BLACK\", nrow(Data1)); Cols[Data1[,3] == \"African\"] <- \" \"; Cols[Data1[,3] == \"British.Ran4000\"] <- \" \"; Cols[Data1[,3] == \"Indian\"] <- \" \"; Data1 <- cbind(Data1, Cols); \ 
 				Chrs <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22); ChrBars <- c(); ChrBars.Begin <- c(); ChrBars.End <- c(); ChrBars.Mid <- c(); for (i in Chrs) { \
 					if (i %in% Data1[,5]) { Data1.ChrSub <- Data1[Data1[,5] == i,]; ChrBars <- c(ChrBars, i); ChrBars.Begin <- c(ChrBars.Begin, min(Data1.ChrSub[,7])); ChrBars.End <- c(ChrBars.End, max(Data1.ChrSub[,7])); ChrBars.Mid <- c(ChrBars.Mid, mean(Data1.ChrSub[,7])); }; \
 				}; \
-				png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.vs1.png\", height=2000, width=2000, res=300); \
-				plot(Data1[,7], Data1[,4], main=\"$l $i $k\"); \
+				png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AfrBritIndn.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.vs1.png\", height=2000, width=2000, res=300); par(xpd=NA); \
+				plot(Data1[,7], Data1[,2], main=\"$l $i $k\", col=Data1[,ncol(Data1)]); for (i in 1:length(ChrBars)) { axis(1, at=c(ChrBars.Begin[i], ChrBars.End[i]), line=2, lwd=3, lwd.ticks=0); }; \
 				dev.off(); \
 			";
 
