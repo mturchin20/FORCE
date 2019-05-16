@@ -2932,8 +2932,8 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 			echo $i
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
-#				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
-				pValBonf=.001; pValCutoff="pVal001";
+				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
+#				pValBonf=.001; pValCutoff="pVal001";
 				echo $k $pValBonf
 		
 				if [ ! -d /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr ] ; then
@@ -2948,10 +2948,37 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 	done 
 done 
 
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);')`; do
+	echo $l
+	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
+		echo $i
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+			pValCutoff="pValBonf";
+#			pValCutoff="pVal001";
+			echo $k $pValCutoff
+	
+			if [ ! -d /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr ] ; then
+				mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr
+			fi
 
-join -a 1 -1 1 -2 1 -e NA -o 0 1.2 1.3 2.2
+			rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz 
+			cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.*.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt | sort -g -k 5,5 -k 6,6 | perl -lane 'if ($. == 1) { $gene1 = $F[0]; $geneCount1 = 1; } if ($F[0] ne $gene1) { $gene1 = $F[0]; $geneCount1++; } print join("\t", @F), "\t", $geneCount1;' | grep -v ^NA | grep -v -w "NA2" | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz	
+
+		done
+	done 
+done 
 
 
+GRB2    2 Pakistani     0.00900900900900901     17      73314156
+SOCS3   2 Pakistani     0.00900900900900901     17      76352857
+YES1    1 Pakistani     0.0045045045045045      18      721587
+CDH2    1 Pakistani     0.0045045045045045      18      25530926
+SMAD4   1 Pakistani     0.0045045045045045      18      48556582
+
+TNF     1 British.Ran4000    0.0178571428571429 6       2828882
+HSPA1A  1 British.Ran4000    0.0178571428571429 6       3068877
+ME1     1 British.Ran4000    0.0178571428571429 6       83920120
+CITED2  1 British.Ran4000    0.0178571428571429 6       139692943
 
 
 
