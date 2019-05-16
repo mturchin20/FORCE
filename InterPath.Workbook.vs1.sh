@@ -2738,12 +2738,12 @@ R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); 
 #leftPlot <- tableGrob(data.frame(LeftTitles = unlist(LeftTitles)), theme=theme_minimal()); 
 #print(plot_grid(plotPoints1, ncol=4, nrow=7)); print(warnings()); dev.off(); \
 
-R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); library(\"cowplot\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
-	for (i in DataTypes1[4]) { for (l in DataTypes2 \
-		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllStrats.noDups.Vs2.\", l, \".AllPaths.Results.wGenes.wVars.ArchExplr.\", i, \".PopComp.vs1.png\", sep=\"\"), height=14000, width=10250, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \ 
+R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); library(\"cowplot\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
+	for (i in DataTypes1[4]) { for (l in DataTypes2[1]) { for (m in Paths) { \
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllStrats.noDups.Vs2.\", l, \".\", m, \".Results.wGenes.wVars.ArchExplr.\", i, \".PopComp.vs1.png\", sep=\"\"), height=14000, width=10250, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \ 
 		plotPoints1 <- c(); ListCounter1 <- 1; for (j in Strats) { \	
 			for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")) { \
-				Data1 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", i, \"/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", l, \".AllPaths.Results.wGenes.wVars.ArchExplr.\", i, \".txt\", sep=\"\"), header=F); \
+				Data1 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", m, \"/\", i, \"/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", l, \".AllPaths.Results.wGenes.wVars.\", m, \".ArchExplr.\", i, \".txt\", sep=\"\"), header=F); \
 				Data2 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", i, \"/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", l, \".AllPaths.Results.wGenes.wVars.ArchExplr.\", i, \".txt\", sep=\"\"), header=F); \
 				Data3 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", i, \"/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", l, \".AllPaths.Results.wGenes.wVars.ArchExplr.\", i, \".txt\", sep=\"\"), header=F); \
 				Data4 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", i, \"/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", l, \".AllPaths.Results.wGenes.wVars.ArchExplr.\", i, \".txt\", sep=\"\"), header=F); \
@@ -2757,7 +2757,7 @@ R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); 
 			}; \
 		}; print(length(plotPoints1)); grid.newpage(); pushViewport(viewport(layout = grid.layout(6, 5, height=unit(c(1,5,5,5,5,5), \"null\"), width=unit(c(1,5,5,5,5), \"null\")))); \ 
 		grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=3)); grid.text(\"WaistAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=4)); grid.text(\"HipAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=5)); \
-		for (i2 in 1:length(Strats)) { grid.text(Strats[i2], gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+1, layout.pos.col=1)); for (j2 in 1:4) { print(plotPoints1[[(4*i2)-4+j2]], vp=viewport(layout.pos.row=i2+1, layout.pos.col=j2+1)); };}; dev.off(); \
+		for (i2 in 1:length(Strats)) { grid.text(Strats[i2], gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+1, layout.pos.col=1)); for (j2 in 1:4) { print(plotPoints1[[(4*i2)-4+j2]], vp=viewport(layout.pos.row=i2+1, layout.pos.col=j2+1)); };}; dev.off(); }; \
 	};}; print(warnings()); \
 "
 
@@ -2948,7 +2948,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 	done 
 done 
 
-#From: https://stackoverflow.com/questions/12496684/how-to-draw-a-line-or-add-a-text-outside-of-the-plot-area-in-r
+#From: https://stackoverflow.com/questions/12496684/how-to-draw-a-line-or-add-a-text-outside-of-the-plot-area-in-r, https://www.researchgate.net/post/R_draw_lines_underneath_X-axis_labels_to_indicate_groups2
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);')`; do
 	echo $l
 	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
@@ -2964,13 +2964,13 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 
 #			rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz 
 #			cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.*.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt | sort -g -k 5,5 -k 6,6 | grep -v ^NA | grep -v -w "NA2" | perl -lane 'if ($. == 1) { $gene1 = $F[0]; $geneCount1 = 1; } if ($F[0] ne $gene1) { $gene1 = $F[0]; $geneCount1++; } print join("\t", @F), "\t", $geneCount1;' | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz	
-			zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1 <- Data1[Data1[,3] %in% c(\"African\", \"British.Ran4000\", \"Indian\"),]; \ 
-				Cols <- rep(\"BLACK\", nrow(Data1)); Cols[Data1[,3] == \"African\"] <- \" \"; Cols[Data1[,3] == \"British.Ran4000\"] <- \" \"; Cols[Data1[,3] == \"Indian\"] <- \" \"; Data1 <- cbind(Data1, Cols); \ 
+			zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz | R -q -e "library(\"RColorBrewer\"); Data1 <- read.table(file('stdin'), header=F); Data1 <- Data1[Data1[,3] %in% c(\"African\", \"British.Ran4000\", \"Indian\"),]; \ 
+			  	Cols <- rep(\"BLACK\", nrow(Data1)); Cols[Data1[,3] == \"African\"] <- brewer.pal(12, \"Paired\")[1]; Cols[Data1[,3] == \"British.Ran4000\"] <- brewer.pal(12, \"Paired\")[3]; Cols[Data1[,3] == \"Indian\"] <- brewer.pal(12, \"Paired\")[7]; Data1 <- cbind(Data1, Cols); \ 
 				Chrs <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22); ChrBars <- c(); ChrBars.Begin <- c(); ChrBars.End <- c(); ChrBars.Mid <- c(); for (i in Chrs) { \
 					if (i %in% Data1[,5]) { Data1.ChrSub <- Data1[Data1[,5] == i,]; ChrBars <- c(ChrBars, i); ChrBars.Begin <- c(ChrBars.Begin, min(Data1.ChrSub[,7])); ChrBars.End <- c(ChrBars.End, max(Data1.ChrSub[,7])); ChrBars.Mid <- c(ChrBars.Mid, mean(Data1.ChrSub[,7])); }; \
-				}; \
-				png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AfrBritIndn.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.vs1.png\", height=2000, width=2000, res=300); par(xpd=NA); \
-				plot(Data1[,7], Data1[,2], main=\"$l $i $k\", col=Data1[,ncol(Data1)]); for (i in 1:length(ChrBars)) { axis(1, at=c(ChrBars.Begin[i], ChrBars.End[i]), line=2, lwd=3, lwd.ticks=0); }; \
+				}; ChrBars; ChrBars.Begin; ChrBars.End; ChrBars.Mid; \
+				png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AfrBritIndn.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.vs1.png\", height=2000, width=2000, res=300); par(oma=c(0,0,0,0), mar=c(7,5,4,2), xpd=NA); \
+				plot(Data1[,7], Data1[,2], main=\"$l $i $k $pValCutoff\", xlab=\"\", ylab=\"Number of Appearances Across Pathways\", xaxt=\"n\", pch=19, col=as.character(Data1[,ncol(Data1)]), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); for (i in 1:length(ChrBars)) { axis(1, at=c(ChrBars.Begin[i], ChrBars.End[i]), labels=NA, line=1, lwd=1.5, lwd.ticks=1.5, cex=1, cex.axis=1, cex.lab=1); lineTemp1 <- 1; if ((i %% 2) == 0) { lineTemp1 <- 2.5; }; axis(1, at=ChrBars.Mid[i], labels=ChrBars[i], tick=F, line=lineTemp1, las=2, lwd=1.5, lwd.ticks=1.5, cex=1, cex.axis=1, cex.lab=1); }; mtext(\"Chromosome\", side=1, line=5.25, cex=1.5); \
 				dev.off(); \
 			";
 
@@ -3011,11 +3011,11 @@ CITED2  1 British.Ran4000    0.0178571428571429 6       139692943
 heatplots (fix/alter pop-based one too?)
 transfers to gsheets (both top pathways + enrichr ones)
 kgene misc
+Kgene K; Kgene genes (mtlThnc)
+gnn dstrb pthwy (mlTnc)
+GK qq rvs (drop 1s, subset paths)
 trsnfr sppl to sppl in ovrlf
 gthb, ovrlf misc
-gnn dstrb pthwy (mlTnc)
-Kgene K; Kgene genes (mtlThnc)
-
 
 
 
