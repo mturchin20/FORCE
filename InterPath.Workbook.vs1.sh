@@ -2916,7 +2916,7 @@ for m in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n",
 done; 
 
 #The below file `20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.txt.gz` was downloaded from https://genome.ucsc.edu/cgi-bin/hgTables, selecting assembly Feb. 2009 (GRCh37/hg19), group Genes and Gene Predictions, track refSeq Genes, table refGene, and output format 'all fields from selected table'; same was done for hg1
-#From MacBook Peo
+#From MacBook Pro
 #scp -p /Users/mturchin20/Documents/Work/LabMisc/Data/UCSC/20190507.UCSCTableBrowser_refSeq.hg*.DefaultOutput.txt.gz mturchin@ssh.ccv.brown.edu:/users/mturchin/Data2/UCSCGB/.
 
 rm -f /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.Condensed.txt.gz; for i in `zcat /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.txt.gz | perl -lane 'print $F[$#F-3];' | sort | uniq`; do echo $i; zcat /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.txt.gz | grep [^-a-zA-Z0-9.]$i[^-a-zA-Z0-9.] | perl -lane 'if ($. == 1) { @refIDs = ($F[1]); $txStart = $F[4]; $txEnd = $F[5]; } else { if ($F[4] < $txStart) { $txStart = $F[4]; } if ($F[5] > $txEnd) { $txEnd = $F[5]; } push(@refIDs, $F[1]); } if (eof()) { print $F[$#F-3], "\t", $., "\t", $F[2], "\t", $F[3], "\t", $txStart, "\t", $txEnd, "\t", join(",", @refIDs); }' | sed 's/chr//g' >> /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.Condensed.txt; done; gzip -f /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.Condensed.txt
@@ -2952,7 +2952,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 	echo $l
 	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
 		echo $i
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 #			pValCutoff="pValBonf";
 			pValCutoff="pVal001";
 			echo $k $pValCutoff
@@ -2963,11 +2963,34 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 
 #			rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz 
 #			cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.*.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt | sort -g -k 5,5 -k 6,6 | grep -v ^NA | grep -v -w "NA2" | perl -lane 'if ($. == 1) { $gene1 = $F[0]; $geneCount1 = 1; } if ($F[0] ne $gene1) { $gene1 = $F[0]; $geneCount1++; } print join("\t", @F), "\t", $geneCount1;' | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz	
-			
+			zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); \ 
+				Chrs <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22); ChrBars <- c(); ChrBars.Begin <- c(); ChrBars.End <- c(); ChrBars.Mid <- c(); for (i in Chrs) { \
+					if (i %in% Data1[,5]) { Data1.ChrSub <- Data1[Data1[,5] == i,]; ChrBars <- c(ChrBars, i); ChrBars.Begin <- c(ChrBars.Begin, min(Data1.ChrSub[,7])); ChrBars.End <- c(ChrBars.End, max(Data1.ChrSub[,7])); ChrBars.Mid <- c(ChrBars.Mid, mean(Data1.ChrSub[,7])); }; \
+				}; \
+				png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.AllPops.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.vs1.png\", height=2000, width=2000, res=300); \
+				plot(Data1[,7], Data1[,4], main=\"$l $i $k\"); \
+				dev.off(); \
+			";
 
 		done
 	done 
 done 
+
+#From MacBook Pro
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/GeneCountDistr
+#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/*/*/GeneCountDistr/*wLoc.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/GeneCountDistr/. 
+
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore
+#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllStrats.noDups.Vs2.GjDrop_wCov_*.AllPaths.Results.wGenes.wVars.ArchExplr.pVal*.*Comp.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/.
+
+
+
+
+PLA2G5  1       African 0.0028169014084507      1       20396686        14
+PLA2G5  1       Indian  0.0357142857142857      1       20396686        14
+PLA2G2D 1       African 0.0028169014084507      1       20439142        15
+PLA2G2D 1       Indian  0.0357142857142857      1       20439142        15
+			
 
 
 GRB2    2 Pakistani     0.00900900900900901     17      73314156
