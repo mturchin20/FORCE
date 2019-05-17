@@ -3006,8 +3006,8 @@ done
 
 DONE heatplots (fix/alter pop-based one too?)
 DONE gnn dstrb pthwy (mlTnc)
+DONE GK qq rvs (drop 1s, subset paths)
 DO transfers to gsheets (both top pathways + enrichr ones)
-DO GK qq rvs (drop 1s, subset paths)
 kgene misc
 Kgene K; Kgene genes (mtlThnc)
 trsnfr sppl to sppl in ovrlf
@@ -3175,6 +3175,20 @@ done;
 
 #					Pathways <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt\", header=F); \ 
 
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);')`; do
+        for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip'`; do
+                for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000`; do
+                        for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+                                ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
+                                echo $l $ancestry1 $ancestry2 $i $k
+
+				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene_perm1.AllPaths.Results.txt.pre.gz | grep $l"_" | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene_perm1.$l.Results.txt.pre.gz
+
+                        done;
+                done;
+        done;
+done;
+
 #Errors Check
 /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/DataRunChecks/
 for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000 | grep Indian`; do
@@ -3288,16 +3302,69 @@ zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin
 zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.*NonSyn*txt.pre.gz | grep -e '-2;'
 (InterPath) [  mturchin@login003  ~/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/HipAdjBMI/ExonicPlus20kb]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.gz | perl -lane 'my @vals1 = split(/,/, $F[$#F]); if ($#vals1 == 0) { print "0"; } else { print "1"; }' | sort | uniq -c
 
-gzip: /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.gz: unexpected end of file
-    837 0
-     60 1
-
-reg qq plots
-go across xaxis and per pathway, show p-values plus the bonferonni correction per pathway via red vs. black datapoints?
-
-zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); Genes <- strsplit(as.character(Pathways.wGenes[$PathNum,3]), \";\")[[1]]; pVals1 <- c(); for (i in 1:length(Genes)) { pVals1 <- c(pVal1, strsplit(Genes[i], \",\")[[1]][6]) }; pVals1 <- pVals1[!is.na(pVals1)]; bonf
-
+R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_Kgene\", \"GjDrop_wCov_Kgene_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
+	for (i in DataTypes[1]) { for (l in Paths[1]) { \
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllTypes.noDups.Rnd2Vrsns.\", as.character(i), \".AllPaths.Results.vs1.png\", sep=\"\"), height=13500, width=9000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(6,4)); \ 
+		for (j in UKBioBankPops) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \	
+			for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")) { \
+				Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.Vs2.noDups.\", i, \".\", l, \".Results.txt.pre.gz\", sep=\"\"), header=F); \	
+				Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.Vs2.noDups.\", i, \".\", l, \".Results.txt.pre.gz\", sep=\"\"), header=F); \	
+				Data3 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.Vs2.noDups.\", i, \".\", l, \".Results.txt.pre.gz\", sep=\"\"), header=F); \	
+				Data4 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.Vs2.noDups.\", i, \".\", l, \".Results.txt.pre.gz\", sep=\"\"), header=F); \	
+				Data1 <- Data1[!is.na(Data1[,2]) & Data1[,2] != 0,]; Data2 <- Data2[!is.na(Data2[,2]) & Data2[,2] != 0,]; Data3 <- Data3[!is.na(Data3[,2]) & Data3[,2] != 0,]; Data4 <- Data4[!is.na(Data4[,2]) & Data4[,2] != 0,]; \ 	
+				xVals1 <- seq(1/nrow(Data1), 1, by=1/nrow(Data1)); xVals2 <- seq(1/nrow(Data2), 1, by=1/nrow(Data2)); xVals3 <- seq(1/nrow(Data3), 1, by=1/nrow(Data3)); xVals4 <- seq(1/nrow(Data4), 1, by=1/nrow(Data4)); \ 
+				xlimMax <- max(c(-log10(xVals1), -log10(xVals2), -log10(xVals3), -log10(xVals4))); ylimMax <- max(c(-log10(Data1[,2]), -log10(Data2[,2]), -log10(Data3[,2]), -log10(Data4[,2]))); \
+				plot(-log10(xVals1[order(xVals1, decreasing=TRUE)]), -log10(Data1[order(Data1[,2], decreasing=TRUE),2]), main=paste(ancestry2, \": \", k, sep=\"\"), xlab=\"-log10(Expected p-Values)\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,xlimMax), ylim=c(0,ylimMax), type=\"b\", pch=16, col=brewer.pal(12, \"Set2\")[1], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \ 
+				points(-log10(xVals2[order(xVals2, decreasing=TRUE)]), -log10(Data2[order(Data2[,2], decreasing=TRUE),2]), type=\"b\", pch=16, col=brewer.pal(12, \"Set2\")[2], cex=1.5); \
+				points(-log10(xVals3[order(xVals3, decreasing=TRUE)]), -log10(Data3[order(Data3[,2], decreasing=TRUE),2]), type=\"b\", pch=16, col=brewer.pal(12, \"Set2\")[3], cex=1.5); \
+				points(-log10(xVals4[order(xVals4, decreasing=TRUE)]), -log10(Data4[order(Data4[,2], decreasing=TRUE),2]), type=\"b\", pch=16, col=brewer.pal(12, \"Set2\")[4],  cex=1.5); \ 
+				abline(0,1, lwd=2, col=\"BLACK\"); \
+				legend(\"topleft\", c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"), pch=c(16,16,16,16), col=c(brewer.pal(12, \"Set2\")[1], brewer.pal(12, \"Set2\")[2], brewer.pal(12, \"Set2\")[3], brewer.pal(12, \"Set2\")[4]), bg=\"transparent\", cex=1.5); \ 
+			}; \
+		}; dev.off(); }; \
+	}; \
 "
+
+R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_Kgene\", \"GjDrop_wCov_Kgene_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
+	for (i in DataTypes[1]) { for (l in Paths[1]) { \
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllTypes.noDups.Rnd2Vrsns.\", as.character(i), \".\", l, \".InDepth.Results.vs1.png\", sep=\"\"), height=13500, width=9000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(6,4)); \ 
+		for (j in UKBioBankPops) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \	
+			for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")) { \
+				Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.Vs2.noDups.\", i, \".\", l, \".Results.txt.pre.gz\", sep=\"\"), header=F); \	
+				Data1 <- Data1[!is.na(Data1[,2]) & Data1[,2] != 0,]; Data1 <- Data1[order(-log10(Data1[,2]), decreasing=TRUE),]; Data2 <- c(); \ 
+				ylimMax <- 0; for (m in 1:nrow(Data1)) { \
+					tempVals1 <- as.numeric(as.character((sapply(strsplit(as.character(Data1[m,3]), \";\")[[1]], function(x) { return(strsplit(x, \",\")[[1]][6]);})))); \
+					ylimMax <- max(c(ylimMax, -log10(tempVals1))); \
+					Data2 <- rbind(Data2, c(Data1[m,1], paste(tempVals1, collapse=\",\"))); \
+				}; \	
+				plot(0, main=paste(ancestry2, \": \", k, sep=\"\"), xlab=\"Pathway\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,nrow(Data1)), ylim=c(0,ylimMax), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+				for (n in 1:nrow(Data2)) { \
+					Data3 <- as.numeric(as.character(strsplit(Data2[n,2], \",\")[[1]])); pValBonf <- .05 / length(Data3); Data3.col <- rep(\"BLACK\", length(Data3)); Data3.col[Data3 < pValBonf] <- \"RED\"; Data3 <- cbind(Data3, Data3.col); \
+					points(rep(n, nrow(Data3)), -log10(as.numeric(as.character(Data3[,1]))), type=\"p\", pch=16, col=Data3[,2], cex=1.5); points(n, -log10(pValBonf), type=\"p\", pch=\"-\", col=\"PURPLE\", cex=3); \ 
+				}; \
+				points(seq(1,nrow(Data2),by=1), -log10(Data1[,2]), type=\"b\", pch=16, col=\"BLUE\", cex=1.5); \
+			}; \
+		}; dev.off(); }; \
+	}; \
+"
+
+				legend(\"topright\", c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"), pch=c(16,16,16,16), col=c(brewer.pal(12, \"Set2\")[1], brewer.pal(12, \"Set2\")[2], brewer.pal(12, \"Set2\")[3], brewer.pal(12, \"Set2\")[4]), bg=\"transparent\", cex=1.5); \ 
+				
+#From MacBook Air
+#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/*Kgene*InDepth*vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -6203,6 +6270,12 @@ KEGG_PRIMARY_BILE_ACID_BIOSYNTHESIS     156
     213    1278   19882
 [  mturchin@node1314  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.$l.no1Drop.Results.txt.pre.gz | wc
     213    1491   20395
+[  mturchin@node1314  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.gz | wc
+   1329   11961 5722515
+[  mturchin@node1314  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.txt.pre.gz | grep BIOCARTA | wc
+    217    1953  423362
+[  mturchin@node1314  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.$l.Results.txt.pre.gz | wc
+    217    1953  423362
 
 
 
