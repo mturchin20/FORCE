@@ -2402,7 +2402,39 @@ done
 
 #On MacBook Pro
 scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/*AllPhenos.noDups.Rnd2Vrsns*AllAvail.pValHists.vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/.
+
+cat /users/mturchin/Data2/UCSCGB/hg19.chrom.sizes | grep -v _gl | grep -v _hap | grep -v chrM | grep -v chrY | sed 's/chr//g' | sort -g -k 1,1 | R -q -e "Data1 <- read.table(file('stdin'), header=F); CumSum <- 0; CumSumCum <- c(); for (i in 1:22) { CumSum <- CumSum + Data1[Data1[,1] == i,2]; CumSumCum <- c(CumSumCum, CumSum); }; CumSumCum <- c(CumSumCum[length(CumSumCum)] + Data1[1,2], CumSumCum); Data1 <- cbind(Data1, CumSumCum); write.table(Data1, quote=FALSE, row.name=FALSE, col.name=FALSE);" | grep -v \> 
+
+> /users/mturchin/Data2/UCSCGB/hg19.chrom.edit1.forR.wCumSums.sizes
 	
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);')`; do
+	echo $l
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
+		echo $j
+		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+		ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+		for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
+			echo $i
+			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
+				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
+#				pValBonf=.001; pValCutoff="pVal001";
+				echo $k $pValBonf
+		
+				if [ ! -d /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ManhattanTry1 ] ; then
+					mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ManhattanTry1
+				fi
+
+				join -a 1 -1 1 -2 1 -e NA2 -o 0 1.2 1.3 2.2 2.3 2.4 <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); foreach my $entry1 (@vals1) { print $entry1, "\t", $F[0], "\t", $F[2] };' | sort -k 1,1) <(zcat /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.Condensed.txt.gz | awk '{ print $1 "\t" $3 "\t" $5 "\t" $6 }' | sort -k 1,1) > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ManhattanTry1/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wLoc.txt 
+
+			done
+		done 
+	done 
+done 
+
+
+
+
 
 
 
@@ -6403,6 +6435,54 @@ BIOCARTA_NO1_PATHWAY 0.870326516161489 PDE3B,0.908665226796863,-0.05187079730955
 [  mturchin@node1312  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/Analyses/KgeneThreshExplore/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_Kgene.BIOCARTA.Results.wVarInfo.txt.pre.gz | head -n 2
 BIOCARTA_41BB_PATHWAY 0.548498356601931 JUN,0.398487088912971,0.00789952672048837,0.00101642051222676,0.00813247568929018,0.796974177825942;MAP3K5,0.147609833917322,0.0120651793330269,0.000272857305268682,0.012497277790601,0.295219667834643;MAPK8,0.0394661833097756,0.00555327532239518,0.000260320948259815,0.00579744174730368,0.0789323666195512;CHUK,0.506490974309247,0.000364674661668611,0.000177911335120254,0.000378595273221266,0.987018051381505;MAPK14,0.191587646535865,0.00247954661390434,0.000302447773835655,0.00256349125696258,0.383175293071729;MAP3K1,0.844003369569153,-0.0147386026124108,0.000906100535012548,-0.01556125637711,0.311993260861694;RELA,0.671211674052153,-0.00586994338739183,0.00360333043965995,-0.00613542879956975,0.657576651895694;TNFRSF9,0.782643605204591,-0.00841428391964643,0.000921943840358743,-0.00879824280217032,0.434712789590818;IKBKB,0.242523453651236,0.0026963264376583,0.000145003316580439,0.00281929413726087,0.485046907302471;MAP4K5,0.04514982369127,0.0118946405280049,0.000558662017852915,0.0122493560249617,0.0902996473825399;IFNG,0.118099730061897,0.0187530017864096,0.00121938453807092,0.0192363196987371,0.236199460123793;TRAF2,0.43056329975076,0.00152004903165212,0.000356194615089595,0.00159447676437046,0.861126599501521;ATF2,0.336078659452423,0.00560404910437839,0.000368748422406371,0.00585658130930308,0.672157318904846;IL4,0.0841604406932853,0.00453371427140131,0.000434158146303478,0.00469469860686163,0.168320881386571;NFKB1,0.408286429634155,0.0016841796735019,0.000307152682260426,0.00174412789875763,0.816572859268309;NFKBIA,0.153342433532039,0.0141526364192051,0.00043084855466913,0.0145741222280883,0.306684867064078;IL2,0.29841244465067,0.00252360526407289,0.000603362801441601,0.00263850484955316,0.596824889301341 0 17 17 17 17 NA 0 136
 BIOCARTA_ACE2_PATHWAY 0.624334061497429 COL4A1,0.416110500998528,0.0077764094272911,0.00030573986045609,0.00803494463916127,0.832221001997056;COL4A2,0.319663060902982,0.0125091941833921,0.000298330826000093,0.0127138198513556,0.639326121805963;REN,0.442634177752364,0.00505624895381775,0.00168908784969707,0.00512086117275189,0.885268355504729;COL4A3,0.193630683024492,0.0284838521586091,0.000903513607176775,0.028665761492418,0.387261366048983;COL4A4,0.0267544096570612,0.0174686777006001,0.000402310279846401,0.0179761361576312,0.0535088193141224;CMA1,0.214853126259636,0.0110748125138577,0.00108202484975386,0.0112437420913481,0.429706252519272;AGT,0.124871443694295,0.0126940358724374,0.000974263862252802,0.0129812274266435,0.249742887388591;AGTR1,0.731696989450955,-0.00453972891296518,0.000534609773421346,-0.00460924193331528,0.536606021098091;ACE,0.374830238275113,0.0142350460911405,0.00141306440306196,0.0144735930644323,0.749660476550226 0 9 9 9 9 NA 0 314
+[  mturchin@node1103  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/Data2/UCSCGB/hg19.chrom.sizes | grep -v _gl | grep -v _hap | grep -v chrM | grep -v chrY | sed 's/chr//g' | sort -g -k 1,1
+X       155270560
+1       249250621
+2       243199373
+3       198022430
+4       191154276
+5       180915260
+6       171115067
+7       159138663
+8       146364022
+9       141213431
+10      135534747
+11      135006516
+12      133851895
+13      115169878
+14      107349540
+15      102531392
+16      90354753
+17      81195210
+18      78077248
+19      59128983
+20      63025520
+21      48129895
+22      51304566
+[  mturchin@node1103  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/Data2/UCSCGB/hg19.chrom.sizes | grep -v _gl | grep -v _hap | grep -v chrM | grep -v chrY | sed 's/chr//g' | sort -g -k 1,1 | R -q -e "Data1 <- read.table(file('stdin'), header=F); CumSum <- 0; CumSumCum <- c(); for (i in 1:22) { CumSum <- CumSum + Data1[Data1[,1] == i,2]; CumSumCum <- c(CumSumCum, CumSum); }; CumSumCum <- c(CumSumCum[length(CumSumCum)] + Data1[1,2], CumSumCum); Data1 <- cbind(Data1, CumSumCum); write.table(Data1, quote=FALSE, row.name=FALSE, col.name=FALSE);" | grep -v \>
+X 155270560 3036303846
+1 249250621 249250621
+2 243199373 492449994
+3 198022430 690472424
+4 191154276 881626700
+5 180915260 1062541960
+6 171115067 1233657027
+7 159138663 1392795690
+8 146364022 1539159712
+9 141213431 1680373143
+10 135534747 1815907890
+11 135006516 1950914406
+12 133851895 2084766301
+13 115169878 2199936179
+14 107349540 2307285719
+15 102531392 2409817111
+16 90354753 2500171864
+17 81195210 2581367074
+18 78077248 2659444322
+19 59128983 2718573305
+20 63025520 2781598825
+21 48129895 2829728720
+22 51304566 2881033286
 
 
 
