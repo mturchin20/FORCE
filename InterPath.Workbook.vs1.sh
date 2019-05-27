@@ -2891,9 +2891,9 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 	done 
 done 
 
-for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);')`; do
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	echo $l
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep African`; do
 		echo $j
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 		ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -2901,8 +2901,8 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 			echo $i
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
-				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
-#				pValBonf=.0001; pValCutoff="pVal0001";
+#				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
+				pValBonf=.01; pValCutoff="pVal1";
 				echo $k $pValBonf
 		
 				if [ ! -d /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff ] ; then
@@ -2910,7 +2910,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 					mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff
 				fi
 			
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $0 } }' | awk '{ print $1 "\t" $5 "\t" $13 }' | perl -slane 'if ($F[0] =~ /$pathType1/) { print join("\t", @F); }' -- -pathType1=$l > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt 
+				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 >= pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $0 } }' | awk '{ print $1 "\t" $5 "\t" $13 }' | perl -slane 'if ($F[0] =~ /$pathType1/) { print join("\t", @F); }' -- -pathType1=$l > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt 
 	
 				if [ -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt ] ; then 
 					if [ ! -s /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt ]; then
@@ -3011,9 +3011,9 @@ rm -f /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg18.Default
 rm -f /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.Condensed.dropExtra.txt.gz; for i in `zcat /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.txt.gz | perl -lane 'print $F[$#F-3];' | sort | uniq`; do echo $i; zcat /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.txt.gz | grep [^-a-zA-Z0-9.]$i[^-a-zA-Z0-9.] | grep -v _hap | grep -v chrUn_ | perl -lane 'if ($. == 1) { @refIDs = ($F[1]); $txStart = $F[4]; $txEnd = $F[5]; } else { if ($F[4] < $txStart) { $txStart = $F[4]; } if ($F[5] > $txEnd) { $txEnd = $F[5]; } push(@refIDs, $F[1]); } if (eof()) { print $F[$#F-3], "\t", $., "\t", $F[2], "\t", $F[3], "\t", $txStart, "\t", $txEnd, "\t", join(",", @refIDs); }' | sed 's/chr//g' >> /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.Condensed.dropExtra.txt; done; gzip -f /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.Condensed.dropExtra.txt
 rm -f /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg18.DefaultOutput.Condensed.dropExtra.txt.gz; for i in `zcat /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg18.DefaultOutput.txt.gz | perl -lane 'print $F[$#F-3];' | sort | uniq`; do echo $i; zcat /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg18.DefaultOutput.txt.gz | grep [^-a-zA-Z0-9.]$i[^-a-zA-Z0-9.] | grep -v _hap | grep -v chrUn_ | perl -lane 'if ($. == 1) { @refIDs = ($F[1]); $txStart = $F[4]; $txEnd = $F[5]; } else { if ($F[4] < $txStart) { $txStart = $F[4]; } if ($F[5] > $txEnd) { $txEnd = $F[5]; } push(@refIDs, $F[1]); } if (eof()) { print $F[$#F-3], "\t", $., "\t", $F[2], "\t", $F[3], "\t", $txStart, "\t", $txEnd, "\t", join(",", @refIDs); }' | sed 's/chr//g' >> /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg18.DefaultOutput.Condensed.dropExtra.txt; done; gzip -f /users/mturchin/Data2/UCSCGB/20190507.UCSCTableBrowser_refSeq.hg18.DefaultOutput.Condensed.dropExtra.txt
 
-for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);')`; do
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	echo $l
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 1`; do
 		echo $j
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 		ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -3021,8 +3021,8 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 			echo $i
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
-				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
-#				pValBonf=.001; pValCutoff="pVal001";
+#				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
+				pValBonf=.01; pValCutoff="pVal1";
 				echo $k $pValBonf
 		
 				if [ ! -d /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr ] ; then
@@ -3093,6 +3093,67 @@ done
 #From MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/GeneCountDistr
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/*/*/GeneCountDistr/*wLoc.vs2.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/GeneCountDistr/. 
+
+
+#Exploring African WaistAdjBMI Situation
+
+join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 2.2 <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/KEGG/pVal01/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pVal01.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/KEGG/pVal01/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pVal01.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
+join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 1.3 2.2 - <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/KEGG/pVal01/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pVal01.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
+join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 1.3 1.4 2.2 - <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/KEGG/pVal01/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pVal01.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
+R -q -e "Data1 <- read.table(file('stdin'), header=F); vals1 <- apply(Data1[,c(2:5)], 1, function(x) { return(sum(x, na.rm=T));}); vals2 <- apply(Data1[,c(2:5)], 1, function(x) { return(sd(x, na.rm=T));});write.table(cbind(Data1, vals1, vals2), quote=FALSE, row.names=FALSE, col.names=FALSE);" 
+
+join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 2.2 <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/KEGG/pVal1/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pVal1.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/KEGG/pVal1/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pVal1.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
+join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 1.3 2.2 - <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/KEGG/pVal1/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pVal1.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
+join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 1.3 1.4 2.2 - <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/KEGG/pVal1/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pVal1.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
+R -q -e "Data1 <- read.table(file('stdin'), header=F); vals1 <- apply(Data1[,c(2:5)], 1, function(x) { return(sum(x, na.rm=T));}); vals2 <- apply(Data1[,c(2:5)], 1, function(x) { return(sd(x, na.rm=T));});write.table(cbind(Data1, vals1, vals2), quote=FALSE, row.names=FALSE, col.names=FALSE);" 
+
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+	echo $l
+	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
+		echo $i
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+#			pValCutoff="pValBonf";
+			pValCutoff="pVal01";
+			echo $k $pValCutoff
+
+			rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz 
+			cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt | sort -g -k 5,5 -k 6,6 | grep -v ^NA | grep -v -w "NA2" | perl -lane 'if ($. == 1) { $gene1 = $F[0]; $geneCount1 = 1; } if ($F[0] ne $gene1) { $gene1 = $F[0]; $geneCount1++; } print join("\t", @F), "\t", $geneCount1;' | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz	
+			join <(zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.txt.gz | awk '{ print $5 "\t" $0 }' | sort -k 1,1) <(cat /users/mturchin/Data2/UCSCGB/hg19.chrom.edit1.forR.wCumSums.sizes | awk '{ print $1 "\t" $3 }' | cat <(echo -e "NA\tNA2") - | sort -k 1,1) | awk '{ print $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $8 "\t" $7 + $9 }' | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.forR.txt.gz 
+
+		done
+	done
+done
+			
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+	echo $l
+	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+		echo $i
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+#			pValCutoff="pValBonf";
+			pValCutoff="pVal01";
+			echo $k $pValCutoff
+
+			R -q -e "library(\"RColorBrewer\"); DataChroms <- read.table(\"/users/mturchin/Data2/UCSCGB/hg19.chrom.edit1.forR.wCumSums.sizes\", header=F); xLims <- c(0,DataChroms[1,3]); ChrmTicks <- c(DataChroms[2:23,3],DataChroms[1,3]); ChrmLabels <- c(); for (i in 3:23) { ChrmLabels <- c(ChrmLabels, (DataChroms[i-1,3] + DataChroms[i,3])/2);}; ChrmLabels <- c(ChrmLabels, (DataChroms[23,3] + DataChroms[1,3])/2); \
+				Cols <- rep(\"BLACK\", nrow(Data1)); Cols[Data1[,3] == \"African\"] <- brewer.pal(12, \"Paired\")[1]; Cols[Data1[,3] == \"British.Ran4000\"] <- brewer.pal(12, \"Paired\")[3]; Cols[Data1[,3] == \"Indian\"] <- brewer.pal(12, \"Paired\")[7]; Data1 <- cbind(Data1, Cols); \ 
+				Data1 <- read.table(\"
+				png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.wLoc.vs2.png\", height=2100, width=8000, res=300); par(oma=c(1,1,4,1), mar=c(7,5,4,2), mfrow=c(1,4), xpd=NA); \
+				
+
+
+				if (\"African\" %in% Data1[,3]) { plot(Data1[Data1[,3] == \"African\",8], Data1[Data1[,3] == \"African\",2], main=\"African\", xlab=\"\", ylab=\"Number of Appearances Across Pathways\", xlim=xLims, xaxt=\"n\", pch=19, col=as.character(Data1[Data1[,3] == \"African\",ncol(Data1)]), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); } else { plot(NA, main=\"African\", xlab=\"\", ylab=\"Number of Appearances Across Pathways\", xlim=xLims, ylim=c(1,2), xaxt=\"n\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); }; \ 
+				axis(1, at=ChrmTicks, labels=NA, line=1, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); axis(1, at=ChrmLabels[seq(1,21,by=2)], labels=seq(1,21,by=2), tick=F, line=1, las=2, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); axis(1, at=ChrmLabels[seq(2,22,by=2)], labels=seq(2,22,by=2), tick=F, line=3, las=2, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); mtext(\"Chromosome\", side=1, line=6.25, cex=1); \
+				if (\"British.Ran4000\" %in% Data1[,3]) { plot(Data1[Data1[,3] == \"British.Ran4000\",8], Data1[Data1[,3] == \"British.Ran4000\",2], main=\"British.Ran4000\", xlab=\"\", ylab=\"Number of Appearances Across Pathways\", xlim=xLims, xaxt=\"n\", pch=19, col=as.character(Data1[Data1[,3] == \"British.Ran4000\",ncol(Data1)]), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); } else { plot(NA, main=\"British.Ran4000\", xlab=\"\", ylab=\"Number of Appearances Across Pathways\", xlim=xLims, ylim=c(1,2), xaxt=\"n\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); }; \ 
+				axis(1, at=ChrmTicks, labels=NA, line=1, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); axis(1, at=ChrmLabels[seq(1,21,by=2)], labels=seq(1,21,by=2), tick=F, line=1, las=2, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); axis(1, at=ChrmLabels[seq(2,22,by=2)], labels=seq(2,22,by=2), tick=F, line=3, las=2, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); mtext(\"Chromosome\", side=1, line=6.25, cex=1); \
+				if (\"Indian\" %in% as.character(Data1[,3])) { plot(Data1[Data1[,3] == \"Indian\",8], Data1[Data1[,3] == \"Indian\",2], main=\"Indian\", xlab=\"\", ylab=\"Number of Appearances Across Pathways\", xlim=xLims, xaxt=\"n\", pch=19, col=as.character(Data1[Data1[,3] == \"Indian\",ncol(Data1)]), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); } else { plot(NA, main=\"Indian\", xlab=\"\", ylab=\"Number of Appearances Across Pathways\", xlim=xLims, ylim=c(1,2), xaxt=\"n\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); }; \ 
+				axis(1, at=ChrmTicks, labels=NA, line=1, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); axis(1, at=ChrmLabels[seq(1,21,by=2)], labels=seq(1,21,by=2), tick=F, line=1, las=2, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); axis(1, at=ChrmLabels[seq(2,22,by=2)], labels=seq(2,22,by=2), tick=F, line=3, las=2, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); mtext(\"Chromosome\", side=1, line=6.25, cex=1); \
+				mtext(\"$l $i $k $pValCutoff\", line=.5, outer=TRUE, cex=2); \
+				dev.off(); \
+			";
+		done
+	done 
+done 
+
+
 
 
 
