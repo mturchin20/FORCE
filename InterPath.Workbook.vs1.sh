@@ -3134,15 +3134,38 @@ done
 
 #Exploring African WaistAdjBMI Situation
 
-join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 2.2 <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/REACTOME/pVal01/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pVal01.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/REACTOME/pVal01/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pVal01.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
+join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 2.2 <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/REACTOME/pVal01/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pVal01.GeneCounts.pValCum.txt
+ | awk '{ print $1 "\t" $2 }' | sort -k 1,1) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/REACTOME/pVal01/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pVal01.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
 join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 1.3 2.2 - <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/REACTOME/pVal01/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pVal01.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
 join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 1.3 1.4 2.2 - <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/REACTOME/pVal01/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pVal01.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
-R -q -e "Data1 <- read.table(file('stdin'), header=F); vals1 <- apply(Data1[,c(2:5)], 1, function(x) { return(sum(x, na.rm=T));}); vals2 <- apply(Data1[,c(2:5)], 1, function(x) { return(sd(x, na.rm=T));});write.table(cbind(Data1, vals1, vals2), quote=FALSE, row.names=FALSE, col.names=FALSE);" | sort -rg -k 6,6 | vi - 
+R -q -e "Data1 <- read.table(file('stdin'), header=F); vals1 <- apply(Data1[,c(2:5)], 1, function(x) { return(sum(x, na.rm=T));}); vals2 <- apply(Data1[,c(2:5)], 1, function(x) { return(sd(x, na.rm=T));});write.table(cbind(Data1, vals1, vals2), quote=FALSE, row.names=FALSE, col.names=FALSE);" | sort -k 1,1 | \
+join -a 1 -a 2 -1 1 -2 1 -e NA -0 0 1.2 1.3 1.4 1.5 1.6 1.7 2.2 - <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.GeneCounts.txt.gz | sort -k 1,1) | \
+join -a 1 -a 2 -1 1 -2 1 -e NA -0 0 1.2 1.3 1.4 1.5 1.6 1.7 1.8 2.2 
+
+sort -rg -k 6,6 | vi - 
+
+> Data1 <- read.table(file('stdin'), header=F); vals1 <- apply(Data1[,c(2:5)], 1, function(x) { return(sum(x, na.rm=T));}); vals2 <- apply(Data1[,c(2:5)], 1, function(x) { return(sd(x, na.rm=T));});write.table(cbind(Data1, vals1, vals2), quote=FALSE, row.names=FALSE, col.names=FALSE);
+A1CF NA NA 1 NA 1 NA
+A2M 3 1 2 1 7 0.957427107756338
+AAAS 3 3 17 3 26 7
+AADAT NA NA NA 1 1 NA
+AANAT NA NA NA 1 1 NA
+AARS NA NA 1 NA 1 NA
+AASS NA NA NA 1 1 NA
+AATF NA 1 3 NA 4 1.4142135623731
+ABAT NA NA 2 2 4 0
+
 
 join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 2.2 <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/REACTOME/pVal1/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pVal1.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/REACTOME/pVal1/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pVal1.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
 join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 1.3 2.2 - <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/REACTOME/pVal1/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pVal1.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
 join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 1.3 1.4 2.2 - <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/REACTOME/pVal1/GeneCountDistr/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.HipAdjBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pVal1.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
 R -q -e "Data1 <- read.table(file('stdin'), header=F); vals1 <- apply(Data1[,c(2:5)], 1, function(x) { return(sum(x, na.rm=T));}); vals2 <- apply(Data1[,c(2:5)], 1, function(x) { return(sd(x, na.rm=T));});write.table(cbind(Data1, vals1, vals2), quote=FALSE, row.names=FALSE, col.names=FALSE);" | sort -rg -k 6,6 | vi -
+
+
+
+/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.GeneCounts.txt.gz
+/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/GeneCountDistr/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.pValCum.txt
+
 
 join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 2.2 <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/REACTOME/pVal01/GeneCountDistr/ukb_chrAll_v2.British.Ran4000.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pVal01.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/REACTOME/pVal01/GeneCountDistr/ukb_chrAll_v2.British.Ran4000.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pVal01.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
 join -a 1 -a 2 -1 1 -2 1 -e NA -o 0 1.2 1.3 2.2 - <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/REACTOME/pVal01/GeneCountDistr/ukb_chrAll_v2.British.Ran4000.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pVal01.GeneCounts.txt | awk '{ print $1 "\t" $2 }' | sort -k 1,1) | \
