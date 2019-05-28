@@ -2411,7 +2411,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 		echo $j
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 		ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-		for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep Waist`; do
+		for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
 			echo $i
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
 				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
@@ -2491,15 +2491,16 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); pValCutoffs = c(\"pVal001\",\"pValBonf\",\"pValAll\"); DataChroms <- read.table(\"/users/mturchin/Data2/UCSCGB/hg19.chrom.edit1.forR.wCumSums.sizes\", header=F); xLims <- c(0,DataChroms[1,3]); \ 
        ChrmTicks <- c(DataChroms[2:23,3],DataChroms[1,3]); ChrmLabels <- c(); for (i in 3:23) { ChrmLabels <- c(ChrmLabels, (DataChroms[i-1,3] + DataChroms[i,3])/2);}; ChrmLabels <- c(ChrmLabels, (DataChroms[23,3] + DataChroms[1,3])/2); \
 	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { for (m in pValCutoffs[3]) { for (l in Paths[2]) { \
-     png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/ManhattanTry1/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllTypes.noDups.Rnd2Vrsns.\", as.character(i), \".\", l, \".Results.\", m, \".ManhattanTry.AfrWaistExplr.vs1.png\", sep=\"\"), height=2200, width=9750, res=300); par(oma=c(1,1,6,18), mar=c(9,5,4,2), mfrow=c(1,4)); \ 
+     png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/ManhattanTry1/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllTypes.noDups.Rnd2Vrsns.\", as.character(i), \".\", l, \".Results.\", m, \".ManhattanTry.AfrWaistExplr.vs1.png\", sep=\"\"), height=2500, width=9750, res=300); par(oma=c(1,1,6,18), mar=c(9,5,4,2), mfrow=c(1,4)); \ 
 		for (j in UKBioBankPops[1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \	
 			for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")) { \
 				Data5 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ManhattanTry1/ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".IntronicPlus20kb.noDups.Vs2.\", i, \".AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".wLoc.txt\", sep=\"\"), header=F); \	
 				ylimMax <- max(c(-log10(Data5[,3])), na.rm=TRUE); if (is.infinite(ylimMax)) { ylimMax <- 10; }; \ 
-				plot(NA, main=paste(ancestry2, \": \", k, sep=\"\"), xlab=\"\", ylab=\"-log10(p-Values)\", xlim=xLims, ylim=c(3,10), xaxt=\"n\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \ 
+				plot(NA, main=paste(ancestry2, \": \", k, sep=\"\"), xlab=\"\", ylab=\"-log10(p-Values)\", xlim=xLims, ylim=c(0,10), xaxt=\"n\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \ 
 				axis(1, at=ChrmTicks, labels=NA, line=1, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); axis(1, at=ChrmLabels[seq(1,21,by=2)], labels=seq(1,21,by=2), tick=F, line=1, las=2, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); axis(1, at=ChrmLabels[seq(2,22,by=2)], labels=seq(2,22,by=2), tick=F, line=3, las=2, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); mtext(\"Chromosome\", side=1, line=7, cex=1); \
-				if (neg.is.na(Data5[1,3])) { segments(Data5[,7], -log10(Data5[,3]), Data5[,8], -log10(Data5[,3]), col=brewer.pal(12, \"Paired\")[5], lwd=6, cex=1.5); }; \
-				abline(h=-log10(.9), lwd=5, lty=3, col=\"BLUE\"); \
+				NoZones <- c(); Data5b <- Data5[Data5[,3] <= .8,]; PlotColors <- apply(Data5[,c(7,8)], 2, function(x) { returnVal1 <- \"BLACK\"; for (j in 1:nrow(Data5b)) { if (x[1] >= Data5b[j,7] && x[1] <= Data5b[j,8]) { returnVal1 <- \"RED\"; }; if (x[2] >= Data5b[j,7] && x[2] <= Data5b[j,8]) { returnVal1 <- \"RED\"; };}; return(returnVal1); }; \ 
+				if (neg.is.na(Data5[1,3])) { segments(Data5[,7], -log10(Data5[,3]), Data5[,8], -log10(Data5[,3]), col=PlotColors, lwd=6, cex=1.5); }; \
+				abline(h=-log10(.8), lwd=5, lty=3, col=\"BLUE\"); \
 			}; \
 		}; mtext(l, line=.5, outer=TRUE, cex=2.5); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"NonSyn\", \"Exonic\", \"Gene\", \"Gene20kb\", \"Intronic20kb\"), pch=c(16,16,16,16,16), col=c(brewer.pal(12, \"Paired\")[7], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[5]), xpd=TRUE, inset=c(.01,.024), bg=\"transparent\", cex=1.5, y.intersp=2); dev.off(); };}; \
 	}; \
