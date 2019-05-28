@@ -2498,7 +2498,7 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 				ylimMax <- max(c(-log10(Data5[,3])), na.rm=TRUE); if (is.infinite(ylimMax)) { ylimMax <- 10; }; \ 
 				plot(NA, main=paste(ancestry2, \": \", k, sep=\"\"), xlab=\"\", ylab=\"-log10(p-Values)\", xlim=xLims, ylim=c(0,10), xaxt=\"n\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \ 
 				axis(1, at=ChrmTicks, labels=NA, line=1, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); axis(1, at=ChrmLabels[seq(1,21,by=2)], labels=seq(1,21,by=2), tick=F, line=1, las=2, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); axis(1, at=ChrmLabels[seq(2,22,by=2)], labels=seq(2,22,by=2), tick=F, line=3, las=2, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); mtext(\"Chromosome\", side=1, line=7, cex=1); \
-				NoZones <- c(); Data5b <- Data5[Data5[,3] <= .8,]; PlotColors <- apply(Data5[,c(7,8)], 2, function(x) { returnVal1 <- \"BLACK\"; for (j in 1:nrow(Data5b)) { if (x[1] >= Data5b[j,7] && x[1] <= Data5b[j,8]) { returnVal1 <- \"RED\"; }; if (x[2] >= Data5b[j,7] && x[2] <= Data5b[j,8]) { returnVal1 <- \"RED\"; };}; return(returnVal1); }; \ 
+				Data5b <- Data5[Data5[,3] >= .8,]; print(head(Data5b)); PlotColors <- apply(Data5[,c(7,8)], 2, function(x) { returnVal1 <- \"BLACK\"; for (j in 1:nrow(Data5b)) { if (x[1] >= Data5b[j,7] && x[1] <= Data5b[j,8]) { returnVal1 <- \"RED\"; }; if (x[2] >= Data5b[j,7] && x[2] <= Data5b[j,8]) { returnVal1 <- \"RED\"; };}; return(returnVal1); }); \ 
 				if (neg.is.na(Data5[1,3])) { segments(Data5[,7], -log10(Data5[,3]), Data5[,8], -log10(Data5[,3]), col=PlotColors, lwd=6, cex=1.5); }; \
 				abline(h=-log10(.8), lwd=5, lty=3, col=\"BLUE\"); \
 			}; \
