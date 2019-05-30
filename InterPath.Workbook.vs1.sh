@@ -3840,27 +3840,29 @@ R -q -e "library(\"RColorBrewer\"); library(\"grid\"); library(\"gridExtra\"); l
 				Data1 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
 				Data2 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_Kgene.\", l, \".Results.wVarInfo.\", m, \".txt.gz\", sep=\"\"), header=F); \
 				Data1.Diff.Length <- length(setdiff(Data1[,1], Data2[,1])); Data2.Diff.Length <- length(setdiff(Data2[,1], Data1[,1])); Data1.Data2.Intersect.Length <- length(intersect(Data2[,1], Data1[,1])); \
+				if (is.na(Data1[1,1)) { Data1.Diff.Length <- 0; }; if (is.na(Data2[1,1])) { Data2.Diff.Length <- 0; }; if (is.na(Data1[1,1]) && is.na(Data2[1,1])) { Data1.Data2.Intersect.Length <- 0; }; \
 				KG2=1:(Data1.Diff.Length+Data1.Data2.Intersect.Length); GeneK2=(Data1.Diff.Length+1):(Data1.Diff.Length+Data1.Data2.Intersect.Length+Data2.Diff.Length); \
 				vennPlot1 <- venn.diagram(list(KG=KG2, GeneK=GeneK2), filename=NULL, fill=c(\"blue\", \"red\"), alpha=c(.5,.5), cex=1.5); \
 				plotPoints1[[ListCounter1]] <- vennPlot1; ListCounter1 <- ListCounter1 + 1; \
 			}; \
                 }; \ 
-		grid.arrange(arrangeGrob(gTree(children=plotPoints1[[1]]), top=textGrob(\"Height\",gp=gpar(fontsize=80,font=1))), gTree(children=plotPoints1[[2]]), gTree(children=plotPoints1[[3]]), gTree(children=plotPoints1[[4]]), \ 
-		gTree(children=plotPoints1[[5]]), gTree(children=plotPoints1[[6]]), gTree(children=plotPoints1[[7]]), gTree(children=plotPoints1[[8]]), \
-		gTree(children=plotPoints1[[9]]), gTree(children=plotPoints1[[10]]), gTree(children=plotPoints1[[11]]), gTree(children=plotPoints1[[12]]), \
-		gTree(children=plotPoints1[[13]]), gTree(children=plotPoints1[[14]]), gTree(children=plotPoints1[[15]]), gTree(children=plotPoints1[[16]]), \
-		gTree(children=plotPoints1[[17]]), gTree(children=plotPoints1[[18]]), gTree(children=plotPoints1[[19]]), gTree(children=plotPoints1[[20]]), \
-		gTree(children=plotPoints1[[21]]), gTree(children=plotPoints1[[22]]), gTree(children=plotPoints1[[23]]), gTree(children=plotPoints1[[24]]), \
-		ncol=4); \
+  grid.arrange(textGrob(\"\"), textGrob(\"Height\",gp=gpar(fontsize=40,font=1)), textGrob(\"BMI\",gp=gpar(fontsize=40,font=1)), textGrob(\"WaistAdjBMI\",gp=gpar(fontsize=40,font=1)), textGrob(\"HipAdjBMI\",gp=gpar(fontsize=40,font=1)),\
+		textGrob(\"African\",gp=gpar(fontsize=40,font=1),rot=90), gTree(children=plotPoints1[[1]]), gTree(children=plotPoints1[[2]]), gTree(children=plotPoints1[[3]]), gTree(children=plotPoints1[[4]]), \ 
+		textGrob(\"British.Ran4k\",gp=gpar(fontsize=40,font=1),rot=90), gTree(children=plotPoints1[[5]]), gTree(children=plotPoints1[[6]]), gTree(children=plotPoints1[[7]]), gTree(children=plotPoints1[[8]]), \
+		textGrob(\"Caribbean\",gp=gpar(fontsize=40,font=1),rot=90), gTree(children=plotPoints1[[9]]), gTree(children=plotPoints1[[10]]), gTree(children=plotPoints1[[11]]), gTree(children=plotPoints1[[12]]), \
+		textGrob(\"Chinese\",gp=gpar(fontsize=40,font=1),rot=90), gTree(children=plotPoints1[[13]]), gTree(children=plotPoints1[[14]]), gTree(children=plotPoints1[[15]]), gTree(children=plotPoints1[[16]]), \
+		textGrob(\"Indian\",gp=gpar(fontsize=40,font=1),rot=90), gTree(children=plotPoints1[[17]]), gTree(children=plotPoints1[[18]]), gTree(children=plotPoints1[[19]]), gTree(children=plotPoints1[[20]]), \
+		textGrob(\"Pakistani\",gp=gpar(fontsize=40,font=1),rot=90), gTree(children=plotPoints1[[21]]), gTree(children=plotPoints1[[22]]), gTree(children=plotPoints1[[23]]), gTree(children=plotPoints1[[24]]), \
+		ncol=5, heights=unit(c(1,7.5,7.5,7.5,7.5,7.5,7.5), c(\"in\", \"in\", \"in\", \"in\", \"in\", \"in\", \"in\")), widths=unit(c(1,7.5,7.5,7.5,7.5), c(\"in\", \"in\", \"in\", \"in\", \"in\"))); \
 		dev.off(); };}; \
         }; \
 "
 
 #				plotVenn1 <- venneuler(c(GK=length(setdiff(Data1[,1], Data2[,1])), GeneK=length(setdiff(Data2[,1], Data1[,1])), \"KG&GeneK\"=length(intersect(Data2[,1], Data1[,1])))); plot(plotVenn1); \	
-grid.newpage(); pushViewport(viewport(layout = grid.layout(7, 5, height=unit(c(1,5,5,5,5,5,5), \"null\"), width=unit(c(1,5,5,5,5), \"null\")))); \
-		grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=3)); grid.text(\"WaistAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=4)); grid.text(\"HipAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=5)); \
-		for (i2 in 1:length(UKBioBankPops)) { ancestry2 = strsplit(UKBioBankPops[i2], \";\")[[1]][2]; ancestry3 = gsub(\"000\$\", \"k\", ancestry2); grid.text(ancestry3, gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+1, layout.pos.col=1)); }; \ 
-	tempDraw1 <- plotPoints1[[1]]; tempDraw1\$vp <- viewport(layout.pos.row=2, layout.pos.col=3); grid.draw(tempDraw1); \ 
+#grid.newpage(); pushViewport(viewport(layout = grid.layout(7, 5, height=unit(c(1,5,5,5,5,5,5), \"null\"), width=unit(c(1,5,5,5,5), \"null\")))); \
+#		grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=3)); grid.text(\"WaistAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=4)); grid.text(\"HipAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=5)); \
+#		for (i2 in 1:length(UKBioBankPops)) { ancestry2 = strsplit(UKBioBankPops[i2], \";\")[[1]][2]; ancestry3 = gsub(\"000\$\", \"k\", ancestry2); grid.text(ancestry3, gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+1, layout.pos.col=1)); }; \ 
+#	tempDraw1 <- plotPoints1[[1]]; tempDraw1\$vp <- viewport(layout.pos.row=2, layout.pos.col=3); grid.draw(tempDraw1); \ 
 
 #From MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults
