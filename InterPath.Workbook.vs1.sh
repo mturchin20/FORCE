@@ -3833,7 +3833,7 @@ done
 
 #From https://stackoverflow.com/questions/8713994/venn-diagram-proportional-and-color-shading-with-semi-transparency
 
-R -q -e "library(\"RColorBrewer\"); library(\"venneuler\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Indian;Indian\"); DataTypes1 <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); DataTypes2 <- c(\"pValBonf\", \"pVal001\"); Paths <- c(\"KEGG\", \"REACTOME\"); \
+R -q -e "library(\"RColorBrewer\"); library(\"grid\"); library(\"gridExtra\"); library(\"venneuler\"); library(\"VennDiagram\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes1 <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); DataTypes2 <- c(\"pValBonf\", \"pVal001\"); Paths <- c(\"KEGG\", \"REACTOME\"); \
 	for (i in DataTypes1[1]) { for (l in Paths[1]) { for (m in DataTypes2[1]) { \
                 png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.ExonicPlus20kb.noDups.Vs2.\", i, \".Results.wGenes.wVars.VsGeneK.\", l, \".\", m, \".vs1.png\", sep=\"\"), height=14000, width=10250, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); plotPoints1 <- c(); ListCounter1 <- 1; \	
 		for (j in UKBioBankPops) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \	
@@ -3841,38 +3841,20 @@ R -q -e "library(\"RColorBrewer\"); library(\"venneuler\"); UKBioBankPops <- c(\
 				Data1 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
 				Data2 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_Kgene.\", l, \".Results.wVarInfo.\", m, \".txt.gz\", sep=\"\"), header=F); \
 				Data1.Diff.Length <- length(setdiff(Data1[,1], Data2[,1])); Data2.Diff.Length <- length(setdiff(Data2[,1], Data1[,1])); Data1.Data2.Intersect.Length <- length(intersect(Data2[,1], Data1[,1])); \
-				GK=1:(Data1.Diff.Length+Data1.Data2.Intersect.Length); GeneK=(Data1.Diff.Length+1):(Data1.Diff.Length+Data1.Data2.Intersect.Length+Data2.Diff.Length); \
-                        	
-1 2 3
-2 3 4 5
-1
-2
-2
-
-				venn.diagram(list(B = 1:1800, A = 1571:2020),fill = c("red", "green"),
-  alpha = c(0.5, 0.5), cex = 2,cat.fontface = 4,lty =2, fontfamily =3, 
-   filename = "trial2.emf");
-
-				plotPoints1[[ListCounter1]] <- ggplot1; ListCounter1 <- ListCounter1 + 1; \
-
+				KG2=1:(Data1.Diff.Length+Data1.Data2.Intersect.Length); GeneK2=(Data1.Diff.Length+1):(Data1.Diff.Length+Data1.Data2.Intersect.Length+Data2.Diff.Length); \
+				vennPlot1 <- venn.diagram(list(KG=KG2, GeneK=GeneK2), filename=NULL, fill=c(\"blue\", \"red\"), alpha=c(.5,.5), cex=1.5); \
+				plotPoints1[[ListCounter1]] <- vennPlot1; ListCounter1 <- ListCounter1 + 1; \
 			}; \
-                }; grid.newpage(); pushViewport(viewport(layout = grid.layout(8, 5, height=unit(c(1,5,5,5,5,5,5,5), \"null\"), width=unit(c(1,5,5,5,5), \"null\")))); \
+                }; grid.newpage(); pushViewport(viewport(layout = grid.layout(7, 5, height=unit(c(1,5,5,5,5,5,5,5), \"null\"), width=unit(c(1,5,5,5,5), \"null\")))); \
 		grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=3)); grid.text(\"WaistAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=4)); grid.text(\"HipAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=5)); \
-		 for (i2 in 1:length(UKBioBankPops)) { ancestry2 = strsplit(UKBioBankPops[i2], \";\")[[1]][2]; ancestry3 = gsub(\"000\$\", \"k\", ancestry2); grid.text(ancestry3, gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+1, layout.pos.col=1)); for (j2 in 1:4) { print(plotPoints1[[(4*i2)-4+j2]], vp=viewport(layout.pos.row=i2+1, layout.pos.col=j2+1)); };}; dev.off(); }; \
-		dev.off(); };}; \
+		 for (i2 in 1:length(UKBioBankPops)) { ancestry2 = strsplit(UKBioBankPops[i2], \";\")[[1]][2]; ancestry3 = gsub(\"000\$\", \"k\", ancestry2); grid.text(ancestry3, gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+1, layout.pos.col=1)); for (j2 in 1:4) { tempDraw1 <- plotPoints1[[(4*i2)-4+j2]]; tempDraw1\$vp <- viewport(layout.pos.row=i2+1, layout.pos.col=j2+1); grid.draw(tempDraw1); };}; dev.off(); };}; \
         }; \
 "
 
-R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); library(\"cowplot\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
 plotPoints1[[ListCounter1]] <- ggplot1; ListCounter1 <- ListCounter1 + 1; \
-			}; \
-		}; print(length(plotPoints1)); grid.newpage(); pushViewport(viewport(layout = grid.layout(6, 5, height=unit(c(1,5,5,5,5,5), \"null\"), width=unit(c(1,5,5,5,5), \"null\")))); \ 
-		grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=3)); grid.text(\"WaistAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=4)); grid.text(\"HipAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=5)); \
-		for (i2 in 1:length(Strats)) { grid.text(Strats[i2], gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+1, layout.pos.col=1)); for (j2 in 1:4) { print(plotPoints1[[(4*i2)-4+j2]], vp=viewport(layout.pos.row=i2+1, layout.pos.col=j2+1)); };}; dev.off(); }; \
-	};}; print(warnings()); \
 		}; print(length(plotPoints1)); grid.newpage(); pushViewport(viewport(layout = grid.layout(8, 5, height=unit(c(1,5,5,5,5,5,5,5), \"null\"), width=unit(c(1,5,5,5,5), \"null\")))); \ 
 		grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=3)); grid.text(\"WaistAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=4)); grid.text(\"HipAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=5)); \
-		for (i2 in 1:length(UKBioBankPops)) { ancestry2 = strsplit(UKBioBankPops[i2], \";\")[[1]][2]; ancestry3 = gsub(\"000\$\", \"k\", ancestry2); grid.text(ancestry3, gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+1, layout.pos.col=1)); for (j2 in 1:4) { print(plotPoints1[[(4*i2)-4+j2]], vp=viewport(layout.pos.row=i2+1, layout.pos.col=j2+1)); };}; dev.off(); }; \
+		for (i2 in 1:length(UKBioBankPops)) { ancestry2 = strsplit(UKBioBankPops[i2], \";\")[[1]][2]; ancestry3 = gsub(\"000\$\", \"k\", ancestry2); grid.text(ancestry3, gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+1, layout.pos.col=1)); for (j2 in 1:4) { grid.draw(plotPoints1[[(4*i2)-4+j2]], vp=viewport(layout.pos.row=i2+1, layout.pos.col=j2+1)); };}; dev.off(); }; \
 
 #				plotVenn1 <- venneuler(c(GK=length(setdiff(Data1[,1], Data2[,1])), GeneK=length(setdiff(Data2[,1], Data1[,1])), \"KG&GeneK\"=length(intersect(Data2[,1], Data1[,1])))); plot(plotVenn1); \	
 
