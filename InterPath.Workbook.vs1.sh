@@ -3831,7 +3831,7 @@ done
 
 #Compare KG to GeneK 
 
-#From https://stackoverflow.com/questions/8713994/venn-diagram-proportional-and-color-shading-with-semi-transparency, https://stackoverflow.com/questions/22992476/how-to-print-three-venn-diagrams-in-the-same-window
+#From https://stackoverflow.com/questions/8713994/venn-diagram-proportional-and-color-shading-with-semi-transparency, https://stackoverflow.com/questions/22992476/how-to-print-three-venn-diagrams-in-the-same-window, https://stackoverflow.com/questions/14726078/changing-title-in-multiplot-ggplot2-using-grid-arrange, https://stackoverflow.com/questions/49197963/r-how-to-increase-height-of-grid-arrange, https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html
 R -q -e "library(\"RColorBrewer\"); library(\"grid\"); library(\"gridExtra\"); library(\"lattice\"); library(\"venneuler\"); library(\"VennDiagram\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes1 <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); DataTypes2 <- c(\"pValBonf\", \"pVal001\"); Paths <- c(\"KEGG\", \"REACTOME\"); \
 	for (i in DataTypes1[1]) { for (l in Paths[1]) { for (m in DataTypes2[1]) { \
                 png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.ExonicPlus20kb.noDups.Vs2.\", i, \".Results.wGenes.wVars.VsGeneK.\", l, \".\", m, \".vs1.png\", sep=\"\"), height=14000, width=10250, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); plotPoints1 <- c(); ListCounter1 <- 1; \	
@@ -3845,7 +3845,7 @@ R -q -e "library(\"RColorBrewer\"); library(\"grid\"); library(\"gridExtra\"); l
 				plotPoints1[[ListCounter1]] <- vennPlot1; ListCounter1 <- ListCounter1 + 1; \
 			}; \
                 }; \ 
-		grid.arrange(gTree(children=plotPoints1[[1]]), gTree(children=plotPoints1[[2]]), gTree(children=plotPoints1[[3]]), gTree(children=plotPoints1[[4]]), \ 
+		grid.arrange(arrangeGrob(gTree(children=plotPoints1[[1]]), top=textGrob(\"Height\",gp=gpar(fontsize=80,font=1))), gTree(children=plotPoints1[[2]]), gTree(children=plotPoints1[[3]]), gTree(children=plotPoints1[[4]]), \ 
 		gTree(children=plotPoints1[[5]]), gTree(children=plotPoints1[[6]]), gTree(children=plotPoints1[[7]]), gTree(children=plotPoints1[[8]]), \
 		gTree(children=plotPoints1[[9]]), gTree(children=plotPoints1[[10]]), gTree(children=plotPoints1[[11]]), gTree(children=plotPoints1[[12]]), \
 		gTree(children=plotPoints1[[13]]), gTree(children=plotPoints1[[14]]), gTree(children=plotPoints1[[15]]), gTree(children=plotPoints1[[16]]), \
