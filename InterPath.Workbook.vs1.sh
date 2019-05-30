@@ -3840,9 +3840,9 @@ R -q -e "library(\"RColorBrewer\"); library(\"grid\"); library(\"gridExtra\"); l
 				Data1 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
 				Data2 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_Kgene.\", l, \".Results.wVarInfo.\", m, \".txt.gz\", sep=\"\"), header=F); \
 				Data1.Diff.Length <- length(setdiff(Data1[,1], Data2[,1])); Data2.Diff.Length <- length(setdiff(Data2[,1], Data1[,1])); Data1.Data2.Intersect.Length <- length(intersect(Data2[,1], Data1[,1])); \
-				if (is.na(Data1[1,1)) { Data1.Diff.Length <- 0; }; if (is.na(Data2[1,1])) { Data2.Diff.Length <- 0; }; if (is.na(Data1[1,1]) && is.na(Data2[1,1])) { Data1.Data2.Intersect.Length <- 0; }; \
 				KG2=1:(Data1.Diff.Length+Data1.Data2.Intersect.Length); GeneK2=(Data1.Diff.Length+1):(Data1.Diff.Length+Data1.Data2.Intersect.Length+Data2.Diff.Length); \
-				vennPlot1 <- venn.diagram(list(KG=KG2, GeneK=GeneK2), filename=NULL, fill=c(\"blue\", \"red\"), alpha=c(.5,.5), cex=1.5); \
+				Fill1 <- \"red\"; Fill2 <- \"blue\"; if (is.na(Data1[1,1])) { KG2 <- NA; Fill2 <- \"white\"; }; if (is.na(Data2[1,1])) { GeneK2 <- NA; Fill1 <- \"white\"; }; \ 
+				vennPlot1 <- venn.diagram(list(KG=KG2, GeneK=GeneK2), filename=NULL, na=\"remove\", fill=c(Fill2, Fill1), alpha=c(.5,.5), cex=1.5); \
 				plotPoints1[[ListCounter1]] <- vennPlot1; ListCounter1 <- ListCounter1 + 1; \
 			}; \
                 }; \ 
