@@ -2921,7 +2921,7 @@ done
 
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	echo $l
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -E 'African|Ran4000|Indian' | grep African`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -vE 'African|Ran4000|Indian'`; do
 		echo $j
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 		ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -2930,7 +2930,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
 				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
 #				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
-				pValBonf=0; pValCutoff="pValAll";
+				pValBonf=.01; pValCutoff="pVal01";
 				echo $k $pValBonf
 		
 				if [ ! -d /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff ] ; then
@@ -2938,7 +2938,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 					mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff
 				fi
 			
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 >= pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $0 } }' | awk '{ print $1 "\t" $5 "\t" $13 }' | perl -slane 'if ($F[0] =~ /$pathType1/) { print join("\t", @F); }' -- -pathType1=$l > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt 
+				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $0 } }' | awk '{ print $1 "\t" $5 "\t" $13 }' | perl -slane 'if ($F[0] =~ /$pathType1/) { print join("\t", @F); }' -- -pathType1=$l > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt 
 #				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $0 } }' | tail -n 100 | awk '{ print $1 "\t" $5 "\t" $13 }' | perl -slane 'if ($F[0] =~ /$pathType1/) { print join("\t", @F); }' -- -pathType1=$l > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt 
 	
 				if [ -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt ] ; then 
@@ -3801,8 +3801,8 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 			echo $i
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
-				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
-#				pValBonf=.001; pValCutoff="pVal001";
+#				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
+				pValBonf=.01; pValCutoff="pVal01";
 				echo $k $pValBonf
 		
 				if [ ! -d /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/ArchitectureExplore/SubFiles/$l/$pValCutoff ] ; then
@@ -3830,20 +3830,16 @@ done
 
 #Compare KG to GeneK (20190528)
 
-for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2 | head -n 1`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000`; do
+#From https://unix.stackexchange.com/questions/47832/is-there-a-simple-command-for-outputting-tab-delimited-columns, http://man7.org/linux/man-pages/man1/column.1.html
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+	echo $l; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
-				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
-#				pValBonf=.001; pValCutoff="pVal001";
+#				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
+				pValBonf=.01; pValCutoff="pVal01";
 		
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/Analyses/KgeneThreshExplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_Kgene.AllPaths.Results.wVarInfo.txt.pre.gz | sort -g -k 2,2  | awk -v pValBonf=$pValBonf '{ if (($2 < pValBonf) && ($13 != 0) && ($2 != "NA") && ($10 < .2) && ($11 >= 100)) { print $0 } }' | awk '{ print $1 "\t" $2 "\t" $3 }' | perl -slane 'if ($F[0] =~ /$pathType1/) { print join("\t", @F); }' -- -pathType1=$l > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_Kgene.$l.Results.wVarInfo.$pValCutoff.txt 
-				/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
-
-				rm /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_Kgene.$l.Results.wVarInfo.$pValCutoff.txt
-
 				KGwc=`cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | wc | awk '{ print $1 }'`
 				GeneKwc=`zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_Kgene.$l.Results.wVarInfo.$pValCutoff.txt.gz | wc | awk '{ print $1 }'`
 				Overlap=`join <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | awk '{ print $1 }' | sort) <(zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_Kgene.$l.Results.wVarInfo.$pValCutoff.txt.gz | awk '{ print $1 }' | sort) | wc | awk '{ print $1 }'` 
@@ -3851,9 +3847,61 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 				echo "$KGwc,$GeneKwc,$Overlap"		
 
 			done
-		done 
-	done 
+		done | xargs echo $ancestry2 
+	done | cat <(echo "Pop Height BMI WaistAdjBMI HipAdjBMI") - | perl -lane 'print join("\t", @F);' | column -t 
 done 
+
+```
+#20190530
+[  mturchin@node1133  ~/LabMisc/RamachandranLab/InterPath]$for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2 | head -n 1`; do
+>         for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000`; do
+>                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>                         for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+...
+>                 done | xargs echo $ancestry2
+>         done | cat <(echo "Pop Height BMI WaistAdjBMI HipAdjBMI") - | perl -lane 'print join("\t", @F);' | column -t
+> done
+KEGG (#NOTE -- pValBonf)
+Pop              Height  BMI      WaistAdjBMI  HipAdjBMI
+African          9,1,0   15,32,6  43,19,4      20,5,0
+British.Ran4000  3,26,0  1,48,0   1,50,0       1,36,0
+Caribbean        1,35,0  2,9,0    4,4,0        9,1,0
+Chinese          4,1,0   4,1,0    5,1,0        4,1,0
+Indian           1,9,0   1,49,0   2,25,0       1,24,0
+Pakistani        3,8,0   1,8,0    3,14,0       4,13,0
+REACTOME
+Pop              Height  BMI      WaistAdjBMI  HipAdjBMI
+African          7,1,0   9,80,6   43,45,0      18,8,0
+British.Ran4000  1,94,0  1,116,0  1,118,0      1,114,0
+Caribbean        1,60,0  1,27,0   1,13,0       5,1,0
+Chinese          3,1,0   1,1,0    2,1,0        3,1,0
+Indian           3,3,0   1,91,0   2,49,0       1,39,0
+Pakistani        3,15,0  2,34,0   1,35,0       2,30,0
+[  mturchin@node1133  ~/LabMisc/RamachandranLab/InterPath]$for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2 | head -n 1`; do
+>         for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000`; do
+>                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>                         for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+...
+>                 done | xargs echo $ancestry2
+>         done | cat <(echo "Pop Height BMI WaistAdjBMI HipAdjBMI") - | perl -lane 'print join("\t", @F);' | column -t
+> done
+KEGG (#NOTE -- pVal01)
+Pop              Height   BMI       WaistAdjBMI  HipAdjBMI
+African          30,12,3  31,73,23  103,59,38    48,17,1
+British.Ran4000  16,47,0  8,72,1    9,71,2       10,61,3
+Caribbean        16,64,2  12,31,1   6,18,0       39,4,0
+Chinese          14,1,0   12,5,1    14,9,2       14,6,1
+Indian           7,20,0   9,79,2    13,50,1      12,45,1
+Pakistani        19,34,1  11,22,0   20,47,1      17,41,1
+REACTOME
+Pop              Height    BMI        WaistAdjBMI  HipAdjBMI
+African          41,7,0    53,192,38  234,150,68   71,59,10
+British.Ran4000  34,190,4  28,235,12  28,246,13    27,212,3
+Caribbean        10,146,2  13,85,1    13,60,0      63,24,2
+Chinese          32,9,0    27,7,0     36,18,0      28,10,0
+Indian           13,38,0   20,193,5   10,158,0     9,125,2
+Pakistani        52,88,3   28,130,3   36,153,2     37,117,2
+```
 
 #From https://stackoverflow.com/questions/8713994/venn-diagram-proportional-and-color-shading-with-semi-transparency, https://stackoverflow.com/questions/22992476/how-to-print-three-venn-diagrams-in-the-same-window, https://stackoverflow.com/questions/14726078/changing-title-in-multiplot-ggplot2-using-grid-arrange, https://stackoverflow.com/questions/49197963/r-how-to-increase-height-of-grid-arrange, https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html
 R -q -e "library(\"RColorBrewer\"); library(\"grid\"); library(\"gridExtra\"); library(\"lattice\"); library(\"venneuler\"); library(\"VennDiagram\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes1 <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); DataTypes2 <- c(\"pValBonf\", \"pVal001\"); Paths <- c(\"KEGG\", \"REACTOME\"); \
@@ -7037,6 +7085,33 @@ PIK3R1  55
 HRAS    54
 PIK3CA  52
 AKT1    51
+#20190530
+[  mturchin@node1133  ~/LabMisc/RamachandranLab/InterPath]$for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2 | head -n 1`; do
+>         for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -v Ran10000`; do
+>                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>                 for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
+>                         for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+>                                 NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`
+>                                 pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
+> #                               pValBonf=.001; pValCutoff="pVal001";
+>
+>                                 KGwc=`cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | wc | awk '{ print $1 }'`
+>                                 GeneKwc=`zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_Kgene.$l.Results.wVarInfo.$pValCutoff.txt.gz | wc | awk '{ print $1 }'`
+>                                 Overlap=`join <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | awk '{ print $1 }' | sort) <(zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_Kgene.$l.Results.wVarInfo.$pValCutoff.txt.gz | awk '{ print $1 }' | sort) | wc | awk '{ print $1 }'`
+>
+>                                 echo "$KGwc,$GeneKwc,$Overlap"
+>
+>                         done
+>                 done | xargs echo $ancestry2
+>         done | cat <(echo "Pop Height BMI WaistAdjBMI HipAdjBMI") - | perl -lane 'print join("\t", @F);' | column -t
+> done
+Pop              Height  BMI      WaistAdjBMI  HipAdjBMI
+African          9,1,0   15,32,6  43,19,4      20,5,0
+British.Ran4000  3,26,0  1,48,0   1,50,0       1,36,0
+Caribbean        1,35,0  2,9,0    4,4,0        9,1,0
+Chinese          4,1,0   4,1,0    5,1,0        4,1,0
+Indian           1,9,0   1,49,0   2,25,0       1,24,0
+Pakistani        3,8,0   1,8,0    3,14,0       4,13,0
 
 
 
