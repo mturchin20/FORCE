@@ -3831,9 +3831,8 @@ done
 
 #Compare KG to GeneK 
 
-#From https://stackoverflow.com/questions/8713994/venn-diagram-proportional-and-color-shading-with-semi-transparency
-
-R -q -e "library(\"RColorBrewer\"); library(\"grid\"); library(\"gridExtra\"); library(\"venneuler\"); library(\"VennDiagram\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes1 <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); DataTypes2 <- c(\"pValBonf\", \"pVal001\"); Paths <- c(\"KEGG\", \"REACTOME\"); \
+#From https://stackoverflow.com/questions/8713994/venn-diagram-proportional-and-color-shading-with-semi-transparency, https://stackoverflow.com/questions/22992476/how-to-print-three-venn-diagrams-in-the-same-window
+R -q -e "library(\"RColorBrewer\"); library(\"grid\"); library(\"gridExtra\"); library(\"lattice\"); library(\"venneuler\"); library(\"VennDiagram\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes1 <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); DataTypes2 <- c(\"pValBonf\", \"pVal001\"); Paths <- c(\"KEGG\", \"REACTOME\"); \
 	for (i in DataTypes1[1]) { for (l in Paths[1]) { for (m in DataTypes2[1]) { \
                 png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.ExonicPlus20kb.noDups.Vs2.\", i, \".Results.wGenes.wVars.VsGeneK.\", l, \".\", m, \".vs1.png\", sep=\"\"), height=14000, width=10250, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); plotPoints1 <- c(); ListCounter1 <- 1; \	
 		for (j in UKBioBankPops) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \	
@@ -3845,20 +3844,23 @@ R -q -e "library(\"RColorBrewer\"); library(\"grid\"); library(\"gridExtra\"); l
 				vennPlot1 <- venn.diagram(list(KG=KG2, GeneK=GeneK2), filename=NULL, fill=c(\"blue\", \"red\"), alpha=c(.5,.5), cex=1.5); \
 				plotPoints1[[ListCounter1]] <- vennPlot1; ListCounter1 <- ListCounter1 + 1; \
 			}; \
-                }; grid.newpage(); pushViewport(viewport(layout = grid.layout(7, 5, height=unit(c(1,5,5,5,5,5,5), \"null\"), width=unit(c(1,5,5,5,5), \"null\")))); \
-		grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=3)); grid.text(\"WaistAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=4)); grid.text(\"HipAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=5)); \
-		for (i2 in 1:length(UKBioBankPops)) { ancestry2 = strsplit(UKBioBankPops[i2], \";\")[[1]][2]; ancestry3 = gsub(\"000\$\", \"k\", ancestry2); grid.text(ancestry3, gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+1, layout.pos.col=1)); }; \ 
-		pushViewport(viewport(layout.pos.row=2, layout.pos.col=2)); grid.draw(plotPoints1[[1]]); pushViewport(viewport(layout.pos.row=2, layout.pos.col=3)); grid.draw(plotPoints1[[2]]); pushViewport(viewport(layout.pos.row=2, layout.pos.col=4)); grid.draw(plotPoints1[[3]]); pushViewport(viewport(layout.pos.row=2, layout.pos.col=5)); grid.draw(plotPoints1[[4]]); \ 
-		pushViewport(viewport(layout.pos.row=3, layout.pos.col=2)); grid.draw(plotPoints1[[5]]); pushViewport(viewport(layout.pos.row=3, layout.pos.col=3)); grid.draw(plotPoints1[[6]]); pushViewport(viewport(layout.pos.row=3, layout.pos.col=4)); grid.draw(plotPoints1[[7]]); pushViewport(viewport(layout.pos.row=3, layout.pos.col=5)); grid.draw(plotPoints1[[8]]); \ 
-		pushViewport(viewport(layout.pos.row=4, layout.pos.col=2)); grid.draw(plotPoints1[[9]]); pushViewport(viewport(layout.pos.row=4, layout.pos.col=3)); grid.draw(plotPoints1[[10]]); pushViewport(viewport(layout.pos.row=4, layout.pos.col=4)); grid.draw(plotPoints1[[11]]); pushViewport(viewport(layout.pos.row=4, layout.pos.col=5)); grid.draw(plotPoints1[[12]]); \ 
-		pushViewport(viewport(layout.pos.row=5, layout.pos.col=2)); grid.draw(plotPoints1[[13]]); pushViewport(viewport(layout.pos.row=5, layout.pos.col=3)); grid.draw(plotPoints1[[14]]); pushViewport(viewport(layout.pos.row=5, layout.pos.col=4)); grid.draw(plotPoints1[[15]]); pushViewport(viewport(layout.pos.row=5, layout.pos.col=5)); grid.draw(plotPoints1[[16]]); \ 
-		pushViewport(viewport(layout.pos.row=6, layout.pos.col=2)); grid.draw(plotPoints1[[17]]); pushViewport(viewport(layout.pos.row=6, layout.pos.col=3)); grid.draw(plotPoints1[[18]]); pushViewport(viewport(layout.pos.row=6, layout.pos.col=4)); grid.draw(plotPoints1[[19]]); pushViewport(viewport(layout.pos.row=6, layout.pos.col=5)); grid.draw(plotPoints1[[20]]); \ 
-		pushViewport(viewport(layout.pos.row=7, layout.pos.col=2)); grid.draw(plotPoints1[[21]]); pushViewport(viewport(layout.pos.row=7, layout.pos.col=3)); grid.draw(plotPoints1[[22]]); pushViewport(viewport(layout.pos.row=7, layout.pos.col=4)); grid.draw(plotPoints1[[23]]); pushViewport(viewport(layout.pos.row=7, layout.pos.col=5)); grid.draw(plotPoints1[[24]]); \ 
+                }; \ 
+		grid.arrange(gTree(children=plotPoints1[[1]]), gTree(children=plotPoints1[[2]]), gTree(children=plotPoints1[[3]]), gTree(children=plotPoints1[[4]]), \ 
+		gTree(children=plotPoints1[[5]]), gTree(children=plotPoints1[[6]]), gTree(children=plotPoints1[[7]]), gTree(children=plotPoints1[[8]]), \
+		gTree(children=plotPoints1[[9]]), gTree(children=plotPoints1[[10]]), gTree(children=plotPoints1[[11]]), gTree(children=plotPoints1[[12]]), \
+		gTree(children=plotPoints1[[13]]), gTree(children=plotPoints1[[14]]), gTree(children=plotPoints1[[15]]), gTree(children=plotPoints1[[16]]), \
+		gTree(children=plotPoints1[[17]]), gTree(children=plotPoints1[[18]]), gTree(children=plotPoints1[[19]]), gTree(children=plotPoints1[[20]]), \
+		gTree(children=plotPoints1[[21]]), gTree(children=plotPoints1[[22]]), gTree(children=plotPoints1[[23]]), gTree(children=plotPoints1[[24]]), \
+		ncol=4); \
 		dev.off(); };}; \
         }; \
 "
 
 #				plotVenn1 <- venneuler(c(GK=length(setdiff(Data1[,1], Data2[,1])), GeneK=length(setdiff(Data2[,1], Data1[,1])), \"KG&GeneK\"=length(intersect(Data2[,1], Data1[,1])))); plot(plotVenn1); \	
+grid.newpage(); pushViewport(viewport(layout = grid.layout(7, 5, height=unit(c(1,5,5,5,5,5,5), \"null\"), width=unit(c(1,5,5,5,5), \"null\")))); \
+		grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=3)); grid.text(\"WaistAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=4)); grid.text(\"HipAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=5)); \
+		for (i2 in 1:length(UKBioBankPops)) { ancestry2 = strsplit(UKBioBankPops[i2], \";\")[[1]][2]; ancestry3 = gsub(\"000\$\", \"k\", ancestry2); grid.text(ancestry3, gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+1, layout.pos.col=1)); }; \ 
+	tempDraw1 <- plotPoints1[[1]]; tempDraw1\$vp <- viewport(layout.pos.row=2, layout.pos.col=3); grid.draw(tempDraw1); \ 
 
 #From MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults
