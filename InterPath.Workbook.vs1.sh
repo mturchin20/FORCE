@@ -3036,7 +3036,7 @@ for n in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n",
 
 for n in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
 	echo $n
-	pValCutoff="pValBonf"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+	pValCutoff="pValBonf"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);')`; do
 		echo $pValCutoff; echo $l;
 		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
 			echo $j
@@ -3045,14 +3045,42 @@ for n in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n",
 				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 				ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 				for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+					pValBonf=`echo ".05 / $NumPaths" | bc -l`; #pValCutoff="pValBonf";
+#					pValBonf=.001; #pValCutoff="pVal001";
 
-					zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/enrichr/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.enrichr.$n.All.vs1.txt.gz | perl -F\; -lane 'print $F[1], "\t", join(";", @F[2..4]);' | grep -v NA | grep -v ";;" | grep -v Term_name | head -n 5
 	
 	                        done; echo ""
 	                done;
 	        done;
-	done | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/enrichr/ 
+	done | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/enrichr/20190531.KG.TopResults.enrichr.$n.$l.AllPops.AllPhenos.Allstrats.$pValCutoff.vs1.txt.gz
 done; 
+
+for n in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+	echo $n
+	pValCutoff="pValBonf"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+	        echo $pValCutoff; echo $l;
+	        for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
+	                echo $j
+	                for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
+	                        echo $i
+	                        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+	                        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+	                        for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+	                                NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`
+	                                pValBonf=`echo ".05 / $NumPaths" | bc -l`; #pValCutoff="pValBonf";
+#       	                        pValBonf=.001; #pValCutoff="pVal001";
+        	                        echo $k;
+
+					zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/enrichr/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.enrichr.$n.All.vs1.txt.gz | perl -F\; -lane 'print $F[1], "\t", join(";", @F[2..4]);' | grep -v NA | grep -v ";;" | grep -v Term_name | head -n 5
+
+                	                echo ""
+                        	done;
+			done;
+                done;
+        done 
+done
+
+
 
 #/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/enrichr/20190427.KG.TopResults.AllPhenos.AllPops.AllStrategies.$pValCutoff.enrichr.$m.AllPathwayGenes.vs1.txt.gz
 
