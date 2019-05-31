@@ -3020,8 +3020,8 @@ done;
 #mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/enrichr
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/enrichr 
 
-for m in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do gene_set_library1=$m;
-	echo $m
+for n in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+	echo $n
 	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
 		echo $i
 		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
@@ -3029,18 +3029,32 @@ for m in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n",
 			echo $j
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
 				echo $k
-				for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);')`; do        
+				for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do        
 					pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
 #					pValBonf=.0001; pValCutoff="pVal0001";
 					echo "Pathway Type: " $l $pValBonf
 
-					zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/enrichr/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.enrichr.$gene_set_library1.All.vs1.txt.gz | perl -F\; -lane 'print $F[1], "\t", join(";", @F[2..4]);' | grep -v NA | grep -v ";;" | grep -v Term_name | head -n 5
+for n in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+	echo $n
+	pValCutoff="pValBonf"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+		echo $pValCutoff; echo $l;
+		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
+			echo $j
+			for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
+				echo $i
+				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+				ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+				for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+
+					zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/enrichr/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.enrichr.$n.All.vs1.txt.gz | perl -F\; -lane 'print $F[1], "\t", join(";", @F[2..4]);' | grep -v NA | grep -v ";;" | grep -v Term_name | head -n 5
 	
 	                        done; echo ""
 	                done;
 	        done;
-	done | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/enrichr/20190427.KG.TopResults.AllPhenos.AllPops.AllStrategies.$pValCutoff.enrichr.$m.AllPathwayGenes.vs1.txt.gz
+	done | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/enrichr/ 
 done; 
+
+#/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/enrichr/20190427.KG.TopResults.AllPhenos.AllPops.AllStrategies.$pValCutoff.enrichr.$m.AllPathwayGenes.vs1.txt.gz
 
 #The below file `20190507.UCSCTableBrowser_refSeq.hg19.DefaultOutput.txt.gz` was downloaded from https://genome.ucsc.edu/cgi-bin/hgTables, selecting assembly Feb. 2009 (GRCh37/hg19), group Genes and Gene Predictions, track refSeq Genes, table refGene, and output format 'all fields from selected table'; same was done for hg1
 #From MacBook Pro
@@ -3787,6 +3801,10 @@ pValCutoff="pValBonf"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl 
 		done;
 	done | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/TopResults/InDepth/20190528.GeneK.TopResults.$l.AllPops.AllPhenos.AllStrats.$pValCutoff.vs1.txt.gz
 done 
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/TopResults/InDepth/enrichr
+
+
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/ArchitectureExplore
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Kgene/ArchitectureExplore/SubFiles
