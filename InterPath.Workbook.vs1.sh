@@ -2984,12 +2984,12 @@ done
 
 #> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/20190427.KG.TopResults.AllPhenos.AllPops.AllStrategies.$pValCutoff.vs1.txt.gz
 
-for m in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do gene_set_library1=$m;
-	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
+for m in `cat <(echo "GO_Biological_Process_2018 GO_Molecular_Function_2018 GO_Cellular_Component_2018" | perl -lane 'print join("\n", @F);')`; do 
+	gene_set_library1=$m; for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
 		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
-			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
-				for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);')`; do        
+			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
+				for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do        
 					pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
 #					pValBonf=.0001; pValCutoff="pVal0001";
 
@@ -3006,7 +3006,7 @@ for m in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n",
 		                                userListId <- strsplit(strsplit(strsplit(content(enrichr1, as=\"text\"), split=\"\\n\")[[1]][3], split=\"\\\"\")[[1]][3], split=\": \")[[1]][2]; \
 		                                string1 <- paste(enrichr_retrieve, \"?userListId=\", userListId, \"&backgroundType=\", gene_set_library, sep=\"\"); \
 		                                enrichr1.GET <- GET(string1); enrichr1.GET.content <- content(enrichr1.GET); \
-		                                enrichr1.GET.content.results <- c(); for (i in 1:25) { enrichr1.GET.content.temp <- enrichr1.GET.content[[1]][[i]]; genes.sub1 <- unlist(enrichr1.GET.content.temp[6]); enrichr1.GET.content.temp[6] <- paste(genes.sub1, collapse=\",\"); enrichr1.GET.content.results <- rbind(enrichr1.GET.content.results, unlist(enrichr1.GET.content.temp)); }; \
+		                                enrichr1.GET.content.results <- c(); for (i in 1:10) { enrichr1.GET.content.temp <- enrichr1.GET.content[[1]][[i]]; genes.sub1 <- unlist(enrichr1.GET.content.temp[6]); enrichr1.GET.content.temp[6] <- paste(genes.sub1, collapse=\",\"); enrichr1.GET.content.results <- rbind(enrichr1.GET.content.results, unlist(enrichr1.GET.content.temp)); }; \
 		                                write.table(enrichr1.GET.content.results, file=\"\", sep=\";\", quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v \> | cat <(echo "Rank;Term_name;P-value;Z-score;Combined_score;Overlapping_genes;Adjusted_p-value;Old_p-value;Old_adjusted_p-value") - | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/enrichr/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.enrichr.$gene_set_library1.All.vs1.txt.gz 
 					else
 						echo "NA NA NA" | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/enrichr/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.enrichr.$gene_set_library1.All.vs1.txt.gz
@@ -3020,42 +3020,7 @@ done;
 #mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/enrichr
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/enrichr 
 
-for n in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
-	echo $n
-	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
-		echo $i
-		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
-			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
-			echo $j
-			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
-				echo $k
-				for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do        
-					pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
-#					pValBonf=.0001; pValCutoff="pVal0001";
-					echo "Pathway Type: " $l $pValBonf
-
-for n in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
-	echo $n
-	pValCutoff="pValBonf"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);')`; do
-		echo $pValCutoff; echo $l;
-		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
-			echo $j
-			for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
-				echo $i
-				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
-				ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-				for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);')`; do
-					pValBonf=`echo ".05 / $NumPaths" | bc -l`; #pValCutoff="pValBonf";
-#					pValBonf=.001; #pValCutoff="pVal001";
-
-	
-	                        done; echo ""
-	                done;
-	        done;
-	done | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/enrichr/20190531.KG.TopResults.enrichr.$n.$l.AllPops.AllPhenos.Allstrats.$pValCutoff.vs1.txt.gz
-done; 
-
-for n in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+for n in `cat <(echo "GO_Biological_Process_2018 GO_Molecular_Function_2018 GO_Cellular_Component_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
 	echo $n
 	pValCutoff="pValBonf"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	        echo $pValCutoff; echo $l;
@@ -3076,11 +3041,9 @@ for n in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n",
                 	                echo ""
                         	done;
 			done;
-                done;
+                done | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/enrichr/20190531.KG.TopResults.enrichr.$n.$l.AllPops.AllPhenos.Allstrats.$pValCutoff.vs1.txt.gz
         done 
 done
-
-
 
 #/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/enrichr/20190427.KG.TopResults.AllPhenos.AllPops.AllStrategies.$pValCutoff.enrichr.$m.AllPathwayGenes.vs1.txt.gz
 
