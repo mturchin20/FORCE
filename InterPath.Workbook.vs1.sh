@@ -95,6 +95,7 @@ cp -p /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/uk
 cp -p /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/ukb_chrAll_v2.Irish.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Backup/20180820.ukb_chrAll_v2.Irish.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt
 cp -p /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/ukb_chrAll_v2.Indian.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Backup/20180820.ukb_chrAll_v2.Indian.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt
 cp -p /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/ukb_chrAll_v2.Pakistani.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Backup/20180820.ukb_chrAll_v2.Pakistani.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt
+gzip /users/mturchin/LabMisc/RamachandranLab/InterPath/Backup/*.txt
 
 
 #20180607
