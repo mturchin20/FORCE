@@ -4043,7 +4043,7 @@ R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); 
 #Non-main-InterPath code runs
 #GEMMA (?)
 
-#From: https://github.com/genetics-statistics/GEMMA, http://www.xzlab.org/software/GEMMAmanual.pdf
+#From: https://github.com/genetics-statistics/GEMMA, http://www.xzlab.org/software/GEMMAmanual.pdf, https://stackoverflow.com/questions/11995832/inverse-of-matrix-in-r, https://stats.stackexchange.com/questions/14951/efficient-calculation-of-matrix-inverse-in-r, https://www.r-bloggers.com/how-do-i-create-the-identity-matrix-in-r/
 #installed conda (see top of workbook)
 
 module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
@@ -4052,30 +4052,43 @@ module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print
 
         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
 
-	R -q -e "Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.txt\", header=F); Data3 <- read.table(\"
-	Data3 <- read.table(\"
+	if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA ]; then
+		mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA
+	fi
+	if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation ]; then
+		mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation
+	fi
+
+	R -q -e "ptm <- proc.time(); library(\"MASS\"); Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.txt\", header=F); Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\", header=F); neg.is.na <- Negate(is.na); \
+	K <- Data1; Y <- Data2[,c(3:4,7:8)]; Z <- Data3[,(ncol(Covars)-9):ncol(Covars)]; for (i in 1:4) { print(proc.time() - ptm); \
+		Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \
+		M <- diag(nrow(Z.Pheno.noNAs)) - (Z.Pheno.noNAs %*% chol2inv(chol((t(Z.Pheno.noNAs) %*% Z.Pheno.noNAs))) %*% t(Z.Pheno.noNAs)); \
+		Y.Pheno.noNAs.M <- M %*% Y.Pheno.noNAs; 
+		K.Pheno.noNAs.M <- M %*% K.Pheno.noNAs %*% M;
+		K.Pheno.noNAs.2.M <- M %*% K.Pheno.noNAs.2 %*% M;
+		K.Pheno.noNAs.3.M <- M %*% K.Pheno.noNAs.3 %*% M;
+		Error.M <- M %*% diag(nrow(M));
+		write.table(Y.Pheno.noNAs.M, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA
+	
+		write.table(PhenoNew, file=paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways\\\", i, \\\".noDups.txt\\\", sep=\\\"\\\"), quote=FALSE, row.name=FALSE, col.name=TRUE); \
+
+
+	}; print(proc.time() - ptm);" 
 
 done
-
-
-#From https://blog.rstudio.com/2016/03/29/feather/, https://blog.dominodatalab.com/the-r-data-i-o-shootout/, https://stackoverflow.com/questions/1727772/quickly-reading-very-large-tables-as-dataframes
-module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+	
+	gemma 
 
-        R -q -e "library("data.table"); library("feather"); \
-        ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); print(proc.time() - ptm); \
-        Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3.sd[which(Data3.sd==0)] <- 1; Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); \
-        ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm); \
-        write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
-done &
+done
 
-#Indn: 13253.066;
-#African: 45gb
-#Brit10k: ~133gb, had success with a 180gb interactive node (like less than an hour?); 110gb for the per-chr version succeeded
-
+M = I − Z(ZT Z)
+−1 ZT
+, a
 
                         LpCnt=1; LpCnt2=1; for (( PathNum=2561; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
   sbatch -t 72:00:00 --mem 10g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
@@ -4103,7 +4116,41 @@ name; “-n [num]” (default 1) specifies which column of phenotype to use (e.g
 for a fam file); “-k [filename]” specifies relatedness matrix file name; “-mk [filename]” specifies the
 multiple relatedness matrix file name; the multiple relatedness matrix file is a text file where each
 
+#From https://stackoverflow.com/questions/11995832/inverse-of-matrix-in-r, https://stats.stackexchange.com/questions/14951/efficient-calculation-of-matrix-inverse-in-r
+require(MASS)
+mat <- matrix(rnorm(1e6),nrow=1e3,ncol=1e3)
+mat1 <- matrix(rnorm(4e8),nrow=2e4,ncol=2e4)
+mat <- mat1 %*% t(mat1); rm(mat1); 
 
+t0 <- proc.time()
+inv0 <- ginv(mat)
+proc.time() - t0 
+
+t1 <- proc.time()
+inv1 <- solve(mat)
+proc.time() - t1 
+
+t2 <- proc.time()
+inv2 <- chol2inv(chol(mat))
+proc.time() - t2 
+
+#From https://blog.rstudio.com/2016/03/29/feather/, https://blog.dominodatalab.com/the-r-data-i-o-shootout/, https://stackoverflow.com/questions/1727772/quickly-reading-very-large-tables-as-dataframes
+module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+        echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+
+        R -q -e "library("data.table"); library("feather"); \
+        ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); print(proc.time() - ptm); \
+        Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3.sd[which(Data3.sd==0)] <- 1; Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); \
+        ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm); \
+        write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
+done &
+
+#Indn: 13253.066;
+#African: 45gb
+#Brit10k: ~133gb, had success with a 180gb interactive node (like less than an hour?); 110gb for the per-chr version succeeded
 
 
 
@@ -7397,6 +7444,34 @@ FID IID Height BMI Waist Hip WaistAdjBMI HipAdjBMI
 6024552 6024552 0.887627003444078 0.608541089829507 0.967907577180001 0.973451067809268 1.11735170597066 1.16798406561571
 6025294 6025294 -0.163355963756279 1.41175601127872 1.66478926061938 1.73422703698405 0.996005568720459 1.40895089323185
 6025455 6025455 1.50154109920995 -1.24025248927293 -0.790120856842063 -1.02098411189274 0.62431145981389 0.192736450141575
+> val1
+           [,1]       [,2]        [,3]
+[1,]  0.9331342  0.4480552 -0.04075839
+[2,]  1.0125566 -0.9618903  1.91522764
+[3,] -0.6909810  0.2437264  0.56653405
+> val3 <- rnorm(3)
+> val3
+[1] -1.8720953  0.9317180  0.9001095
+> val1 * val3
+           [,1]       [,2]       [,3]
+[1,] -1.7469162 -0.8388020 0.07630359
+[2,]  0.9434172 -0.8962105 1.78445208
+[3,] -0.6219585  0.2193805 0.50994268
+> val1 %*% val3
+          [,1]
+[1,] -1.366142
+[2,] -1.067898
+[3,]  2.030609
+> 0.9331342 * -1.8720953 + 0.4480552 * 0.9317180 + -0.04075839 * 0.9001095
+[1] -1.366142
+> for (i in 1:3) { print(val3[1] * val1[i,1] + val3[2] * val1[i,2] + val3[3] * val1[i,3]); }
+[1] -1.366142
+[1] -1.067898
+[1] 2.030609
+> for (i in 1:3) { print(c(val3[i] * val1[i,1], val3[i] * val1[i,2], val3[i] * val1[i,3])); }
+[1] -1.74691620 -0.83880205  0.07630359
+[1]  0.9434172 -0.8962105  1.7844521
+[1] -0.6219585  0.2193805  0.5099427
 
 
 
