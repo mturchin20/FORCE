@@ -4055,34 +4055,132 @@ module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print
 	if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA ]; then
 		mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA
 	fi
-	if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation ]; then
-		mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation
-	fi
 
 	R -q -e "ptm <- proc.time(); library(\"MASS\"); Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.txt\", header=F); Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\", header=F); neg.is.na <- Negate(is.na); \
 	K <- Data1; Y <- Data2[,c(3:4,7:8)]; Z <- Data3[,(ncol(Covars)-9):ncol(Covars)]; for (i in 1:4) { print(proc.time() - ptm); \
 		Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \
-		M <- diag(nrow(Z.Pheno.noNAs)) - (Z.Pheno.noNAs %*% chol2inv(chol((t(Z.Pheno.noNAs) %*% Z.Pheno.noNAs))) %*% t(Z.Pheno.noNAs)); \
+		M <- diag(nrow(Z.Pheno.noNAs)) - (Z.Pheno.noNAs %*% chol2inv(chol(t(Z.Pheno.noNAs) %*% Z.Pheno.noNAs)) %*% t(Z.Pheno.noNAs)); \
 		Y.Pheno.noNAs.M <- M %*% Y.Pheno.noNAs; 
 		K.Pheno.noNAs.M <- M %*% K.Pheno.noNAs %*% M;
 		K.Pheno.noNAs.2.M <- M %*% K.Pheno.noNAs.2 %*% M;
 		K.Pheno.noNAs.3.M <- M %*% K.Pheno.noNAs.3 %*% M;
 		Error.M <- M %*% diag(nrow(M));
 		write.table(Y.Pheno.noNAs.M, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA
+
+        R -q -e "ptm <- proc.time(); library(\"MASS\"); Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.txt\", header=T); Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\", header=F); neg.is.na <- Negate(is.na); \
+        K <- Data1; Y <- Data2[,c(3:4,7:8)]; Z <- Data3[,(ncol(Covars)-9):ncol(Covars)]; for (i in 1:4) { print(proc.time() - ptm); \
+                Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \
+                M <- diag(nrow(Z.Pheno.noNAs)) - (Z.Pheno.noNAs %*% chol2inv(chol(t(Z.Pheno.noNAs) %*% Z.Pheno.noNAs)) %*% t(Z.Pheno.noNAs)); \
+                Y.Pheno.noNAs.M <- M %*% Y.Pheno.noNAs;
+                K.Pheno.noNAs.M <- M %*% K.Pheno.noNAs %*% M;
+                K.Pheno.noNAs.2.M <- M %*% K.Pheno.noNAs.2 %*% M;
+                K.Pheno.noNAs.3.M <- M %*% K.Pheno.noNAs.3 %*% M;
+                Error.M <- M %*% diag(nrow(M));
+                
+                write.table(Y.Pheno.noNAs.M, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+                mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.
+                100geno.raw.edit.noFix.GEMMA.Vs1.\", row.names(Y)[i] ,\".YM.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, 
+                col.names=FALSE)
+				write.table(K.Pheno.noNAs.M, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+                mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.
+                100geno.raw.edit.noFix.GEMMA.Vs1.\", row.names(Y)[i] ,\".KM.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, 
+                col.names=FALSE)
+                write.table(K.Pheno.noNAs.2.M, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+                mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.
+                100geno.raw.edit.noFix.GEMMA.Vs1.\", row.names(Y)[i] ,\".K2M.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, 
+                col.names=FALSE)
+                write.table(K.Pheno.noNAs.3.M, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+                mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.
+                100geno.raw.edit.noFix.GEMMA.Vs1.\", row.names(Y)[i] ,\".K3M.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, 
+                col.names=FALSE)
+                write.table(Error.M, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+                mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.
+                100geno.raw.edit.noFix.GEMMA.Vs1.\", row.names(Y)[i] ,\".EM.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, 
+                col.names=FALSE)
+
+
+				PhenoNames <- (\"Height\", \"BMI\", \"WaistAdjBMI\", 
+
+                write.table(PhenoNew, file=paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+                mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.
+                ${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways\\\", i, \\\".noDups.txt\\\", 
+                sep=\\\"\\\"), quote=FALSE, row.name=FALSE, col.name=TRUE); \
+
+				 write.table(InterPath.output\\\$Est, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+				 mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.
+				 sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.
+				 Paths${PathNum}.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); 
+
+				Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/
+				InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.
+				edit.noFix.cov.txt\", header=F);
+		
+				Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/
+				InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.
+				Phenos.Transformed.BMIAdj.txt\", header=T); 
+				
+				Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/
+				$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.
+				PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\", header=F);
+
+        }; print(proc.time() - ptm);"
+
+done
+for i in `cat phenos`
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
+	        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+	        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	
+	        echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+	
+	        cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.
+	        ${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.txt | wc   
+#	       gemma
+	
+			echo /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+                mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.
+                100geno.raw.edit.noFix.GEMMA.Vs1.$i.KM.txt
+                /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+                mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.
+                100geno.raw.edit.noFix.GEMMA.Vs1.$i.K2M.txt
+                /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+                mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.
+                100geno.raw.edit.noFix.GEMMA.Vs1.$i.K3M.txt
+                /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+                mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.
+                100geno.raw.edit.noFix.GEMMA.Vs1.$i.EM.txt
+                > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+                mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.
+                100geno.raw.edit.noFix.GEMMA.Vs1.$i.VarCompList.txt
+	
+			gemma -p /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+	                mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.
+	                100geno.raw.edit.noFix.GEMMA.Vs1.$i.YM.txt
+	              -mk /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/
+                mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.
+                100geno.raw.edit.noFix.GEMMA.Vs1.$i.VarCompList.txt
+	
+	./gemma -p [filename] -mk [filename] -n [num] -vc [num] -o [prefix]
+	
+	done
+done
+
+	
+
 		write.table(PhenoNew, file=paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways\\\", i, \\\".noDups.txt\\\", sep=\\\"\\\"), quote=FALSE, row.name=FALSE, col.name=TRUE); \
 
 
 	}; print(proc.time() - ptm);" 
 
 done
-for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
-	
-	gemma 
+
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.txt | wc	
+#	gemma 
 
 done
 
@@ -7472,6 +7570,45 @@ FID IID Height BMI Waist Hip WaistAdjBMI HipAdjBMI
 [1] -1.74691620 -0.83880205  0.07630359
 [1]  0.9434172 -0.8962105  1.7844521
 [1] -0.6219585  0.2193805  0.5099427
+> mat1 <- matrix(rnorm(4e8),nrow=2e4,ncol=2e4)
+> mat <- mat1 %*% t(mat1); rm(mat1);
+>
+> t0 <- proc.time()
+> inv0 <- ginv(mat)
+> proc.time() - t0
+    user   system  elapsed
+6109.772   18.127 6128.184
+>
+> t1 <- proc.time()
+> inv1 <- solve(mat)
+> proc.time() - t1
+   user  system elapsed
+903.393   2.681 906.116
+>
+> t2 <- proc.time()
+> inv2 <- chol2inv(chol(mat))
+> proc.time() - t2
+   user  system elapsed
+352.775   1.534 354.330
+> library("MASS"
++ )
+> mat1 <- matrix(rnorm(4e8),nrow=2e4,ncol=2e4)
+> mat <- mat1 %*% t(mat1); rm(mat1);
+> mat.eigen <- eigen(mat)
+> summary(mat.eigen)
+        Length    Class  Mode
+values      20000 -none- numeric
+vectors 400000000 -none- numeric
+> head(mat.eigen$values)
+[1] 79969.57 79900.79 79836.05 79670.56 79556.30 79478.47
+> tail(mat.eigen$values)
+[1] 2.893531e-03 1.545938e-03 7.960042e-04 5.628102e-04 3.155307e-04
+[6] 6.952714e-05
+> mat.eigen$values[(length(mat.eigen$values)-40):(length(mat.eigen$values)-20)]
+ [1] 0.20918143 0.19674310 0.19065842 0.17088483 0.16978483 0.15666410
+ [7] 0.14645738 0.14154328 0.13005568 0.12869060 0.11796953 0.11495314
+[13] 0.10579555 0.09058126 0.08870981 0.08475821 0.07420246 0.06212681
+[19] 0.05860470 0.05760145 0.05242482
 
 
 
