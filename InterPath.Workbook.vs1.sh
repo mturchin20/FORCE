@@ -4061,9 +4061,9 @@ t2 <- proc.time()
 inv2 <- chol2inv(chol(mat))
 proc.time() - t2 
 
-#From: https://github.com/genetics-statistics/GEMMA, http://www.xzlab.org/software/GEMMAmanual.pdf, https://stackoverflow.com/questions/11995832/inverse-of-matrix-in-r, https://stats.stackexchange.com/questions/14951/efficient-calculation-of-matrix-inverse-in-r, https://www.r-bloggers.com/how-do-i-create-the-identity-matrix-in-r/
+#From: https://github.com/genetics-statistics/GEMMA, http://www.xzlab.org/software/GEMMAmanual.pdf, https://stackoverflow.com/questions/11995832/inverse-of-matrix-in-r, https://stats.stackexchange.com/questions/14951/efficient-calculation-of-matrix-inverse-in-r, https://www.r-bloggers.com/how-do-i-create-the-identity-matrix-in-r/, https://stackoverflow.com/questions/22906804/matrix-expression-causes-error-requires-numeric-complex-matrix-vector-arguments
 #installed conda (see top of workbook)
-module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
+module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
@@ -4074,25 +4074,14 @@ module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print
 	fi
 
         R -q -e "ptm <- proc.time(); library(\"MASS\"); Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.txt\", header=T); Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\", header=T); neg.is.na <- Negate(is.na); \
-        
-		K <- as.matrix(Data1); 
-		Y <- as.matrix(Data2[,c(3:4,7:8)]); 
-		Z <- as.matrix(Data3[,(ncol(Data3)-9):ncol(Data3)]); 
-		for (i in 1:4) { print(proc.time() - ptm); \
-	                Y.Pheno <- Y[,i]; 
-			Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; 
-			K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; 
-			Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; 
-			K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; 
-			K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \
-			M <- diag(nrow(Z.Pheno.noNAs)) - (Z.Pheno.noNAs %*% chol2inv(chol(t(Z.Pheno.noNAs) %*% Z.Pheno.noNAs)) %*% t(Z.Pheno.noNAs)); \
-			Y.Pheno.noNAs.M <- M %*% Y.Pheno.noNAs; 
-			K.Pheno.noNAs.M <- M %*% K.Pheno.noNAs %*% M; 
-			K.Pheno.noNAs.2.M <- M %*% K.Pheno.noNAs.2 %*% M; 
-			K.Pheno.noNAs.3.M <- M %*% K.Pheno.noNAs.3 %*% M; 
-			Error.M <- M %*% diag(nrow(M)); \
-		
-		write.table(Y.Pheno.noNAs.M, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.\", colnames(Y)[i] ,\".YM.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.M, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.\", colnames(Y)[i] ,\".KM.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.M, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.\", colnames(Y)[i] ,\".K2M.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.M, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.\", colnames(Y)[i] ,\".K3M.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(Error.M, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.\", colnames(Y)[i] ,\".EM.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+        K <- as.matrix(Data1); Y <- as.matrix(Data2[,c(3:4,7:8)]); Z <- as.matrix(Data3[,(ncol(Data3)-9):ncol(Data3)]); for (i in 1:4) { print(proc.time() - ptm); \
+                Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \
+                print(Z.Pheno.noNAs[1:10,1:10]); \
+		M <- diag(nrow(Z.Pheno.noNAs)) - (Z.Pheno.noNAs %*% chol2inv(chol(t(Z.Pheno.noNAs) %*% Z.Pheno.noNAs)) %*% t(Z.Pheno.noNAs)); \
+		Y.Pheno.noNAs.M <- M %*% Y.Pheno.noNAs; K.Pheno.noNAs.M <- M %*% K.Pheno.noNAs %*% M; K.Pheno.noNAs.2.M <- M %*% K.Pheno.noNAs.2 %*% M; K.Pheno.noNAs.3.M <- M %*% K.Pheno.noNAs.3 %*% M; Error.M <- M %*% diag(nrow(M)); \
+		Error <- diag(nrow(M)); \
+		write.table(Y.Pheno.noNAs, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.\", colnames(Y)[i] ,\".YnoM.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.\", colnames(Y)[i] ,\".KnoM.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.\", colnames(Y)[i] ,\".K2noM.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.\", colnames(Y)[i] ,\".K3noM.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(Error, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.\", colnames(Y)[i] ,\".EnoM.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+		write.table(cbind(rep(1, nrow(Z.Pheno.noNAs)), Z.Pheno.noNAs), file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.\", colnames(Y)[i] ,\".Zwith1s.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 		print(proc.time() - ptm); ptm <- proc.time(); \ 
 	};"
 done
@@ -4100,13 +4089,13 @@ done
 for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 	ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
 	
 	        echo $ancestry1 $ancestry2 $i
 	
-		echo /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.KM.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.K2M.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.K3M.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.EM.txt | sed 's/ /\n/g' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.VarCompList.txt
+		echo /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.KnoM.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.K2noM.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.K3noM.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.EnoM.txt | sed 's/ /\n/g' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.VarCompList.test1.txt
                 
-		cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA; gemma -p /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.YM.txt -mk /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.VarCompList.txt -n 1 -vc 1 -o ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.Output.txt 
+		cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA; gemma -p /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.YnoM.txt -mk /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.VarCompList.test1.txt -c /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.Zwith1s.txt -n 1 -vc 1 -o ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.Vs1.$i.Output.Test1.txt 
 	
 	done
 done
