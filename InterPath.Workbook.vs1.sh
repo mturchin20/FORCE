@@ -621,32 +621,24 @@ sleep 28800; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", 
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		echo $ancestry1 $ancestry2 $ancestry3 $k
 
-		gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.*Regions.c2.${k}.Pathway*.noDups.txt
+		gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.*Regions.c2.${k}.Pathways1*.noDups.txt
 	
 	done;
 done;		
-
-for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -E 'Ran10000|Irish' | grep -vE 'African|Ran4000|Indian' | grep Irish`; do
-        for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 1`; do
+  for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 12 | tail -n 1`; do
                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
                 echo $ancestry1 $ancestry2 $k $NumPaths
 
-		for l in {1..$NumPaths}; do
-			if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.*Regions.c2.${k}.Pathway${l}.noDups.txt.gz ]; then
+		for (( l=1; l <= $NumPaths; l=l+1 )); do
+			if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.*Regions.c2.${k}.Pathways${l}.noDups.txt.gz ]; then
 				echo "1"
 			fi 
 		done | wc
 
         done;  
 done;
-
-
-test each/everyu file is actually there? 1-4310 or whatever?
-
-
-
-
 
 #		sbatch -t 48:00:00 --mem 2g --account=ccmb-condo -o temp2.output -e temp2.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh'; 
 #		echo -e "gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.*Regions.c2.${k}.Pathway*.txt");
@@ -705,10 +697,10 @@ Exonic
 ExonicPlus
 ExonicPlus20kb
 
-#		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 1`; do
-for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
-		for k in `cat <(echo "IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75" | perl -lane 'print join("\n", @F);')`; do
+#		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 1`; do
+for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -E 'African|Ran4000|Indian' | head -n 2`; do
+		for k in `cat <(echo "IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 Genes" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 			ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`
@@ -1924,15 +1916,15 @@ Ran10k All Four Intronic20kb25-75
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.GG.cpp
 module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | head -n 1`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -E 'Ran10000|Irish' | grep Irish`; do
-	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 5`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 1 | tail -n 1`; do
+  for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 12 | tail -n 1`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; PhenoSeed1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
 #			NumPaths=2
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k
 			
 			LpCnt=1; LpCnt2=1; for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
-  sbatch -t 72:00:00 -n 4 -N 1-1 --mem 28g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
+  sbatch -t 72:00:00 --mem 10g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
 				echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); sourceCpp(\\\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp\\\"); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
 				Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\\\", header=T); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\\\", header=F); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.${k}.txt\\\", header=F); Y.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways1.noDups.txt.gz\\\", header=T); Y.Check.Pheno <- Y.Check\\\$$Pheno1; Y.Check.Pheno.noNAs <- Y.Check.Pheno[neg.is.na(Y.Check.Pheno)]; Y.Seed <- $AncSeed1 + $PhenoSeed1; \
 				Pathways.Regions <- list(); cores = detectCores(); InterPath.output <- list(); InterPath.output\\\$Est <- c(); InterPath.output\\\$Eigenvalues <- c(); InterPath.output\\\$PVE <- c(); \ 
@@ -3431,7 +3423,7 @@ join -a 1 -a 2 -e "FALSE" -o 0 1.1 2.1 <(cat /users/mturchin/data/mturchin/Broad
 
 cmp <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | awk '{ print $1 }') <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.wcp_comps.symbols.gmt | awk '{ print $1 }') | wc 
 
-for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -E 'African|Ran4000|Indian' | head -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`; echo $pheno1 $ancestry1 $ancestry2 $ancestry3;
 
 #	join <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.wcp_comps.symbols.gmt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.NonSyn.noDups.txt | awk '{ print $1 }' | sort) | sort -g -k 3,3 > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.NonSyn.noDups.txt
@@ -3439,9 +3431,10 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep
 #	join <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.wcp_comps.symbols.gmt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.ExonicPlus.noDups.txt | awk '{ print $1 }' | sort) | sort -g -k 3,3 > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.ExonicPlus.noDups.txt
 #	join <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.wcp_comps.symbols.gmt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.ExonicPlus20kb.noDups.txt | awk '{ print $1 }' | sort) | sort -g -k 3,3 > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.ExonicPlus20kb.noDups.txt
 #	join <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.wcp_comps.symbols.gmt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.IntronicPlus20kb.noDups.txt | awk '{ print $1 }' | sort) | sort -g -k 3,3 > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.IntronicPlus20kb.noDups.txt
-	join <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.wcp_comps.symbols.gmt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.IntronicPlus20kb25.txt | awk '{ print $1 }' | sort) | sort -g -k 3,3 > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.IntronicPlus20kb25.txt
-	join <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.wcp_comps.symbols.gmt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.IntronicPlus20kb50.txt | awk '{ print $1 }' | sort) | sort -g -k 3,3 > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.IntronicPlus20kb50.txt
-	join <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.wcp_comps.symbols.gmt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.IntronicPlus20kb75.txt | awk '{ print $1 }' | sort) | sort -g -k 3,3 > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.IntronicPlus20kb75.txt
+#	join <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.wcp_comps.symbols.gmt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.IntronicPlus20kb25.txt | awk '{ print $1 }' | sort) | sort -g -k 3,3 > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.IntronicPlus20kb25.txt
+#	join <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.wcp_comps.symbols.gmt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.IntronicPlus20kb50.txt | awk '{ print $1 }' | sort) | sort -g -k 3,3 > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.IntronicPlus20kb50.txt
+#	join <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.wcp_comps.symbols.gmt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.IntronicPlus20kb75.txt | awk '{ print $1 }' | sort) | sort -g -k 3,3 > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.IntronicPlus20kb75.txt
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | perl -lane 'my @vals1 = split(/,/, $F[2]); my $val1 = "FALSE"; if ($#vals1 > 0) { $val1 = "TRUE"; } print $F[0], "\t", $F[1], "\t", $., "\t", $val1;' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.Genes.noDups.txt; ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.Genes.noDups.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.Genes.txt
 
 done
 	
@@ -7682,6 +7675,77 @@ alyses/InterPath/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.
    4      4:561631    6    6:27709441     0.149265      17.1381    3.478e-05 
    4      4:561631    7    7:76433150    -0.251292      17.4461    2.957e-05 
    4      4:561631    7   7:106465648    -0.149988      17.0059    3.729e-05 
+#20190624
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -E 'Ran10000|Irish' | grep -vE 'African|Ran4000|Indian' | head -n 2 | tail -n 1`; do
+>   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
+>                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>                 NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
+>                 echo $ancestry1 $ancestry2 $k $NumPaths
+>
+>                 for (( l=1; l <= $NumPaths; l=l+1 )); do
+>                         if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.*Regions.c2.${k}.Pathways${l}.noDups.txt.gz ]; then
+>                                 echo "1"
+>                         fi
+>                 done | wc
+>
+>         done;
+> done;
+Irish Irish NonSyn 4714
+   4714    4714    9428
+Irish Irish Exonic 4729
+   4729    4729    9458
+Irish Irish ExonicPlus 4734
+   4734    4734    9468
+Irish Irish ExonicPlus20kb 4734
+   4734    4734    9468
+Irish Irish IntronicPlus20kb 4734
+   4734    4734    9468
+[  mturchin@node1305  ~/LabMisc/RamachandranLab/InterPath]$for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 1 | tail -n 1`; do
+>   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 12 | tail -n 1`; do
+>                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>                 NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
+>                 echo $ancestry1 $ancestry2 $k $NumPaths
+>
+>                 for (( l=1; l <= $NumPaths; l=l+1 )); do
+>                         if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.*Regions.c2.${k}.Pathways${l}.noDups.txt.gz ]; then
+>                                 echo "1"
+>                         fi
+>                 done | wc
+>
+>         done;
+> done;
+African African Genes 22251
+  22251   22251   44502
+[  mturchin@node1305  ~]$for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 1`; do
+>   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 12 | tail -n 1`; do
+>                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>                 NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
+>                 echo $ancestry1 $ancestry2 $k $NumPaths
+>
+>                 for (( l=1; l <= $NumPaths; l=l+1 )); do
+>                         if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.*Regions.c2.${k}.Pathways${l}.noDups.txt.gz ]; then
+>                                 echo "1"
+>                         fi
+>                 done | wc
+>
+>         done;
+> done;
+British British.Ran4000 Genes 23100
+  23100   23100   46200
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | perl -lane 'my @vals1 = split(/,/, $F[2]); my $val1 = "FALSE"; if ($#vals1 > 0) { $val1 = "TRUE"; } print $F[0], "\t", $F[1], "\t", $., "\t", $val1;' | head -n 10
+A1BG    A1BG    1       TRUE
+A1CF    A1CF    2       TRUE
+A2M     A2M     3       TRUE
+A2ML1   A2ML1   4       TRUE
+A2MP1   A2MP1   5       TRUE
+A3GALT2 A3GALT2 6       TRUE
+A4GALT  A4GALT  7       TRUE
+A4GNT   A4GNT   8       TRUE
+AA06    AA06    9       TRUE
+AAAS    AAAS    10      FALSE
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | perl -lane 'my @vals1 = split(/,/, $F[2]); my $val1 = "FALSE"; if ($#vals1 > 0) { $val1 = "TRUE"; } print $F[0], "\t", $F[1], "\t", $., "\t", $val1;' | perl -lane 'print $F[$#F];' | sort | uniq -c 
+   2172 FALSE
+  20079 TRUE
 
 
 
