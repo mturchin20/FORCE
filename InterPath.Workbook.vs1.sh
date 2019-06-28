@@ -1007,23 +1007,6 @@ done
 #<10k: 24g
 #>=10k: 65g (75g for Irish)
 
-4743367              63      batch  mturchin    default 2019-06-19T09:43:50 2019-06-19T16:59:38   01:06:40          1  COMPLETED      0:0           Height Irish Irish IntronicPlus20kb 4321
-4743367.bat+      batch                         default 2019-06-19T15:52:58 2019-06-19T16:59:38   01:06:40          1  COMPLETED      0:0
-4743368              63      batch  mturchin    default 2019-06-19T09:43:50             Unknown   01:29:43          1    RUNNING      0:0
-4743369              63      batch  mturchin    default 2019-06-19T09:43:50 2019-06-19T17:14:30   01:10:38          1  COMPLETED      0:0           Height Irish Irish IntronicPlus20kb 4481
-4743369.bat+      batch                         default 2019-06-19T16:03:52 2019-06-19T17:14:30   01:10:38          1  COMPLETED      0:0
-4743370              63      batch  mturchin    default 2019-06-19T09:43:50 2019-06-19T16:53:22   00:47:58          1  COMPLETED      0:0           Height Irish Irish IntronicPlus20kb 4561
-4743370.bat+      batch                         default 2019-06-19T16:05:24 2019-06-19T16:53:22   00:47:58          1  COMPLETED      0:0
-4743371              63      batch  mturchin    default 2019-06-19T09:43:50 2019-06-19T17:00:43   00:50:10          1     FAILED      1:0           Height Irish Irish IntronicPlus20kb 4641
-4743371.bat+      batch                         default 2019-06-19T16:10:33 2019-06-19T17:00:43   00:50:10          1     FAILED      1:0
-4743372              63      batch  mturchin    default 2019-06-19T09:43:51 2019-06-19T17:17:03   01:02:23          1  COMPLETED      0:0           Height Irish Irish IntronicPlus20kb 4721
-4743372.bat+      batch                         default 2019-06-19T16:14:40 2019-06-19T17:17:03   01:02:23          1  COMPLETED      0:0
-4748014        interact      batch  mturchin ccmb-condo 2019-06-19T17:20:53             Unknown   00:05:05          1    RUNNING      0:0
-
-
-
-double check all 'ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k' noDups.txt.gz file date allocations after everything is done...
-
 
 #20190619 NOTE -- in some few cases for Irish getting a `Warning message: system call failed: Cannot allocate memory` error in the error files, but investigating at least one of the source and underlying files (`ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/slurmTemp/*error | awk '{ if ($5 == 61) { print $0 } }'`) doesn't seem to show anything obvious? all files are present and look fine, no obvious issues or discrepancies; so for the moment moving forward, since it's only affect 9 collection of files, only 2 of which are really ultimately analyzed at the moment anyways; NOTE -- there's slight differences between 'k' on which files showup/have issues, thought 'Pathways1' seems to be consistent possibly?
 #ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/slurmTemp/*error | awk '{ if ($5 == 61) { print $0 } }'
@@ -1911,42 +1894,16 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 Ran10k All Four Intronic20kb25-75
 #201905** 20190603 -- Prob: Redo collection of results with dropping of pathways that just have a single variant in them? Soln: took care of this like last week or so, see re: the creation of the '...noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt' files 
 
-4831566              63      batch  mturchin    default 2019-06-24T15:22:07 2019-06-24T17:08:52   00:03:57          1  NODE_FAIL      1:0                         Height African Genes 22081 
-4955076              63      batch  mturchin    default 2019-06-24T20:19:01 2019-06-25T01:00:58   00:04:34          1  NODE_FAIL      1:0                    BMI British.Ran4000 Genes 15001 
-
-5174000              63      batch  mturchin    default 2019-06-26T12:38:28 2019-06-27T13:36:47   12:05:40          4     FAILED      1:0                        Height Irish ExonicPlus 651 
-5174000.bat+      batch                         default 2019-06-27T10:35:22 2019-06-27T13:36:47   12:05:40          4     FAILED      1:0                                                    
-5174008              63      batch  mturchin    default 2019-06-26T12:38:28 2019-06-27T13:29:57   09:30:16          4     FAILED      1:0                        Height Irish ExonicPlus 731 
-5174008.bat+      batch                         default 2019-06-27T11:07:23 2019-06-27T13:29:57   09:30:16          4     FAILED      1:0                                                    
-5174009              63      batch  mturchin    default 2019-06-26T12:38:28 2019-06-27T13:59:18   11:27:40          4     FAILED      1:0                        Height Irish ExonicPlus 741 
-5174009.bat+      batch                         default 2019-06-27T11:07:23 2019-06-27T13:59:18   11:27:40          4     FAILED      1:0                                                    
-5174010              63      batch  mturchin    default 2019-06-26T12:38:28 2019-06-27T13:40:47   10:05:36          4     FAILED      1:0                        Height Irish ExonicPlus 751 
-5174010.bat+      batch                         default 2019-06-27T11:09:23 2019-06-27T13:40:47   10:05:36          4     FAILED      1:0                                                    
-5174011              63      batch  mturchin    default 2019-06-26T12:38:28 2019-06-27T13:24:27   08:12:16          4     FAILED      1:0                        Height Irish ExonicPlus 761 
-5174011.bat+      batch                         default 2019-06-27T11:21:23 2019-06-27T13:24:27   08:12:16          4     FAILED      1:0                                                    
-5174012              63      batch  mturchin    default 2019-06-26T12:38:28 2019-06-27T13:56:25   09:48:04          4     FAILED      1:0                        Height Irish ExonicPlus 771 
-5174012.bat+      batch                         default 2019-06-27T11:29:24 2019-06-27T13:56:25   09:48:04          4     FAILED      1:0                                                    
-5174024              63      batch  mturchin    default 2019-06-26T12:38:28 2019-06-27T14:01:23   04:12:20          4     FAILED      1:0                        Height Irish ExonicPlus 891 
-5174024.bat+      batch                         default 2019-06-27T12:58:18 2019-06-27T14:01:23   04:12:20          4     FAILED      1:0                                                    
-5174030              63      batch  mturchin    default 2019-06-26T12:38:28 2019-06-27T13:59:51   02:58:52          4     FAILED      1:0                        Height Irish ExonicPlus 951 
-5174030.bat+      batch                         default 2019-06-27T13:15:08 2019-06-27T13:59:51   02:58:52          4     FAILED      1:0                                                    
-5174033              63      batch  mturchin    default 2019-06-26T12:38:29 2019-06-27T14:01:31   02:05:12          4     FAILED      1:0                        Height Irish ExonicPlus 981 
-5174033.bat+      batch                         default 2019-06-27T13:30:13 2019-06-27T14:01:31   02:05:12          4     FAILED      1:0                                                    
-5174034              63      batch  mturchin    default 2019-06-26T12:38:29 2019-06-27T14:02:24   01:42:12          4     FAILED      1:0                        Height Irish ExonicPlus 991 
-5174034.bat+      batch                         default 2019-06-27T13:36:51 2019-06-27T14:02:24   01:42:12          4     FAILED      1:0                                                    
-
-
-
 #pathway*remaining genome
 #NOTE -- copy and pasted `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp` & `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.Vs2.R` from associated Slack channel and from Lorin's code posted on 20180731
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.GG.cpp
-module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 1`; do
+module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | tail -n 2 | head -n 1`; do
 	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -E 'Ran10000|Irish' | grep -vE 'African|Ran4000|Indian' | head -n 2 | tail -n 1`; do
-  for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+  for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; PhenoSeed1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
-#			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
-			NumPaths=2
+			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
+#			NumPaths=2
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k
 			
 			LpCnt=1; LpCnt2=1; for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
@@ -4250,24 +4207,29 @@ done
 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.bed
 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.bed
 
-module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
 
-	if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA ]; then
-		mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA
-	fi
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.fam | perl -lane '$F[$#F] = 1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.fam
+	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.bed
+	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.bim
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.fam | perl -lane '$F[$#F] = 1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA.fam
+	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA.bed
+	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA.bim
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.fam | perl -lane '$F[$#F] = 1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.fam
+	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.fam
+	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.bim
 
-	if [ ! -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.fam ]; then 
-		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.fam | perl -lane '$F[$#F] = 1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.fam
-		ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.bed
-		ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.bim
-	fi
-	if [ ! -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.cXX.txt ]; then
+#	cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/; gemma -bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA -gk 2 -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA; mv output/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA* .
+#	cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/; gemma -bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA -gk 2 -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA; mv output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA* .
+#	cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/; gemma -bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA -gk 2 -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA; mv output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA* .
+done
+
 		cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20; gemma -bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA -gk 2 -o ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA; mv output/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA* . 
-	fi
+done
 
         R -q -e "ptm <- proc.time(); library(\"MASS\"); Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.cXX.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.txt\", header=T); Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\", header=T); neg.is.na <- Negate(is.na); \
         K <- as.matrix(Data1); Y <- as.matrix(Data2[,c(3:4,7:8)]); Z <- as.matrix(Data3[,(ncol(Data3)-9):ncol(Data3)]); for (i in 1:2) { print(proc.time() - ptm); \
