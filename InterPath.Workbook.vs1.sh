@@ -4409,7 +4409,7 @@ git clone https://github.com/lorinanthony/MAPIT
 
 module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | head -n 1`; do
 	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | head -n 1`; do
-		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; 
+		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`;  
 		echo $i $ancestry1 $ancestry2 $ancestry3 $k
 
 		if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT ]; then
@@ -4417,11 +4417,23 @@ module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;
 		fi
 
 		sbatch -t 72:00:00 -n 4 -N 1-1 --mem 42g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.vs1.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.vs1.slurm.output.error --comment "$Pheno1 $ancestry2" <(echo -e '#!/bin/sh';	
-			echo -e "\nR -q -e \"library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); library(\\\"CompQuadForm\\\"); sourceCpp(\\\"/users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.cpp\\\"); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
-			Phenos <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.txt\\\", header=T);
-			Genos <- read.table(\\\"
-			Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\\\", header=T);
-			
+			echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); library(\\\"CompQuadForm\\\"); source(\\\"/users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.R\\\"); sourceCpp(\\\"/users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.cpp\\\"); cores = detectCores(); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
+			Y <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.txt\\\", header=T); X <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); W <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\\\", header=T); \
+			Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; X.noNAs <- X[neg.is.na(Y.Pheno),]; W.noNAs <- W[neg.is.na(Y.Pheno),W]; \
+			Results1 <- MAPIT_Davies_Approx(X=t(X.noNAs),Y=Y.Pheno.noNAs,W=W.noNAs,cores=cores); \
+			Results1.pvals <- (); for(i in 1:length(vc.ts)){ \
+				lambda = sort(mapit$Eigenvalues[,i],decreasing = T); \
+				Davies_Method = davies(mapit$Est[i], lambda = lambda, acc=1e-8); \
+				approx.davies.pvals[i] = 2*min(Davies_Method$Qq, 1-Davies_Method$Qq); \
+				names(approx.davies.pvals)[i] = colnames(X)[i]; \
+			}; \
+			write.table(...); \
+		\"");
+        done;
+done
+
+
+
 
 cores = detectCores()
 
@@ -4432,7 +4444,9 @@ proc.time() - ptm #Stop clock
 
 davies.pvals = mapit$pvalues
 names(davies.pvals) = colnames(X)
-		
+
+                                echo -e "\nR -q -e \"library(\\\"data.table\\\"); \
+                                Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); \
 		
 		ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno
 	
@@ -8004,6 +8018,31 @@ Genes
 (InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$join -v 1 <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ print $2 "\t" $1 }' | sort) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1 <- cbind(Data1, seq(1, nrow(Data1), by=1)); write.table(Data1, quote=FALSE, row.names=FALSE, col.names=FALSE);" | awk '{ print $2 "\t" $7 }' | sort) | sort -rg -k 2,2      
 SNP2 1
 SNP1 1
+> dim(X)
+[1]  3000 10000
+> X[1:10,1:10]
+            SNP1       SNP2       SNP3       SNP4       SNP5       SNP6
+ [1,] -0.4545249 -0.7990536  1.1145591 -1.0171102  0.1963302 -0.9921594
+ [2,] -0.4545249  0.8405913 -0.6967504  0.4793737 -1.2332588  0.4975694
+ [3,] -0.4545249  0.8405913 -0.6967504  1.9758576  0.1963302  0.4975694
+ [4,] -0.4545249 -0.7990536 -0.6967504  1.9758576 -1.2332588  0.4975694
+ [5,] -0.4545249  0.8405913  1.1145591 -1.0171102  0.1963302 -0.9921594
+ [6,] -0.4545249 -0.7990536 -0.6967504 -1.0171102  0.1963302 -0.9921594
+ [7,] -0.4545249  0.8405913 -0.6967504 -1.0171102 -1.2332588 -0.9921594
+ [8,] -0.4545249  0.8405913  1.1145591  1.9758576 -1.2332588 -0.9921594
+ [9,] -0.4545249  2.4802362  2.9258685  0.4793737 -1.2332588 -0.9921594
+[10,] -0.4545249 -0.7990536 -0.6967504 -1.0171102  0.1963302 -0.9921594
+            SNP7       SNP8       SNP9      SNP10
+ [1,] -1.0366691 -0.7363310  1.8679941  0.9965886
+ [2,]  0.4549411  2.6911212 -1.0706437 -0.7406373
+ [3,]  0.4549411 -0.7363310  1.8679941 -0.7406373
+ [4,]  0.4549411 -0.7363310 -1.0706437 -0.7406373
+ [5,]  0.4549411  0.9773951  0.3986752  0.9965886
+ [6,]  1.9465514 -0.7363310 -1.0706437 -0.7406373
+ [7,]  0.4549411  0.9773951 -1.0706437 -0.7406373
+ [8,] -1.0366691 -0.7363310 -1.0706437 -0.7406373
+ [9,] -1.0366691 -0.7363310  1.8679941  0.9965886
+[10,]  0.4549411  0.9773951 -1.0706437 -0.7406373
 
 
 
