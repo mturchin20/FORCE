@@ -4417,13 +4417,9 @@ module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;
 			echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); library(\\\"CompQuadForm\\\"); source(\\\"/users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.R\\\"); sourceCpp(\\\"/users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.cpp\\\"); cores = detectCores(); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
 			Y <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.txt\\\", header=T); X <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); W <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\\\", header=T); \
 			Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; X.noNAs <- X[neg.is.na(Y.Pheno),]; W.noNAs <- W[neg.is.na(Y.Pheno),W]; \
-			Results1 <- MAPIT_Davies_Approx(X=t(X.noNAs),Y=Y.Pheno.noNAs,W=W.noNAs,cores=cores); \
-			Results1.pVals <- (); for(i in 1:length(vc.ts)){ \
-				lambda = sort(Results1$Eigenvalues[,i],decreasing = T); \
-				Davies_Method = davies(Results1$Est[i], lambda = lambda, acc=1e-8); \
-				Results1.pVals[i] = 2*min(Davies_Method$Qq, 1-Davies_Method$Qq); \
-				names(Results1.pVals)[i] = colnames(X.noNAs)[i]; \
-			}; \
+			Results1 <- MAPIT(X=t(X.noNAs),Y=Y.Pheno.noNAs,W=W.noNAs,hybrid=FALSE,test=\\\"davies\\\",cores=cores); \ 
+			Results1.pVals <- Results1$pvalues; 
+
 			write.table(...); \
 		\"");
         done;
