@@ -391,6 +391,61 @@ done
 
 
 
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v African | grep Ran10000`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+        echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+
+        for i in {1..22}; do
+#		rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/chr${i}.dose.vcf.gz /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/chr${i}.dose.vcf.gz.tbi /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/chr${i}.info.gz 
+#		rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.plinkTemp.nosex /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.plinkTemp.log /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.plinkTemp.tped /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.plinkTemp.tfam
+#		rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.fam /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.nosex 
+	done
+done
+
+for j in `cat <(echo $PAGEIPMBioMePops2 | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+        echo $ancestry1 $ancestry2
+
+        for i in {1..22}; do
+#               rm /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/chr${i}.dose.vcf.gz /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/chr${i}.dose.vcf.gz.tbi /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/chr${i}.info.gz
+#               rm /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chr${i}_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.plinkTemp.nosex /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chr${i}_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.plinkTemp.log /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chr${i}_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.plinkTemp.tped /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chr${i}_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.plinkTemp.tfam
+#               rm /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chr${i}_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.plinkTemp.bed /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chr${i}_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.plinkTemp.fam /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chr${i}_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.plinkTemp.bim /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chr${i}_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.plinkTemp.nosex
+        done
+done
+
+
+
+[  mturchin@node1301  ~/data/ukbiobank_jun17/subsets]$ls -lrt Indian/Indian/Imputation/mturchin20/ukb_chr17_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose*plinkTemp* | grep -v pruned
+-rw-r--r--  1 mturchin sramacha    165056 Jun 21  2018 Indian/Indian/Imputation/mturchin20/ukb_chr17_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.plinkTemp.nosex
+-rw-r--r--  1 mturchin sramacha      2516 Jun 21  2018 Indian/Indian/Imputation/mturchin20/ukb_chr17_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.plinkTemp.log
+-rw-r--r--  1 mturchin sramacha 345291366 Jun 22  2018 Indian/Indian/Imputation/mturchin20/ukb_chr17_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.plinkTemp.tped
+-rw-r--r--  1 mturchin sramacha    206320 Jun 22  2018 Indian/Indian/Imputation/mturchin20/ukb_chr17_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.plinkTemp.tfam
+-rw-r--r--  1 mturchin sramacha  21562353 Jun 22  2018 Indian/Indian/Imputation/mturchin20/ukb_chr17_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bed
+-rw-r--r--  1 mturchin sramacha    211478 Jun 22  2018 Indian/Indian/Imputation/mturchin20/ukb_chr17_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.fam
+-rw-r--r--  1 mturchin sramacha    494346 Jun 22  2018 Indian/Indian/Imputation/mturchin20/ukb_chr17_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bim
+-rw-r--r--  1 mturchin sramacha    165056 Jul  8 19:01 Indian/Indian/Imputation/mturchin20/ukb_chr17_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.nosex
+[  mturchin@node1301  ~/data/ukbiobank_jun17/subsets]$ls -lrt African/African/Imputation/mturchin20/ukb_chr17_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose*plinkTemp* | grep -v pruned
+ls: cannot access African/African/Imputation/mturchin20/ukb_chr17_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose*plinkTemp*: No such file or directory
+[  mturchin@node1301  ~/data/ukbiobank_jun17/subsets]$ls -lrt African/African/Imputation/mturchin20/ukb_chr17_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose*plinkTemp* | grep -v pruned
+-rw-r--r--  1 mturchin sramacha     98560 Jun 19  2018 African/African/Imputation/mturchin20/ukb_chr17_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.plinkTemp.nosex
+-rw-r--r--  1 mturchin sramacha      2575 Jun 19  2018 African/African/Imputation/mturchin20/ukb_chr17_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.plinkTemp.log
+-rw-r--r--  1 mturchin sramacha 160998294 Jun 21  2018 African/African/Imputation/mturchin20/ukb_chr17_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.plinkTemp.tped
+-rw-r--r--  1 mturchin sramacha    123200 Jun 21  2018 African/African/Imputation/mturchin20/ukb_chr17_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.plinkTemp.tfam
+-rw-r--r--  1 mturchin sramacha  10041573 Jun 21  2018 African/African/Imputation/mturchin20/ukb_chr17_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bed
+-rw-r--r--  1 mturchin sramacha    126280 Jun 21  2018 African/African/Imputation/mturchin20/ukb_chr17_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.fam
+-rw-r--r--  1 mturchin sramacha    385338 Jun 21  2018 African/African/Imputation/mturchin20/ukb_chr17_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bim
+-rw-r--r--  1 mturchin sramacha     98560 Jun 27 11:50 African/African/Imputation/mturchin20/ukb_chr17_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.nosex
+
+
+
+
+
+
+
 
 #From http://csg.sph.umich.edu/abecasis/mach/tour/imputation.html
 #r2 cutoff .3
@@ -4511,6 +4566,39 @@ done
                                 Results1.pVals[i] = 2*min(Davies_Method$Qq, 1-Davies_Method$Qq); \
                                 names(Results1.pVals)[i] = colnames(X.noNAs)[i]; \
                         }; \
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#PAGE IPM BioMe
+#20190804
+
+
+
+
+
+
+
 
 
 
