@@ -4711,20 +4711,36 @@ done;
 
 zcat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.txt | awk '{ print $2 "\t" $3 "\t" $6 "\t" $7 }' | gzip > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.txt
 /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/PAGE_IPMBioMe_chrAll_v1.QCed.1kGMatch.pruned.QCed.SNPrecode.w1kG.flipped.dropmissnp.allRltvs.flashpca.pcs.$ancestry2.wFullCovars.txt
+/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/PAGE_IPMBioMe_chrAll_v1.QCed.1kGMatch.pruned.QCed.SNPrecode.w1kG.flipped.dropmissnp.allRltvs.flashpca.pcs.$ancestry2.wFullCovars.txt
+
+[  mturchin@node1141  ~]$join <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sort -k 1,1) <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/PAGE_IPMBioMe_chrAll_v1.QCed.1kGMatch.pruned.QCed.SNPrecode.w1kG.flipped.dropmissnp.allRltvs.flashpca.pcs.$ancestry2.wFullCovars.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sed 's/IID1/IID/g' | sed 's/FID1/FID/g' | sort -k 1,1) | grep FID  
+FID_IID FID IID Height BMI FID IID SEX AGE FID2 IID2 PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10
+
+[  mturchin@node1141  ~]$cat /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.BMIAdj.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.top10resids.txt | head -n 10
+FID     IID  Height     BMI    Waist    Hip     WaistAdjBMI     HipAdjBMI
+1001592 1001592 0.482230373861928       0.703966568163725       0.984284201836018       1.51468833166627        0.838424173391287       2.14739041643977
+1002560 1002560 0.995372496532658       1.62137078564717        1.1200363003127 1.44408673131797        -1.46758901649104       -0.236952171707685
+1003036 1003036 0.423542423316795       1.31038015543109        1.48046469336499        1.57744691383801        0.826715030030281       1.37484178622006
+1004593 1004593 0.543614965093147       0.692624120227216       0.84083185327103        1.17166613546072        0.664675358701637       1.39183580378522
+1008167 1008167 0.706236222643289       -0.413661888087305      -0.302698613713754      -0.515403966799832      0.132667804297904       -0.458515695165364
+1009965 1009965 -0.638398121653517      0.75993932951009        0.929087384105685       1.1745771146562 0.633768287469564       1.09074899286256
+1010953 1010953 -2.11953223420151       0.114214347396125       0.136240343970814       -0.519425721071934      0.112141217892785       -0.898486531378543
+1012491 1012491 1.25699514939234        -0.198002791571748      0.265887318902999       0.105612965644997       1.06236731112431        0.839340051905529
+1013297 1013297 0.404989722143848       0.0429335697197124      0.244046174135434       -0.0657139679281006     0.504135867356006       0.0125503152510296
 
 for j in `cat <(echo $PAGEIPMBioMePops2 | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
-        echo $ancestry1 $ancestry2 /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/ukb_chrAll_v2.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.flashpca.pcs.wFullCovars.txt
+        echo $ancestry1 $ancestry2 /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/PAGE_IPMBioMe_chrAll_v1.QCed.1kGMatch.pruned.QCed.SNPrecode.w1kG.flipped.dropmissnp.allRltvs.flashpca.pcs.$ancestry2.wFullCovars.txt
 
-       join <(zcat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sort -k 1,1) <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/ukb_chrAll_v2.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.flashpca.pcs.wFullCovars.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sort -k 1,1) | awk '{ print $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $8 "\t" $9 "\t" $12 "\t" $13 "\t" $14 "\t" $15 "\t" $16 "\t" $17 "\t" $18 "\t" $19 "\t" $20 "\t" $21 "\t" $22 "\t" $23 "\t" $24 }' | grep -v FID | R -q -e "Data1 <- read.table(file('stdin'), header=F); for (i in 3:8) { Data1 <- cbind(Data1, residuals(lm(Data1[,i] ~ Data1[,12] + Data1[,13] + Data1[,14] + Data1[,15] + Data1[,16] + Data1[,17] + Data1[,18] + Data1[,19] + Data1[,20] + Data1[,21], na.action=na.exclude))); }; write.table(Data1, file=\"\", quote=FALSE, row.name=FALSE, col.name=FALSE);" | grep -v \> | grep -v Height | cat <(echo "FID IID Height BMI Waist Hip WaistAdjBMI HipAdjBMI FID IID SEX ANCESTRY AGE PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10 Height BMI Waist Hip WaistAdjBMI HipAdjBMI") -  | perl -lane 'print $F[0], "\t", $F[1], "\t", join("\t", @F[$#F-5..$#F]);' > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.flashpca.top10resids.txt
+       join <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sort -k 1,1) <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/PAGE_IPMBioMe_chrAll_v1.QCed.1kGMatch.pruned.QCed.SNPrecode.w1kG.flipped.dropmissnp.allRltvs.flashpca.pcs.$ancestry2.wFullCovars.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sed 's/IID1/IID/g' | sed 's/FID1/FID/g' | sort -k 1,1) | awk '{ print $2 "\t" $3 "\t" $4 "\t" $5 "\t" $12 "\t" $13 "\t" $14 "\t" $15 "\t" $16 "\t" $17 "\t" $18 "\t" $19 "\t" $20 "\t" $21 }' | grep -v FID | R -q -e "Data1 <- read.table(file('stdin'), header=F); for (i in 3:4) { Data1 <- cbind(Data1, residuals(lm(Data1[,i] ~ Data1[,5] + Data1[,6] + Data1[,7] + Data1[,8] + Data1[,9] + Data1[,10] + Data1[,11] + Data1[,12] + Data1[,13] + Data1[,14], na.action=na.exclude))); }; write.table(Data1, file=\"\", quote=FALSE, row.name=FALSE, col.name=FALSE);" | grep -v \> | grep -v Height | cat <(echo "FID IID Height BMI PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10 Height BMI") -  | perl -lane 'print $F[0], "\t", $F[1], "\t", join("\t", @F[$#F-1..$#F]);' > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.flashpca.top10resids.txt
 
-        cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw | perl -lane 'print join("\t", @F[0..6]);' | sed 's/_/ /g' | awk '{ print $1 "\t" $2 }' | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID2\"); \
-        Data2 <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.flashpca.top10resids.txt\", header=T); \
-        Data3 <- merge(Data1, Data2, by=\"FID\"); \
-        write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.top10resids.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);"
-        paste <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw | perl -lane 'print join("\t", @F[0..6]);' | sed 's/_/ /g' | awk '{ print $1 "\t" $2 }') <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.top10resids.txt | awk '{ print $1 }') | awk '{ if ($1 != $3) { print $0 } }' | wc
+       cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.FIDIIDs | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID\"); \
+       Data2 <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.flashpca.top10resids.txt\", header=T); \
+       Data3 <- merge(Data1, Data2, by=\"IID\"); \
+       write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.top10resids.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);"
+       paste <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.FIDIIDs) <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.top10resids.txt | awk '{ print $2 }') | awk '{ if ($1 != $3) { print $0 } }' | wc
 
 done
 
@@ -4847,7 +4863,7 @@ for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -
         done
 done
 
-for j in `cat <(echo $PAGEIPMBioMePops2 | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $PAGEIPMBioMePops2 | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 1`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
         
@@ -4857,25 +4873,24 @@ for j in `cat <(echo $PAGEIPMBioMePops2 | perl -lane 'print join("\n", @F);') | 
 
 done
 
-for j in `cat <(echo $PAGEIPMBioMePops2 | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $PAGEIPMBioMePops2 | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-        ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`
 
-        echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+        echo $pheno1 $ancestry1 $ancestry2
 
-       zcat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.edit.gz | head -n 1 | perl -lane 'print join("\n", @F);' > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.SNPIDs
-       paste <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.SNPIDs | sed 's/_/ /g' | awk '{ print $1 }') <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim | awk '{ print $2 }') | awk '{ if ($1 == $2) { print $0 } } ' | wc
-       cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.SNPIDs | wc
-       cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim | wc
-       cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.SNPIDs | awk '{ print $1 "\t" NR }' > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.SNPIDsRowPos
-       cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw | perl -lane 'print join("\t", @F[0..6]);' | sed 's/_/ /g' | awk '{ print $1 "\t" $2 }' | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID\"); \
-       Data2 <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.txt\", header=T); \
-       Data3 <- merge(Data1, Data2, by=\"IID\"); \
-       write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);"
-       paste <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw | perl -lane 'print join("\t", @F[0..6]);' | sed 's/_/ /g' | awk '{ print $1 "\t" $2 }') <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.txt | awk '{ print $1 }') | awk '{ if ($1 != $3) { print $0 } }' | wc
+#	zcat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.edit.gz | head -n 1 | perl -lane 'print join("\n", @F);' > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.SNPIDs
+#        paste <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.SNPIDs | sed 's/_/ /g' | awk '{ print $1 }') <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim | awk '{ print $2 }') | awk '{ if ($1 == $2) { print $0 } } ' | wc
+#        cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.SNPIDs | wc
+#        cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim | wc
+#        cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.SNPIDs | awk '{ print $1 "\t" NR }' > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.SNPIDsRowPos
+#        cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.FIDIIDs | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID\"); \
+#        Data2 <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.txt\", header=T); \
+#        Data3 <- merge(Data1, Data2, by=\"IID\"); \
+#        write.table(Data3[,c(1,3:ncol(Data3))], file=\"\", quote=FALSE, row.name=FALSE, col.name=TRUE);" | grep -v \> | awk '{ print $2 "\t" $1 "\t" $3 "\t" $4 }' | grep -v FID | cat <(echo "FID IID Height BMI") - > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.txt 
+#        paste <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.FIDIIDs) <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.txt | awk '{ print $2 }') | awk '{ if ($1 != $3) { print $0 } }' | wc
 
-#        cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.txt | awk '{ print $1 "\t" $2 }' | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID\"); \
+#        cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.FIDIIDs | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID\"); \
 #        Data2 <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.flashpca.top10resids.txt\", header=T); \
 #        Data3 <- merge(Data1, Data2, by=\"IID\"); \
 #        write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.flashpca.top10resids.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);"
@@ -8575,6 +8590,59 @@ SNP1 1
  [8,] -1.0366691 -0.7363310 -1.0706437 -0.7406373
  [9,] -1.0366691 -0.7363310  1.8679941  0.9965886
 [10,]  0.4549411  0.9773951 -1.0706437 -0.7406373
+#20190805
+[  mturchin@node1141  ~]$for j in `cat <(echo $PAGEIPMBioMePops2 | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
+>         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+>         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>
+>         echo $pheno1 $ancestry1 $ancestry2
+>
+>        zcat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.edit.gz
+ | head -n 1 | perl -lane 'print join("\n", @F);' > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.
+ImptHRC.dose.100geno.noFix.raw.SNPIDs
+>        paste <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.
+SNPIDs | sed 's/_/ /g' | awk '{ print $1 }') <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim | awk '{ print $2 }') | awk '{ if ($1 == $2) { print $0 } } ' | wc
+>        cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.SNPIDs | wc
+>        cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim | wc
+>        cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.SNPIDs | awk '{ print $1 "\t" NR }' > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.SNPIDsRowPos
+>        cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.FIDIIDs | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID\"); \
+>        Data2 <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.txt\", header=T); \
+>        Data3 <- merge(Data1, Data2, by=\"IID\"); \
+>        write.table(Data3[,c(1,3:ncol(Data3))], file=\"\", quote=FALSE, row.name=FALSE, col.name=TRUE);" | grep -v \> | awk '{ print $2 "\t" $1 "\t" $3 "\t" $4 }' | grep -v FID | cat <(echo "FID IID Height BMI") - > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.txt
+>        paste <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.FIDIIDs) <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.txt | awk '{ print $2 }') | awk '{ if ($1 != $3) { print $0 } }' | wc
+> 
+> #       cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.FIDIIDs | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID\"); \
+> #       Data2 <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.flashpca.top10resids.txt\", header=T); \
+> #       Data3 <- merge(Data1, Data2, by=\"IID\"); \
+> #       write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.flashpca.top10resids.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);"
+> #       paste <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.txt | awk '{ print $1 "\t" $2 }') <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.flashpca.top10resids.txt | awk '{ print $1 }') | awk '{ if ($1 != $3) { print $0 } }' | wc
+> 
+> done
+AfrAmr AfrAmrHRC
+ 859641 1719282 20002504
+ 859641  859641 11720534
+ 859641 5157846 25160350
+   4295   12885   64422
+Euro EuroStrict
+ 859133 1718266 19990692
+ 859133  859133 11713612
+ 859133 5154798 25145490
+   2368    7101   35514
+Euro EuroLoose
+ 859465 1718930 19998418
+ 859465  859465 11718139
+ 859465 5156790 25155208
+   3871   11610   58059
+AfrAmr AfrAmr1000G
+ 899946 1799892 20940612
+ 899946  899946 12279218
+ 899946 5399676 26356758
+   4295   12885   64422
+AfrAmr AfrAmrCAAPA
+ 895956 1791912 20850536
+ 895956  895956 12217180
+ 895956 5375736 26226272
+   4295   12885   64422
 
 
 
