@@ -4660,13 +4660,17 @@ module load R/3.4.3_mkl; for i in `cat <(echo "Height BMI Waist Hip" | perl -lan
                 done;
         done;
 done;
-for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 1`; do
+for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 15 | tail -n 10`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
                 echo $i $ancestry1 $ancestry2 $ancestry3 $k
 
-                gzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.edit.Regions.c2.${k}.Pathways*.txt
-        done;
+#		for i in {1..9}; do
+#			sbatch -t 24:00:00 --mem 2g -o temp2.output -e temp2.error --comment "$i $ancestry1 $ancestry2 $k" <(echo -e '#!/bin/sh';
+#        	        echo -e "\ngzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.edit.Regions.c2.${k}.Pathways${i}*.txt"); 
+#	     	done
+		gzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.edit.Regions.c2.${k}.Pathways*.txt
+	done;
 done;
 
 ##20190301 NOTE -- I think the 'noFix' thing was just the inclusion of 'Data3.sd[which(Data3.sd==0)] <- 1' into the code for the above situations described, so just including 'noFix' in the file output name since it was unintentionally included in the updated 'noDup' version that I revised below
@@ -4745,11 +4749,6 @@ for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | 
 
 done
 
-
-
-
-
-
 for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 15 | tail -n 10`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -4803,32 +4802,6 @@ for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | 
 
         done;
 done;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #                for k in `cat <(echo "IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 Genes" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
 for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -n 2`; do
@@ -9278,6 +9251,73 @@ ExonicPlus
 ExonicPlus20kb
    3017 0
    1717 1
+   4734 0
+[  mturchin@node1122  ~]$for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 15 | tail -n 10`; do
+>         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>         echo $i $ancestry1 $ancestry2
+>         for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+>                 echo $k
+>
+>                 for l in `cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose
+.100geno.noFix.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | awk '{ print $3 }'`; do val1=`echo $l | perl -ane 'my @vals1=split(",", $F[0]); print join("\n", @vals1), "\n";' | wc
+ | awk '{ print $1 }'`; val2=`echo $l | perl -ane 'my @vals1=split(",", $F[0]); print join("\n", @vals1), "\n";' | sort | uniq | wc | awk '{ print $1 }'`; echo $val1 $val2; done | awk '{ if ($1 != $2) { print "1" } else { print "0" } }' |
+ sort | uniq -c
+>                 for l in `cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose
+.100geno.noFix.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | awk '{ print $3 }'`; do val1=`echo $l | perl -ane 'my @vals1=split(",", $F[0]); print join("\n", @vals1), "\n"
+;' | wc | awk '{ print $1 }'`; val2=`echo $l | perl -ane 'my @vals1=split(",", $F[0]); print join("\n", @vals1), "\n";' | sort | uniq | wc | awk '{ print $1 }'`; echo $val1 $val2; done | awk '{ if ($1 != $2) { print "1" } else { print "0"
+ } }' | sort | uniq -c
+>
+>         done;
+> done
+AfrAmr AfrAmrHRCPruned
+ExonicPlus20kb
+   3039 0
+   1695 1
+   4734 0
+Euro EuroStrictPruned
+ExonicPlus20kb
+   3049 0
+   1685 1
+   4734 0
+Euro EuroLoosePruned
+ExonicPlus20kb
+   3043 0
+   1691 1
+   4734 0
+AfrAmr AfrAmr1000GPruned
+ExonicPlus20kb
+   3021 0
+   1713 1
+   4734 0
+AfrAmr AfrAmrCAAPAPruned
+ExonicPlus20kb
+   3031 0
+   1703 1
+   4734 0
+AfrAmr AfrAmrHRCPrunedStrict
+ExonicPlus20kb
+   3181 0
+   1553 1
+   4734 0
+Euro EuroStrictPrunedStrict
+ExonicPlus20kb
+   3239 0
+   1495 1
+   4734 0
+Euro EuroLoosePrunedStrict
+ExonicPlus20kb
+   3215 0
+   1519 1
+   4734 0
+AfrAmr AfrAmr1000GPrunedStrict
+ExonicPlus20kb
+   3163 0
+   1571 1
+   4734 0
+AfrAmr AfrAmrCAAPAPrunedStrict
+ExonicPlus20kb
+   3173 0
+   1561 1
    4734 0
 
 
