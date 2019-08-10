@@ -4670,6 +4670,7 @@ for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | 
 #        	        echo -e "\ngzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.edit.Regions.c2.${k}.Pathways${i}*.txt"); 
 #	     	done
 		gzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.edit.Regions.c2.${k}.Pathways*.txt
+#		ls -rlt /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/ | grep -v gz
 	done;
 done;
 
@@ -4761,7 +4762,7 @@ for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | 
                 fi
 
                 for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+80 )); do
-                        sbatch -t 144:00:00 --mem 20g --account ccmb-condo -o temp1.output -e temp1.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
+                        sbatch -t 48:00:00 --mem 20g -o temp1.output -e temp1.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
                         echo -e "\nR -q -e \"library(\\\"data.table\\\"); \
                         Data1 <- read.table(\\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.Transformed.txt\\\", header=T); Data3 <- read.table(\\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\\\", header=F); neg.is.na <- Negate(is.na); \
                         for (i in $PathNum:($PathNum+79)) { \
@@ -4779,12 +4780,18 @@ for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | 
                 done;
         done;
 done;
-sleep 28800; for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+sleep 28800; for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 15 | tail -n 10`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
                 echo $ancestry1 $ancestry2 $ancestry3 $k
 
-                gzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/phenos/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.Regions.c2.${k}.Pathways*.noDups.txt
+		rm /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/phenos/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.Regions.c2.${k}.Pathways*.noDups.txt*
+
+#		for i in {1..9}; do
+#			sbatch -t 24:00:00 --mem 2g -o temp3.output -e temp3.error --comment "$i $ancestry1 $ancestry2 $k" <(echo -e '#!/bin/sh';
+ #       	        echo -e "\ngzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/phenos/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.Regions.c2.${k}.Pathways${i}*.noDups.txt"); 
+#	     	done
+#                gzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/phenos/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.Regions.c2.${k}.Pathways*.noDups.txt
 
         done;
 done;
@@ -4802,6 +4809,18 @@ for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | 
 
         done;
 done;
+for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+  for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+                ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+                echo $ancestry1 $ancestry2 $ancestry3 $k
+
+		ancestry2a=$ancestry2
+		ancestry2b=$ancestry2"Pruned"
+		ancestry2c=$ancestry2"PruneStrict"
+
+                gzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/phenos/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.Regions.c2.${k}.Pathways*.noDups.txt
+
+        done;
 
 #                for k in `cat <(echo "IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 Genes" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
 for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -n 2`; do
@@ -9319,6 +9338,49 @@ ExonicPlus20kb
    3173 0
    1561 1
    4734 0
+[  mturchin@node1307  ~]$for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 15 | tail -n 10`; do
+>   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+>                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>                 echo $i $ancestry1 $ancestry2 $ancestry3 $k
+> 
+> #               for i in {1..9}; do
+> #                       sbatch -t 24:00:00 --mem 2g -o temp2.output -e temp2.error --comment "$i $ancestry1 $ancestry2 $k" <(echo -e '#!/bin/sh';
+> #                       echo -e "\ngzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.edit.Regions.c2.${k}.Pathways${i}*.txt");
+> #               done
+> #               gzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.edit.Regions.c2.${k}.Pathways*.txt
+>                 ls -rlt /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/ | grep -v gz
+>         done;
+> done;
+9 AfrAmr AfrAmrHRCPruned ExonicPlus20kb
+total 10313056
+drwxr-sr-x. 2 mturchin sramacha    32768 Aug 10 02:18 slurmTemp
+9 Euro EuroStrictPruned ExonicPlus20kb
+total 5424640
+drwxr-sr-x. 2 mturchin sramacha    32768 Aug 10 02:53 slurmTemp
+9 Euro EuroLoosePruned ExonicPlus20kb
+total 8983136
+drwxr-sr-x. 2 mturchin sramacha    32768 Aug 10 03:12 slurmTemp
+9 AfrAmr AfrAmr1000GPruned ExonicPlus20kb
+total 10616512
+drwxr-sr-x. 2 mturchin sramacha    32768 Aug 10 03:40 slurmTemp
+9 AfrAmr AfrAmrCAAPAPruned ExonicPlus20kb
+total 10646592
+drwxr-sr-x. 2 mturchin sramacha    32768 Aug 10 04:09 slurmTemp
+9 AfrAmr AfrAmrHRCPrunedStrict ExonicPlus20kb
+total 6825568
+drwxr-sr-x. 2 mturchin sramacha    32768 Aug 10 04:30 slurmTemp
+9 Euro EuroStrictPrunedStrict ExonicPlus20kb
+total 2922144
+drwxr-sr-x. 2 mturchin sramacha    32768 Aug 10 04:45 slurmTemp
+9 Euro EuroLoosePrunedStrict ExonicPlus20kb
+total 5000800
+drwxr-sr-x. 2 mturchin sramacha    32768 Aug 10 04:54 slurmTemp
+9 AfrAmr AfrAmr1000GPrunedStrict ExonicPlus20kb
+total 6863360
+drwxr-sr-x. 2 mturchin sramacha    32768 Aug 10 05:09 slurmTemp
+9 AfrAmr AfrAmrCAAPAPrunedStrict ExonicPlus20kb
+total 6806272
+drwxr-sr-x. 2 mturchin sramacha    32768 Aug 10 05:27 slurmTemp
 
 
 
