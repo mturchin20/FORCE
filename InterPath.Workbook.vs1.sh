@@ -4785,13 +4785,11 @@ sleep 28800; for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\
                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
                 echo $ancestry1 $ancestry2 $ancestry3 $k
 
-		rm /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/phenos/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.Regions.c2.${k}.Pathways*.noDups.txt*
-
 #		for i in {1..9}; do
 #			sbatch -t 24:00:00 --mem 2g -o temp3.output -e temp3.error --comment "$i $ancestry1 $ancestry2 $k" <(echo -e '#!/bin/sh';
- #       	        echo -e "\ngzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/phenos/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.Regions.c2.${k}.Pathways${i}*.noDups.txt"); 
+#			echo -e "\ngzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/phenos/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.Regions.c2.${k}.Pathways${i}*.noDups.txt"); 
 #	     	done
-#                gzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/phenos/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.Regions.c2.${k}.Pathways*.noDups.txt
+		gzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/phenos/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.Regions.c2.${k}.Pathways*.noDups.txt
 
         done;
 done;
@@ -4809,18 +4807,21 @@ for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | 
 
         done;
 done;
-for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
                 echo $ancestry1 $ancestry2 $ancestry3 $k
 
 		ancestry2a=$ancestry2
 		ancestry2b=$ancestry2"Pruned"
-		ancestry2c=$ancestry2"PruneStrict"
+		ancestry2c=$ancestry2"PrunedStrict"
 
-                gzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/phenos/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.Regions.c2.${k}.Pathways*.noDups.txt
+		ls -lrt /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2a/Analyses/InterPath/pathways/$k/phenos/. | awk '{ if ($5 < 40000) { print $0 } }' | wc
+		ls -lrt /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2b/Analyses/InterPath/pathways/$k/phenos/. | awk '{ if ($5 < 40000) { print $0 } }' | wc
+		ls -lrt /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2c/Analyses/InterPath/pathways/$k/phenos/. | awk '{ if ($5 < 40000) { print $0 } }' | wc
 
         done;
+done;
 
 #                for k in `cat <(echo "IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 Genes" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
 for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -n 2`; do
@@ -9381,6 +9382,41 @@ drwxr-sr-x. 2 mturchin sramacha    32768 Aug 10 05:09 slurmTemp
 9 AfrAmr AfrAmrCAAPAPrunedStrict ExonicPlus20kb
 total 6806272
 drwxr-sr-x. 2 mturchin sramacha    32768 Aug 10 05:27 slurmTemp
+[  mturchin@node1307  ~]$for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 5`; do
+>   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+>                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>                 echo $ancestry1 $ancestry2 $ancestry3 $k
+> 
+>                 ancestry2a=$ancestry2
+>                 ancestry2b=$ancestry2"Pruned"
+>                 ancestry2c=$ancestry2"PrunedStrict"
+> 
+>                 ls -lrt /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2a/Analyses/InterPath/pathways/$k/phenos/. | awk '{ if ($5 < 40000) { print $0 } }' | wc
+>                 ls -lrt /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2b/Analyses/InterPath/pathways/$k/phenos/. | awk '{ if ($5 < 40000) { print $0 } }' | wc
+>                 ls -lrt /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2c/Analyses/InterPath/pathways/$k/phenos/. | awk '{ if ($5 < 40000) { print $0 } }' | wc
+> 
+>         done;
+> done;
+AfrAmr AfrAmrHRC ExonicPlus20kb
+    685    6158  160022
+    661    5942  162327
+    415    3728  106805
+Euro EuroStrict ExonicPlus20kb
+   1210   10883  285215
+   1147   10316  284107
+    657    5906  170528
+Euro EuroLoose ExonicPlus20kb
+    754    6779  176154
+    713    6410  175113
+    390    3503  100358
+AfrAmr AfrAmr1000G ExonicPlus20kb
+    707    6356  167989
+    681    6122  169966
+    418    3755  109247
+AfrAmr AfrAmrCAAPA ExonicPlus20kb
+    714    6419  169655
+    687    6176  171465
+    420    3773  109771
 
 
 
