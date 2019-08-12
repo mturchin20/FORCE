@@ -5018,7 +5018,7 @@ done
 
 
 module load R/3.4.3_mkl gcc; sleep 1; for i in `cat <(echo "Height;59261 BMI;13725" | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
-	for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 5 | tail -n 4`; do
+	for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 10 | tail -n 5`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 		   ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Imputation/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; PhenoSeed1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 			NumPaths=`cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
@@ -5062,7 +5062,8 @@ done
 #				write.table(InterPath.output\\\$Eigenvalues, \\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/$Pheno1/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths${PathNum}.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); \
 #				write.table(InterPath.output\\\$PVE, \\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/$Pheno1/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths${PathNum}.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\"")
 
-for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+source activate InterPath; PAGEIPMBioMePops3=`echo "AfrAmr;AfrAmrHRC;AAHRC;496726 Euro;EuroStrict;EurStr;698236 Euro;EuroLoose;EurLs;2483362 AfrAmr;AfrAmr1000G;AA1000G;936214 AfrAmr;AfrAmrCAAPA;AACAAPA;3857636 AfrAmr;AfrAmrHRCPruned;AAHRCPr;496726 Euro;EuroStrictPruned;EurStrPr;698236 Euro;EuroLoosePruned;EurLsPr;2483362 AfrAmr;AfrAmr1000GPruned;AA1000GPr;936214 AfrAmr;AfrAmrCAAPAPruned;AACAAPAPr;3857636 AfrAmr;AfrAmrHRCPrunedStrict;AAHRCPr;496726 Euro;EuroStrictPrunedStrict;EurStrPr;698236 Euro;EuroLoosePrunedStrict;EurLsPr;2483362 AfrAmr;AfrAmr1000GPrunedStrict;AA1000GPr;936214 AfrAmr;AfrAmrCAAPAPrunedStrict;AACAAPAPr;3857636"`; 
+module load R/3.4.3_mkl; for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
 	for j in `cat <(echo $PAGEIPMBioMePops3 | perl -lane 'print join("\n", @F);') | head -n 15 | tail -n 15`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 			SECONDS=0;
@@ -5075,9 +5076,9 @@ for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -
 			for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
 				R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
 				Pathways <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\", header=F); \ 
-				InterPath.output.Est <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/$i/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK.Paths${PathNum}.Est.txt\", header=F); \
-				InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/$i/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK.Paths${PathNum}.Eigenvalues.txt\", header=F); \
-				InterPath.output.PVE <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/$i/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK.Paths${PathNum}.PVE.txt\", header=F); \
+				InterPath.output.Est <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/$i/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths${PathNum}.Est.txt\", header=F); \
+				InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/$i/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths${PathNum}.Eigenvalues.txt\", header=F); \
+				InterPath.output.PVE <- read.table(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/$i/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths${PathNum}.PVE.txt\", header=F); \
 				Results1 <- c(); Counter1 <- 1; for (i in $PathNum:($PathNum+9)) { \
 					if (i <= $NumPaths) { if (neg.is.na(InterPath.output.Est[Counter1,1])) { \ 
 						Lambda <- sort(InterPath.output.Eigenvalues[,Counter1], decreasing=TRUE); \
@@ -5087,7 +5088,7 @@ for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -
 						Counter1 = Counter1 + 1; \
 					} else { Results1 <- rbind(Results1, c(as.character(Pathways[i,1]), rep(NA, 5))); }; \
 				};}; write.table(Results1, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
-			done | grep -v \> | gzip > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/$i/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.txt.pre.gz
+			done | grep -v \> | gzip > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/$i/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK_perm1.AllPaths.Results.txt.pre.gz
 			duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 		done;
 	done;
@@ -5122,6 +5123,7 @@ done;
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/IPBBioMe
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/IPBBioMe/Rnd2
 
+#From: https://stackoverflow.com/questions/22854112/how-to-skip-a-paste-argument-when-its-value-is-na-in-r
 R -q -e "library(\"RColorBrewer\"); IPBBioMePops <- c(NA, \"Pruned\", \"PrunedStrict\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
         for (i in DataTypes[1]) { for (l in Paths[3]) { \
                 png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/IPBBioMe/Rnd2/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.AllPops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.noDups.Rnd2Vrsns.\", as.character(i), \".\", l, \".Results.vs1.png\", sep=\"\"), height=6500, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(3,2)); \
