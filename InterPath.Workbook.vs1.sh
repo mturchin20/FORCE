@@ -4631,7 +4631,7 @@ done &
 #done
 
 module load R/3.4.3_mkl; for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | head -n 1`; do
-	for j in `cat <(echo $PAGEIPMBioMePops5 | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do
+	for j in `cat <(echo $PAGEIPMBioMePops5 | perl -lane 'print join("\n", @F);') | head -n 6 | tail -n 6`; do
                 for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1 | head -n 1`; do
                         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 			NumPaths=`cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
@@ -4662,7 +4662,7 @@ module load R/3.4.3_mkl; for i in `cat <(echo "Height BMI Waist Hip" | perl -lan
                 done;
         done;
 done;
-for j in `cat <(echo $PAGEIPMBioMePops5 | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $PAGEIPMBioMePops5 | perl -lane 'print join("\n", @F);') | head -n 6 | tail -n 6`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
                 echo $i $ancestry1 $ancestry2 $ancestry3 $k
@@ -4754,7 +4754,7 @@ done
 #...@F[1..$#F]);' > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt
 @...@F[1..$#F]);' > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.noTransform.txt
 
-for j in `cat <(echo $PAGEIPMBioMePops5 | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $PAGEIPMBioMePops5 | perl -lane 'print join("\n", @F);') | head -n 6 | tail -n 6`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		NumPaths=`cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
@@ -4952,7 +4952,7 @@ for j in `cat <(echo $PAGEIPMBioMePops5 | perl -lane 'print join("\n", @F);') | 
         cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | perl -slane 'if ($. == 1) { $input_file = "/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1b/$ancestry2b/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2b.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.IntronicPlus20kb.txt"; %hash1; open( my $input_fh, "<", $input_file ) || die "Cannot open $input_file: $!"; while(my @row = split(/\s+/, <$input_fh>)) { chomp @row; $hash1{$row[0]} = \$row[1]; } close($input_fh); } my @info1; foreach my $entry1 (@F[2..$#F]) { if ($hash1{$entry1}) { push(@info1, ${$hash1{$entry1}}); } } print $F[0], "\t", $F[1], "\t", join(",", @info1);' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 | perl -lane 'if ($#F == 2) { print join("\t", @F); }' > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.IntronicPlus20kb.txt;
 done
 
-for j in `cat <(echo $PAGEIPMBioMePops5 | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $PAGEIPMBioMePops5 | perl -lane 'print join("\n", @F);') | head -n 6 | tail -n 6`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
         echo $i $ancestry1 $ancestry2
         for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
