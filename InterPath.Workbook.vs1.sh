@@ -4312,7 +4312,7 @@ done
 
 #wCovar Var Component
 
-module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 2 | head -n 1`; do
+module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1 | head -n 1`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
@@ -4325,7 +4325,7 @@ module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print
                         RescaleVector <- function(X) { n1 <- length(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - v1 %*% t(v1) / n1; X1 <- m1 %*% X; X1 <- (X1 - mean(X1)) / sd(X1) ; return(X1); }; \
                         RescaleMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - v1 %*% t(v1) / n1; X1 <- m1 %*% X %*% m1; X1 <- X1/mean(diag(X1)); return(X1); }; \
                         Y.Pheno.noNAs.Rescale <- RescaleVector(Y.Pheno.noNAs); K.Pheno.noNAs.Rescale <- RescaleMatrix(K.Pheno.noNAs); K.Pheno.noNAs.2.Rescale <- RescaleMatrix(K.Pheno.noNAs.2); K.Pheno.noNAs.3.Rescale <- RescaleMatrix(K.Pheno.noNAs.3); Error.Rescale <- RescaleMatrix(Error); Z.Pheno.noNAs.Covar.Rescale <- RescaleMatrix(Z.Pheno.noNAs.Covar); \
-                       	write.table(Z.Pheno.noNAs.Covar.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".ZnoMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			write.table(Y.Pheno.noNAs.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".YnoMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".KnoMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".K2noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".K3noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(Error.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".EnoMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(Z.Pheno.noNAs.Covar.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".ZnoMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
                         print(proc.time() - ptm); ptm <- proc.time(); \
                 };"
         done
@@ -4340,20 +4340,7 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head
 
 		echo /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs1.$i.KnoMRescale.sXX.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs1.$i.K2noMRescale.sXX.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs1.$i.ZnoMRescale.sXX.txt | sed 's/ /\n/g' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs1.$i.noMRescale.VarCompList.wZVar.sXX.txt		
 
-
-
-
-
-
-
-#		echo /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs1.$i.KMRescale.sXX.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs1.$i.K2MRescale.sXX.txt | sed 's/ /\n/g' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs1.$i.MRescale.VarCompList.sXX.txt		
-               
-		cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA; gemma -p /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs1.$i.YMRescale.sXX.txt -mk /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs1.$i.MRescale.VarCompList.sXX.txt -n 1 -vc 2 -o ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs1.$i.MRescale.Output.sXX.txt
-
-
-
-
-
+		cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA; gemma -p /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs1.$i.YnoMRescale.sXX.txt -mk /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs1.$i.noMRescale.VarCompList.wZVar.sXX.txt -n 1 -vc 2 -o ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs1.$i.noMRescale.wZVar.Output.sXX.txt
  
 	done
 done
@@ -5452,7 +5439,20 @@ R -q -e "library(\"RColorBrewer\"); IPMBioMePops <- c(NA, \"WithinPCA\", \"Withi
 #On MacBook Pro
 scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/IPMBioMe/Rnd2/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.AllPops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.noDups.Rnd2Vrsns*.PCAExplore.Results.vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/IPMBioMe/Rnd2/.
 
+#noTrans, noTrans + wCovs; 3rdDrop + 3rdRan; within-pop Trans
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 1`; do
+        for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+		for j in `cat <(echo $PAGEIPMBioMePops2 | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do
+                        for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+                                ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
+                                echo $l $ancestry1 $ancestry2 $i $k
 
+				join <(zcat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/$i/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.noTrans.wCovs.AllPaths.Results.txt.pre.gz | sort -k 1,1) <(cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | perl -lane 'my @vals1 = split(/,/, $F[2]); print $F[0], "\t", scalar(@vals1);' | sort -k 1,1) | perl -lane 'if ($F[$#F] > 1) { print join("\t", @F); }' | grep $l"_" | gzip > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/$i/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.noTrans.wCovs.$l.Results.txt.pre.gz
+
+                        done;
+                done;
+        done;
+done;
 
 
 
