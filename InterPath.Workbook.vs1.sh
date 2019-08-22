@@ -4514,7 +4514,6 @@ done
 
 #Pops: -n 8 -N 1-1 --mem 101g (might be overkill, but at 41g some runs were failing)
 
-
                         Results1.pVals <- (); for(i in 1:length(Y.Pheno.noNAs)){ \
                                 lambda = sort(Results1$Eigenvalues[,i],decreasing = T); \
                                 Davies_Method = davies(Results1$Est[i], lambda = lambda, acc=1e-8); \
@@ -4522,9 +4521,9 @@ done
                                 names(Results1.pVals)[i] = colnames(X.noNAs)[i]; \
                         }; \
 
-module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 1`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 2`; do
-		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`; 
+module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 1`; do
+		SECONDS=0; ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`; 
 		echo $i $ancestry1 $ancestry2 $ancestry3 $k
 
 		R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
@@ -4535,9 +4534,9 @@ module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;
 			Lambda <- sort(MAPIT.output.Eigenvalues[,i], decreasing=TRUE); \
 			Davies.Output <- davies(MAPIT.output.Est[i,1], lambda=Lambda, acc=1e-8); \
 			pVal <- 2*min(1-Davies.Output\$Qq, Davies.Output\$Qq); \
-			Results1 <- rbind(Results1, c(as.character(Pathways[i,1]), MAPIT.output.Est[i,1], MAPIT.output.PVE[i,1], pVal, Davies.Output\$Qq, Davies.Output\$ifault)); \
+			Results1 <- rbind(Results1, c(i, MAPIT.output.Est[i,1], MAPIT.output.PVE[i,1], pVal, Davies.Output\$Qq, Davies.Output\$ifault)); \
 		}; write.table(Results1, fil=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT//ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Results.txt.pre.gz
-	
+		duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 		done;
 	done;
 done;
