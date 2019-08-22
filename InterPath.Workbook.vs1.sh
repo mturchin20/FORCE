@@ -4522,6 +4522,49 @@ done
                                 names(Results1.pVals)[i] = colnames(X.noNAs)[i]; \
                         }; \
 
+module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 2`; do
+		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`; 
+		echo $i $ancestry1 $ancestry2 $ancestry3 $k
+
+		R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
+		MAPIT.output.Est <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.Est.txt\", header=F); \
+		MAPIT.output.Eigenvalues <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.txt\", header=F); \
+		MAPIT.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.PVE.txt\", header=F); \
+		Results1 <- c(); for (i in 1:length(MAPIT.output.Est)) { \
+			Lambda <- sort(MAPIT.output.Eigenvalues[,i], decreasing=TRUE); \
+			Davies.Output <- davies(MAPIT.output.Est[i,1], lambda=Lambda, acc=1e-8); \
+			pVal <- 2*min(1-Davies.Output\$Qq, Davies.Output\$Qq); \
+			Results1 <- rbind(Results1, c(as.character(Pathways[i,1]), MAPIT.output.Est[i,1], MAPIT.output.PVE[i,1], pVal, Davies.Output\$Qq, Davies.Output\$ifault)); \
+		}; write.table(Results1, fil=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT//ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Results.txt.pre.gz
+	
+		done;
+	done;
+done;
+
+#			NumPaths=20
+
+			echo $i $ancestry1 $ancestry2 $ancestry3 $k
+			for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+10 )); do
+				R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
+				Pathways <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\", header=F); \ 
+				InterPath.output.Est <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK.Paths${PathNum}.Est.txt\", header=F); \
+				InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK.Paths${PathNum}.Eigenvalues.txt\", header=F); \
+				InterPath.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK.Paths${PathNum}.PVE.txt\", header=F); \
+				Results1 <- c(); Counter1 <- 1; for (i in $PathNum:($PathNum+9)) { \
+					if (i <= $NumPaths) { if (neg.is.na(InterPath.output.Est[Counter1,1])) { \ 
+						Lambda <- sort(InterPath.output.Eigenvalues[,Counter1], decreasing=TRUE); \
+						Davies.Output <- davies(InterPath.output.Est[Counter1,1], lambda=Lambda, acc=1e-8); \
+						pVal <- 2*min(1-Davies.Output\$Qq, Davies.Output\$Qq); \
+						Results1 <- rbind(Results1, c(as.character(Pathways[i,1]), InterPath.output.Est[Counter1,1], InterPath.output.PVE[Counter1,1], pVal, Davies.Output\$Qq, Davies.Output\$ifault)); \ 
+						Counter1 = Counter1 + 1; \
+					} else { Results1 <- rbind(Results1, c(as.character(Pathways[i,1]), rep(NA, 5))); }; \
+				};}; write.table(Results1, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
+			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.txt.pre.gz
+			duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
+		done;
+	done;
+done 
 
 
 
@@ -5501,6 +5544,11 @@ scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/Inter
 
 
 
+
+
+
+
+
 #PAGE MEC
 #20190821
 
@@ -5513,15 +5561,6 @@ PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2b.HRCdrops.ATGC.flip
 #.,6225 s/PAGE_IPMBioMe_chrAll_v1.QCed.1kGMatch.pruned.QCed.SNPrecode.w1kG.flipped.dropmissnp.allRltvs.flashpca.pcs.$ancestry2.wFullCovars/PAGE_MEC_chrAll_v1.$ancestry2.QCed.pruned.QCed.KING.Loose.allRltvs.flashpca.pcs.wFullCovars.txt/g
 #.,6230 s/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.$ancestry2.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.Regions/phs000220.v2.pht002387.v2.p2.c2.PAGE_MEC_Metabochip_Subject_Phenotypes.GRU.Edits.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.Regions/g
 #..6230 s/phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits/phs000220.v2.pht002387.v2.p2.c2.PAGE_MEC_Metabochip_Subject_Phenotypes.GRU.Edits./g
-
-6220
-
-/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Imputation/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw
-PAGE_IPMBioMe_chrAll_v1.QCed.1kGMatch.pruned.QCed.SNPrecode.w1kG.flipped.dropmissnp.allRltvs.flashpca.pcs.$ancestry2.wFullCovars
-/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/PAGE_MEC_chrAll_v1.$ancestry2.QCed.pruned.QCed.KING.Loose.allRltvs.flashpca.pcs.wFullCovars.txt
-/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/PAGE_MEC_chrAll_v1.$ancestry2.QCed.pruned.QCed.KING.Loose.allRltvs.flashpca.pcs.wFullCovars.txt
-/users/mturchin/data/dbGaP/PhenosGenos/PAGE/MEC/phs000220.v2.pht002387.v2.p2.c2.PAGE_MEC_Metabochip_Subject_Phenotypes.GRU.Edits.txt
-phs000925.v1.pht006203.v1.p1.c1.PAGE_IPM_BioMe.GRU.Edits.$ancestry2.Transformed.Edits.${ancestry2}.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.Regions.
 
 module load R/3.4.3_mkl; for j in `cat <(echo $PAGEMECPops5 | perl -lane 'print join("\n", @F);') | head -n 6 | tail -n 6`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
@@ -5902,12 +5941,6 @@ done
 
 #Others: --mem 12g 
 
-
-
-
-
-
-
 #GjDrop + wCov + GK setup
 #  sbatch -t 36:00:00 --mem 12g -o /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/InterPath/$Pheno1/$k/slurm/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Pathways${PathNum}.slurm.output -e /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/InterPath/$Pheno1/$k/slurm/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
 #				...sourceCpp(\\\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp\\\");...
@@ -5926,13 +5959,6 @@ done
 #				write.table(InterPath.output\\\$Eigenvalues, \\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/InterPath/$Pheno1/$k/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths${PathNum}.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); \
 #				write.table(InterPath.output\\\$PVE, \\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/InterPath/$Pheno1/$k/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths${PathNum}.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\"")
 #
-
-
-
-
-
-
-
 
 module load R/3.4.3_mkl; for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -n 2 | head -n 1`; do
 	for j in `cat <(echo $PAGEMECPops2 | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do
@@ -6088,6 +6114,10 @@ done;
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/MEC
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/MEC/Rnd2
+
+
+
+
 
 
 
