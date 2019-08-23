@@ -4514,9 +4514,8 @@ done
 
 #Pops: -n 8 -N 1-1 --mem 101g (might be overkill, but at 41g some runs were failing; Brit for approx took ~7-8 days? Afr 3-4 days?)
 
-
-module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 1`; do
+for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 2`; do
 		SECONDS=0; ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`; 
 		echo $i $ancestry1 $ancestry2 $ancestry3 $k
 
@@ -4524,12 +4523,12 @@ module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;
 			mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles
 		fi
 		
-		rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/*; cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.txt | perl -lane 'for (my $i=0; $i <= 100000; $i += 10000) { my $output1 = "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.Subset." . $i . ".txt"; open(my $outfile1, '>>', $output1) or die; my $end1 = 9999; if ($i + $end1 > $#F) { $end1 = $#F; } print $outfile1 join("\t", @F[$i..$end1]); close($outfile1); }'
+		rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/*; cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.txt | perl -F, -slane 'for (my $i=0; $i <= $#F; $i += 10000) { my $output1 = "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1b/$ancestry2b/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v2.$ancestry2b.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1Bash.DaviesApprox.3.Eigenvalues.Subset." . $i . ".txt"; open(my $outfile1, ">>", $output1) or die; my $end1 = $i + 9999; if ($end1 > $#F) { $end1 = $#F - $i; } print $outfile1 join("\t", @F[$i..$end1]); close($outfile1); }' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 -Pheno1Bash=$Pheno1
+		gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/*
 
-		done;
 	done;
 done;
-
+~			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ | awk '{ print $9 }' | perl -slane 'if ($F[0] =~ m/(.*InterPath\.)($iBash.*)/) { my $val1 = "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1b/$ancestry2b/mturchin20/Analyses/InterPath/" . $1 . $2; my $val2 = "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1b/$ancestry2b/mturchin20/Analyses/InterPath/" . $1 . "vs1." . $2; system("mv $val1 $val2");}' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 -iBash=$i -kBash=$k
 
 module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
 	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 1`; do
