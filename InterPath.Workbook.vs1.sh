@@ -4537,13 +4537,14 @@ module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;
 		R -q -e "library(\"data.table\"); library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
 		MAPIT.output.Est <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.Est.txt\", header=F); \
 		MAPIT.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.PVE.txt\", header=F); \
-		Results1 <- c(); for (j in seq(0, nrow(MAPIT.output.PVE), by=10000)) { write(j, stderr()); for (i in j:(j+9999)) { \
-		     ptm <- proc.time(); MAPIT.output.Eigenvalues <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.Subset.\", j, \".txt.gz\", sep=\"\"), header=F)); write(proc.time() - ptm, stderr()); write(head(MAPIT.output.Eigenvalues)[1:5,1:5], stderr()); \
-			Lambda <- sort(MAPIT.output.Eigenvalues[,i], decreasing=TRUE); \
-			Davies.Output <- davies(MAPIT.output.Est[i,1], lambda=Lambda, acc=1e-8); \
-			pVal <- 2*min(1-Davies.Output\$Qq, Davies.Output\$Qq); \
-			Results1 <- rbind(Results1, c(i, MAPIT.output.Est[i,1], MAPIT.output.PVE[i,1], pVal, Davies.Output\$Qq, Davies.Output\$ifault)); \
-		};}; write.table(Results1, fil=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT//ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Results.txt.pre.gz
+		Results1 <- c(); for (j in seq(0, 2, by=10000)) { write(j, stderr()); ptm <- proc.time(); MAPIT.output.Eigenvalues <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.Subset.\", j, \".txt.gz\", sep=\"\"), header=F)); write(proc.time() - ptm, stderr()); print(MAPIT.output.Eigenvalues[1:10,1:10]); \
+			for (i in j:10) { \
+				Lambda <- sort(MAPIT.output.Eigenvalues[,i], decreasing=TRUE); \
+				Davies.Output <- davies(MAPIT.output.Est[i,1], lambda=Lambda, acc=1e-8); \
+				pVal <- 2*min(1-Davies.Output\$Qq, Davies.Output\$Qq); \
+				Results1 <- rbind(Results1, c(i, MAPIT.output.Est[i,1], MAPIT.output.PVE[i,1], pVal, Davies.Output\$Qq, Davies.Output\$ifault)); \
+			}; \
+		}; write.table(Results1, fil=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT//ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Results.txt.pre.gz
 		duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 		done;
 	done;
