@@ -4530,25 +4530,26 @@ for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82
 done;
 
 module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 1 | tail -n 1`; do
 		SECONDS=0; ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`; 
 		echo $i $ancestry1 $ancestry2 $ancestry3 $k
 
 		R -q -e "library(\"data.table\"); library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
 		MAPIT.output.Est <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.Est.txt\", header=F); \
-		ptm <- proc.time(); MAPIT.output.Eigenvalues <- fread(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.txt\", header=F); print(proc.time() - ptm); \
 		MAPIT.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.PVE.txt\", header=F); \
-		Results1 <- c(); for (i in 1:10) { \
+		Results1 <- c(); for (j in seq(0, nrow(MAPIT.output.PVE), by=10000)) { write(j, stderr()); for (i in j:(j+9999)) { \
+		     ptm <- proc.time(); MAPIT.output.Eigenvalues <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.Subset.\", j, \".txt.gz\", sep=\"\"), header=F)); write(proc.time() - ptm, stderr()); write(head(MAPIT.output.Eigenvalues)[1:5,1:5], stderr()); \
 			Lambda <- sort(MAPIT.output.Eigenvalues[,i], decreasing=TRUE); \
 			Davies.Output <- davies(MAPIT.output.Est[i,1], lambda=Lambda, acc=1e-8); \
 			pVal <- 2*min(1-Davies.Output\$Qq, Davies.Output\$Qq); \
 			Results1 <- rbind(Results1, c(i, MAPIT.output.Est[i,1], MAPIT.output.PVE[i,1], pVal, Davies.Output\$Qq, Davies.Output\$ifault)); \
-		}; write.table(Results1, fil=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT//ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Results.txt.pre.gz
+		};}; write.table(Results1, fil=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT//ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Results.txt.pre.gz
 		duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 		done;
 	done;
 done;
 #		Results1 <- c(); for (i in 1:length(MAPIT.output.Est)) { \
+#		ptm <- proc.time(); MAPIT.output.Eigenvalues <- fread(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.txt\", header=F); print(proc.time() - ptm); \
 
 R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
         for (i in DataTypes[1]) { \
