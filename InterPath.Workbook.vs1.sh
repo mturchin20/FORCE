@@ -4402,6 +4402,56 @@ cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchi
 cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.3.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data2 <- cbind(Data1, Data1[,1] / 598811); write.table(Data2, quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v \> | head -n 20
 paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data2 <- cbind(Data1, Data1[,1] / 372841); write.table(Data2, quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v \> | head -n 20) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.3.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data2 <- cbind(Data1, Data1[,1] / 598811); write.table(Data2, quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v \> | head -n 20)
 paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data2 <- cbind(Data1, Data1[,1] / 372841); write.table(Data2, quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v \> | head -n 20) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.3.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data2 <- cbind(Data1, Data1[,1] / 598811); write.table(Data2, quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v \> | head -n 20)
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.epi.SortUniqC.qt
+cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.epi.SortUniqC.qt
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.epi.SortUniqC.qt
+cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.epi.SortUniqC.qt
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.epi.qt | awk '{ if ($7 < .00000005) { print $2 "\n" $4 } }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.epi.SortUniqC.lt5e8.qt
+cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.epi.qt | awk '{ if ($7 < .00000005) { print $2 "\n" $4 } }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.epi.SortUniqC.lt5e8.qt
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.epi.qt | awk '{ if ($7 < .00000005) { print $2 "\n" $4 } }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.epi.SortUniqC.lt5e8.qt
+cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.epi.qt | awk '{ if ($7 < .00000005) { print $2 "\n" $4 } }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.epi.SortUniqC.lt5e8.qt
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK
+R -q -e "library(\"RColorBrewer\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/ukb_chrAll_v2.AfrBrit4.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.HeightBMI.epi.qt.Results.QQplots.vs1.png\",  height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
+	for (k in c(\"Height\", \"BMI\")[1:2]) { \
+		Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.qt\", sep=\"\"), header=F); \
+		Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.qt\", sep=\"\"), header=F); \
+		xVals1 <- seq(1/nrow(Data1), 1, by=1/nrow(Data1)); xVals2 <- seq(1/nrow(Data2), 1, by=1/nrow(Data2)); \
+		xlimMax <- max(c(-log10(xVals1), -log10(xVals2))); ylimMax <- max(c(-log10(Data1[,7]), -log10(Data2[,7]))); \
+		plot(-log10(xVals1[order(xVals1, decreasing=TRUE)]), -log10(Data1[order(Data1[,7], decreasing=TRUE),7]), main=paste(k, sep=\"\"), xlab=\"-log10(Expected p-Values)\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,xlimMax), ylim=c(0,9), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+		points(-log10(xVals2[order(xVals2, decreasing=TRUE)]), -log10(Data2[order(Data2[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
+		abline(0,1, lwd=2, col=\"BLACK\"); \
+		mtext(\"PLINK SNP-by-SNP Epistasis\", line=-1.5, outer=TRUE, cex=2); legend(\"topleft\", c(\"African\", \"Brit.Ran4k\"), pch=c(16,16), col=c(brewer.pal(12, \"Paired\")[7], brewer.pal(12, \"Paired\")[3]), bg=\"transparent\", cex=1.5); \
+	}; dev.off(); \
+"
+
+R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
+        for (i in DataTypes[1]) { \
+                png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/ukb_chrAll_v2.AfrBrit4k.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.HeightBMI.DaviesApprox.Results.vs1.png\", height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
+                for (j in UKBPops[1]) { \
+                        for (k in c(\"Height\", \"BMI\")[1:2]) { \
+                                Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.\", k, \".DaviesApprox.Results.txt.pre.gz\", sep=\"\"), header=F); \
+                                Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.\", k, \".DaviesApprox.Results.txt.pre.gz\", sep=\"\"), header=F); \
+                                Data1 <- Data1[!is.na(Data1[,4]) & Data1[,4] > 0,]; Data2 <- Data2[!is.na(Data2[,4]) & Data2[,4] > 0,]; \
+                                xVals1 <- seq(1/nrow(Data1), 1, by=1/nrow(Data1)); xVals2 <- seq(1/nrow(Data2), 1, by=1/nrow(Data2)); \
+                                xlimMax <- max(c(-log10(xVals1), -log10(xVals2))); ylimMax <- max(c(-log10(Data1[,4]), -log10(Data2[,4]))); \
+                                plot(-log10(xVals1[order(xVals1, decreasing=TRUE)]), -log10(Data1[order(Data1[,4], decreasing=TRUE),4]), main=paste(k, sep=\"\"), xlab=\"-log10(Expected p-Values)\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,xlimMax), ylim=c(0,9), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+                                points(-log10(xVals2[order(xVals2, decreasing=TRUE)]), -log10(Data2[order(Data2[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
+                                abline(0,1, lwd=2, col=\"BLACK\"); \
+                                mtext(\"MAPIT\", line=-1.5, outer=TRUE, cex=2); legend(\"topleft\", c(\"African\", \"Brit.Ran4k\"), pch=c(16,16), col=c(brewer.pal(12, \"Paired\")[7], brewer.pal(12, \"Paired\")[3]), bg=\"transparent\", cex=1.5); \
+                        }; \
+                }; dev.off(); \
+        }; \
+"
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4417,6 +4467,11 @@ DONE pathway phenotype files
  -- double check IntronicPlus20kb
 _ G*K runs orig
 _ G*K runs perm1
+
+
+
+
+
 
 
 
@@ -4633,15 +4688,16 @@ module load R/3.4.3_mkl gcc; sleep 1; for i in `cat <(echo "Height;59261 BMI;137
 			mkdir /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/slurm
                 fi
 		
-		sbatch -t 336:00:00 -n 16 -N 1-1 --mem 251g -o /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/slurm/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.vs1.slurm.$Pheno1.DaviesApprox.output -e /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/slurm/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.vs1.slurm.$Pheno1.DaviesApprox.error --comment "$Pheno1 $ancestry2" <(echo -e '#!/bin/sh'; 
+		sbatch -t 336:00:00 -n 16 -N 1-1 --mem 251g -o /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/slurm/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.vs1.slurm.$Pheno1.DaviesApprox.2.output -e /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/slurm/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.vs1.slurm.$Pheno1.DaviesApprox.2.error --comment "$Pheno1 $ancestry2" <(echo -e '#!/bin/sh'; 
 			echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); library(\\\"CompQuadForm\\\"); source(\\\"/users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.R\\\"); sourceCpp(\\\"/users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.MTedits1.cpp\\\"); cores = detectCores(); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
 			Y <- read.table(\\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.Phenos.$ancestry2.Transformed.txt\\\", header=T); X <- fread('zcat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Imputation/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.edit.gz', header=T); Z <- read.table(\\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/InterPath/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\\\", header=T); KINGDrops <- read.table(\\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.KING.Strict.related.kin0.3rdDrops.FIDIIDs\\\", header=F); \ 
-			print(dim(Y)); print(dim(X)); print(dim(Z)); X <- X[sapply(Y[,2] %in% KINGDrops[,2], neg.is.true),]; Z <- Z[sapply(Y[,2] %in% KINGDrops[,2], neg.is.true),]; Y <- Y[sapply(Y[,2] %in% KINGDrops[,2], neg.is.true),]; print(dim(Y)); print(dim(X)); print(dim(Z)); Y <- Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; X.noNAs <- X[neg.is.na(Y.Pheno),]; Z.PCs.noNAs <- Z[neg.is.na(Y.Pheno),(ncol(Z)-9):ncol(Z)]; \
+			Y <- Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; X.noNAs <- X[neg.is.na(Y.Pheno),]; Z.PCs.noNAs <- Z[neg.is.na(Y.Pheno),(ncol(Z)-9):ncol(Z)]; \
 			MAPIT.Results <- MAPIT_Davies_Approx(X=t(X.noNAs),y=Y.Pheno.noNAs,Z=t(as.matrix(Z.PCs.noNAs)),cores=cores); \
-			fwrite(data.frame(MAPIT.Results\\\$Est), \\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.Results.$Pheno1.DaviesApprox.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); fwrite(data.frame(MAPIT.Results\\\$Eigenvalues), \\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.Results.$Pheno1.DaviesApprox.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); fwrite(data.frame(MAPIT.Results\\\$PVE), \\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.Results.$Pheno1.DaviesApprox.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\""); 
+			fwrite(data.frame(MAPIT.Results\\\$Est), \\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.Results.$Pheno1.DaviesApprox.2.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); fwrite(data.frame(MAPIT.Results\\\$Eigenvalues), \\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.Results.$Pheno1.DaviesApprox.2.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); fwrite(data.frame(MAPIT.Results\\\$PVE), \\\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.Results.$Pheno1.DaviesApprox.2.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\""); 
         
 	done;
 done
+#			print(dim(Y)); print(dim(X)); print(dim(Z)); X <- X[sapply(Y[,2] %in% KINGDrops[,2], neg.is.true),]; Z <- Z[sapply(Y[,2] %in% KINGDrops[,2], neg.is.true),]; Y <- Y[sapply(Y[,2] %in% KINGDrops[,2], neg.is.true),]; print(dim(Y)); print(dim(X)); print(dim(Z)); Y <- Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; X.noNAs <- X[neg.is.na(Y.Pheno),]; Z.PCs.noNAs <- Z[neg.is.na(Y.Pheno),(ncol(Z)-9):ncol(Z)]; \
 
 
 
@@ -5375,7 +5431,7 @@ done
 #			done | grep -v \> | gzip > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/$i/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.GjDrop_wCov_GK_perm1.AllPaths.Results.txt.pre.gz
 
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
-        for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+        for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -n 2`; do
 		for j in `cat <(echo $PAGEIPMBioMePops2 | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do
                         for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
                                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
@@ -5666,7 +5722,7 @@ R -q -e "library(\"RColorBrewer\"); IPMBioMePops <- c(\"3rdDrop\", \"3rdRan\", N
 "
 
 #On MacBook Pro
-scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/IPMBioMe/Rnd2/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.AllPops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.noDups.Rnd2Vrsns*.KINGdropHack.Results.vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/IPMBioMe/Rnd2/.
+scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/IPMBioMe/Rnd2/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.AllPops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.noDups.Rnd2Vrsns*.KINGdrop3rdsHack.Results.vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/IPMBioMe/Rnd2/.
 
 
 
@@ -6157,7 +6213,7 @@ done
 #			done | grep -v \> | gzip > /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/InterPath/$i/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.GjDrop_wCov_GK_perm1.AllPaths.Results.txt.pre.gz
 
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
-        for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+        for i in `cat <(echo "Height BMI" | perl -lane 'print join("\n", @F);') | head -n 2`; do
 		for j in `cat <(echo $PAGEMECPops1 | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do
                         for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
                                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
@@ -6273,7 +6329,7 @@ R -q -e "library(\"RColorBrewer\"); MECPops <- c(NA, \"Pruned\", \"PrunedStrict\
         for (i in DataTypes[1]) { for (l in Paths[3]) { \
                 png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/MEC/Rnd2/PAGE_MEC_chrAll_v1.AllPops.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.noDups.Rnd2Vrsns.\", as.character(i), \".\", l, \".KINGdrop3rdsHack.Results.vs1.png\", sep=\"\"), height=2500, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
                 for (j in MECPops[1]) { \
-                        for (k in c(\"Height\", \"BMI\")[1]) { \
+                        for (k in c(\"Height\", \"BMI\")[1:2]) { \
                                 Data1 <- read.table(gsub(\"NA\",\"\",paste(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/AfrAmr/AfrAmr\", j, \"/Analyses/InterPath/\", k, \"/PAGE_MEC_chrAll_v1.AfrAmr.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".KINGdrop3rds.wthnPopTrans.\", l, \".Results.txt.pre.gz\", sep=\"\")), header=F); \
                                 Data2 <- read.table(gsub(\"NA\",\"\",paste(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/JpnAmr/JpnAmr\", j, \"/Analyses/InterPath/\", k, \"/PAGE_MEC_chrAll_v1.JpnAmr.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".KINGdrop3rds.wthnPopTrans.\", l, \".Results.txt.pre.gz\", sep=\"\")), header=F); \
                                 Data3 <- read.table(gsub(\"NA\",\"\",paste(\"/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/Hawaiian/Hawaiian\", j, \"/Analyses/InterPath/\", k, \"/PAGE_MEC_chrAll_v1.Hawaiian.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".KINGdrop3rds.wthnPopTrans.\", l, \".Results.txt.pre.gz\", sep=\"\")), header=F); \
@@ -6291,13 +6347,27 @@ R -q -e "library(\"RColorBrewer\"); MECPops <- c(NA, \"Pruned\", \"PrunedStrict\
 "
 
 #On MacBook Pro
-mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/MEC
-mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/MEC/Rnd2
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/MEC/Rnd2/PAGE_MEC_chrAll_v1.AllPops.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.noDups.Rnd2Vrsns*.Results.vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/MEC/Rnd2
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/MEC
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/MEC/Rnd2
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/MEC/Rnd2/PAGE_MEC_chrAll_v1.AllPops.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.noDups.Rnd2Vrsns*.KINGdrop3rdsHack.Results.vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/MEC/Rnd2
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+#Gen Diversity estimates work
+#20190831
 
 
 
