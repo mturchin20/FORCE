@@ -4412,52 +4412,35 @@ cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Anal
 cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.epi.qt | awk '{ if ($7 < .00000005) { print $2 "\n" $4 } }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.epi.SortUniqC.lt5e8.qt
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK
-R -q -e "library(\"RColorBrewer\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/ukb_chrAll_v2.AfrBrit4.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.HeightBMI.epi.qt.Results.QQplots.vs1.png\",  height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
+R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/ukb_chrAll_v2.AfrBrit4.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.HeightBMI.epi.qt.Results.QQplots.vs1.png\",  height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
 	for (k in c(\"Height\", \"BMI\")[1:2]) { \
-		Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.qt\", sep=\"\"), header=F); \
-		Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.qt\", sep=\"\"), header=F); \
+		Data1 <- as.data.frame(fread(cmd=paste(\"cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.qt | perl -lane 'if (\$#F > 4) { print join(\\\"\t\\\", @F); }'\", sep=\"\"), header=T)); \
+		Data2 <- as.data.frame(fread(cmd=paste(\"cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.qt | perl -lane 'if (\$#F > 4) { print join(\\\"\t\\\", @F); }'\", sep=\"\"), header=T)); \
+		head(Data1); head(Data2); \
 		xVals1 <- seq(1/nrow(Data1), 1, by=1/nrow(Data1)); xVals2 <- seq(1/nrow(Data2), 1, by=1/nrow(Data2)); \
-		xlimMax <- max(c(-log10(xVals1), -log10(xVals2))); ylimMax <- max(c(-log10(Data1[,7]), -log10(Data2[,7]))); \
-		plot(-log10(xVals1[order(xVals1, decreasing=TRUE)]), -log10(Data1[order(Data1[,7], decreasing=TRUE),7]), main=paste(k, sep=\"\"), xlab=\"-log10(Expected p-Values)\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,xlimMax), ylim=c(0,9), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-		points(-log10(xVals2[order(xVals2, decreasing=TRUE)]), -log10(Data2[order(Data2[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
+		xlimMax <- max(c(-log10(xVals1)+4, -log10(xVals2)+4)); ylimMax <- max(c(-log10(Data1[,7]), -log10(Data2[,7]))); \
+		plot(-log10(xVals1[order(xVals1, decreasing=TRUE)])+4, -log10(Data1[order(Data1[,7], decreasing=TRUE),7]), main=paste(k, sep=\"\"), xlab=\"-log10(Expected p-Values)\", ylab=\"-log10(Observed p-Values)\", xlim=c(4,xlimMax), ylim=c(4,ylimMax), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+		points(-log10(xVals2[order(xVals2, decreasing=TRUE)])+4, -log10(Data2[order(Data2[,7], decreasing=TRUE),7]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
 		abline(0,1, lwd=2, col=\"BLACK\"); \
 		mtext(\"PLINK SNP-by-SNP Epistasis\", line=-1.5, outer=TRUE, cex=2); legend(\"topleft\", c(\"African\", \"Brit.Ran4k\"), pch=c(16,16), col=c(brewer.pal(12, \"Paired\")[7], brewer.pal(12, \"Paired\")[3]), bg=\"transparent\", cex=1.5); \
 	}; dev.off(); \
 "
 
-R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
-        for (i in DataTypes[1]) { \
-                png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/ukb_chrAll_v2.AfrBrit4k.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.HeightBMI.DaviesApprox.Results.vs1.png\", height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
-                for (j in UKBPops[1]) { \
-                        for (k in c(\"Height\", \"BMI\")[1:2]) { \
-                                Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.\", k, \".DaviesApprox.Results.txt.pre.gz\", sep=\"\"), header=F); \
-                                Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.\", k, \".DaviesApprox.Results.txt.pre.gz\", sep=\"\"), header=F); \
-                                Data1 <- Data1[!is.na(Data1[,4]) & Data1[,4] > 0,]; Data2 <- Data2[!is.na(Data2[,4]) & Data2[,4] > 0,]; \
-                                xVals1 <- seq(1/nrow(Data1), 1, by=1/nrow(Data1)); xVals2 <- seq(1/nrow(Data2), 1, by=1/nrow(Data2)); \
-                                xlimMax <- max(c(-log10(xVals1), -log10(xVals2))); ylimMax <- max(c(-log10(Data1[,4]), -log10(Data2[,4]))); \
-                                plot(-log10(xVals1[order(xVals1, decreasing=TRUE)]), -log10(Data1[order(Data1[,4], decreasing=TRUE),4]), main=paste(k, sep=\"\"), xlab=\"-log10(Expected p-Values)\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,xlimMax), ylim=c(0,9), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-                                points(-log10(xVals2[order(xVals2, decreasing=TRUE)]), -log10(Data2[order(Data2[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
-                                abline(0,1, lwd=2, col=\"BLACK\"); \
-                                mtext(\"MAPIT\", line=-1.5, outer=TRUE, cex=2); legend(\"topleft\", c(\"African\", \"Brit.Ran4k\"), pch=c(16,16), col=c(brewer.pal(12, \"Paired\")[7], brewer.pal(12, \"Paired\")[3]), bg=\"transparent\", cex=1.5); \
-                        }; \
-                }; dev.off(); \
-        }; \
-"
+#From MacBook Pro
+mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK
+scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/ukb_chrAll_v2.AfrBrit4.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.HeightBMI.epi.qt.Results.QQplots.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/.
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
+something with counts on left for all four and proportions on right for all four, can have different colors and plot poitns for height and bmi (colors are still Afr vs. Brit4k)
+brit 4k new rounds
+nucleotide diversity/heterozygosity?
+proportion of plink snp-by-snp hits in top interpath pathway results? correlations perhaps? compare results to permutations? can also test gene results if InterPath results look interesting, may see marginal significance trends (as if to say that if we had the power we'd see the full things there too)
+irish?
+~~
+redo everything: change pca, do within-pop pheno transformations, remove double y-intercept when removing additive genomic backgrounds
 
 #Irish rerun check list
 
@@ -4467,6 +4450,9 @@ DONE pathway phenotype files
  -- double check IntronicPlus20kb
 _ G*K runs orig
 _ G*K runs perm1
+
+
+
 
 
 
