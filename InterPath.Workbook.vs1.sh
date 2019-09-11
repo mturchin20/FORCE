@@ -6816,16 +6816,20 @@ done
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); \ 
 	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { \ 
 		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/TopOverlap/UKB_AfrBrit4k_TopResultsOverlap_MAPITvsGenes_vs1.png\", sep=\"\"), height=4000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(2,2)); \
-		for (j in UKBioBankPops[1:2]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
-                        for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
-				Data2 <- as.data.frame(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.\", k, \".DaviesApprox.Results.wChrBP.txt.pre.gz | sed 's/_/\t/g' | sed 's/:/\t/g' | awk '{ print \$1 \\\"\t\\\" \$2 \\\"\t\\\" \$7 }' | sort -k 1,1\", sep=\"\"), header=F)); colnames(Data2) <- c(\"ChrBP\", \"Val2\"); \
-                        	Data3 <- as.data.frame(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".Genes.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGeneLoc.txt.pre.gz | grep -v NA | sort -g -k 7,7 | awk '{ print \$1 \\\"\t\\\" \$2 \\\"\t\\\" \$3 \\\"\t\\\" \$4 \\\"\t\\" \$7 }'\", sep=\"\"), header=F));
-				Data4 < c(); for (iLoop in 1:nrow(Data3)) { Data2.sub <- Data2[Data2[,1] == Data3[iLoop,2] & Data2[,2] > Data3[iLoop,3] & Data2[,2] < Data3[iLoop,4],]; TempCumSum <- sum(-log10(Data2.sub[,3])); Data4 <- rbind(Data4, c(Data3[iLoop,1:4], TempCumSum, Data3[iLoop,5])); }; \
-				print(head(Data4)); \
+		for (j in UKBioBankPops[1:1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+                        for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:1]) { \
+				Data2 <- as.data.frame(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.\", k, \".DaviesApprox.Results.wChrBP.txt.pre.gz | sed 's/_/\t/g' | sed 's/:/\t/g' | awk '{ print \$1 \\\"\t\\\" \$2 \\\"\t\\\" \$8 }' | sort -k 1,1\", sep=\"\"), header=F)); \
+                        	Data3 <- as.data.frame(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".Genes.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGeneLoc.txt.pre.gz | grep -v NA | sort -g -k 7,7 | awk '{ print \$1 \\\"\t\\\" \$2 \\\"\t\\\" \$3 \\\"\t\\\" \$4 \\\"\t\\\" \$7 }'\", sep=\"\"), header=F)); \ 
+				Data2 <- Data2[Data2[,3] > 0 & neg.is.na(Data2[,3]),]; Data3 <- Data3[Data3[,5] > 0,]; \
+				Data4 <- c(); for (iLoop in 1:nrow(Data3)) { Data2.sub <- Data2[Data2[,1] == Data3[iLoop,2] & Data2[,2] > Data3[iLoop,3] & Data2[,2] < Data3[iLoop,4],]; TempCumSum <- NA; if (nrow(Data2.sub) > 0) { TempCumSum <- sum(-log10(Data2.sub[,3]))/nrow(Data2.sub); }; Data4 <- rbind(Data4, c(Data3[iLoop,1:4], TempCumSum, Data3[iLoop,5])); }; \
+				print(cor(Data4[,5], Data4[,6])); \
+				write.tabe
 			}; \
                 }; dev.off(); \
         }; \
 "
+				print(head(Data2)); \
+				print(quantile(Data2[,3])); \
 				
 Data3 <- merge(Data1, Data2, by=\"ChrBP\"); \ 
 				print(cor(Data3[,2], -log10(Data3[,3]))); \
