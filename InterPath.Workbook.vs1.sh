@@ -6800,46 +6800,52 @@ for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82
 	done
 done
 
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/TopOverlap
+
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); pValCutoffs = c(\"pVal001\",\"pValBonf\"); DataChroms <- read.table(\"/users/mturchin/Data2/UCSCGB/hg19.chrom.edit1.forR.wCumSums.sizes\", header=F); xLims <- c(0,DataChroms[1,3]); \
        ChrmTicks <- c(DataChroms[2:23,3],DataChroms[1,3]); ChrmLabels <- c(); for (i in 3:23) { ChrmLabels <- c(ChrmLabels, (DataChroms[i-1,3] + DataChroms[i,3])/2);}; ChrmLabels <- c(ChrmLabels, (DataChroms[23,3] + DataChroms[1,3])/2); \
 	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { for (m in pValCutoffs[2]) { for (l in Paths[2]) { \
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/TopOverlap/UKB_AfrBrit4k_TopResultsOverlap_\", l, \"_\", m, \"_vs1.png\", sep=\"\"), height=4000, width=4500, res=300); par(oma=c(1,1,4,14), mar=c(5,5,4,2), mfrow=c(2,2)); \
 		for (j in UKBioBankPops[1:2]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
                         for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
-				Data1 <- fread(cmd=paste(\"cat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.SortUniqC.qt | sed 's/:/ /g'\", sep=\"\"), header=F); \
-                        	print(head(Data1)); \
+				print(paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.\", k, \".DaviesApprox.Results.wChrBP.txt.pre.gz | sed 's/:/\t/g' | sed 's/_/\t/g' | perl -lane 'print join(\\\"\t\\\", @F);' | sort -g -k 8,8 | head -n 10000\", sep=\"\")); \
+				Data1 <- as.data.frame(fread(cmd=paste(\"cat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.SortUniqC.qt | sed 's/:/ /g' | head -n 10000\", sep=\"\"), header=F)); \
+			     Data2 <- as.data.frame(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.\", k, \".DaviesApprox.Results.wChrBP.txt.pre.gz | sed 's/:/\t/g' | sed 's/_/\t/g' | perl -lane 'print join(\\\"\t\\\", @F);' | sort -g -k 8,8 | head -n 10000\", sep=\"\"), header=F)); \
+				Data3 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".Genes.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGeneLoc.txt.pre.gz\", sep=\"\"), header=F); \
+				Data4 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ManhattanTry1/ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".wLoc.txt\", sep=\"\"), header=F); \
+				Data1.NewLoc <- c(); for (i in 1:nrow(Data1)) { Data1.NewLoc <- c(Data1.NewLoc, Data1[i,3] + DataChroms[as.character(DataChroms[,1]) == as.character(Data1[i,2]),3]); }; \
+				Data2.NewLoc <- c(); for (i in 1:nrow(Data2)) { Data2.NewLoc <- c(Data2.NewLoc, Data2[i,2] + DataChroms[as.character(DataChroms[,1]) == as.character(Data2[i,1]),3]); }; \	
+				Data3.NewBegin <- c(); Data3.NewEnd <- c(); for (i in 1:nrow(Data3)) { Data3.NewBegin <- c(Data3.NewBegin, Data3[i,3] + DataChroms[as.character(DataChroms[,1]) == as.character(Data3[i,2]),3]); Data3.NewEnd <- c(Data3.NewEnd, Data3[i,4] + DataChroms[as.character(DataChroms[,1]) == as.character(Data3[i,2]),3]); }; \
+				print(head(DataChroms)); print(head(Data1)); print(head(Data1.NewLoc)); print(head(Data3)); print(head(Data3.NewBegin)); \
 			}; \
                 };};}; \
         }; \
 "
-		
-		png(paste(\"
-/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/ManhattanTry1/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllTypes.noDups.Rnd2Vrsns.\", as.character(i), \".\", l, \".Results.\", m, \".ManhattanTry.vs1.png
-                \", sep=\"\"), height=4000, width=4500, res=300); par(oma=c(1,1,4,14), mar=c(5,5,4,2), mfrow=c(2,2)); \
 
-		Data1 <- as.data.frame(fread(cmd=paste(\"cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.qt | perl -lane 'if (\$#F > 4) { print join(\\\"\t\\\", @F); }'\", sep=\"\"), header=T)); \
+Data2 <- read.table(\"/users/mturchin/Data2/UCSCGB/hg19.chrom.edit1.forR.wCumSums.sizes\", header=F); NewBegin <- c(); NewEnd <- c(); for (i in 1:nrow(Data1)) { NewBegin <- c(NewBegin, Data1[i,5] + Data2[as.character(Data2[,1]) == as.character(Data1[i,4]),3]); NewEnd <- c(NewEnd, Data1[i,6] + Data2[as.character(Data2[,1]) == as.character(Data1[i,4]),3]); };
 
-				
-	Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.\", k, \".DaviesApprox.Results.wChrBP.txt.pre.gz\", sep=\"\"), header=F); \
-				Data3 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".Genes.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGeneLoc.txt.pre.gz\", sep=\"\"), header=F); \
-				Data4 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ManhattanTry1/ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".wLoc.txt\", sep=\"\"), header=F); \
-				print(head(Data1)); print(head(Data2)); print(head(Data3)); print(head(Data4)); \				
 
-					Data2 <- fread(cmd=paste(\\\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\\\", as.character(i), \\\".noDups.txt.gz\\\", sep=\\\"\\\"), header=T); \ 
+				yData1 <- 3; yData2 <- 2; yData3 <- 1; \
+				plot(NA, main=pate(k, \" \", l, \" \", m, sep-\"\"), xlab=\"\", xlim=xLims, ylim=c(0,4), xaxt=\"n\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+                                axis(1, at=ChrmTicks, labels=NA, line=1, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); axis(1, at=ChrmLabels[seq(1,21,by=2)], labels=seq(1,21,by=2), tick=F, line=1, las=2, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); axis(1, at=ChrmLabels[seq(2,22,by=2)], labels=seq(2,22,by=2), tick=F, line=3, las=2, lwd=1.5, lwd.ticks=1.5, cex=1.5, cex.axis=1.5, cex.lab=1.5); mtext(\"Chromosome\", side=1, line=7, cex=1); \
+				plot(Data1[
 
-Data1 
+no pvals
+just 	
+
+
+
+#                        	print(head(Data2)); \
+
+
+
 
      V1 V2        V3
 1: 1704 16  64519086
 2: 1440 21  45724827
-
-    V1          V2
-1 1704 16:64519086
-2 1440 21:45724827
-3 1211 16:90025429
-             V1     V2     V3         V4         V5            V6           V7
-1 7:155315387_A 174561 174561  0.4854957  0.3400495 -2.000000e+00 2.000000e+00
-2  3:98784885_G  69697  69697 -0.3689607 -0.5701639  5.454156e-07 9.999997e-01
-3 10:50421139_C 216991 216991 -1.1344211  6.2595413  1.196524e-06 9.999994e-01
+   V1        V2 V3     V4     V5         V6         V7            V8
+1:  7 155315387  A 174561 174561  0.4854957  0.3400495 -2.000000e+00
+2:  3  98784885  G  69697  69697 -0.3689607 -0.5701639  5.454156e-07
        V1 V2       V3       V4            V5            V6        V7        V8
 1    A1BG 19 58858171 58864865  3.617843e-02  3.435605e-02 0.8392822 0.4196411
 2    A1CF 10 52559168 52645435 -4.579827e-02 -4.733243e-02 0.2281585 0.8859208
