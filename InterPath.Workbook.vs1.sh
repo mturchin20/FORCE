@@ -6843,6 +6843,7 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 #On MacBook Pro
 scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/TopOverlap/UKB_AfrBrit4k_TopResultsOverlap_MAPITvsGenes_vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/TopOverlap/.
 
+#from https://stackoverflow.com/questions/34469178/r-convert-factor-to-numeric-and-remove-levels
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); pValCutoffs = c(\"pVal001\",\"pValBonf\", \"pValAll\"); \
 	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { for (m in pValCutoffs[3]) { for (l in Paths[3]) { \
 		for (j in UKBioBankPops[1:1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
@@ -6852,23 +6853,41 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 				Data5 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ManhattanTry1/ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".wLoc.txt\", sep=\"\"), header=F); \
 				Data2 <- Data2[Data2[,3] > 0 & neg.is.na(Data2[,3]),]; Data4 <- Data4[Data4[,3] > 0 & neg.is.na(Data4[,3]),]; \ 
 				Pathways <- unique(Data5[,2]); Pathways <- as.character(Pathways); \
-				print(head(Pathways)); \
-				Data6 <- c(); for (n in 1:10) { \
+				Data6 <- c(); for (n in 1:length(Pathways)) { print(n); \
 					Data5.sub <- Data5[Data5[,2] == Pathways[n],]; \
-					print(head(Data5.sub)); \
 					nrowCount <- c(); TempCumSumAll <- c(); if (nrow(Data5.sub) > 0) { for (o in 1:nrow(Data5.sub)) { \
-						Data2.sub <- Data2[Data2[,1] == Data5.sub[o,4] & Data2[,2] > Data5.sub[o,5] & Data2[,2] < Data5.sub[o,6],]; print(head(Data2.sub)); if (nrow(Data2.sub) > 0) { TempCumSumAll <- c(TempCumSumAll, Data2.sub[,3]); }; nrowCount <- c(nrowCount, nrow(Data2.sub)); \
+						Data2.sub <- Data2[Data2[,1] == Data5.sub[o,4] & Data2[,2] > Data5.sub[o,5] & Data2[,2] < Data5.sub[o,6],]; if (nrow(Data2.sub) > 0) { TempCumSumAll <- c(TempCumSumAll, Data2.sub[,3]); }; nrowCount <- c(nrowCount, nrow(Data2.sub)); \
 					};}; \
-					TempCumSumFinal <- NA; if (length(TempCumSumAll) > 0) { TempCumSumFinal <- mean(-log10(TempCumSumAll)); }; Data6 <- rbind(Data6, c(Pathways[n], TempCumSumFinal, -log10(Data4[Data4[,1] == Pathways[n],3]), nrow(Data5.sub), length(TempCumSumAll), paste(nrowCount, collapse=\",\"))); \ 
-				}; print(head(Data6)); \
+					TempCumSumFinal <- NA; if (length(TempCumSumAll) > 0) { Chisq.Stat <- -2 * sum(log(TempCumSumAll), na.rm=TRUE); Chisq.pVal <- NA; if (Chisq.Stat == 0) { Chisq.pVal <- -100; } else { Chisq.pVal <- -log10(pchisq(Chisq.Stat, df=2*length(TempCumSumAll[neg.is.na(TempCumSumAll)]), lower.tail=FALSE)); }; TempCumSumFinal <- Chisq.pVal; }; Data6 <- rbind(Data6, c(Pathways[n], TempCumSumFinal, -log10(Data4[Data4[,1] == Pathways[n],3]), nrow(Data5.sub), length(TempCumSumAll), paste(nrowCount, collapse=\",\"))); \ 
+				}; write.table(Data6, gzfile(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/TopOverlap/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.DaviesApprox.InterPath.Pathways.\", i, \".ExonicPlus20kb.GjDrop_wCov_GK.\", l, \".\", m, \".Results.wLocs.txt.gz\", sep=\"\")), quote=FALSE, row.name=FALSE, col.name=FALSE); \
 			}; \
                 };};}; \
         }; \
 "
 
+#					TempCumSumFinal <- NA; if (length(TempCumSumAll) > 0) { TempCumSumFinal <- mean(-log10(TempCumSumAll)); }; Data6 <- rbind(Data6, c(Pathways[n], TempCumSumFinal, -log10(Data4[Data4[,1] == Pathways[n],3]), nrow(Data5.sub), length(TempCumSumAll), paste(nrowCount, collapse=\",\"))); \ 
+
+Chisq.Stat <- -2 * sum(log(pVals1), na.rm=TRUE); Chisq.pVal <- \"PH\"; if (Chisq.Stat == 0) { Chisq.pVal <- -9; } else { Chisq.pVal <- pchisq(Chisq.Stat, df=2*length(pVals1[neg.is.na(pVals1)]), lower.tail=FALSE); };
+
 /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ManhattanTry1/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wLoc.txt
 /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
 
+R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); pValCutoffs = c(\"pVal001\",\"pValBonf\", \"pValAll\"); \
+	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { for (m in pValCutoffs[3]) { for (l in Paths[3]) { \ 
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/TopOverlap/UKB_AfrBrit4k_TopResultsOverlap_MAPITvsPathways_\", l, m, \"_vs1.png\", sep=\"\"), height=4000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(2,2)); \
+		for (j in UKBioBankPops[1:1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+                        for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
+				Data4 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/TopOverlap/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.DaviesApprox.InterPath.Pathways.\", i, \".ExonicPlus20kb.GjDrop_wCov_GK.\", l, \".\", m, \".Results.wLocs.txt.gz\", sep=\"\"), header=F); \
+				Data4 <- Data4[neg.is.na(Data4[,2]) & Data4[,2] > 0 & neg.is.na(Data4[,3]) & Data4[,3] > 0,]; \
+				plot(Data4[,2], Data4[,3], xlab=\"mean(MAPIT -log10 p-Values)\", ylab=\"InterPath 'Pathways' -log10 p-Value\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); abline(lm(Data4[,3] ~ Data4[,2]), col=\"RED\"); \ 
+				print(cor(Data4[,2], Data4[,3])); \
+			}; \
+                }; dev.off(); };}; \
+        }; \
+"
+
+#On MacBook Pro
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/TopOverlap/UKB_AfrBrit4k_TopResultsOverlap_MAPITvsPathways*_vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/TopOverlap/.
 
 
 
