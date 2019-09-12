@@ -6845,23 +6845,22 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterP
 
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); pValCutoffs = c(\"pVal001\",\"pValBonf\", \"pValAll\"); \
 	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { for (m in pValCutoffs[3]) { for (l in Paths[3]) { \
-		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/TopOverlap/UKB_AfrBrit4k_TopResultsOverlap_\", l, \"_\", m, \"_vs1.png\", sep=\"\"), height=4000, width=4500, res=300); par(oma=c(1,1,4,14), mar=c(5,5,4,2), mfrow=c(2,2)); \
-		for (j in UKBioBankPops[1:2]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
-                        for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
+		for (j in UKBioBankPops[1:1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+                        for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:1]) { \
       				Data2 <- as.data.frame(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.\", k, \".DaviesApprox.Results.wChrBP.txt.pre.gz | sed 's/_/\t/g' | sed 's/:/\t/g' | awk '{ print \$1 \\\"\t\\\" \$2 \\\"\t\\\" \$8 }' | sort -k 1,1\", sep=\"\"), header=F)); \
-				Data4 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+				Data4 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
 				Data5 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ManhattanTry1/ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".wLoc.txt\", sep=\"\"), header=F); \
 				Data2 <- Data2[Data2[,3] > 0 & neg.is.na(Data2[,3]),]; Data4 <- Data4[Data4[,3] > 0 & neg.is.na(Data4[,3]),]; \ 
-				Pathways <- unique(Data5[,2]); \
+				Pathways <- unique(Data5[,2]); Pathways <- as.character(Pathways); \
 				print(head(Pathways)); \
-				Data6 <- c(); for (n in 1:length(Pathways)) { \
+				Data6 <- c(); for (n in 1:10) { \
 					Data5.sub <- Data5[Data5[,2] == Pathways[n],]; \
 					print(head(Data5.sub)); \
-					if (nrow(Data5.sub) > 0) { for (o in 1:nrow(Data5.sub)) { \
-						Data6 <- c(); for (iLoop in 1:nrow(Data3)) { print(iLoop); 
-						Data2.sub <- Data2[Data2[,1] == Data5.sub[o,4] & Data2[,2] > Data5.sub[o,5] & Data2[,2] < Data5.sub[o,6],]; TempCumSum <- NA; if (nrow(Data2.sub) > 0) { TempCumSum <- sum(-log10(Data2.sub[,3]))/nrow(Data2.sub); }; Data6 <- rbind(Data6, c(Pathways[o], TempCumSum, Data4[Data4[,1] == Pathways[o],3])); }; \
-					};};
-				}; \
+					nrowCount <- c(); TempCumSumAll <- c(); if (nrow(Data5.sub) > 0) { for (o in 1:nrow(Data5.sub)) { \
+						Data2.sub <- Data2[Data2[,1] == Data5.sub[o,4] & Data2[,2] > Data5.sub[o,5] & Data2[,2] < Data5.sub[o,6],]; print(head(Data2.sub)); if (nrow(Data2.sub) > 0) { TempCumSumAll <- c(TempCumSumAll, Data2.sub[,3]); }; nrowCount <- c(nrowCount, nrow(Data2.sub)); \
+					};}; \
+					TempCumSumFinal <- NA; if (length(TempCumSumAll) > 0) { TempCumSumFinal <- mean(-log10(TempCumSumAll)); }; Data6 <- rbind(Data6, c(Pathways[n], TempCumSumFinal, -log10(Data4[Data4[,1] == Pathways[n],3]), nrow(Data5.sub), length(TempCumSumAll), paste(nrowCount, collapse=\",\"))); \ 
+				}; print(head(Data6)); \
 			}; \
                 };};}; \
         }; \
