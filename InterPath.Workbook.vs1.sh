@@ -6934,16 +6934,17 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterP
 
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); pValCutoffs = c(\"pVal001\",\"pValBonf\", \"pValAll\"); \
 	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { for (m in pValCutoffs[3]) { for (l in Paths[3]) { \
-		for (j in UKBioBankPops[1:1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
-                        for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:1]) { \
+		for (j in UKBioBankPops[1:2]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+                        for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
+				print(c(m, l, j, k)); \
 				Data2 <- as.data.frame(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/PEGASUS/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.\", k, \".DaviesApprox.PEGASUS.out.gz | awk '{ print \$2 \\\"\t\\\" \$7 }' | grep -v Pvalue | sort -g -k 2,2\", sep=\"\"), header=F)); \
 				Data4 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
-				print(head(Data2)); Data2 <- Data2[Data2[,2] > 0 & neg.is.na(Data2[,2]),]; Data4 <- Data4[Data4[,3] > 0 & neg.is.na(Data4[,3]),]; \ 
-				print(paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/PEGASUS/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.\", k, \".DaviesApprox.PEGASUS.out.gz\", sep=\"\")); print(head(Data2)); Data6 <- c(); for (n in 1:nrow(Data4)) { \
+				Data2 <- Data2[Data2[,2] > 0 & neg.is.na(Data2[,2]),]; Data4 <- Data4[Data4[,3] > 0 & neg.is.na(Data4[,3]),]; \ 
+				Data6 <- c(); for (n in 1:nrow(Data4)) { \
 					pValsTemp <- c(); PathwayGenes <- unlist(strsplit(as.character(Data4[n,2]), \",\")); for (o in PathwayGenes) { \
 						Data2.sub <- Data2[which(as.character(Data2[,1]) == o),]; \
 						if (nrow(Data2.sub) == 1) { pValsTemp <- c(pValsTemp, Data2.sub[1,2]); }; \
-						if (nrow(Data2.sub) > 1) { write(\"Error1a\", stderr()); }; \
+						if (nrow(Data2.sub) > 1) { if (o == \"HIST1H2BC\") { pValsTemp <- c(pValsTemp, Data2.sub[1,2]); } else { write(paste(\"Error1a -- pathway \", Data4[n,1], \" gene \", o, \" (\", ancestry1, \" \", k, \")\", sep=\"\"), stderr()); };}; \
 					}; \	
 					Chisq.pVal <- NA; if (length(pValsTemp) > 0) { Chisq.Stat <- -2 * sum(log(pValsTemp), na.rm=TRUE); if (Chisq.Stat == 0) { Chisq.pVal <- -100; } else { Chisq.pVal <- -log10(pchisq(Chisq.Stat, df=2*length(pValsTemp[neg.is.na(pValsTemp)]), lower.tail=FALSE)); };}; \
 					Data6 <- rbind(Data6, c(as.character(Data4[n,1]), as.character(Data4[n,2]), length(pValsTemp), Chisq.pVal, Data4[n,3])); \
