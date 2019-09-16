@@ -6962,8 +6962,8 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
                         for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
 				Data4 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/TopOverlap/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.DaviesApprox.PEGASUS.InterPath.Pathways.\", k, \".ExonicPlus20kb.GjDrop_wCov_GK.\", l, \".\", m, \".Results.wLocs.txt.gz\", sep=\"\"), header=F); \
 				Data4 <- Data4[neg.is.na(Data4[,4]) & Data4[,4] > 0 & neg.is.na(Data4[,5]) & Data4[,5] > 0,]; Data4[,4] <- -log10(Data4[,4]); Data4[,5] <- -log10(Data4[,5]); \
-				plot(Data4[,4], Data4[,5], xlab=\"MAPIT PEGASUS Fisher's -log10 p-Value\", ylab=\"InterPath 'Pathways' -log10 p-Value\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); abline(lm(Data4[,5] ~ Data4[,4]), col=\"RED\"); legend(\"topright\", c(paste(\"Corr: \", signif(cor(Data4[,4], Data4[,5]), digits=3), sep=\"\")), cex=1.5); \ 
-				usr <- par(\"usr\"); text(usr[2], usr[4], paste(\"Corr: \", signif(cor(Data4[,4], Data4[,5]), digits=3), sep=\"\"), adj=c(1.5,4), cex=1.5); \
+				plot(Data4[,4], Data4[,5], xlab=\"MAPIT PEGASUS Fisher's -log10 p-Value\", ylab=\"InterPath 'Pathways' -log10 p-Value\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); abline(lm(Data4[,5] ~ Data4[,4]), col=\"RED\"); legend1 <- legend(\"topright\", c(paste(\"Corr: \", signif(cor(Data4[,4], Data4[,5]), digits=3), sep=\"\")), bty=\"n\", plot=TRUE, cex=1.5); \ 
+				usr <- par(\"usr\"); print(head(usr)); print(summary(legend1)); print(legend1[1]); rect(legend1\$text\$x[1]-diff(usr[1:2])/100,legend1\$rect\$top-legend1\$rect\$h,legend1\$rect\$left+legend1\$rect\$w,legend1\$rect\$top, cex=1.5); \
 				print(cor(Data4[,4], Data4[,5])); \
 			}; \
                 }; dev.off(); };}; \
@@ -6971,6 +6971,7 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 "
 
 #				Data4 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/TopOverlap/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.DaviesApprox.InterPath.Pathways.\", k, \".ExonicPlus20kb.GjDrop_wCov_GK.\", l, \".\", m, \".Results.wLocs.txt.gz\", sep=\"\"), header=F); \
+#				usr <- par(\"usr\"); text(usr[2], usr[4], paste(\"Corr: \", signif(cor(Data4[,4], Data4[,5]), digits=3), sep=\"\"), adj=c(1.5,4), cex=1.5); \
 
 #On MacBook Pro
 scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/TopOverlap/UKB_AfrBrit4k_TopResultsOverlap_MAPITvsPathways*_vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/TopOverlap/.
