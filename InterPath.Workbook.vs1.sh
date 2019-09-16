@@ -6894,15 +6894,15 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 		for (j in UKBioBankPops[1:2]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
                         for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
 				Data4 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/TopOverlap/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.DaviesApprox.PEGASUS.InterPath.Genes.GjDrop_wCov_GK.\", k, \".Results.wLocs.txt.gz\", sep=\"\"), header=F); \
-				print(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/TopOverlap/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.DaviesApprox.PEGASUS.InterPath.Genes.GjDrop_wCov_GK.\", k, \".Results.wLocs.txt.gz\", sep=\"\")); \
 				Data4 <- Data4[neg.is.na(Data4[,2]) & Data4[,2] > 0 & neg.is.na(Data4[,6]) & Data4[,6] > 0,]; \
-				plot(-log10(Data4[,2]), -log10(Data4[,6]), xlab=\"MAPIT PEGASUS -log10 p-Values\", ylab=\"InterPath 'Gene' -log10 p-Value\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); print(head(-log10(Data4[,6]))); print(head(-log10(Data4[,2]))); abline(lm(-log10(Data4[,6]) ~ -log10(Data4[,2])), col=\"RED\"); \
-#				print(summary(lm(-log10(Data4[,6]) ~ -log10(Data4[,2])))); \
+				plot(-log10(Data4[,2]), -log10(Data4[,6]), xlab=\"MAPIT PEGASUS -log10 p-Values\", ylab=\"InterPath 'Gene' -log10 p-Value\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); print(head(-log10(Data4[,6]))); print(head(-log10(Data4[,2]))); abline(lm(-log10(Data4[,6]) ~ -log10(Data4[,2])), col=\"RED\"); lines(smooth.spline(-log10(Data4[,2]), -log10(Data4[,6])), col=\"RED\");  \
 				print(cor(-log10(Data4[,2]), -log10(Data4[,6]))); \
 			}; \
                 }; dev.off(); \
         }; \
 "
+
+#				plot(-log10(Data4[,2]), -log10(Data4[,6]), xlab=\"MAPIT PEGASUS -log10 p-Values\", ylab=\"InterPath 'Gene' -log10 p-Value\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); print(head(-log10(Data4[,6]))); print(head(-log10(Data4[,2]))); abline(a=-log10(summary(lm(Data4[,6] ~ Data4[,2]))\$coefficients[1]), b=-log10(summary(lm(Data4[,6] ~ Data4[,2]))\$coefficients[2]), col=\"RED\"); \
 
 #On MacBook Pro
 scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/TopOverlap/UKB_AfrBrit4k_TopResultsOverlap_MAPITvsGenes_vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/TopOverlap/.
