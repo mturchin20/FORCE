@@ -6944,7 +6944,8 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 					pValsTemp <- c(); PathwayGenes <- unlist(strsplit(as.character(Data4[n,2]), \",\")); for (o in PathwayGenes) { \
 						Data2.sub <- Data2[which(as.character(Data2[,1]) == o),]; \
 						if (nrow(Data2.sub) == 1) { pValsTemp <- c(pValsTemp, Data2.sub[1,2]); }; \
-						if (nrow(Data2.sub) > 1) { if (o == \"HIST1H2BC\") { pValsTemp <- c(pValsTemp, Data2.sub[1,2]); } else { write(paste(\"Error1a -- pathway \", Data4[n,1], \" gene \", o, \" (\", ancestry1, \" \", k, \")\", sep=\"\"), stderr()); };}; \
+						if (nrow(Data2.sub) == 2) { if (Data2.sub[1,2] == Data2.sub[2,2]) { pValsTemp <- c(pValsTemp, Data2.sub[1,2]); } else { write(paste(\"Error1b -- pathway \", Data4[n,1], \" gene \", o, \" (\", ancestry1, \" \", k, \")\", sep=\"\"), stderr()); }; }; \
+						if (nrow(Data2.sub) > 2) { write(paste(\"Error1a -- pathway \", Data4[n,1], \" gene \", o, \" (\", ancestry1, \" \", k, \")\", sep=\"\"), stderr()); }; \
 					}; \	
 					Chisq.pVal <- NA; if (length(pValsTemp) > 0) { Chisq.Stat <- -2 * sum(log(pValsTemp), na.rm=TRUE); if (Chisq.Stat == 0) { Chisq.pVal <- -100; } else { Chisq.pVal <- -log10(pchisq(Chisq.Stat, df=2*length(pValsTemp[neg.is.na(pValsTemp)]), lower.tail=FALSE)); };}; \
 					Data6 <- rbind(Data6, c(as.character(Data4[n,1]), as.character(Data4[n,2]), length(pValsTemp), Chisq.pVal, Data4[n,3])); \
