@@ -2375,7 +2375,13 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k
 	
 			R -q -e "library(\"RColorBrewer\"); 
-			Data1 <- read.table(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt\", header=F); \
+			Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.$l.Results.txt.pre.gz\", header=F); \
+			Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.$l.Results.txt.pre.gz\", header=F); \
+			Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.$l.Results.txt.pre.gz\", header=F); \
+			Data4 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.$l.Results.txt.pre.gz\", header=F); \
+
+
+/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt\", header=F); \
 
 			/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.NonSyn.Vs2.GjDrop_wCov_GK.AllPaths.Results.txt.pre.gz
 	
@@ -4661,9 +4667,9 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturch
                 Data2 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
                 print(head(Data1)); print(head(Data2)); \
 		Data1 <- Data1[order(Data1[,1], decreasing=TRUE),]; Data2 <- Data2[order(Data2[,1], decreasing=TRUE),]; Data1 <- Data1[1:50,]; Data2 <- Data2[1:50,]; \ 
-                xVals1 <- seq(1, nrow(Data1), by=1); xVals2 <- seq(1, nrow(Data2), by=1); xVals1 <- xVals1 + 1; xVals2 <- xVals2 + 1; \
+                xVals1 <- seq(1, nrow(Data1), by=1); xVals2 <- seq(1, nrow(Data2), by=1); \
                 xlimMax <- max(c(xVals1, xVals2)); ylimMax <- max(c(Data1[,1], Data2[,1])); \
-                plot(xVals1[order(xVals1, decreasing=TRUE)], Data1[,1], main=paste(k, sep=\"\"), xlab=\"Tested SNP\", ylab=\"Number of Marginally Significant Interactions\", xlim=c(1,xlimMax), ylim=c(475,ylimMax), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+                plot(xVals1[order(xVals1, decreasing=TRUE)], Data1[,1], main=paste(k, sep=\"\"), xlab=\"Tested SNP\", ylab=\"Number of Marginally Significant Interactions\", xlim=c(0,xlimMax), ylim=c(475,ylimMax), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
                 points(xVals2[order(xVals2, decreasing=TRUE)], Data2[,1], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
                 mtext(\"PLINK SNP-by-SNP Epistasis Tests\", line=-1.5, outer=TRUE, cex=2); legend(\"topleft\", c(\"African\", \"Brit.Ran4k\"), pch=c(16,16), col=c(brewer.pal(12, \"Paired\")[7], brewer.pal(12, \"Paired\")[3]), bg=\"transparent\", cex=1.5); \
         }; dev.off(); \
