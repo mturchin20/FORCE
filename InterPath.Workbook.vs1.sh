@@ -2358,9 +2358,9 @@ R -q -e "library(\"RColorBrewer\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", 
 				points(-log10(xVals2[order(xVals2, decreasing=TRUE)]), -log10(Data2[order(Data2[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[1], cex=1.5); \
 				points(-log10(xVals3[order(xVals3, decreasing=TRUE)]), -log10(Data3[order(Data3[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
 				points(-log10(xVals4[order(xVals4, decreasing=TRUE)]), -log10(Data4[order(Data4[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9],  cex=1.5); \
-				abline(0,1, col=\"BLACK\"); abline(h=-log10(pValBonf1), lty=3, lwd=3, col=\"RED\"); \ 
+				abline(0,1, lwd=1, col=\"BLACK\"); abline(h=-log10(pValBonf1), lty=3, lwd=3, col=\"RED\"); \ 
 			}; \
-                }; mtext(m, side=3, outer=TRUE, at=.5, cex=2.5); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Indian\", \"Bonf pVal\"), pch=c(16,16,16,16,NA), lty=c(NA,NA,NA,NA,3), lwd=c(NA,NA,NA,NA,2), col=c(brewer.pal(12, \"Paired\")[7], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[9], \"RED\"), xpd=TRUE, inset=c(.05,.24), bg=\"transparent\", cex=1.5, y.intersp=2); dev.off(); }; \
+                }; mtext(m, side=3, outer=TRUE, at=.5, cex=2.5); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Indian\", \"Bonf pVal\"), pch=c(16,16,16,16,NA), lty=c(NA,NA,NA,NA,3), lwd=c(NA,NA,NA,NA,3), col=c(brewer.pal(12, \"Paired\")[7], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[9], \"RED\"), xpd=TRUE, inset=c(.05,.24), bg=\"transparent\", cex=1.5, y.intersp=2); dev.off(); }; \
         };}; print(warnings()); \
 "
 
