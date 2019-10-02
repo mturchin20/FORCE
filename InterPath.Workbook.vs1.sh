@@ -4636,15 +4636,17 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturch
                 Data1 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
                 Data2 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
                 Data3 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
-                print(head(Data1)); print(head(Data2)); print(head(Data3)); \
-		Data1 <- Data1[order(Data1[,1], decreasing=TRUE),]; Data2 <- Data2[order(Data2[,1], decreasing=TRUE),]; Data3 <- Data3[order(Data3[,1], decreasing=TRUE),]; \ 
-		Data1 <- Data1[1:50,]; Data2 <- Data2[1:50,]; Data3 <- Data3[1:50,]; \ 
-                xVals1 <- seq(1, nrow(Data1), by=1); xVals2 <- seq(1, nrow(Data2), by=1); xVals3 <- seq(1, nrow(Data3), by=1); \
-                xlimMax <- max(c(xVals1, xVals2, xVals3)); ylimMax <- max(c(Data1[,1], Data2[,1], Data3[,1])); \
-                plot(xVals1[order(xVals1, decreasing=TRUE)], Data1[,1], main=paste(k, sep=\"\"), xlab=\"Tested SNP\", ylab=\"Number of Marginally Significant Interactions\", xlim=c(0,xlimMax), ylim=c(475,3150), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+                Data4 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
+                print(head(Data1)); print(head(Data2)); print(head(Data3)); print(head(Data4)); \
+		Data1 <- Data1[order(Data1[,1], decreasing=TRUE),]; Data2 <- Data2[order(Data2[,1], decreasing=TRUE),]; Data3 <- Data3[order(Data3[,1], decreasing=TRUE),]; Data4 <- Data4[order(Data4[,1], decreasing=TRUE),]; \ 
+		Data1 <- Data1[1:50,]; Data2 <- Data2[1:50,]; Data3 <- Data3[1:50,]; Data4 <- Data4[1:50,]; \ 
+                xVals1 <- seq(1, nrow(Data1), by=1); xVals2 <- seq(1, nrow(Data2), by=1); xVals3 <- seq(1, nrow(Data3), by=1); xVals3 <- seq(1, nrow(Data4), by=1); \
+                xlimMax <- max(c(xVals1, xVals2, xVals3)); ylimMax <- max(c(Data1[,1], Data2[,1], Data3[,1], Data4[,1])); \
+                plot(xVals1[order(xVals1, decreasing=TRUE)], Data1[,1], main=paste(k, sep=\"\"), xlab=\"Tested SNP\", ylab=\"Number of Marginally Significant Interactions\", xlim=c(0,xlimMax), ylim=c(475,3350), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
                 points(xVals2[order(xVals2, decreasing=TRUE)], Data2[,1], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[1], cex=1.5); \
                 points(xVals3[order(xVals3, decreasing=TRUE)], Data3[,1], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
-	}; par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\"), pch=c(16,16), col=c(brewer.pal(12, \"Paired\")[7], brewer.pal(12, \"Paired\")[1]), xpd=TRUE, inset=c(.05,.14), bg=\"transparent\", cex=1.5, y.intersp=2); \
+                points(xVals3[order(xVals3, decreasing=TRUE)], Data4[,1], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=1.5); \
+	}; par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Indian\"), pch=c(16,16,16,16), col=c(brewer.pal(12, \"Paired\")[7], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[9]), xpd=TRUE, inset=c(.05,.15), bg=\"transparent\", cex=1.5, y.intersp=2); \
         dev.off(); \
 "
 
