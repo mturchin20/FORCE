@@ -4893,8 +4893,8 @@ scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/Inter
 
 
 #20190917 NOTE -- as of right now, the situation is as follows for IPM BioMe/MEC & not pruned/pruned:
-# - IPM BioMe: AfrAmr fails for both not pruned (tbd actually atm) & pruned, EuroStrict works for both
-# - MEC: AfrAmr works for pruned (not pruned rerunning atm), JpnAmr works for pruned (not pruned rerunning atm) 
+# - IPM BioMe: AfrAmr fails for both not pruned & pruned, EuroStrict works for both
+# - MEC: AfrAmr works for both not pruned & pruned, JpnAmr works for both not pruned & pruned 
 
 module load R/3.4.3_mkl gcc; sleep 1; for i in `cat <(echo "Height;59261 BMI;13725" | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
 	for j in `cat <(echo $PAGEIPMBioMePops2 | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
@@ -5028,15 +5028,6 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterP
 
 
 
-
-
-
-
-
-
-
-
-
 module load R/3.4.3_mkl gcc; sleep 1; for i in `cat <(echo "Height;59261 BMI;13725" | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
 	for j in `cat <(echo $PAGEMECPops1 | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`;
@@ -5100,8 +5091,8 @@ for i in `cat <(echo "Height;59261 BMI;13725" | perl -lane 'print join("\n", @F)
 			mkdir /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/Subfiles
 		fi
 		
-		rm /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/Subfiles/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.pruned.MAPIT.Results.$Pheno1.DaviesApprox.2.Eigenvalues.Subset*; cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.pruned.MAPIT.Results.$Pheno1.DaviesApprox.2.Eigenvalues.txt | perl -F, -slane 'for (my $i=0; $i <= $#F; $i += 10000) { my $output1 = "/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1b/$ancestry2b/Analyses/MAPIT/Subfiles/PAGE_MEC_chrAll_v1.$ancestry2b.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.pruned.MAPIT.Results.$Pheno1Bash.DaviesApprox.2.Eigenvalues.Subset." . $i . ".txt"; open(my $outfile1, ">>", $output1) or die; my $end1 = $i + 9999; if ($end1 > $#F) { $end1 = $i + ($#F - $i); } print $outfile1 join("\t", @F[$i..$end1]); close($outfile1); }' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 -Pheno1Bash=$Pheno1
-		gzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/Subfiles/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.pruned.MAPIT.Results.$Pheno1.DaviesApprox.2.Eigenvalues.Subset*txt
+		rm /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/Subfiles/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.Subset*; cat /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.txt | perl -F, -slane 'for (my $i=0; $i <= $#F; $i += 10000) { my $output1 = "/users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1b/$ancestry2b/Analyses/MAPIT/Subfiles/PAGE_MEC_chrAll_v1.$ancestry2b.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.Results.$Pheno1Bash.DaviesApprox.3.Eigenvalues.Subset." . $i . ".txt"; open(my $outfile1, ">>", $output1) or die; my $end1 = $i + 9999; if ($end1 > $#F) { $end1 = $i + ($#F - $i); } print $outfile1 join("\t", @F[$i..$end1]); close($outfile1); }' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 -Pheno1Bash=$Pheno1
+		gzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/MEC/$ancestry1/$ancestry2/Analyses/MAPIT/Subfiles/PAGE_MEC_chrAll_v1.$ancestry2.QCed.QCed.dropRltvs.Loose.PCAdrops.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.Subset*txt
 
 	done;
 done;
