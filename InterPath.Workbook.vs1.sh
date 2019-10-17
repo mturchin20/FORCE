@@ -4501,7 +4501,7 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head
 	done
 done
 
-for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 8 | tail -n 8`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
 	rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.wPCs.wthnPop.results.temp1.output
 
@@ -4528,9 +4528,9 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head
 		echo "" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.wPCs.wthnPop.results.temp1.output
 	
 	done
-done
+dpone
 
-paste <(cat <(echo -e "\nHeight\nKnoM,K2noM,ZnoM\nKM,K2M,ZnoM\nKM,K2M,ZM\n\nBMI\nnKnoM,K2noM,ZnoM\nKM,K2M,ZnoM\nKM,K2M,ZM")) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.wPCs.wthnPop.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.wPCs.wthnPop.results.temp1.output) | column -t -s $'\t' | awk '{ if (NR == 6) { print "" } print $0 }' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_AllPops_GEMMA_PCs_wthnPop_Results1.output
+paste <(cat <(echo -e "\nHeight\nKnoM,K2noM,ZnoM\nKM,K2M,ZnoM\nKM,K2M,ZM\n\nBMI\nnKnoM,K2noM,ZnoM\nKM,K2M,ZnoM\nKM,K2M,ZM")) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.wPCs.wthnPop.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.wPCs.wthnPop.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.wPCs.wthnPop.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.wPCs.wthnPop.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.wPCs.wthnPop.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.wPCs.wthnPop.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.wPCs.wthnPop.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.wPCs.wthnPop.results.temp1.output) | column -t -s $'\t' | awk '{ if (NR == 7) { print "" } print $0 }' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_AllPops_GEMMA_PCs_wthnPop_Results1.output
 
 #cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_AllPops_GEMMA_PCs_Results1.output
 #cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_AllPops_GEMMA_PCs_wthnPop_Results1.output
