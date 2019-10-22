@@ -5011,7 +5011,7 @@ R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned.\", \"PrunedStrict
 				Data1 <- Data1[!is.na(Data1[,4]) & Data1[,4] > 0,]; Data2 <- Data2[!is.na(Data2[,4]) & Data2[,4] > 0,]; \
                                 xVals1 <- seq(1/nrow(Data1), 1, by=1/nrow(Data1)); xVals2 <- seq(1/nrow(Data2), 1, by=1/nrow(Data2)); \
                                 xlimMax <- max(c(-log10(xVals1), -log10(xVals2))); ylimMax <- max(c(-log10(Data1[,4]), -log10(Data2[,4]))); \
-                                plot(-log10(xVals1[order(xVals1, decreasing=TRUE)]), -log10(Data1[order(Data1[,4], decreasing=TRUE),4]), main=gsub(\"Pruned.\",\"Pruned\",gsub(\"NA\",\"Not Pruned\",paste(k, sep=\"\"))), xlab=\"-log10(Expected p-Values)\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,xlimMax), ylim=c(0,9), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+                                plot(-log10(xVals1[order(xVals1, decreasing=TRUE)]), -log10(Data1[order(Data1[,4], decreasing=TRUE),4]), main=gsub(\"Pruned.\",\"Pruned\",gsub(\"NA\",\"Not Pruned\",paste(k, \" \", j, sep=\"\"))), xlab=\"-log10(Expected p-Values)\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,xlimMax), ylim=c(0,9), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
                                 abline(0,1, lwd=2, col=\"BLACK\"); \
 				legend(\"topleft\", c(\"EuroStrict\"), pch=c(16), col=c(brewer.pal(12, \"Paired\")[3]), bg=\"transparent\", cex=1.5); \
                         }; \
