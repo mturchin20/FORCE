@@ -3080,9 +3080,9 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 	done 
 done 
 
-for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do
 	echo $l
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -vE 'African|Ran4000|Indian' | head -n 2 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 1`; do
 		echo $j
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 		ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -7280,8 +7280,8 @@ done
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/Comps
 
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); pValCutoffs = c(\"pVal001\",\"pValBonf\", \"pValAll\"); \
-        neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { for (m in pValCutoffs[3]) { for (l in Paths[3]) { \
-		for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:1]) { \
+        neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { for (m in pValCutoffs[3]) { for (l in Paths[2:3]) { \
+		for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
 			print(c(m, l, k)); \
 			Data1 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v2.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
 			Data2 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v2.British.Ran4000.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
@@ -7290,21 +7290,22 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 			Data1 <- Data1[Data1[,3] > 0 & neg.is.na(Data1[,3]),]; Data2 <- Data2[Data2[,3] > 0 & neg.is.na(Data2[,3]),]; Data3 <- Data3[Data3[,3] > 0 & neg.is.na(Data3[,3]),]; Data4 <- Data4[Data4[,3] > 0 & neg.is.na(Data4[,3]),]; \
 			Data1 <- Data1[,c(1,3)]; Data2 <- Data2[,c(1,3)]; Data3 <- Data3[,c(1,3)]; Data4 <- Data4[,c(1,3)]; colnames(Data1) <- c(\"Pathway\", \"pValue\"); colnames(Data2) <- c(\"Pathway\", \"pValue\"); colnames(Data3) <- c(\"Pathway\", \"pValue\"); colnames(Data4) <- c(\"Pathway\", \"pValue\"); \ 
 			print(head(Data1)); print(head(Data2)); \
-			Comps1 <- c(\"Data1\", \"Data1\", \"Data1\", \"Data2\", \"Data2\", \"Data3\"); Comps2 <- c(\"Data2\", \"Data3\", \"Data4\", \"Data3\", \"Data4\", \"Data4\"); Names1 <- c(\"African\", \"African\", \"African\", \"Brit.Ran4k\", \"Brit.Ran4k\", \"Caribbean\"); Names2 <- c(\"Brit.Ran4k\", \"Caribbean\", \"Indian\", \"Caribbean\", \"Indian\", \"Indian\"); \
+			Comps1 <- c(1, 1, 1, 2, 2, 3); Comps2 <- c(2, 3, 4, 3, 4, 4); Names1 <- c(\"African\", \"African\", \"African\", \"Brit.Ran4k\", \"Brit.Ran4k\", \"Caribbean\"); Names2 <- c(\"Brit.Ran4k\", \"Caribbean\", \"Indian\", \"Caribbean\", \"Indian\", \"Indian\"); \
 			for (o in 1:length(Comps1)[1]) { \
-				png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/Comps/ukb_chrAll_v2.\", Names1[o], \"_\", Names2[o], \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".AncComps.vs1.png\", sep=\"\")); par(oma=c(1,1,1,1), mar=c(5,5,4,2)); \
-				print(Comps1[o]); print(head(Comps2[o])); \
-				DataMerge1 <- merge(Comps1[o], Comps2[o], by=\"Pathway\"); \
+				png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/Comps/ukb_chrAll_v2.\", Names1[o], \"_\", Names2[o], \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".AncComps.vs1.png\", sep=\"\"), height=2000, width=2000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2)); \
+				DataMerge1 <- eval(parse(text=paste(\"merge(Data\", Comps1[o], \", Data\", Comps2[o], \", by=\\\"Pathway\\\")\", sep=\"\"))); \
 				print(head(DataMerge1)); \	
-				plot(DataMerge1[2], DataMerge1[3], main=paste(Names1[o], \" vs. \", Names2[o], sep=\"\"), xlab=Names1[o], ylab=Names1[y], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-				pValThresh <- .05 / nrow(DataMerge1); abline(h=pValThresh, lwd=2, lty=3, col=\"RED\"); abline(v=pValThresh, lwd=, lty=3, col=\"RED\"); abline(0,1, col=\"BLACK\"); \ 
+				plot(-log10(DataMerge1[,2]), -log10(DataMerge1[,3]), main=paste(l, \" \", k, \": \", Names1[o], \" vs. \", Names2[o], sep=\"\"), xlab=Names1[o], ylab=Names2[o], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+				pValThresh <- .05 / nrow(DataMerge1); abline(h=-log10(pValThresh), lwd=2, lty=3, col=\"RED\"); abline(v=-log10(pValThresh), lwd=2, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
 				dev.off(); \
 			}; \
 		}; \ 
 	};};}; \
 "
 
-for (j in UKBioBankPops[1:2]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+#On MacBook Pro
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/Comps
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/Comps/* /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/Comps/.
 
 
 
@@ -7318,6 +7319,10 @@ for (j in UKBioBankPops[1:2]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry
 
 #Between phenotype comps
 #20190917
+
+
+
+for (j in UKBioBankPops[1:2]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz
 
