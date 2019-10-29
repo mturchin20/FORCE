@@ -7692,9 +7692,24 @@ ln /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/ForIsabell
 ln /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/ForIsabella/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.ExonicPlus50kb.Simulations.Format.txt /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/ForIsabella/ukb_chrAll_v2.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Annovar.ExonicPlus50kb.Simulations.Format.txt
 ln /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/ForIsabella/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.ExonicPlus50kb.Simulations.Format.txt /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/ForIsabella/ukb_chrAll_v2.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Annovar.ExonicPlus50kb.Simulations.Format.txt
 
+#20191028: Joint SFS files for Lorin
 
+mkdir /users/mturchin/ForPeople/Lorin
 
+##plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --freq --out /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sdfsfsf
 
+#cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.frq
+#cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.frq
+
+join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.frq | awk '{ print $2 "\t" $5 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.frq | awk '{ print $2 "\t" $5 }' | sort -k 1,1) | sed 's/:/ /g' | awk '{ print $1 ":" $2 "\t" $0 }' | sort -g -k 2,2 -k 3,3 | grep -v MAF | cat <(echo -e "SNPID\tCHR\tBP\tMAF_Afr\tMAF_Brit4k") - > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq
+
+cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .1) && ($5 >= .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.SNPs
+cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 < .1) && ($5 >= .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.SNPs
+cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .1) && ($5 < .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.SNPs
+
+#On MacBook Pro
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/Lorin 
+#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.* /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/Lorin/.
 
 
 
@@ -12360,6 +12375,16 @@ Caribbean Caribbean ExonicPlus20kb
    4734 0
 Indian Indian ExonicPlus20kb
    4734 0
+#20191029
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .1) && ($5 >= .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.SNPs
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 < .1) && ($5 >= .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.SNPs
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .1) && ($5 < .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.SNPs
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.SNPs | wc
+ 176584  176584 2054189
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.SNPs | wc
+  55677   55677  648032
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.SNPs | wc
+  55582   55582  647348
 
 
 
