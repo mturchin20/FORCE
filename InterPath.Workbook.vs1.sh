@@ -6887,7 +6887,7 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep
 	vcftools --gzvcf 
 
 done
-		
+
 for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | head -n 1`; do
 	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -E 'African|Ran4000|Indian|Caribbean' | head -n 4 | tail -n 4`; do
                 for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1 | head -n 1`; do
@@ -6956,6 +6956,11 @@ done;
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/GenDiv 
 
+
+
+#20191029 CHECK_0 -- Prob: do individual site pi idea instead? get each site nucleotide diversity metric and just then take the average of them across each pathway based on SNP id & such?
+		
+
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Indian;Indian\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); pValCutoffs = c(\"pVal001\",\"pValBonf\", \"pValAll\"); \
 	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { for (l in Paths[2:3]) { for (m in pValCutoffs[3]) { \
 		for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
@@ -6967,7 +6972,7 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 					plot(-log10(Data1.temp1[,2]), Data1.temp1[,3], main=gsub(\"Top All Pathways\", paste(\"All Pathways (l=\", as.character(j), \")\", sep=\"\"), paste(\"Top \", i, \" Pathways\", sep=\"\")), xlab=\"-log10(p-Value)\", ylab=\"Mean Heterozygosity\", xlim=c(0,xLimMax), ylim=c(yLimMin,yLimMax), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
 				    Data1.temp1.2.neglog10 <- -log10(Data1.temp1[,2]); RegrLine1 <- lm(Data1.temp1[,3] ~ Data1.temp1.2.neglog10); abline(RegrLine1, col=\"RED\", lwd=2, lty=2); legend(\"topright\", c(\"RegrLine\", paste(\"Beta: \", signif(summary(RegrLine1)\$coefficients[2,1], digits=3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine1)\$coefficients[2,4], digits=3), sep=\"\"), \"----\", paste(\"Corr: \", signif(cor(-log10(Data1.temp1[,2]), Data1.temp1[,3]), digits=3), sep=\"\")), cex=1.5); \ 
 				}; \
-                	}; mtext(paste(l, \" \", k, \": -log10(p-Values) vs. Pathway Mean Individual Heterozygosity\", sep=\"\"), side=3, line=2, outer=TRUE, cex=3); mtext(\"African\", side=2, line=1, outer=TRUE, at=.88, cex=3); mtext(\"British.Ran4000\", side=2, line=1, outer=TRUE, at=.63, cex=3); mtext(\"Caribbean\", side=2, line=1, outer=TRUE, at=.38, cex=3); mtext(\"Indian\", side=2, line=1, outer=TRUE, at=.13, cex=3); dev.off(); \
+                	}; mtext(paste(l, \" \", k, \": -log10(p-Values) vs. Pathway Mean Individual Heterozygosity\", sep=\"\"), side=3, line=2, outer=TRUE, cex=3); mtext(\"African\", side=2, line=1.5, outer=TRUE, at=.88, cex=3); mtext(\"British.Ran4000\", side=2, line=1.5, outer=TRUE, at=.63, cex=3); mtext(\"Caribbean\", side=2, line=1.5, outer=TRUE, at=.38, cex=3); mtext(\"Indian\", side=2, line=1.5, outer=TRUE, at=.13, cex=3); dev.off(); \
 		}; \
 	};};}; \
 "
