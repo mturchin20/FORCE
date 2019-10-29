@@ -4446,6 +4446,7 @@ paste <(cat <(echo -e "\nHeight\nNot Imputed, Not Pruned\nNot Imputed, Pruned\nI
 #cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_AllPops_GEMMA_Main_Results1.output
 #cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_AllPops_GEMMA_Main_wthnPop_Results1.output
 
+
 #wCovar Var Component
 
 module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
@@ -4529,6 +4530,126 @@ paste <(cat <(echo -e "\nHeight\nKnoM,K2noM,ZnoM\nKM,K2M,ZnoM\nKM,K2M,ZM\n\nBMI\
 
 #cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_AllPops_GEMMA_PCs_Results1.output
 #cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_AllPops_GEMMA_PCs_wthnPop_Results1.output
+
+
+#Exploring various levels of pruning and impact on GEMMA results
+#(only taking a look at African & Brit.Ran4k for current purposes)
+
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -E 'African|Ran4000' | head -n 1`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+	if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses ]; then
+		mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses
+		mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore
+		mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/slurm
+	fi
+
+	for j in `echo .9 .8 .7 .6 .5 .4 .3 .2 .1 | perl -ane 'print join("\n", @F);' | head -n 1`; do
+        	for i in {1..22}; do
+        	        echo $ancestry1 $ancestry2 $i
+	
+	                sbatch -t 72:00:00 --mem 20g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.clump.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.clump.error --comment "$ancestry1 $ancestry2 $i" <(echo -e '#!/bin/sh'; \
+	                echo -e "\nplink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp --indep-pairwise 1000 50 .05 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp"; \
+			echo -e "\nplink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp --extract /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.prune.in --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.pruned")
+	        done
+	done
+done
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'African|Ran4000'`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+       rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr*_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.prune.* /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr*_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.log /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr*_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.pruned.log /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr*_v2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.clump.output /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr*_v2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.clump.error /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr*_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.pruned.nosex
+       rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr*_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.prune.* /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr*_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.log /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr*_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.log /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr*_v2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.clump.output /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr*_v2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.clump.error
+        for chr in {2..22}; do
+                echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.pruned.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.pruned.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.pruned.fam"
+        done > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.pruned.MergeList.Vs1.txt
+        for chr in {2..22}; do
+                echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${chr}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${chr}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${chr}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.fam"
+        done > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.MergeList.Vs1.txt
+        for chr in {2..22}; do
+                echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${chr}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${chr}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${chr}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.fam"
+        done > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.MergeList.Vs1.txt
+done
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'African|Ran4000'`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+        echo $ancestry1 $ancestry2 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.pruned.MergeList.Vs1.txt
+
+        sbatch -t 24:00:00 --mem 100g --account ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.pruned.MergeList.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.pruned.MergeList.error --comment "$ancestry1 $ancestry2" <(echo -e '#!/bin/sh'; echo -e "\nplink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr1_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.pruned --merge-list /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.pruned.MergeList.Vs1.txt --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned")
+        sbatch -t 24:00:00 --mem 100g --account ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.MergeList.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.MergeList.error --comment "$ancestry1 $ancestry2" <(echo -e '#!/bin/sh'; echo -e "\nplink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned --merge-list /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.MergeList.Vs1.txt --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned")
+        sbatch -t 24:00:00 --mem 100g --account ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.MergeList.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.MergeList.error --comment "$ancestry1 $ancestry2" <(echo -e '#!/bin/sh'; echo -e "\nplink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop --merge-list /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.MergeList.Vs1.txt --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop")
+done
+
+#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.bed
+#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.bed
+#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.bed
+
+module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -E 'African|Ran4000' | head -n 1 | tail -n 1`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+        echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+
+#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.fam | perl -lane '$F[$#F] = 1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.fam
+#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.bed
+#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.bim
+#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.fam | perl -lane '$F[$#F] = 1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA.fam
+#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA.bed
+#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA.bim
+#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.fam | perl -lane '$F[$#F] = 1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.fam
+#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.bed
+#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.bim
+#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.fam | perl -lane '$F[$#F] = 1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.fam
+#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.bed
+#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.bim
+
+#	cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/; gemma -bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA -gk 2 -o ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA; mv output/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA* .
+#	cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/; gemma -bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA -gk 2 -o ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA; mv output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA* .
+#	cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/; gemma -bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA -gk 2 -o ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA; mv output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA* .
+	cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/; gemma -bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA -gk 2 -o ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA; mv output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA* .
+done
+
+module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 8 | tail -n 8`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+        echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+
+	for m in `cat <(echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+	        R -q -e "ptm <- proc.time(); library(\"MASS\"); Data1 <- read.table(\"$m.sXX.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.txt\", header=T); Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\", header=T); neg.is.na <- Negate(is.na); \
+	        K <- as.matrix(Data1); Y <- as.matrix(Data2[,c(3:4,7:8)]); Z <- as.matrix(Data3[,(ncol(Data3)-9):ncol(Data3)]); for (i in 1:2) { print(proc.time() - ptm); \
+			Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \ 
+			M <- diag(nrow(Z.Pheno.noNAs)) - (Z.Pheno.noNAs %*% chol2inv(chol(t(Z.Pheno.noNAs) %*% Z.Pheno.noNAs)) %*% t(Z.Pheno.noNAs)); \
+			Y.Pheno.noNAs.M <- M %*% Y.Pheno.noNAs; K.Pheno.noNAs.M <- M %*% K.Pheno.noNAs %*% M; K.Pheno.noNAs.2.M <- M %*% K.Pheno.noNAs.2 %*% M; K.Pheno.noNAs.3.M <- M %*% K.Pheno.noNAs.3 %*% M; Error.M <- M %*% diag(nrow(M)); \
+			RescaleVector <- function(X) { n1 <- length(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - v1 %*% t(v1) / n1; X1 <- m1 %*% X; X1 <- (X1 - mean(X1)) / sd(X1) ; return(X1); }; \
+			RescaleMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - v1 %*% t(v1) / n1; X1 <- m1 %*% X %*% m1; X1 <- X1/mean(diag(X1)); return(X1); }; \
+			Y.Pheno.noNAs.Rescale <- RescaleVector(Y.Pheno.noNAs); K.Pheno.noNAs.Rescale <- RescaleMatrix(K.Pheno.noNAs); K.Pheno.noNAs.2.Rescale <- RescaleMatrix(K.Pheno.noNAs.2); K.Pheno.noNAs.3.Rescale <- RescaleMatrix(K.Pheno.noNAs.3); \	
+			Y.Pheno.noNAs.M.Rescale <- RescaleVector(Y.Pheno.noNAs.M); K.Pheno.noNAs.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.M); K.Pheno.noNAs.2.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.2.M); K.Pheno.noNAs.3.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.3.M); Error.M.Rescale <- RescaleMatrix(Error.M); \	
+			write.table(Y.Pheno.noNAs.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".YnoMRescale.wthnPop.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".KnoMRescale.wthnPop.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".K2noMRescale.wthnPop.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".K3noMRescale.wthnPop.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \ 
+			print(proc.time() - ptm); ptm <- proc.time(); \ 
+		};"
+	done
+done
+
+#Orig Vrsn
+#			write.table(Y.Pheno.noNAs.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".YnoMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".KnoMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".K2noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".K3noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \ 
+#			write.table(Y.Pheno.noNAs.M.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".YMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.M.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".KMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.M.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".K2MRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.M.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".K3MRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(Error.M.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".EMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \ 
+#wthnPop Vrs
+#		...Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.txt\", header=T);...
+#			write.table(Y.Pheno.noNAs.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".YnoMRescale.wthnPop.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".KnoMRescale.wthnPop.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".K2noMRescale.wthnPop.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".K3noMRescale.wthnPop.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \ 
+#			write.table(Y.Pheno.noNAs.M.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".YMRescale.wthnPop.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.M.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".KMRescale.wthnPop.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.M.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".K2MRescale.wthnPop.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.M.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".K3MRescale.wthnPop.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(Error.M.Rescale, file=paste(\"$m.gemmaK.Vs1.\", colnames(Y)[i] ,\".EMRescale.wthnPop.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \ 
+
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 8 | tail -n 8`; do
+	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
+	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+	        echo $ancestry1 $ancestry2 $i
+		
+		if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/slurm ]; then
+			mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/slurm
+		fi
+
 
 
 
@@ -6956,7 +7077,6 @@ for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);'
                 done;
         done;
 done;
-				
 #				sbatch -t 72:00:00 --mem 2g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Pathways${PathNum}.noDups.site.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Pathways${PathNum}.noDups.site.slurm.error --comment "$i $ancestry1 $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh';
 #				echo -e "\nfor (( PathNum2=$PathNum; PathNum2 <= $PathNum+3; PathNum2=PathNum2+1 )); do join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sites.pi | awk '{ print \$1 \"_\" \$2 \"\\\t\" \$0 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\${PathNum2}.noDups.SNPIDs | awk '{ print \$1 \"_\" \$2 \"\\\t\" \$0 }' | sort -k 1,1) | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/site/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Pathways\${PathNum2}.noDups.sites.pi.gz; done;")
 
@@ -6991,11 +7111,6 @@ done;
 #done 
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/GenDiv 
-
-
-
-#20191029 CHECK_0 -- Prob: do individual site pi idea instead? get each site nucleotide diversity metric and just then take the average of them across each pathway based on SNP id & such?
-		
 
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Indian;Indian\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); pValCutoffs = c(\"pVal001\",\"pValBonf\", \"pValAll\"); \
 	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { for (l in Paths[2:3]) { for (m in pValCutoffs[3]) { \
