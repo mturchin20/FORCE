@@ -4577,36 +4577,28 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep
 	done
 done
 
-
-
-
-
-
-
-module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -E 'African|Ran4000' | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -E 'African|Ran4000' | head -n 1 | tail -n 1`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
 
-#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.fam | perl -lane '$F[$#F] = 1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.fam
-#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.bed
-#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.bim
-#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.fam | perl -lane '$F[$#F] = 1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA.fam
-#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA.bed
-#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA.bim
-#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.fam | perl -lane '$F[$#F] = 1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.fam
-#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.bed
-#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.bim
-#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.fam | perl -lane '$F[$#F] = 1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.fam
-#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.bed
-#	ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.bim
+	for j in `echo .9 .85 .8 .7 .6 .5 .4 .3 .2 .1 | perl -ane 'print join("\n", @F);' | head -n 1`; do
+#		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.fam | perl -lane '$F[$#F] = 1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.fam
+#		ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.bed
+#		ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.bim
 
-#	cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/; gemma -bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA -gk 2 -o ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA; mv output/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA* .
-#	cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/; gemma -bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA -gk 2 -o ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA; mv output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA* .
-#	cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/; gemma -bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA -gk 2 -o ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA; mv output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA* .
-	cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/; gemma -bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA -gk 2 -o ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA; mv output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA* .
+		cd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/; gemma -bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA -gk 2 -o ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA; mv output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA* .
+	done
 done
+
+
+
+
+
+
+
+
 
 module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 8 | tail -n 8`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
@@ -7703,13 +7695,21 @@ mkdir /users/mturchin/ForPeople/Lorin
 
 join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.frq | awk '{ print $2 "\t" $5 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.frq | awk '{ print $2 "\t" $5 }' | sort -k 1,1) | sed 's/:/ /g' | awk '{ print $1 ":" $2 "\t" $0 }' | sort -g -k 2,2 -k 3,3 | grep -v MAF | cat <(echo -e "SNPID\tCHR\tBP\tMAF_Afr\tMAF_Brit4k") - > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq
 
-cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .1) && ($5 >= .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.SNPs
-cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 < .1) && ($5 >= .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.SNPs
-cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .1) && ($5 < .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.SNPs
+cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .05) && ($5 >= .05)) { print $0 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.Info
+cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 < .05) && ($5 >= .05)) { print $0 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.Info
+cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .05) && ($5 < .05)) { print $0 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.Info
+
+cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.Info | awk '{ print $1 }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.SNPs
+cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.Info | awk '{ print $1 }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.SNPs
+cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.Info | awk '{ print $1 }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.SNPs
+
+cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.Info | R -q -e "Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,4]); quantile(Data1[,5]);"
+cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.Info | R -q -e "Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,4]); quantile(Data1[,5]);"
+cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.Info | R -q -e "Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,4]); quantile(Data1[,5]);"
 
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/Lorin 
-#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.* /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/Lorin/.
+#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.*.SNPs /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/Lorin/.
 
 
 
@@ -12376,15 +12376,58 @@ Caribbean Caribbean ExonicPlus20kb
 Indian Indian ExonicPlus20kb
    4734 0
 #20191029
-(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .1) && ($5 >= .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.SNPs
-(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 < .1) && ($5 >= .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.SNPs
-(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .1) && ($5 < .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.SNPs
+#(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .1) && ($5 >= .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.SNPs
+#(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 < .1) && ($5 >= .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.SNPs
+#(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .1) && ($5 < .1)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.SNPs
+#(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.SNPs | wc
+# 176584  176584 2054189
+#(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.SNPs | wc
+#  55677   55677  648032
+#(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.SNPs | wc
+#  55582   55582  647348
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .05) && ($5 >= .05)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.SNPs
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 < .05) && ($5 >= .05)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.SNPs
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.joint.frq | awk '{ if (($4 >= .05) && ($5 < .05)) { print $1 } }' > /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.SNPs
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$
 (InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.SNPs | wc
- 176584  176584 2054189
+ 242072  242072 2816714
 (InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.SNPs | wc
-  55677   55677  648032
+  41972   41972  488651
 (InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.SNPs | wc
-  55582   55582  647348
+  39062   39062  454735
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.Info | R -q -e "Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,4]); quantile(Data1[,5]);"
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,4]); quantile(Data1[,5]);
+    0%    25%    50%    75%   100%
+0.0500 0.1357 0.2369 0.3597 0.5000
+     0%     25%     50%     75%    100%
+0.05008 0.13300 0.23930 0.36430 0.50000
+>
+>
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.BothCommon.Info | R -q -e "Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,4]); quantile(Data1[,5]);"
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,4]); quantile(Data1[,5]);
+    0%    25%    50%    75%   100%
+0.0500 0.1357 0.2369 0.3597 0.5000
+     0%     25%     50%     75%    100%
+0.05008 0.13300 0.23930 0.36430 0.50000
+>
+>
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.AfrRare.Info | R -q -e "Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,4]); quantile(Data1[,5]);"
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,4]); quantile(Data1[,5]);
+      0%      25%      50%      75%     100%
+0.002597 0.015580 0.025000 0.037010 0.049840
+      0%      25%      50%      75%     100%
+0.050080 0.087535 0.142300 0.230550 0.499900
+>
+>
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Brit4kRare.Info | R -q -e "Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,4]); quantile(Data1[,5]);"
+> Data1 <- read.table(file('stdin'), header=T); quantile(Data1[,4]); quantile(Data1[,5]);
+     0%     25%     50%     75%    100%
+0.05000 0.08718 0.14330 0.23810 0.50000
+      0%      25%      50%      75%     100%
+0.002615 0.017780 0.026800 0.037920 0.049950
+>
+>
 
 
 
