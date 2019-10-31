@@ -4600,7 +4600,7 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPops | perl -lane 'p
 	for j in `echo .9 .85 .8 .7 .6 .5 .4 .3 .2 .1 | perl -ane 'print join("\n", @F);' | head -n 10`; do
 		for m in `cat <(echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA" | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
 		        R -q -e "ptm <- proc.time(); library(\"MASS\"); Data1 <- read.table(\"$m.sXX.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.txt\", header=T); Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt\", header=T); neg.is.na <- Negate(is.na); \
-		        K <- as.matrix(Data1); Y <- as.matrix(Data2[,c(3:4,7:8)]); Z <- as.matrix(Data3[,(ncol(Data3)-9):ncol(Data3)]); for (i in 1:1) { print(proc.time() - ptm); \
+		        K <- as.matrix(Data1); Y <- as.matrix(Data2[,c(3:4,7:8)]); Z <- as.matrix(Data3[,(ncol(Data3)-9):ncol(Data3)]); for (i in 1:2) { print(proc.time() - ptm); \
 				Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \ 
 				M <- diag(nrow(Z.Pheno.noNAs)) - (Z.Pheno.noNAs %*% chol2inv(chol(t(Z.Pheno.noNAs) %*% Z.Pheno.noNAs)) %*% t(Z.Pheno.noNAs)); \
 				Y.Pheno.noNAs.M <- M %*% Y.Pheno.noNAs; K.Pheno.noNAs.M <- M %*% K.Pheno.noNAs %*% M; K.Pheno.noNAs.2.M <- M %*% K.Pheno.noNAs.2 %*% M; K.Pheno.noNAs.3.M <- M %*% K.Pheno.noNAs.3 %*% M; Error.M <- M %*% diag(nrow(M)); \
@@ -4615,12 +4615,12 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPops | perl -lane 'p
 	done
 done
 
-for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -E 'African|Ran4000' | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -E 'African|Ran4000' | head -n 2 | tail -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
-	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
 	        echo $ancestry1 $ancestry2 $i
 		
-		for j in `echo .9 .85 .8 .7 .6 .5 .4 .3 .2 .1 | perl -ane 'print join("\n", @F);' | head -n 1`; do
+		for j in `echo .9 .85 .8 .7 .6 .5 .4 .3 .2 .1 | perl -ane 'print join("\n", @F);' | head -n 10`; do
 			echo /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.KMRescale.wthnPop.sXX.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.K2MRescale.wthnPop.sXX.txt | sed 's/ /\n/g' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.MRescale.VarCompList.wthnPop.sXX.txt		
         	       
 			sbatch -t 24:00:00 --mem 8g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.MRescale.wthnPop.Output.sXX.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/slurm/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.MRescale.wthnPop.Output.sXX.slurm.error --comment "$ancestry1 $ancestry2 $i GEMMA_V4" <(echo -e '#!/bin/sh'; echo -e "\ncd /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore; gemma -p /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.YMRescale.wthnPop.sXX.txt -mk /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.MRescale.VarCompList.wthnPop.sXX.txt -n 1 -vc 2 -o ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.MRescale.wthnPop.Output.sXX.txt";)
@@ -4635,37 +4635,37 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') |  gre
 
 		echo $ancestry1 $ancestry2 $i
 
-		for j in `echo .9 .85 .8 .7 .6 .5 .4 .3 .2 .1 | perl -ane 'print join("\n", @F);' | head -n 1`; do
+		for j in `echo .9 .85 .8 .7 .6 .5 .4 .3 .2 .1 | perl -ane 'print join("\n", @F);' | head -n 10`; do
 			ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.MRescale.wthnPop.Output.sXX.txt.log.txt 
 		done | wc
 
 	done 
 done
 
-for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') |  grep -E 'African|Ran4000' | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') |  grep -E 'African|Ran4000' | head -n 2 | tail -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
 	rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output
 	
 	echo $ancestry2 >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output
-	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
 		echo $ancestry1 $ancestry2 $i
+			
+		echo "" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output
+		for j in `echo .9 .85 .8 .7 .6 .5 .4 .3 .2 .1 | perl -ane 'print join("\n", @F);' | head -n 10`; do
 		
-		for j in `echo .9 .85 .8 .7 .6 .5 .4 .3 .2 .1 | perl -ane 'print join("\n", @F);' | head -n 1`; do
-			echo "" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output
-		
-			if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.MRescale.wthnPop.Output.sXX.txt.log.txt ]; then
-				cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.MRescale.wthnPop.Output.sXX.txt.log.txt | grep "pve estimates" | awk '{ print $5 "," $6 }' >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output
+			if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.MRescale.wthnPop.Output.sXX.txt.log.txt ]; then
+				cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.MRescale.wthnPop.Output.sXX.txt.log.txt | grep "pve estimates" | awk '{ print $5 "," $6 }' >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output
 			else
 				echo "NA" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output
 			fi
-			echo "" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output
 		done
+		echo "" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output
 	done
 done
 
-paste <(cat <(echo -e "\nHeight\n.9\n.85\n.8\n.7\n.6\n.5\n.4\n.3\n.2\n.1\n\nBMI\n.9\n.85\n.8\n.7\n.6\n.5\n.4\n.3\n.2\n.1")) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output) | column -t -s $'\t' | awk '{ if (NR == 7) { print "" } print $0 }' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_AllPops_GEMMA_ExplorePrunw_wthnPop_Results1.output
+paste <(cat <(echo -e "\nHeight\n.9\n.85\n.8\n.7\n.6\n.5\n.4\n.3\n.2\n.1\n\nBMI\n.9\n.85\n.8\n.7\n.6\n.5\n.4\n.3\n.2\n.1")) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output) | column -t -s $'\t' | awk '{ if (NR == 13) { print "" } print $0 }' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_AllPops_GEMMA_ExplorePrune_wthnPop_Results1.output
 
-#cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_AllPops_GEMMA_ExplorePrunw_wthnPop_Results1.output
+#cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_AllPops_GEMMA_ExplorePrune_wthnPop_Results1.output
 
 
 
@@ -7747,7 +7747,7 @@ ln /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/ForIsabell
 
 mkdir /users/mturchin/ForPeople/Lorin
 
-##plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --freq --out /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sdfsfsf
+##plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --freq --out /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sdfgfdsgf
 
 #cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.frq
 #cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.frq
@@ -12487,6 +12487,53 @@ Indian Indian ExonicPlus20kb
 0.002615 0.017780 0.026800 0.037920 0.049950
 >
 >
+[  mturchin@node1618  ~/LabMisc/RamachandranLab/InterPath]$for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') |  grep -E 'African|Ran4000' | head -n 2 | tail -n 2`; do
+>         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+>         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>         for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+> 
+>                 echo $ancestry1 $ancestry2 $i
+> 
+>                 for j in `echo .9 .85 .8 .7 .6 .5 .4 .3 .2 .1 | perl -ane 'print join("\n", @F);' | head -n 10`; do
+>                         ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/Analyses/GEMMAexplore/output/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune${j}.GEMMA.gemmaK.Vs1.$i.MRescale.wthnPop.Output.sXX.txt.log.txt
+>                 done | wc
+> 
+>         done
+> done
+African African Height
+     10      90    3176
+African African BMI
+     10      90    3150
+British British.Ran4000 Height
+ls: cannot access /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/Analyses/GEMMAexplore/output/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.prune.3.GEMMA.gemmaK.Vs1.Height.MRescale.wthnPop.Output.sXX.txt.log.txt: No such file or directory
+      9      81    3006
+British British.Ran4000 BMI
+     10      90    3304
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$paste <(cat <(echo -e "\nHeight\n.9\n.85\n.8\n.7\n.6\n.5\n.4\n.3\n.2\n.1\n\nBMI\n.9\n.85\n.8\n.7\n.6\n.5\n.4\n.3\n.2\n.1")) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.explorePrune.wthnPop.results.temp1.output) | column -t -s $'\t' | awk '{ if (NR == 13) { print "" } print $0 }'
+        African                British.Ran4000
+Height
+.9      0.0401865,0.0129931    0.991042,0.00895835
+.85     0.0397246,0.0128152    0.994955,0.0050452
+.8      0.0295958,0.0142682    0.979781,0.0202189
+.7      0.0390237,0.0124287    0.99982,0.000147162
+.6      0.0383216,0.0123902    0.936507,0.0633451
+.5      0.000324667,0.0213586  0.923702,0.076145
+.4      0.0346142,0.0109923    0.936603,0.0632861
+.3      0.063859,0.00191096    NA
+.2      0.0486797,0.00497952   0.85526,0.0939956
+.1      0.058915,0.010965      0.580291,0.279676
+
+BMI
+.9      0.683412,0.00737713    0.396698,0.511797
+.85     0.684706,0.0107778     0.413745,0.487867
+.8      0.676402,0.0149665     0.412512,0.47958
+.7      0.688473,0.0181933     0.424611,0.463638
+.6      0.658457,0.0563328     0.408565,0.473325
+.5      0.657695,0.053322      0.450862,0.447698
+.4      0.643131,0.0656717     0.412203,0.464779
+.3      0.683461,0.0233765     0.43336,0.218455
+.2      0.694875,0.0345467     0.405308,0.2954
+.1      0.493916,0.000178636   0.286193,0.328208
 
 
 
