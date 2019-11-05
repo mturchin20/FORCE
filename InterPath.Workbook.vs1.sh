@@ -161,6 +161,7 @@ UKBioBankPops=`echo "African;African;Afr British;British.Ran4000;Brit4k Caribbea
 UKBioBankPops=`echo "African;African;Afr British;British.Ran4000;Brit4k British;British.Ran10000;Brit10k Caribbean;Caribbean;Carib Chinese;Chinese;Chi Indian;Indian;Indn Irish;Irish;Irish Pakistani;Pakistani;Pkstn"`;
 ##UKBioBankPops=`echo "African;African;Afr British;British.Ran4000;Brit4k British;British.Ran10000;Brit10k British;British.Ran100000;Brit100k Caribbean;Caribbean;Carib Chinese;Chinese;Chi Indian;Indian;Indn Irish;Irish;Irish Pakistani;Pakistani;Pkstn"`;
 UKBioBankPops=`echo "African;African;Afr;472840 British;British.Ran4000;Brit4k;138503 British;British.Ran10000;Brit10k;9827442 Caribbean;Caribbean;Carib;328593 Chinese;Chinese;Chi;842743 Indian;Indian;Indn;549281 Irish;Irish;Irish;902143 Pakistani;Pakistani;Pkstn;232849"`;
+UKBioBankPopsRnd2=`echo "African;African;Afr;472840 British;British.Ran4000;Brit4k;138503 British;British.Ran10000;Brit10k;9827442 Caribbean;Caribbean;Carib;328593 Chinese;Chinese;Chi;842743 Indian;Indian;Indn;549281 Irish;Irish;Irish;902143 Pakistani;Pakistani;Pkstn;232849 British;British.Ran4000.2;Brit4k2;847242 British;British.Ran4000.3;Brit4k3;925683 British;British.Ran4000.4;Brit4k4;394757 British;British.Ran4000.5;Brit4k5;642245 British;British.Ran10000.2;Brit10k2;2045872 British;British.Ran10000.3;Brit10k3;5892624 British;British.Ran10000.4;Brit10k4;9574998 British;British.Ran10000.5;Brit10k5;3741930"`;
 
 #20180618 NOTE -- overall impression from the first round of these explorations below: a) base R BLAS is not good (as is well known by this poitn) b) load R from Oscar since conda R currently does not implement any of the better BLAS libraries (eg OpenBLAS or MKL) c) tcrossprod() outperforms GetLinearKernal() (apparently), and in generally appears to be best option d) doing the for loop thing with tcrossprod() though leads to a seg fault by the second loop, not sure why e) ccov and covar don't seem to either really matter or make much of a difference (at least top-level enough that once I found out tcrossprod() and the Oscar R combination worked, I stuck with that; I don't think I checked whether ccov/covar did better on the Oscar R module, so that may make a difference tbh) f) covar needs full data (no missing genotypes) I think whereas tcrossprod() seems to handle NAs somehow/someway g) GetLinearKernel() and tcrossprod() do not handle NAs, eg by having them it just makes every resulting new matrix entry NA; need to use imputed data or data removed of any missing genotypes h) the amount of memory for getting the tcrossprod() result on the African raw dataset is about ~18-19gb 
 // [[Rcpp::export]]
@@ -264,7 +265,7 @@ done
 #MacBook Air
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chr*_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Volumes/NO\ NAME/ 
 
-for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep British | grep -v Ran4000 | grep -v Ran100000`; do
+for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
@@ -278,9 +279,9 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep
 	fi
 
         for i in {1..22}; do
-        	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop --recode vcf --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop
-		/users/mturchin/Software/vcftools_0.1.13/bin/vcf-sort /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.vcf | bgzip -c > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz
-		rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.vcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.log
+        	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop --recode vcf --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop
+		/users/mturchin/Software/vcftools_0.1.13/bin/vcf-sort /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.vcf | bgzip -c > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz
+		rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.vcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.log
 	done
 
 done
@@ -376,63 +377,156 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/B
 ~	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/chr_${i}.zip -p'lklPN{3YAH2fTp'
 ~done
 
-
-
-cd /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3
 wget -c
 for i in {1..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/chr_${i}.zip -p''
-cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3/chr_${i}.zip -p''
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3
 wget -c
 for i in {1..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/chr_${i}.zip -p''
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3
 wget -c
-mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/qcreport.1.html
-mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/statistics.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/statistics.1.txt
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/qcreport.1.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/statistics.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/statistics.1.txt
 wget -c
-mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/qcreport.2.html
-mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/statistics.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/statistics.2.txt
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/qcreport.2.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/statistics.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/statistics.2.txt
 for i in {1..8}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/chr_${i}.zip -p''
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
 for i in {9..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/chr_${i}.zip -p''
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-cd /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3
 wget -c
 for i in {1..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/chr_${i}.zip -p''
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-cd /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3
 wget -c
 for i in {1..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/chr_${i}.zip -p'OhLHXUz7mhVfO3'
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-cd /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3
 wget -c
-mv /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/qcreport.1.html
-mv /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/statistics.html /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/statistics.1.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/qcreport.1.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/statistics.html /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/statistics.1.html
 wget -c
-mv /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/qcreport.2.html
-mv /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/statistics.html /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/statistics.2.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/qcreport.2.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/statistics.html /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/statistics.2.html
 for i in {1..8}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/chr_${i}.zip -p'Ie0PdKwGPs2ui4'
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
 for i in {9..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/chr_${i}.zip -p'Ie0PdKwGPs2ui4'
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-cd /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3
 wget -c
 for i in {1..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/chr_${i}.zip -p'ZXFvfg9uUw4BoZ'
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-cd /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20 
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3 
+cd /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3 
 wget -c
 for i in {1..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/chr_${i}.zip -p'lklPN{3YAH2fTp'
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
+
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/Imputation
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/Imputation/mturchin20/v3
+wget -c
+for i in {1..22}; do
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/Imputation/mturchin20/v3/chr_${i}.zip -p''
+done
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3
+wget -c
+for i in {1..22}; do
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3/chr_${i}.zip -p''
+done
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/Imputation
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/Imputation/mturchin20/v3
+wget -c
+for i in {1..22}; do
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/Imputation/mturchin20/v3/chr_${i}.zip -p''
+done
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation/mturchin20/v3
+wget -c
+for i in {1..22}; do
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation/mturchin20/v3/chr_${i}.zip -p''
+done
+
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3
+wget -c
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/qcreport.1.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/statistics.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/statistics.1.txt
+wget -c
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/qcreport.2.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/statistics.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/statistics.2.txt
+for i in {1..8}; do
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/chr_${i}.zip -p''
+done
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3
+wget -c
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/qcreport.1.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/statistics.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/statistics.1.txt
+wget -c
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/qcreport.2.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/statistics.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/statistics.2.txt
+for i in {1..8}; do
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/chr_${i}.zip -p''
+done
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3
+wget -c
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/qcreport.1.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/statistics.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/statistics.1.txt
+wget -c
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/qcreport.2.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/statistics.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/statistics.2.txt
+for i in {1..8}; do
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/chr_${i}.zip -p''
+done
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3
+wget -c
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/qcreport.1.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/statistics.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/statistics.1.txt
+wget -c
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/qcreport.2.html
+mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/statistics.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/statistics.2.txt
+for i in {1..8}; do
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/chr_${i}.zip -p''
+done
+
 
 
 
