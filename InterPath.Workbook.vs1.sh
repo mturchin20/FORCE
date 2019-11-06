@@ -97,6 +97,11 @@ cp -p /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/ukb_
 cp -p /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/ukb_chrAll_v2.Pakistani.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Backup/20180820.ukb_chrAll_v2.Pakistani.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt
 gzip /users/mturchin/LabMisc/RamachandranLab/InterPath/Backup/*.txt
 
+#20191106
+#Singularity code/work/misc
+singularity instance start -B /users/mturchin/scratch/UMichImptServer/test1:/data/ docker://genepi/imputationserver mis-docker
+singularity run -B /users/mturchin/scratch/UMichImptServer/test1:/data/ instance://mis-docker
+
 
 #20180607
 #Vs1
