@@ -270,8 +270,8 @@ done
 #MacBook Air
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chr*_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Volumes/NO\ NAME/ 
 
-for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
-        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8`; do
+	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
         echo $ancestry1 $ancestry2 
@@ -323,14 +323,14 @@ mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Irish
 mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Irish/Irish 
 mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Pakistani 
 mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Pakistani/Pakistani 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chr_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/African/African/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chr_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran4000/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/ukb_chr_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran10000/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/ukb_chr_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Caribbean/Caribbean/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/ukb_chr_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Chinese/Chinese/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/ukb_chr_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Indian/Indian/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/ukb_chr_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Irish/Irish/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/ukb_chr_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Pakistani/Pakistani/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chr*_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/African/African/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chr*_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran4000/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/ukb_chr*_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran10000/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/ukb_chr*_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Caribbean/Caribbean/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/ukb_chr*_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Chinese/Chinese/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/ukb_chr*_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Indian/Indian/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/ukb_chr*_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Irish/Irish/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/ukb_chr*_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/Pakistani/Pakistani/. 
 
 mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran4000.2
 mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran4000.3
@@ -340,14 +340,14 @@ mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/Br
 mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran10000.3
 mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran10000.4
 mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran10000.5
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/mturchin20/ukb_chr_v3.British.Ran4000.2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran4000.2/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/mturchin20/ukb_chr_v3.British.Ran4000.3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran4000.3/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/mturchin20/ukb_chr_v3.British.Ran4000.4.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran4000.4/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/mturchin20/ukb_chr_v3.British.Ran4000.5.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran4000.5/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/mturchin20/ukb_chr_v3.British.Ran10000.2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran10000.2/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/mturchin20/ukb_chr_v3.British.Ran10000.3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran10000.3/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/mturchin20/ukb_chr_v3.British.Ran10000.4.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran10000.4/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/mturchin20/ukb_chr_v3.British.Ran10000.5.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran10000.5/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/mturchin20/ukb_chr*_v3.British.Ran4000.2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran4000.2/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/mturchin20/ukb_chr*_v3.British.Ran4000.3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran4000.3/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/mturchin20/ukb_chr*_v3.British.Ran4000.4.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran4000.4/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/mturchin20/ukb_chr*_v3.British.Ran4000.5.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran4000.5/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/mturchin20/ukb_chr*_v3.British.Ran10000.2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran10000.2/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/mturchin20/ukb_chr*_v3.British.Ran10000.3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran10000.3/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/mturchin20/ukb_chr*_v3.British.Ran10000.4.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran10000.4/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/mturchin20/ukb_chr*_v3.British.Ran10000.5.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Users/mturchin20/Documents/Work/LabMisc/Data/UKBioBank/subsets/British/British.Ran10000.5/. 
 
 
 
