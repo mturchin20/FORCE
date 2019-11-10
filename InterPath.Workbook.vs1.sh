@@ -426,18 +426,69 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/B
 ~	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/chr_${i}.zip -p'lklPN{3YAH2fTp'
 ~done
 
+#20191110 NOTE -- moving previous 'v2' raw imputation results to external harddrive to save space
+#On MacBook Pro
+mkdir /Volumes/Elements/Data/UKBioBank/subsets
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/African
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/African/African
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/British
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran4000
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran10000
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Caribbean
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Caribbean/Caribbean
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Chinese
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Chinese/Chinese
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Indian
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Indian/Indian
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Irish
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Irish/Irish
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Pakistani
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Pakistani/Pakistani
+#mv /Volumes/Elements/dbGaP/ /Volumes/Elements/Data/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/African/African/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran4000/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran10000/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Caribbean/Caribbean/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Chinese/Chinese/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Indian/Indian/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Irish/Irish/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Pakistani/Pakistani/.
+rm /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/chr*
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British.Ran4000/British.Ran4000/Imputation/mturchin20/chr*
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British.Ran10000/British.Ran10000/Imputation/mturchin20/chr*
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/chr*
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/chr*
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/chr*
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/chr*
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/chr*
+
 mkdir /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3 
+
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3
+mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3
+
 cd /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3
 wget -c
 for i in {1..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3/chr_${i}.zip -p''
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3
 cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3
 wget -c
 for i in {1..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3
 cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3
 wget -c
 mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/qcreport.1.html
@@ -451,19 +502,21 @@ done
 for i in {9..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3
 cd /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3
 wget -c
 for i in {1..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3
 cd /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3
 wget -c
 for i in {1..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3
+cd /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3
+wget -c
+for i in {1..22}; do
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3/chr_${i}.zip -p''
+done
 cd /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3
 wget -c
 mv /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/qcreport.1.html
@@ -477,45 +530,33 @@ done
 for i in {9..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3
-cd /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3
-wget -c
-for i in {1..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3/chr_${i}.zip -p''
-done
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3 
 cd /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3 
 wget -c
 for i in {1..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
 
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/Imputation/mturchin20/v3
 cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/Imputation/mturchin20/v3
 wget -c
 for i in {1..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3
 cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3
 wget -c
 for i in {1..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/Imputation/mturchin20/v3
 cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/Imputation/mturchin20/v3
 wget -c
 for i in {1..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation/mturchin20/v3
 cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation/mturchin20/v3
 wget -c
 for i in {1..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
 
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3
 cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3
 wget -c
 mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/qcreport.1.html
@@ -526,7 +567,6 @@ mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imput
 for i in {1..8}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3
 cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3
 wget -c
 mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/qcreport.1.html
@@ -537,7 +577,6 @@ mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imput
 for i in {1..8}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3
 cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3
 wget -c
 mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/qcreport.1.html
@@ -548,7 +587,6 @@ mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imput
 for i in {1..8}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
-mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3
 cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3
 wget -c
 mv /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/qcreport.html /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/qcreport.1.html
