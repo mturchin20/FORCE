@@ -481,13 +481,58 @@ mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Im
 mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3
 
 cd /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3
-wget -c
+wget -c https://imputationserver.sph.umich.edu/share/results/67d617eb0f456647051c21d0550dad54/qcreport.html https://imputationserver.sph.umich.edu/share/results/d775f64e9baad0e7d97726bb18e723e2/chr_1.zip https://imputationserver.sph.umich.edu/share/results/5e624b8aa64e741b83038d27a8688db2/chr_10.zip https://imputationserver.sph.umich.edu/share/results/ea34248d3c900895156d57d30b9438ca/chr_11.zip https://imputationserver.sph.umich.edu/share/results/532a647c724f886fa959d7b5f1afe5d/chr_12.zip https://imputationserver.sph.umich.edu/share/results/2bfd6e3cf3e5e636afb2a8eda18a32c7/chr_13.zip https://imputationserver.sph.umich.edu/share/results/84ac55a8c8fff980f519ff660153eb45/chr_14.zip https://imputationserver.sph.umich.edu/share/results/fc232458557ff77534a705303b3851ca/chr_15.zip https://imputationserver.sph.umich.edu/share/results/3bafa078d93aa9dc49392b00204ed3c5/chr_16.zip https://imputationserver.sph.umich.edu/share/results/863749c4a69c14a3afededbad5ec6b15/chr_17.zip https://imputationserver.sph.umich.edu/share/results/95a3376cea22787b0bbf857b4e002ff1/chr_18.zip https://imputationserver.sph.umich.edu/share/results/f587ca3916096042a9e4c934f57220ef/chr_19.zip https://imputationserver.sph.umich.edu/share/results/eb6f31bd03b2f228bdbcffede64cdf51/chr_2.zip https://imputationserver.sph.umich.edu/share/results/f370692fd3087b7e1171ba6a21a22ccb/chr_20.zip https://imputationserver.sph.umich.edu/share/results/dd15f357e35c6bddcb71122033c099a5/chr_21.zip https://imputationserver.sph.umich.edu/share/results/e1b7a7b74ac3f81ca0131daa5b8806ce/chr_22.zip https://imputationserver.sph.umich.edu/share/results/937a28624ed4d32b7cb0db48f6f6c298/chr_3.zip https://imputationserver.sph.umich.edu/share/results/480ce7a2bee4293834e43ade7c1f30fa/chr_4.zip https://imputationserver.sph.umich.edu/share/results/9fa79228b14e35ee19a815f0593aafe/chr_5.zip https://imputationserver.sph.umich.edu/share/results/f324c1071754e5102ab1caf2140d6732/chr_6.zip https://imputationserver.sph.umich.edu/share/results/ee198d6f26c622ad76026181458f0e3d/chr_7.zip https://imputationserver.sph.umich.edu/share/results/3976adb62c566d792dc3593b1d5bb41f/chr_8.zip https://imputationserver.sph.umich.edu/share/results/f0e916eb6d69d52e1432d2106b17c67e/chr_9.zip https://imputationserver.sph.umich.edu/share/results/74172352cb7b3c20f938edce907f558/statistics.txt https://imputationserver.sph.umich.edu/share/results/124f1b1958bef8ae063132b5d7945d44/chr_1.log https://imputationserver.sph.umich.edu/share/results/997a155114bce13a4fd93a699497ec10/chr_10.log https://imputationserver.sph.umich.edu/share/results/ffbc1c795418ef14a7279925070ff247/chr_11.log https://imputationserver.sph.umich.edu/share/results/3befe625ed152303ce52707f56a25573/chr_12.log https://imputationserver.sph.umich.edu/share/results/facd32391cf9264ed764e70ea6db8bea/chr_13.log https://imputationserver.sph.umich.edu/share/results/8606b56d28f15a333f440b8680257f99/chr_14.log https://imputationserver.sph.umich.edu/share/results/f72a14658354c60420a2bf300ebc28d6/chr_15.log https://imputationserver.sph.umich.edu/share/results/ab73459774de81304625b59bb08e41a9/chr_16.log https://imputationserver.sph.umich.edu/share/results/98523fc251474e8111f912b2397721c1/chr_17.log https://imputationserver.sph.umich.edu/share/results/80e404c15db73fe188cf22f5c30c0e90/chr_18.log https://imputationserver.sph.umich.edu/share/results/24d31ba218187cab17180d72cdbc11d7/chr_19.log https://imputationserver.sph.umich.edu/share/results/60798a7cf74167f7f429127f7e42d048/chr_2.log https://imputationserver.sph.umich.edu/share/results/b2914863f7ebfea1cb41f00de08fe15e/chr_20.log https://imputationserver.sph.umich.edu/share/results/5b1e3eda1dba38ebd3d22c20a4858570/chr_21.log https://imputationserver.sph.umich.edu/share/results/f994249a20092538c4e22ea5c98e36b3/chr_22.log https://imputationserver.sph.umich.edu/share/results/4751d7cd12062997ba5d136034d293f1/chr_3.log https://imputationserver.sph.umich.edu/share/results/c438b9c602edd5fea88689910242d721/chr_4.log https://imputationserver.sph.umich.edu/share/results/a7e0d6c02d8ebcb5b602fc8792504045/chr_5.log https://imputationserver.sph.umich.edu/share/results/c7014489ba17faa9f3532a2c6e34f96c/chr_6.log https://imputationserver.sph.umich.edu/share/results/21766187af37014848e5e1c65fb1b1ce/chr_7.log https://imputationserver.sph.umich.edu/share/results/83f91da8e36b0136a1130eba36c1753b/chr_8.log https://imputationserver.sph.umich.edu/share/results/3dffe0bad45dfde406bfe02e5b47164a/chr_9.log
 for i in {1..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3/chr_${i}.zip -p''
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3/chr_${i}.zip -p'OIzr0y5ocoVD.U'
 cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3
-wget -c
+wget -c https://imputationserver.sph.umich.edu/share/results/abb2e11cd1a33c950c3bcd4675189ed1/qcreport.html
+https://imputationserver.sph.umich.edu/share/results/209d61d468b90e2ff4e611f4b5c70d25/chr_1.zip
+https://imputationserver.sph.umich.edu/share/results/68080ed475d17d6d09ab0ddb7ddbd454/chr_10.zip
+https://imputationserver.sph.umich.edu/share/results/b51e46164a87ef06cb2bd5aef6534377/chr_11.zip
+https://imputationserver.sph.umich.edu/share/results/f424c99961a8f73217cde10cfc6655cd/chr_12.zip
+https://imputationserver.sph.umich.edu/share/results/382abe2fd677c8ff445258cf95eb5e9c/chr_13.zip
+https://imputationserver.sph.umich.edu/share/results/bd9c3b53fec842b9a142e95120efba90/chr_14.zip
+https://imputationserver.sph.umich.edu/share/results/54514bad924004b79b8c8d124fb5c290/chr_15.zip
+https://imputationserver.sph.umich.edu/share/results/5c1b84bd1696f9d33316bee440980204/chr_16.zip
+https://imputationserver.sph.umich.edu/share/results/97a33cd50d3525e766d88dc1f69b8522/chr_17.zip
+https://imputationserver.sph.umich.edu/share/results/7e484e59e987ea27a0018ef2c27c45ab/chr_18.zip
+https://imputationserver.sph.umich.edu/share/results/68d1b52a477d31c2d6fa8c5c93eef82d/chr_19.zip
+https://imputationserver.sph.umich.edu/share/results/1c3d652d1433cf9157487f59988ccf59/chr_2.zip
+https://imputationserver.sph.umich.edu/share/results/395428f8668cb628c0403b1fdc1dace9/chr_20.zip
+https://imputationserver.sph.umich.edu/share/results/7bf300527dc385375fe7d992ad9eb0de/chr_21.zip
+https://imputationserver.sph.umich.edu/share/results/9bf166ba32148d006950adc2aecadcb3/chr_22.zip
+https://imputationserver.sph.umich.edu/share/results/39ff24d3988ab2fa9807d5145b6ed4ff/chr_3.zip
+https://imputationserver.sph.umich.edu/share/results/8613cac85352e1f59b6bba20e3a92a86/chr_4.zip
+https://imputationserver.sph.umich.edu/share/results/fcbd81ff1f27090493e582f401d1527c/chr_5.zip
+https://imputationserver.sph.umich.edu/share/results/c1a4741e82e62596af986bfa48bd9afd/chr_6.zip
+https://imputationserver.sph.umich.edu/share/results/4480627de7dadc8d3950fecb86ac633e/chr_7.zip
+https://imputationserver.sph.umich.edu/share/results/8c5e975d70d7f40d898e5ccc359e64d6/chr_8.zip
+https://imputationserver.sph.umich.edu/share/results/bf67e3c15f585e56156e8c27992c9b6f/chr_9.zip
+https://imputationserver.sph.umich.edu/share/results/9863617c08fe9f9d3e8585d89df9fa77/statistics.txt
+https://imputationserver.sph.umich.edu/share/results/4631bf78a509a8b8d45c6683491d3093/chr_1.log
+https://imputationserver.sph.umich.edu/share/results/167280426205bae3d573386721fe997a/chr_10.log
+https://imputationserver.sph.umich.edu/share/results/bd9448b9bf23a49d550330cecc1f7bdc/chr_11.log
+https://imputationserver.sph.umich.edu/share/results/83b4c1f7254dfafae4c8126e679cba70/chr_12.log
+https://imputationserver.sph.umich.edu/share/results/644a8907f3cf39b855dc0adaa682c1d3/chr_13.log
+https://imputationserver.sph.umich.edu/share/results/56273cb8e2fb58dcfb296c2416f8ad4c/chr_14.log
+https://imputationserver.sph.umich.edu/share/results/9ec0c63e985701bf672bd94ab58d0338/chr_15.log
+https://imputationserver.sph.umich.edu/share/results/a57f49b85a9ffd70e9361546cfd0075a/chr_16.log
+https://imputationserver.sph.umich.edu/share/results/77ae5dd6d7be6b796f6883f00d112cf8/chr_17.log
+https://imputationserver.sph.umich.edu/share/results/e4e382d92b0d9ac3dc804f3d4b68ed43/chr_18.log
+https://imputationserver.sph.umich.edu/share/results/90ef77f34032ebd4aff371d56d69dd78/chr_19.log
+https://imputationserver.sph.umich.edu/share/results/ce639959a8d9091d6605113bbdbaec4f/chr_2.log
+https://imputationserver.sph.umich.edu/share/results/8ff39c457eee82c837e816f5fad890b0/chr_20.log
+https://imputationserver.sph.umich.edu/share/results/f217428ef5812aa1ab390c78c23ff2c4/chr_21.log
+https://imputationserver.sph.umich.edu/share/results/951169e7cb4f3d19e3db4057880b4880/chr_22.log
+https://imputationserver.sph.umich.edu/share/results/824d4385513c7e0387ae1154f8258a9b/chr_3.log
+https://imputationserver.sph.umich.edu/share/results/6f1775693b8b6d1b0d94bd6809235ba0/chr_4.log
+https://imputationserver.sph.umich.edu/share/results/977a9e95c3f200c247834507b0c4f646/chr_5.log
+https://imputationserver.sph.umich.edu/share/results/32bca2370011e872597d3bda32f185dd/chr_6.log
+https://imputationserver.sph.umich.edu/share/results/f51e83662e2204d7deb73c07056f1fe1/chr_7.log
+https://imputationserver.sph.umich.edu/share/results/b39802d0f38209e26034e8c711f3adf1/chr_8.log
+https://imputationserver.sph.umich.edu/share/results/8144681934de1604ff2a3ab6a9c35d88/chr_9.log
 for i in {1..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3/chr_${i}.zip -p''
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3/chr_${i}.zip -p'GS2gPvxC7RunMF'
 done
 cd /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3
 wget -c
@@ -503,19 +548,154 @@ for i in {9..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/chr_${i}.zip -p''
 done
 cd /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3
-wget -c
+wget -c https://imputationserver.sph.umich.edu/share/results/3fca89a737c67d79d20ff96d36e76632/qcreport.html
+https://imputationserver.sph.umich.edu/share/results/fc4888e3fa951b159d69230ce5aa88de/chr_1.zip
+https://imputationserver.sph.umich.edu/share/results/6d9160dc52cc946bae81dfcff54e91ae/chr_10.zip
+https://imputationserver.sph.umich.edu/share/results/adf6113ee78ae4b15185db417d09c155/chr_11.zip
+https://imputationserver.sph.umich.edu/share/results/29d2ce97788d0fd54ba60b5a266c28ae/chr_12.zip
+https://imputationserver.sph.umich.edu/share/results/c48aace66937ff793f574cd96fef1d36/chr_13.zip
+https://imputationserver.sph.umich.edu/share/results/bec3b8598c81982eed885e1042f086fa/chr_14.zip
+https://imputationserver.sph.umich.edu/share/results/6fad2d2a5b90a66f65b6831505d6cde3/chr_15.zip
+https://imputationserver.sph.umich.edu/share/results/5e8d1b5d911b9586484273a41ba1415b/chr_16.zip
+https://imputationserver.sph.umich.edu/share/results/355e450991bf1c4f90054ae02b7db115/chr_17.zip
+https://imputationserver.sph.umich.edu/share/results/eb51b8b8f0a009cc7a35c3f65f0313ab/chr_18.zip
+https://imputationserver.sph.umich.edu/share/results/f02e50cec1a74d3b576e816b72db442c/chr_19.zip
+https://imputationserver.sph.umich.edu/share/results/78cee35e05da2ed1fef46aeeec9bbc59/chr_2.zip
+https://imputationserver.sph.umich.edu/share/results/ec0031c66e147b47477b9ff52e3eedd/chr_20.zip
+https://imputationserver.sph.umich.edu/share/results/8f0b28aa663715bd0ccbb4019262a9ce/chr_21.zip
+https://imputationserver.sph.umich.edu/share/results/da8bcf093fa5525de38551bde054621b/chr_22.zip
+https://imputationserver.sph.umich.edu/share/results/ef59c1b781317338ea976b2dbdb5eb71/chr_3.zip
+https://imputationserver.sph.umich.edu/share/results/42a7d2f97cee34bd85e01991b2f67f80/chr_4.zip
+https://imputationserver.sph.umich.edu/share/results/80f80e05b569dc2c172c306d9cf24df5/chr_5.zip
+https://imputationserver.sph.umich.edu/share/results/da999e147a389c2c18523a20cd4cecec/chr_6.zip
+https://imputationserver.sph.umich.edu/share/results/387c05d84efefd42f812d687f730dc0e/chr_7.zip
+https://imputationserver.sph.umich.edu/share/results/66c5cee69b3415d197b3c03de98fc2c5/chr_8.zip
+https://imputationserver.sph.umich.edu/share/results/d4d82c73dec5cb0aa4a22fa75c1b3216/chr_9.zip
+https://imputationserver.sph.umich.edu/share/results/8ce39d861bcaed47a640cb8fc5d8592d/statistics.txt
+https://imputationserver.sph.umich.edu/share/results/c7123d6ac2d552c744fcb4f5988f773/chr_1.log
+https://imputationserver.sph.umich.edu/share/results/5d08c53d76b4b1838e14879e1b39a355/chr_10.log
+https://imputationserver.sph.umich.edu/share/results/2bac02b21419c1a35f32598891f9a6a9/chr_11.log
+https://imputationserver.sph.umich.edu/share/results/d7a73ab6b4f5e32c39ebae14bfc74226/chr_12.log
+https://imputationserver.sph.umich.edu/share/results/4dd530a7d6aebcab54792e4cd57a6743/chr_13.log
+https://imputationserver.sph.umich.edu/share/results/97d549ab841230596b4f021921a2c48c/chr_14.log
+https://imputationserver.sph.umich.edu/share/results/4a8b2cc37d9c28dba486d1d4420ffd6c/chr_15.log
+https://imputationserver.sph.umich.edu/share/results/2e4edc44130e8683ab401e3cf64dd3f3/chr_16.log
+https://imputationserver.sph.umich.edu/share/results/29880fabe12da20f99756f3fcc9f765f/chr_17.log
+https://imputationserver.sph.umich.edu/share/results/973c9a620686c6e0ad24d2d692ef240/chr_18.log
+https://imputationserver.sph.umich.edu/share/results/fc07cdfb30eddb518ba1e6633e9936a5/chr_19.log
+https://imputationserver.sph.umich.edu/share/results/b4530237442636d5db5cda29a3d6698b/chr_2.log
+https://imputationserver.sph.umich.edu/share/results/c1ea0b8827c16bcd94cdc623bde38923/chr_20.log
+https://imputationserver.sph.umich.edu/share/results/65812b56fa542fab11fbd49f161f9d04/chr_21.log
+https://imputationserver.sph.umich.edu/share/results/3a1462153931e22e3d185341730d1a40/chr_22.log
+https://imputationserver.sph.umich.edu/share/results/b0e942ae39571a43a4d78ef4cc8838d/chr_3.log
+https://imputationserver.sph.umich.edu/share/results/d2c4a69b1041bc383b91cefb74bf9b46/chr_4.log
+https://imputationserver.sph.umich.edu/share/results/b21806209a8229100b0bcb099b1b02eb/chr_5.log
+https://imputationserver.sph.umich.edu/share/results/2108534df6843929e1b090392b56faf2/chr_6.log
+https://imputationserver.sph.umich.edu/share/results/783f27aefcfae81d2d738f6b715009b6/chr_7.log
+https://imputationserver.sph.umich.edu/share/results/ccfb84fb7f04156c7018671d2092034d/chr_8.log
+https://imputationserver.sph.umich.edu/share/results/eacbe8723ea7ed1ac06b7b990ef21e6b/chr_9.log
 for i in {1..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3/chr_${i}.zip -p''
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3/chr_${i}.zip -p'IihJwVBj6M8eAP'
 done
 cd /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3
-wget -c
+wget -c https://imputationserver.sph.umich.edu/share/results/1f284e4bd70cbfef1e3d4d6c9a02835f/qcreport.html
+https://imputationserver.sph.umich.edu/share/results/ece42c9ab9ad156181837f99815c4134/chr_1.zip
+https://imputationserver.sph.umich.edu/share/results/73e3139b4cee593fce7c2dd2d607d892/chr_10.zip
+https://imputationserver.sph.umich.edu/share/results/ba1a4624af573702a48f6f9a25a80474/chr_11.zip
+https://imputationserver.sph.umich.edu/share/results/badc30f4615ad5299fdd7aef38001e8b/chr_12.zip
+https://imputationserver.sph.umich.edu/share/results/5dbe62bf0d5646b749b0591b40db1a85/chr_13.zip
+https://imputationserver.sph.umich.edu/share/results/cda6d4b446e5c15357f9204e22843a16/chr_14.zip
+https://imputationserver.sph.umich.edu/share/results/8ab57fa682f13db38f0c4570d9f058a4/chr_15.zip
+https://imputationserver.sph.umich.edu/share/results/5293bb5c2778a309798f8e9ffc0a15fc/chr_16.zip
+https://imputationserver.sph.umich.edu/share/results/f79c2ffcacf3543c3c10444f8fdc7060/chr_17.zip
+https://imputationserver.sph.umich.edu/share/results/7229b778a32eb2b635b85823bf4f8c67/chr_18.zip
+https://imputationserver.sph.umich.edu/share/results/eface0c1c7c22d4d0c5e9bb12320b38a/chr_19.zip
+https://imputationserver.sph.umich.edu/share/results/4f3581be721453afe088250ada7ff5d5/chr_2.zip
+https://imputationserver.sph.umich.edu/share/results/974ef8a64a12e0efe5bcf3a111fac2fa/chr_20.zip
+https://imputationserver.sph.umich.edu/share/results/2f460ace32e4db636373a66dcfceaeb5/chr_21.zip
+https://imputationserver.sph.umich.edu/share/results/202748a9bd491e2e44322c59cc96ef8/chr_22.zip
+https://imputationserver.sph.umich.edu/share/results/dd5c1513639ecfcd8590ba6e66210f2c/chr_3.zip
+https://imputationserver.sph.umich.edu/share/results/c55559c7fe337b6c87b62dc31e5bdb74/chr_4.zip
+https://imputationserver.sph.umich.edu/share/results/4affd68daa090b77e7024ce4ba54c3b/chr_5.zip
+https://imputationserver.sph.umich.edu/share/results/3e75f1128a0c3f4c1ea408953fdfc15c/chr_6.zip
+https://imputationserver.sph.umich.edu/share/results/a48994deee688be803db42552b6f653b/chr_7.zip
+https://imputationserver.sph.umich.edu/share/results/c6b761d8980ad4e4221ab528061aa4b3/chr_8.zip
+https://imputationserver.sph.umich.edu/share/results/a438dbdf425a86256bd71c60cdae07c5/chr_9.zip
+https://imputationserver.sph.umich.edu/share/results/8055eb50aabbd4a0ff01e33cec3191db/statistics.txt
+https://imputationserver.sph.umich.edu/share/results/393571932060eac628c6875153c3314a/chr_1.log
+https://imputationserver.sph.umich.edu/share/results/97d6816501026938304b941629dec22b/chr_10.log
+https://imputationserver.sph.umich.edu/share/results/71c962f851fdce826e7545ab07fdde71/chr_11.log
+https://imputationserver.sph.umich.edu/share/results/9e965aed3240b61461e5b4c2a5414183/chr_12.log
+https://imputationserver.sph.umich.edu/share/results/978b1da3e968f5e9e7dfd8591f6b5dde/chr_13.log
+https://imputationserver.sph.umich.edu/share/results/5cdf52f1f85249198200ef6fd51e6d8b/chr_14.log
+https://imputationserver.sph.umich.edu/share/results/e8c06e8266c2877f908223f7f83c73de/chr_15.log
+https://imputationserver.sph.umich.edu/share/results/55e40ddc864dac7eef2d09d1e1f1feea/chr_16.log
+https://imputationserver.sph.umich.edu/share/results/3d864aba491be99c85018cfbf0a41077/chr_17.log
+https://imputationserver.sph.umich.edu/share/results/564006f444a8c399c4960d050755c0d9/chr_18.log
+https://imputationserver.sph.umich.edu/share/results/498175ddce4f6b07b71da2376e0e04cd/chr_19.log
+https://imputationserver.sph.umich.edu/share/results/658d3db6882796ba7b2ab9a9eb6654a0/chr_2.log
+https://imputationserver.sph.umich.edu/share/results/11cb42297699f52559af77d85fa78af8/chr_20.log
+https://imputationserver.sph.umich.edu/share/results/c04800f2864aa2aa0575e75f6dc141e6/chr_21.log
+https://imputationserver.sph.umich.edu/share/results/547949764c3ebf152844588e89f0d7f6/chr_22.log
+https://imputationserver.sph.umich.edu/share/results/8ea193e6408ea2b51d5e0364b6f6ef5b/chr_3.log
+https://imputationserver.sph.umich.edu/share/results/910276be5641006764e05a2bb53c44cb/chr_4.log
+https://imputationserver.sph.umich.edu/share/results/d4fd99091f141c85d3c402edbbbffdf1/chr_5.log
+https://imputationserver.sph.umich.edu/share/results/6f6d047955f6226079ca7b620435a6cd/chr_6.log
+https://imputationserver.sph.umich.edu/share/results/db6d1893efdd93507c7916d637e12544/chr_7.log
+https://imputationserver.sph.umich.edu/share/results/e2dcae8a1a571933edf87659ff161661/chr_8.log
+https://imputationserver.sph.umich.edu/share/results/7aa828d0b7d225b449dbfdb6518820d8/chr_9.log
 for i in {1..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3/chr_${i}.zip -p''
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3/chr_${i}.zip -p'*XNm47yHyxhWUM'
 done
 cd /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3
-wget -c
+wget -c https://imputationserver.sph.umich.edu/share/results/95cf9bb0bab6f780c78e3a0f21b7c361/qcreport.html
+https://imputationserver.sph.umich.edu/share/results/b8c1778b041b34e25eb6bc3fc7cc0ba5/chr_1.zip
+https://imputationserver.sph.umich.edu/share/results/c016b02e5621dc14ffb4a7ad8f013a73/chr_10.zip
+https://imputationserver.sph.umich.edu/share/results/64e4dcc263bbe13cc53bcb5dd97dfb3d/chr_11.zip
+https://imputationserver.sph.umich.edu/share/results/2c744b99c49093a50ab8b1cce9c54dd1/chr_12.zip
+https://imputationserver.sph.umich.edu/share/results/5d2702531097b9283dcea2a0aeef0f13/chr_13.zip
+https://imputationserver.sph.umich.edu/share/results/6b9edd530812950434b587a873dc2ede/chr_14.zip
+https://imputationserver.sph.umich.edu/share/results/97e9a42975611b323b9b786c00847f3b/chr_15.zip
+https://imputationserver.sph.umich.edu/share/results/21ae147226a5a86a33d46e1d847ef1f9/chr_16.zip
+https://imputationserver.sph.umich.edu/share/results/e7f11202515190be87131802e62c6383/chr_17.zip
+https://imputationserver.sph.umich.edu/share/results/55ce546ec01d404781e1dc515080e4bc/chr_18.zip
+https://imputationserver.sph.umich.edu/share/results/c34da9faf3cc07c1025f1e111b9b51c7/chr_19.zip
+https://imputationserver.sph.umich.edu/share/results/3fc57a33afcefbaf8e638c746a0b21c3/chr_2.zip
+https://imputationserver.sph.umich.edu/share/results/1ab1ab3bb1272e05f599469186300a34/chr_20.zip
+https://imputationserver.sph.umich.edu/share/results/68ec54d4fbf478b61d004bce4355014e/chr_21.zip
+https://imputationserver.sph.umich.edu/share/results/c51caa716326d28fb2fa99f294f567b2/chr_22.zip
+https://imputationserver.sph.umich.edu/share/results/6d9a9bfaff11923b72c8c732afec3fee/chr_3.zip
+https://imputationserver.sph.umich.edu/share/results/e91736564c45dc293a3f796f5ae3c091/chr_4.zip
+https://imputationserver.sph.umich.edu/share/results/9cb8d9eaf761afe949c1640c925d14a/chr_5.zip
+https://imputationserver.sph.umich.edu/share/results/80ec657d218725762c5cc04a7ca4952f/chr_6.zip
+https://imputationserver.sph.umich.edu/share/results/c2b70ff49ce6476354eb14f9dacebcef/chr_7.zip
+https://imputationserver.sph.umich.edu/share/results/cf9f6cb50688b06ae76ddced29cdc4bd/chr_8.zip
+https://imputationserver.sph.umich.edu/share/results/20f01b63348ac7a9557bea37aeccf3c9/chr_9.zip
+https://imputationserver.sph.umich.edu/share/results/95c1129625de5027c26383f366d4117/statistics.txt
+https://imputationserver.sph.umich.edu/share/results/7b40d4c31a145df580465d6d9ee7a015/chr_1.log
+https://imputationserver.sph.umich.edu/share/results/592208d2d6d4efc8211a3929c05d9d5/chr_10.log
+https://imputationserver.sph.umich.edu/share/results/c737de90c8b2289b15f378200ba4dc13/chr_11.log
+https://imputationserver.sph.umich.edu/share/results/4d12bf304fd542297f3721ad42dc0ad8/chr_12.log
+https://imputationserver.sph.umich.edu/share/results/862bd9f0c8b5287fd96fe3913f62039/chr_13.log
+https://imputationserver.sph.umich.edu/share/results/45431b0f9c065f921e74b0e63cbbd986/chr_14.log
+https://imputationserver.sph.umich.edu/share/results/825dab2b3b53fb1659f80ca673cbe42e/chr_15.log
+https://imputationserver.sph.umich.edu/share/results/b3503c2a815aa3643539a077e01f6002/chr_16.log
+https://imputationserver.sph.umich.edu/share/results/4d815ca3c8e7388bfc27ebfece7b59f6/chr_17.log
+https://imputationserver.sph.umich.edu/share/results/855a76e32590d1b6d8a3de1754d9efc4/chr_18.log
+https://imputationserver.sph.umich.edu/share/results/4200cbcb83e50f16cbd3d2a5cc90dc6e/chr_19.log
+https://imputationserver.sph.umich.edu/share/results/a3dfa5c395b71a4612f2efe5a3562f0d/chr_2.log
+https://imputationserver.sph.umich.edu/share/results/220845602d4d3ac4cba86c6cd2925519/chr_20.log
+https://imputationserver.sph.umich.edu/share/results/6c3bcbeea28a95e6313ef5fb07f9b4c6/chr_21.log
+https://imputationserver.sph.umich.edu/share/results/3cf5e9a77e750971a0706614ec3fcdb8/chr_22.log
+https://imputationserver.sph.umich.edu/share/results/b363da3f311c51c490bfd1b0f5d51e13/chr_3.log
+https://imputationserver.sph.umich.edu/share/results/1ab78304073c90cd5b6b6dd5c0601ba5/chr_4.log
+https://imputationserver.sph.umich.edu/share/results/310c1fd8870ee9eb5cd00380b28dc190/chr_5.log
+https://imputationserver.sph.umich.edu/share/results/dce9fb690b4238306852e1c3e9de27bd/chr_6.log
+https://imputationserver.sph.umich.edu/share/results/9f91b4114db9db361e3752b421cb85b1/chr_7.log
+https://imputationserver.sph.umich.edu/share/results/60b6416b7908f929bac9d1d9f13defc7/chr_8.log
+https://imputationserver.sph.umich.edu/share/results/ad71922a78d79d204c3cb362fee7fe18/chr_9.log
 for i in {1..22}; do
-	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3/chr_${i}.zip -p''
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3/chr_${i}.zip -p'2W>Sh[FNibH5oq'
 done
 cd /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3
 wget -c
