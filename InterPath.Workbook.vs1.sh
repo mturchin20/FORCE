@@ -451,10 +451,10 @@ rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbio
 rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Caribbean/Caribbean/.
 rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Chinese/Chinese/.
 rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Indian/Indian/.
-rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Irish/Irish/.
+#20191111 NOTE -- didn't back up the Irish data, accidentally deleted it before transferring (ironically, didn't really use Irish data too much in first round anyways)
+#rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Irish/Irish/.
 rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Pakistani/Pakistani/.
-#20191111 NOTE -- African and Brit.Ran10k didn't have the .log files 
-#rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/chr*log /Volumes/Elements/Data/UKBioBank/subsets/African/African/.
+#rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/Part*/chr*log /Volumes/Elements/Data/UKBioBank/subsets/African/African/.
 #rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/chr*log /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran4000/.
 #rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/OLD1.British.Ran10000/Imputation/mturchin20/chr*log /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran10000/.
 #rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/chr*log /Volumes/Elements/Data/UKBioBank/subsets/Caribbean/Caribbean/.
@@ -470,6 +470,43 @@ rm /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturc
 rm /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/chr*
 rm /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/chr*
 rm /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/chr*
+
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/African/African/v3
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran4000/v3
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran10000/v3
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Caribbean/Caribbean/v3
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Chinese/Chinese/v3
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Indian/Indian/v3
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Irish/Irish/v3
+mkdir /Volumes/Elements/Data/UKBioBank/subsets/Pakistani/Pakistani/v3
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/African/African/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran4000/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran10000/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Caribbean/Caribbean/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Chinese/Chinese/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Indian/Indian/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Irish/Irish/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3/chr*zip /Volumes/Elements/Data/UKBioBank/subsets/Pakistani/Pakistani/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3/chr*log /Volumes/Elements/Data/UKBioBank/subsets/African/African/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3/v3/chr*log /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran4000/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/chr*log /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran10000/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3/chr*log /Volumes/Elements/Data/UKBioBank/subsets/Caribbean/Caribbean/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3/chr*log /Volumes/Elements/Data/UKBioBank/subsets/Chinese/Chinese/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3/chr*log /Volumes/Elements/Data/UKBioBank/subsets/Indian/Indian/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/chr*log /Volumes/Elements/Data/UKBioBank/subsets/Irish/Irish/v3/.
+rsync -avze ssh --progress mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3/chr*log /Volumes/Elements/Data/UKBioBank/subsets/Pakistani/Pakistani/v3/.
+rm /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3/chr*zip
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3/chr*zip
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/chr*zip
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3/chr*zip
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3/chr*zip
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3/chr*zip
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/chr*zip
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3/chr*zip
+
+
+
+
 
 mkdir /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3
 mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3
