@@ -537,6 +537,10 @@ mkdir /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran10000.4
 mkdir /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran10000.4/v3
 mkdir /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran10000.5
 mkdir /Volumes/Elements/Data/UKBioBank/subsets/British/British.Ran10000.5/v3
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/chr*zip
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/chr*zip
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/chr*zip
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/chr*zip
 
 #20191113 NOTE -- didn't really end up doing/using this because only had ~250Gb on wolfy
 ~##On wolfy.uchicago.edu
