@@ -599,6 +599,12 @@ wget -c https://imputationserver.sph.umich.edu/share/results/95cf9bb0bab6f780c78
 for i in {1..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3/chr_${i}.zip -p'2W>Sh[FNibH5oq'
 done
+#Indian chr8 rerun
+wget https://imputationserver.sph.umich.edu/share/results/ed161ca2cedea405d234cc0abb9889c0/qcreport.html https://imputationserver.sph.umich.edu/share/results/3d7ead0d37773dafe28bc65d44402789/statistics.txt
+wget -c https://imputationserver.sph.umich.edu/share/results/c285d3595603d603e047bcb759283d10/chr_8.zip https://imputationserver.sph.umich.edu/share/results/4e12673703d1e792ab3d819c269fa787/chr_8.log
+for i in {8..8}; do
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3/chr_${i}.zip -p'nNriT!bKJ3fqK6'
+done
 cd /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3
 wget -c https://imputationserver.sph.umich.edu/share/results/a0e2ddbafb4602b4c32912fb1aeb7bb1/qcreport.html https://imputationserver.sph.umich.edu/share/results/31572fb56b6883528294b97e1115004a/chr_1.zip https://imputationserver.sph.umich.edu/share/results/1ffdf6c3f20ba8c9fe8e70f8817cc68f/chr_10.zip https://imputationserver.sph.umich.edu/share/results/eac67b63dd9d231f370dce28b23cb42a/chr_11.zip https://imputationserver.sph.umich.edu/share/results/9fad8cbd15dd39b90c691ac691b4ee42/chr_12.zip https://imputationserver.sph.umich.edu/share/results/418bab84dae6c910f09482f5397a420d/chr_13.zip https://imputationserver.sph.umich.edu/share/results/1077372c805bac87a6adf4045c31ef91/chr_14.zip https://imputationserver.sph.umich.edu/share/results/f34b01d28f7f642a7e6b0d065bf195b/chr_15.zip https://imputationserver.sph.umich.edu/share/results/b7d36811adfe3fd03f1ea4284b038fa0/chr_16.zip https://imputationserver.sph.umich.edu/share/results/7e95ace1ac885ae414397666ec2bd259/chr_17.zip https://imputationserver.sph.umich.edu/share/results/f4d3dc31278e8615db997da5dbd16ca2/chr_18.zip https://imputationserver.sph.umich.edu/share/results/6d3854a3334ba87ae09f25da74921912/chr_19.zip https://imputationserver.sph.umich.edu/share/results/96e4ec1c93c6437636124addfe7b8663/chr_2.zip https://imputationserver.sph.umich.edu/share/results/339a232eed4b8ec7d1c466c8b84968f5/chr_20.zip https://imputationserver.sph.umich.edu/share/results/6eca654ea16ad57032bc13cdc6eb9fdb/chr_21.zip https://imputationserver.sph.umich.edu/share/results/4572ee5379bb3b6fbc399b8802be5bf7/chr_22.zip https://imputationserver.sph.umich.edu/share/results/a6e16fdca005e7ecf5ea77abaf160808/chr_3.zip https://imputationserver.sph.umich.edu/share/results/bfbdebb427dfa24ed8ee49b91d476c1c/chr_4.zip https://imputationserver.sph.umich.edu/share/results/c1f46a47588aa4f3944e9ad8f8c87c1f/chr_5.zip https://imputationserver.sph.umich.edu/share/results/9dd6e03d8ae1da47fcf8db069ad949f/chr_6.zip https://imputationserver.sph.umich.edu/share/results/bac94fe9f70ebce1d18e3af8b679daba/chr_7.zip https://imputationserver.sph.umich.edu/share/results/b4ffc70317828f5fc54d8aaeaa93bc20/chr_8.zip https://imputationserver.sph.umich.edu/share/results/8477e3015268438d6c3839db00b695f5/chr_9.zip https://imputationserver.sph.umich.edu/share/results/a4752d940a91f5843b5ff7e273a8d55d/statistics.txt https://imputationserver.sph.umich.edu/share/results/5d0a2a18a268919da6936cc8462754ff/chr_1.log https://imputationserver.sph.umich.edu/share/results/1fc15a6d552212be8d5b9dc367885813/chr_10.log https://imputationserver.sph.umich.edu/share/results/b06f803890114ee3225213e11dc9e439/chr_11.log https://imputationserver.sph.umich.edu/share/results/737e2976a29cf134c1f19d00b4b2fedd/chr_12.log https://imputationserver.sph.umich.edu/share/results/5c284a9a4a4bcd1b5c5b7e216c219cef/chr_13.log https://imputationserver.sph.umich.edu/share/results/3e49305ebe57498385a200227c2fb20b/chr_14.log https://imputationserver.sph.umich.edu/share/results/f638b52fa2dff58d2a35df56e15bd28a/chr_15.log https://imputationserver.sph.umich.edu/share/results/1b50ac8dcaf4616b7b0444fbabd97010/chr_16.log https://imputationserver.sph.umich.edu/share/results/261b2d2a068d10db99605c3b6ff34ba6/chr_17.log https://imputationserver.sph.umich.edu/share/results/eeb5b36e94a56759f823e480eb2aceae/chr_18.log https://imputationserver.sph.umich.edu/share/results/6636fd19bec86b8a699ac42e3ad068ec/chr_19.log https://imputationserver.sph.umich.edu/share/results/c902e45fbcb4ef557b9d78cfd7832b9e/chr_2.log https://imputationserver.sph.umich.edu/share/results/748f83fddd9c31eddccf95d109309146/chr_20.log https://imputationserver.sph.umich.edu/share/results/814ead6cc264ae6b3f293e0be4571278/chr_21.log https://imputationserver.sph.umich.edu/share/results/edc17eb13aab3928bd90c8da57f37812/chr_22.log https://imputationserver.sph.umich.edu/share/results/8df72eae1547701b4ce2fc9e67d47847/chr_3.log https://imputationserver.sph.umich.edu/share/results/9490d9cabdfecc9867ba993107f2a5c7/chr_4.log https://imputationserver.sph.umich.edu/share/results/8ef1f43c82316977e289e5722887e711/chr_5.log https://imputationserver.sph.umich.edu/share/results/adf39bcb61c1f43f7b3a27821e9ff13c/chr_6.log https://imputationserver.sph.umich.edu/share/results/73f3825af0bd1bb9ae3ab6d07e252b1e/chr_7.log https://imputationserver.sph.umich.edu/share/results/8a96dde2b3724a7556e5914f5225e10a/chr_8.log https://imputationserver.sph.umich.edu/share/results/1513ece05e9a0e2eecf5f1cac3e7d618/chr_9.log
 for i in {1..22}; do
@@ -608,6 +614,12 @@ cd /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/m
 wget -c https://imputationserver.sph.umich.edu/share/results/5cd10f502133757551fca7f5a3f2f866/qcreport.html https://imputationserver.sph.umich.edu/share/results/be2b5d282fbfd01993f106823b1be3dc/chr_1.zip https://imputationserver.sph.umich.edu/share/results/29dcc491a2ab0532f2627547646d7b76/chr_10.zip https://imputationserver.sph.umich.edu/share/results/55f858f1506de4ee6b6ee690b6ee70ee/chr_11.zip https://imputationserver.sph.umich.edu/share/results/cc71b91c07e6b1fc5108b8a5e96d6836/chr_12.zip https://imputationserver.sph.umich.edu/share/results/ad5b652bfc0adbade9da6ac3deac89c0/chr_13.zip https://imputationserver.sph.umich.edu/share/results/6ecf1adb4712e0c740061b340e826c0b/chr_14.zip https://imputationserver.sph.umich.edu/share/results/8ae831d489f602ad6de33482f557918d/chr_15.zip https://imputationserver.sph.umich.edu/share/results/4ff0647aaca3dd682fcdf9bed67647f2/chr_16.zip https://imputationserver.sph.umich.edu/share/results/240090188b95fea631018d798141ec02/chr_17.zip https://imputationserver.sph.umich.edu/share/results/de2ae4ec4fd5e37935f945b5943a8262/chr_18.zip https://imputationserver.sph.umich.edu/share/results/629f566e06559ad3b29ea438bb02814f/chr_19.zip https://imputationserver.sph.umich.edu/share/results/9f2522290a30fdac07dfe3063679f9e4/chr_2.zip https://imputationserver.sph.umich.edu/share/results/fc8b2dca95ad802f8fa88cc413e14983/chr_20.zip https://imputationserver.sph.umich.edu/share/results/d9b12c5115e9ce15686151942bc2504d/chr_21.zip https://imputationserver.sph.umich.edu/share/results/a3e307284632df11d604bda3b7d9440f/chr_22.zip https://imputationserver.sph.umich.edu/share/results/f989849d640e5d291107193a069c474/chr_3.zip https://imputationserver.sph.umich.edu/share/results/2e60a54f8023d6de3599106dce5a199a/chr_4.zip https://imputationserver.sph.umich.edu/share/results/41fe347d71e9be43fe112651e7571392/chr_5.zip https://imputationserver.sph.umich.edu/share/results/c13feccf3bf98b83cda1f41710b81526/chr_6.zip https://imputationserver.sph.umich.edu/share/results/c19c497fe28d6e75272c1f96a579737f/chr_7.zip https://imputationserver.sph.umich.edu/share/results/90df8e841aa263c771aa72e655fb9879/chr_8.zip https://imputationserver.sph.umich.edu/share/results/d54893fef6ffca13c6976125d5c60c9e/chr_9.zip https://imputationserver.sph.umich.edu/share/results/70fdd75f5ff377b4a4c81a3b4c415b0a/statistics.txt https://imputationserver.sph.umich.edu/share/results/3ecb8bc25e2f8d83d02b174780c8c7dc/chr_1.log https://imputationserver.sph.umich.edu/share/results/17530a1c1c50a779e6bba0e175cb2605/chr_10.log https://imputationserver.sph.umich.edu/share/results/ce76e022376ae3e92ddbd8d9baa5ab3d/chr_11.log https://imputationserver.sph.umich.edu/share/results/2285abf75d7ad550f700b2aa44f10ecf/chr_12.log https://imputationserver.sph.umich.edu/share/results/fef964cbfe14fe28f9346eee4620fdb/chr_13.log https://imputationserver.sph.umich.edu/share/results/6467268212b03a473708651387942519/chr_14.log https://imputationserver.sph.umich.edu/share/results/92d9508cfe3fae4bbc8f3b4b1a80d64c/chr_15.log https://imputationserver.sph.umich.edu/share/results/b8bcf05c9cc8b7a01347d2bf76deb2af/chr_16.log https://imputationserver.sph.umich.edu/share/results/4e06193b2314fd567dedf4d1cca7b6f0/chr_17.log https://imputationserver.sph.umich.edu/share/results/733f03f235810840e1264090876729da/chr_18.log https://imputationserver.sph.umich.edu/share/results/13713804b92720ca8ccb04c47c32e315/chr_19.log https://imputationserver.sph.umich.edu/share/results/7e6aa4e9f8fcc51a103159e4db9fd0ea/chr_2.log https://imputationserver.sph.umich.edu/share/results/dfe0b11b225fa0bad3bbfeb3cfcd74f/chr_20.log https://imputationserver.sph.umich.edu/share/results/458bc19200445606f5cd21bc321e6ffa/chr_21.log https://imputationserver.sph.umich.edu/share/results/b0f7b1f746e1dcf6686e60a2c736b5af/chr_22.log https://imputationserver.sph.umich.edu/share/results/12413d1d6fcfa97b729584f40746d82a/chr_3.log https://imputationserver.sph.umich.edu/share/results/3eeb51c9805dcdbaa95c811dba69b2c8/chr_4.log https://imputationserver.sph.umich.edu/share/results/c011f9c63391e1e8eaea24235eadba35/chr_5.log https://imputationserver.sph.umich.edu/share/results/51c98640cd9dcf72030368a4c6497b96/chr_6.log https://imputationserver.sph.umich.edu/share/results/d8f318ff33f4f11753052a1f4f87d71e/chr_7.log https://imputationserver.sph.umich.edu/share/results/6190f8678cb75a918ec45249afe74232/chr_8.log https://imputationserver.sph.umich.edu/share/results/2a5cda2b289354fe2a52b2e92358b4fd/chr_9.log
 for i in {1..22}; do
 	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3/chr_${i}.zip -p'Ih2tnuiFDOwKG1'
+done
+#Pakistani chr9 rerun
+wget https://imputationserver.sph.umich.edu/share/results/5b077a06692ba89d31e68014dfe2697e/qcreport.html https://imputationserver.sph.umich.edu/share/results/c02564d73a5645c87b4a3aa45a35f7a4/statistics.txt
+wget -c https://imputationserver.sph.umich.edu/share/results/b662677889ecb32d961d1110b8858827/chr_9.zip https://imputationserver.sph.umich.edu/share/results/7bf35ffad41b87b6d63a28779eab7dc4/chr_9.log 
+for i in {9..9}; do
+	7za x /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3/chr_${i}.zip -p'a2hfJDMweIO4JP'
 done
 
 
@@ -734,8 +746,8 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 
 done
 
-#From https://www.biostars.org/p/46060/ & https://sourceforge.net/p/vcftools/mailman/message/29115811/; 20181108 From https://unix.stackexchange.com/questions/223778/how-to-run-an-infinite-loop-in-the-background
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 6 | tail -n 1`; do
+#From https://www.biostars.org/p/46060/, https://sourceforge.net/p/vcftools/mailman/message/29115811/; 20181108 From https://unix.stackexchange.com/questions/223778/how-to-run-an-infinite-loop-in-the-background, https://www.biostars.org/p/313943/
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 1`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
         ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`
@@ -746,9 +758,11 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/slurm
 	fi
 
-	for i in {8..8}; do
+	for i in {9..9}; do
 		echo $i
-        	sbatch -t 24:00:00 --mem 40g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/slurm/ukb_chr${i}_v3.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/slurm/ukb_chr${i}_v3.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.error --comment "$ancestry1 $ancestry2 $i" <(echo -e '#!/bin/sh'; echo -e "\nplink --vcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.vcf.gz --extract /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.info.r2gt3.MAFgt01.noDups.PLINK.ChrBPs --geno 0 --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.plinkTemp";)
+        	sbatch -t 24:00:00 --mem 20g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/slurm/ukb_chr${i}_v3.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/slurm/ukb_chr${i}_v3.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.error --comment "$ancestry1 $ancestry2 $i" <(echo -e '#!/bin/sh'; echo -e "\nplink --vcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.vcf.gz --extract /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.info.r2gt3.MAFgt01.noDups.PLINK.ChrBPs --geno 0 --snps-only just-acgt --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.plinkTemp";)
+	
+
 
 	done 
 	sleep 1
@@ -763,28 +777,44 @@ done
 #		vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.vcf.gz --plink-tped --snps /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.info.r2gt3.MAFgt01.noDups.ChrBPs --max-missing 1 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp
 #		plink --tfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.plinkTemp --geno 0 --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 1`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 2`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
-        echo $ancestry1 $ancestry2 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imput^ation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.Vs2.txt
+        echo $ancestry1 $ancestry2 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imput^ation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.MergeList.Vs2.txt
 
 	for chr in {2..22}; do
-                echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.fam" 
-        done > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.Vs2.txt
+                echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.plinkTemp.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.plinkTemp.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.plinkTemp.fam" 
+        done > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.MergeList.Vs2.txt
 
 done
+#                echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.fam" 
+#        done > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.Vs2.txt
 #	rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.MergeList.Vs2.txt
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 1`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 2 | tail -n 1`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
-        echo $ancestry1 $ancestry2 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.Vs2.txt
+        echo $ancestry1 $ancestry2 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.MergeList.Vs2.txt
 	
-	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr1_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp --merge-list /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.Vs2.txt --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno
+	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr1_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.plinkTemp --merge-list /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.MergeList.Vs2.txt --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed
+	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed  --indep-pairwise 1000 50 .95 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.r95 
+	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed  --indep-pairwise 1000 50 .9 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.r90 
+	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed  --indep-pairwise 1000 50 .85 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.r85 
+	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed  --indep-pairwise 1000 50 .8 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.r80 
+	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed  --indep-pairwise 1000 50 .75 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.r75 
+	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed  --indep-pairwise 1000 50 .7 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.r70 
 
 done
+
+
+
+~                echo -e "\nplink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose --indep-pairwise 1000 50 .1 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose"; \
+~               echo -e "\nplink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose --extract /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.prune.in --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.pruned")
+
+
+
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 1`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
@@ -12847,6 +12877,36 @@ BMI
 .3      0.683461,0.0233765     0.43336,0.218455
 .2      0.694875,0.0345467     0.405308,0.2954
 .1      0.493916,0.000178636   0.286193,0.328208
+#20191115
+[  mturchin@node1121  ~/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.bim | awk '{ print $1 }' | sort | uniq -c
+1253276 1
+ 796395 10
+ 793110 11
+ 764849 12
+ 584174 13
+ 517043 14
+ 469607 15
+ 499867 16
+ 447685 17
+ 458191 18
+ 372037 19
+1356539 2
+ 354284 20
+ 223010 21
+ 217382 22
+1155854 3
+1175500 4
+1038776 5
+1035800 6
+ 945597 7
+ 899779 8
+ 687287 9
+[  mturchin@node1121  ~/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.bim | wc
+16046042 96276252 474325930
+[  mturchin@node1121  ~/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.bim | awk '{ if (($5 == "A") || ($5 == "G") || ($5 == "T") || ($5 == "C")) { print $5 } }' | wc                         
+15414508 15414508 30829016
+[  mturchin@node1121  ~/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.bim | awk '{ if ((($5 == "A") || ($5 == "G") || ($5 == "T") || ($5 == "C")) && (($6 == "A") || ($6 == "G") || ($6 == "T") || ($6 == "C"))) { print $5 } }' | wc
+14519994 14519994 29039988
 
 
 
