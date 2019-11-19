@@ -844,11 +844,8 @@ paste <(echo -e "Population\nr2>.95\nr2>.90\nr2>.85\nr2>.80") \
 <(cat <(echo "Indian") <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.r.95.prune.in | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.r.9.prune.in | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.r.85.prune.in | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.r.8.prune.in | wc | awk '{ print $1 }')) \ 
 <(cat <(echo "Irish") <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.r.95.prune.in | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.r.9.prune.in | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.r.85.prune.in | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.r.8.prune.in | wc | awk '{ print $1 }')) | column -t 
 
-
-
-
-
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 2 | tail -n 1`; do
+#20191119 NOTE -- going forward with using .85 as the r^2 pruning threshold of choice
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
@@ -862,7 +859,7 @@ done
 #	rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.raw.edit.gz /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.raw
 #	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw | perl -lane 'if ($. == 1) { @vals1; for (my $i = 6; $i <= $#F; $i++) { if ($F[$i] =~ m/HET/) { $PH = 1 } else { push(@vals1, $i); } } } print join("\t", @F[@vals1]);' | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 1`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
         echo $ancestry1 $ancestry2 
@@ -870,11 +867,6 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 	rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw
 
 done
-
-
-
-
-
 
 ~for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 1`; do
 ~        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
@@ -981,15 +973,19 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep
 
 
 
-	join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.txt | awk '{ print $1 "_" $2 }' | sort) | grep -v ANCESTRY | cat <(echo "FID_IID FID IID SEX ANCESTRY AGE PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10") - | perl -lane 'print join("\t", @F[1..$#F]);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt 
-
-
+	join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FullDataset.pruned.flashpca.pcs.wFullCovars.wAC.txt | awk '{ print $1 "_" $2 "\t" $0 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt
+ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.txt | awk '{ print $1 "_" $2 }' | sort) | grep -v ANCESTRY | cat <(echo "FID_IID FID IID SEX ANCESTRY AGE CENTER PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10") - | perl -lane 'print join("\t", @F[1..$#F]);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.sort.ImptHRC.dose.100geno.raw.txt 
+	
+	/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.gz";)
+	/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FullDataset.pruned.flashpca.pcs.wFullCovars.wAC.txt
 	/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FullDataset.pruned.flashpca.pcs.wFullCovars.wAssesmentCenter.txt
-
+	ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt
 
 
 
 done
+
+#	join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt...)
 
 #<4k: 12g
 #>10k: 31g (37g for Irish)
@@ -1180,27 +1176,30 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head
 		
 	echo $pheno1 $ancestry1 $ancestry2 $ancestry3
 
-#	zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -lane 'print join("\n", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.SNPIDs
-#	paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.SNPIDs | sed 's/_/ /g' | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | awk '{ print $2 }') | awk '{ if ($1 == $2) { print $0 } } ' | wc
-#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.SNPIDs | wc
-#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | wc
-#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.SNPIDs | awk '{ print $1 "\t" NR }' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.SNPIDsRowPos
-	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw | perl -lane 'print join("\t", @F[0..6]);' | sed 's/_/ /g' | awk '{ print $1 "\t" $2 }' | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID2\"); \
+
+	/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.gz";)
+
+	zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.gz | head -n 1 | perl -lane 'print join("\n", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.SNPIDs
+	paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.SNPIDs | sed 's/_/ /g' | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | awk '{ print $2 }') | awk '{ if ($1 == $2) { print $0 } } ' | wc
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.SNPIDs | wc
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | wc
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.SNPIDs | awk '{ print $1 "\t" NR }' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.SNPIDsRowPos
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw | perl -lane 'print join("\t", @F[0..6]);' | sed 's/_/ /g' | awk '{ print $1 "\t" $2 }' | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID2\"); \
 	
 	Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.$ancestry2.BMIAdj.Edit.txt\", header=T); \ 
 	Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.$ancestry2.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt\", header=T); \ 
 	/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.$ancestry2.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt	
 	
 	Data3 <- merge(Data1, Data2, by=\"FID\"); \	
-	write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);" 
-	paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw | perl -lane 'print join("\t", @F[0..6]);' | sed 's/_/ /g' | awk '{ print $1 "\t" $2 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt | awk '{ print $1 }') | awk '{ if ($1 != $3) { print $0 } }' | wc
-#	rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw
+	write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);" 
+	paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw | perl -lane 'print join("\t", @F[0..6]);' | sed 's/_/ /g' | awk '{ print $1 "\t" $2 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt | awk '{ print $1 }') | awk '{ if ($1 != $3) { print $0 } }' | wc
+#	rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw
 	
-#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.txt | awk '{ print $1 "\t" $2 }' | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID2\"); \ 
+#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.BMIAdj.txt | awk '{ print $1 "\t" $2 }' | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID2\"); \ 
 #	Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.BMIAdj.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.top10resids.txt\", header=T); \ 
 #	Data3 <- merge(Data1, Data2, by=\"FID\"); \
-#	write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.flashpca.top10resids.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);"
-#	paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.txt | awk '{ print $1 "\t" $2 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.flashpca.top10resids.txt | awk '{ print $1 }') | awk '{ if ($1 != $3) { print $0 } }' | wc
+#	write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.BMIAdj.flashpca.top10resids.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);"
+#	paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.BMIAdj.txt | awk '{ print $1 "\t" $2 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.BMIAdj.flashpca.top10resids.txt | awk '{ print $1 }') | awk '{ if ($1 != $3) { print $0 } }' | wc
 
 done
 
