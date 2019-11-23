@@ -1014,7 +1014,7 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep
 					PhenoNew <- Data1[,c(1:2)]; \
 					Data2.mean <- apply(Data2, 2, mean); Data2.sd <- apply(Data2, 2, sd); Data2.sd[which(Data2.sd==0)] <- 1; Data2 <- t((t(Data2)-Data2.mean)/Data2.sd); \
 					for (j in 3:8) { \
-						PhenoNew <- cbind(PhenoNew, residuals(lm(Data1[,j] ~ Data2, na.action=na.exclude))); \  
+						PhenoNew <- cbind(PhenoNew, residuals(lm(Data1[,j] ~ Data2 - 1, na.action=na.exclude))); \  
 					}; \
 					colnames(PhenoNew) <- colnames(Data1); \
 					write.table(PhenoNew, file=paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.${ancestry2}.v3.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.Regions.c2.${k}.Pathways\\\", i, \\\".noDups.txt\\\", sep=\\\"\\\"), quote=FALSE, row.name=FALSE, col.name=TRUE); \
