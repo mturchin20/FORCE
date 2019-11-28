@@ -1363,10 +1363,10 @@ done
 #Brit10k: ~133gb, had success with a 180gb interactive node (like less than an hour?); 110gb for the per-chr version succeeded; (Irish worked with 225g on ccmb-condo) 
 #20191128 NOTE -- info for post-change to imputation
 #Afr: mem 190331060K (~190gb?), time 532.272
-#Brit10k: mem 290996496K, time 2445.701 (Irish: )
+#Brit10k: mem 290996496K, time 2445.701 (Irish: mem 346579616K, time 3505.491)
  
 #From https://blog.rstudio.com/2016/03/29/feather/, https://blog.dominodatalab.com/the-r-data-i-o-shootout/, https://stackoverflow.com/questions/1727772/quickly-reading-very-large-tables-as-dataframes
-module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | grep Irish`; do
+module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		
