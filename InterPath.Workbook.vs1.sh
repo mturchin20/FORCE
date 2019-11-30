@@ -1399,6 +1399,16 @@ done
 #	write.table(Data3.cov, "/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.cov.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);"
 #	print(table(apply(Data3, 2, sd) == 0));"
 
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+        echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.noFix.cov.txt | head -n 10 | perl -lane 'print join("\t", @F[0..9]);'
+
+done
+
 module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -E 'Ran10000|Irish' | grep Ran10000`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -13036,6 +13046,182 @@ Caribbean Caribbean Carib
 >
 >
       0       0       0
+[  mturchin@node1611  ~]$module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8`; do
+>         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+>         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>
+>         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+>
+>         R -q -e "library("data.table"); library("feather"); \
+>         ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.gz', header=T); print(proc.time() - ptm); \
+>         Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); \
+>         ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm); \
+>         write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.noFix.cov.txt\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
+> done
+module: loading 'R/3.4.3_mkl'
+African African
+> library(data.table); library(feather);         ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.gz', header=T); print(proc.time() - ptm);         Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd);         ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm);         write.table(Data3.cov, "/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.noFix.cov.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);
+   user  system elapsed
+210.587  22.486 233.105
+   user  system elapsed
+479.611   0.588 480.256
+>
+>
+British British.Ran4000
+> library(data.table); library(feather);         ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.gz', header=T); print(proc.time() - ptm);         Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd);         ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm);         write.table(Data3.cov, "/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.noFix.cov.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);
+   user  system elapsed
+124.019  13.457 137.518
+   user  system elapsed
+366.755   0.047 366.814
+>
+>
+British British.Ran10000
+> library(data.table); library(feather);         ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.gz', header=T); print(proc.time() - ptm);         Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd);         ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm);         write.table(Data3.cov, "/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.noFix.cov.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);
+   user  system elapsed
+275.109  30.932 306.083
+    user   system  elapsed
+2126.668    0.176 2126.911
+>
+>
+Caribbean Caribbean
+> library(data.table); library(feather);         ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.s
+ort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.gz', header=T); print(proc.time() - ptm);         Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd);         ptm <- proc.time(); Da
+ta3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm);         write.table(Data3.cov, "/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.noFix.cov.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);
+   user  system elapsed
+241.892  26.587 268.526
+   user  system elapsed
+726.928   4.775 731.729
+>
+>
+Chinese Chinese
+> library(data.table); library(feather);         ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.gz', header=T); print(proc.time() - ptm);         Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd);         ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm);         write.table(Data3.cov, "/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.noFix.cov.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);
+   user  system elapsed
+ 48.844   5.323  54.203
+   user  system elapsed
+ 44.235   0.000  44.237
+>
+>
+Indian Indian
+> library(data.table); library(feather);         ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.gz', header=T); print(proc.time() - ptm);         Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd);         ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm);         write.table(Data3.cov, "/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.noFix.cov.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);
+   user  system elapsed
+163.427  18.589 182.162
+   user  system elapsed
+729.575   0.053 729.654
+>
+>
+Irish Irish
+> library(data.table); library(feather);         ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.gz', header=T); print(proc.time() - ptm);         Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd);         ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm);         write.table(Data3.cov, "/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.noFix.cov.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);
+   user  system elapsed
+288.724  36.360 325.131
+    user   system  elapsed
+3344.177    0.273 3344.552
+>
+>
+Pakistani Pakistani
+> library(data.table); library(feather);         ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.gz', header=T); print(proc.time() - ptm);         Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd);         ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm);         write.table(Data3.cov, "/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.noFix.cov.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);
+   user  system elapsed
+ 65.723   7.452  73.214
+   user  system elapsed
+ 68.576   0.001  68.579
+>
+>
+[  mturchin@node1132  ~/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3]$for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8`; do
+>         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+>         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>
+>         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+>
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.edit.noFix.cov.txt | head -n 10 | perl -lane 'print join("\t", @F[0..9]);'
+>
+> done
+African African
+746.048231960226        2.46695646845647        -0.329003681384558      -0.542642615974959      5.84475776763891        0.00812555284358235     0.307654050000212       -17.438236014815        -0.952508945828721      -2.5452138618332
+2.46695646845647        816.860451188257        -2.66094759373806       -0.977151269335341      3.28081806544327        -2.88190921764142       -3.99282899790419       10.0687977147599        -4.54533819024995       -3.22702289608423
+-0.329003681384558      -2.66094759373806       717.36028205267 1.27054225891088        2.14236789200294        2.763142595182  5.41066943944464        -21.7286411244683       2.05734073820908        3.14718118477412
+-0.542642615974959      -0.977151269335341      1.27054225891088        746.107700828109        -2.67662798129945       3.73120106378704        1.06054790128738        -17.2710008700821       5.02449469635502        -0.212193576451092
+5.84475776763891        3.28081806544327        2.14236789200294        -2.67662798129945       741.91221844973 0.182002504413003       0.875872345391666       -18.6095329401385       -0.286157325508189      1.18322068193162
+0.00812555284358235     -2.88190921764142       2.763142595182  3.73120106378704        0.182002504413003       725.278302468447        2.94023154087119        -20.4856002004565       3.44431111092079        0.731471706945361
+0.307654050000212       -3.99282899790419       5.41066943944464        1.06054790128738        0.875872345391666       2.94023154087119        718.650183735096        -19.5228426550792       2.5147839445688 3.37527023625136
+-17.438236014815        10.0687977147599        -21.7286411244683       -17.2710008700821       -18.6095329401385       -20.4856002004565       -19.5228426550792       1313.9387577388 -9.77120939182167       -22.4079043609389
+-0.952508945828721      -4.54533819024995       2.05734073820908        5.02449469635502        -0.286157325508189      3.44431111092079        2.5147839445688 -9.77120939182167       750.431295913419        0.662021667949764
+-2.5452138618332        -3.22702289608423       3.14718118477412        -0.212193576451092      1.18322068193162        0.731471706945361       3.37527023625136        -22.4079043609389       0.662021667949764       717.460315690539
+British British.Ran4000
+317.744968143149        0.574231004098338       0.332629018716011       -1.54070479237124       -0.818976337525611      -0.762528234684882      1.17054055614947        -0.0881932056963579     -0.156799981483767      0.275600580645048
+0.574231004098338       319.987986411204        -0.17538422009751       -0.89170097802975       0.319694979048973       -0.0742903957655263     1.43000452560958        -0.32923763318272       0.520041096830486       -0.309549012482965
+0.332629018716011       -0.17538422009751       327.255666112868        0.332803800365702       -1.69522314243157       0.920511895953999       0.566227375339445       -0.171514432863692      -0.340408723902007      1.01863574053922
+-1.54070479237124       -0.89170097802975       0.332803800365702       318.557073988053        0.34073438621889        0.364041338914116       0.104539559119985       0.147274066676216       -0.806981977626123      -0.112869191327898
+-0.818976337525611      0.319694979048973       -1.69522314243157       0.34073438621889        320.096899146527        -0.249111486756926      -1.04486399757271       -0.510094660153049      -0.300837934103713      0.461879519702544
+-0.762528234684882      -0.0742903957655263     0.920511895953999       0.364041338914116       -0.249111486756926      319.316768470443        0.287266282913738       -1.36300813317142       0.318833164387358       0.233607038443081
+1.17054055614947        1.43000452560958        0.566227375339445       0.104539559119985       -1.04486399757271       0.287266282913738       316.844215785984        -0.301319862796184      -0.762397967530512      -0.592168289474944
+-0.0881932056963579     -0.32923763318272       -0.171514432863692      0.147274066676216       -0.510094660153049      -1.36300813317142       -0.301319862796184      317.699439423496        -0.850064814940407      -0.921795190481922
+-0.156799981483767      0.520041096830486       -0.340408723902007      -0.806981977626123      -0.300837934103713      0.318833164387358       -0.762397967530512      -0.850064814940407      315.544537817684        -0.175806670361048
+0.275600580645048       -0.309549012482965      1.01863574053922        -0.112869191327898      0.461879519702544       0.233607038443081       -0.592168289474944      -0.921795190481922      -0.175806670361048      318.428569675411
+British British.Ran10000
+127.825366817134        0.440650006442091       0.0310507216866623      -0.0612350107917859     -0.138777796125079      0.105629652723357       -0.467817827116038      1.1164345096615 -0.522217709583515      -1.056498819754
+0.440650006442091       125.398281706077        -0.263839578121511      -0.251046536349674      -0.494111469709858      -0.429293818569851      0.0902367625369315      -0.423111212618125      -0.305520233923727      -0.029711873134892
+0.0310507216866623      -0.263839578121511      125.868547535685        -0.319628719050608      0.348349092184275       0.0330536317512229      -0.406985113132956      -0.075710675343276      -0.0225614768829892     0.1574747571485
+-0.0612350107917859     -0.251046536349674      -0.319628719050608      127.991018330916        0.146583555068655       -0.266171171395144      -0.164297571393123      0.305235793507071       -0.52640362039611       0.386522635667922
+-0.138777796125079      -0.494111469709858      0.348349092184275       0.146583555068655       127.434992694768        0.226265357442361       -0.0938704257488164     0.640150399561178       -0.155775229065558      0.335908931239653
+0.105629652723357       -0.429293818569851      0.0330536317512229      -0.266171171395144      0.226265357442361       126.547245729138        0.0547105086667925      -0.535298588668902      -0.236046003356753      0.176248074640641
+-0.467817827116038      0.0902367625369315      -0.406985113132956      -0.164297571393123      -0.0938704257488164     0.0547105086667925      126.149702809449        0.478698068933724       -0.284107184214702      0.549791632022312
+1.1164345096615 -0.423111212618125      -0.075710675343276      0.305235793507071       0.640150399561178       -0.535298588668902      0.478698068933724       126.965271299041        -0.449569546344408      -0.376618830000328
+-0.522217709583515      -0.305520233923727      -0.0225614768829892     -0.52640362039611       -0.155775229065558      -0.236046003356753      -0.284107184214702      -0.449569546344408      126.675065043329        -0.1097068671984
+-1.056498819754 -0.029711873134892      0.1574747571485 0.386522635667922       0.335908931239653       0.176248074640641       0.549791632022312       -0.376618830000328      -0.1097068671984        126.570571291493
+Caribbean Caribbean
+625.522887789989        -2.21527112291598       -0.787217082605628      -1.3167218901378        -0.049490369253212      -0.279075692338455      2.23382962894526        -1.62177432399012       1.12918197509991        -1.94523739060873
+-2.21527112291598       811.431977200955        4.89081947868323        -7.95092229029859       -14.208253457894        3.77045295101977        -9.43688276364757       46.7449650247535        -6.9828432213516        -3.48855700137184
+-0.787217082605628      4.89081947868323        646.791443635688        0.547948196905693       2.01080400812156        0.451805387739096       -6.59224182852064       1.85887989837002        0.611063388706995       1.54010780930253
+-1.3167218901378        -7.95092229029859       0.547948196905693       591.109779799051        2.25671257305329        -2.16361367301028       1.98992822131301        -11.9455316113447       -0.67501091017617       -1.66021210316254
+-0.049490369253212      -14.208253457894        2.01080400812156        2.25671257305329        580.300599988527        -1.68939366733816       0.257246162533131       -15.1470953285792       -1.99336776628803       1.22487936415477
+-0.279075692338455      3.77045295101977        0.451805387739096       -2.16361367301028       -1.68939366733816       635.844194612288        1.98711447683169        5.86607771369521        0.0636803349314839      -1.11540952980968
+2.23382962894526        -9.43688276364757       -6.59224182852064       1.98992822131301        0.257246162533131       1.98711447683169        595.396359141344        -6.25999613207442       2.20025399175619        1.52485063830468
+-1.62177432399012       46.7449650247535        1.85887989837002        -11.9455316113447       -15.1470953285792       5.86607771369521        -6.25999613207442       793.805609736436        -4.03668563905809       -3.52208899168403
+1.12918197509991        -6.9828432213516        0.611063388706995       -0.67501091017617       -1.99336776628803       0.0636803349314839      2.20025399175619        -4.03668563905809       612.110700946784        3.75602420317548
+-1.94523739060873       -3.48855700137184       1.54010780930253        -1.66021210316254       1.22487936415477        -1.11540952980968       1.52485063830468        -3.52208899168403       3.75602420317548        615.926775469974
+Chinese Chinese
+686.325043275657        1.54723741766629        -1.69965784204582       -0.78133065802839       -3.23696163249846       4.8363156734128 -3.3195524183919        0.271834094565851       1.72603555549298        -1.33013210804542
+1.54723741766629        696.156435881123        1.14642270457995        -1.38526416526945       2.85363461047694        2.02536121419127        -0.0462368634735442     0.225224911169961       -4.29002609495137       1.30655400185496
+-1.69965784204582       1.14642270457995        680.977734702384        -2.80676862395697       1.3498592330675 -0.6147240571025        -0.943847303207085      0.0484685394915362      -2.0022991316858        3.55109581007366
+-0.78133065802839       -1.38526416526945       -2.80676862395697       693.11706154332 0.24852752598054        -2.96516840838374       2.95646645840238        -3.68896552117694       3.42753811711206        -3.93727523553503
+-3.23696163249846       2.85363461047694        1.3498592330675 0.24852752598054        701.92420188694 -4.03551025554069       2.74347467669329        -0.270435341207622      -2.69447185915047       2.94294143664895
+4.8363156734128 2.02536121419127        -0.6147240571025        -2.96516840838374       -4.03551025554069       683.674662490566        0.143849919665941       -4.93468988284834       0.671171682851535       -2.63592068456292
+-3.3195524183919        -0.0462368634735442     -0.943847303207085      2.95646645840238        2.74347467669329        0.143849919665941       686.621813095763        1.78718330313501        -0.220151131590227      0.841475810941749
+0.271834094565851       0.225224911169961       0.0484685394915362      -3.68896552117694       -0.270435341207622      -4.93468988284834       1.78718330313501        687.969364062822        1.45515119931189        -0.151037456183992
+1.72603555549298        -4.29002609495137       -2.0022991316858        3.42753811711206        -2.69447185915047       0.671171682851535       -0.220151131590227      1.45515119931189        696.514325894406        -0.61854088241682
+-1.33013210804542       1.30655400185496        3.55109581007366        -3.93727523553503       2.94294143664895        -2.63592068456292       0.841475810941749       -0.151037456183992      -0.61854088241682       688.853235631383
+Indian Indian
+269.218786135946        0.115221059639261       0.350254234514312       -1.10576582131108       -0.470365594436781      -1.5490097088085        0.752492779016035       1.0541466474716 -0.969935562081731      -0.442642140464561
+0.115221059639261       260.076743127278        -0.878719406479094      0.49074677189341        1.47325137777194        1.99868512770068        -0.961678307347292      0.144605070659411       0.649969240032845       0.013263092016128
+0.350254234514312       -0.878719406479094      268.332130106499        -0.133646846815724      -1.80568306197878       -0.812236315024461      0.112154845056519       -0.326738639931097      -1.84400694570667       0.222236892890498
+-1.10576582131108       0.49074677189341        -0.133646846815724      261.010394104774        3.43383865443389        0.8620525683036 0.272435696473578       2.30794516488625        1.79596485701682        0.468476738091996
+-0.470365594436781      1.47325137777194        -1.80568306197878       3.43383865443389        257.433578150667        1.04176594734497        -1.75321520521739       3.81935115922735        5.65679654692519        -0.0841161800658136
+-1.5490097088085        1.99868512770068        -0.812236315024461      0.8620525683036 1.04176594734497        261.593752951186        -1.30119019352654       0.61846890788262        0.529649918192112       0.222595212512559
+0.752492779016035       -0.961678307347292      0.112154845056519       0.272435696473578       -1.75321520521739       -1.30119019352654       268.204420912678        -1.53674456972885       -0.313751452993301      -0.887793396418227
+1.0541466474716 0.144605070659411       -0.326738639931097      2.30794516488625        3.81935115922735        0.61846890788262        -1.53674456972885       260.262548740274        2.53681710488804        -0.838992227589235
+-0.969935562081731      0.649969240032845       -1.84400694570667       1.79596485701682        5.65679654692519        0.529649918192112       -0.313751452993301      2.53681710488804        257.061219077574        -0.120385888956566
+-0.442642140464561      0.013263092016128       0.222236892890498       0.468476738091996       -0.0841161800658136     0.222595212512559       -0.887793396418227      -0.838992227589235      -0.120385888956566      265.893629040839
+Irish Irish
+104.592221594461        -0.363710567724264      -0.166479275745665      0.464024263088033       -0.36724098267885       0.0741223511181148      -0.089570788736336      0.10506655970495        -0.289817264359026      -0.0825976554133261
+-0.363710567724264      104.252575049269        0.400454346300153       0.370246794617824       -0.0205071159836428     -0.188148827933233      0.299898351980997       0.256723521229446       0.0859897378969636      -0.721466560552924
+-0.166479275745665      0.400454346300153       104.32035984026 -0.402763250334452      0.25832404971449        -0.437489645636895      0.452636491628001       -0.261896250304409      -0.0194313400446552     -0.483590502140725
+0.464024263088033       0.370246794617824       -0.402763250334452      105.286080470187        0.0414129491724049      -0.721457012681718      0.383006331888443       0.790131316038556       -0.522914825808277      0.218842405046132
+-0.36724098267885       -0.0205071159836428     0.25832404971449        0.0414129491724049      106.443319748175        0.252022761394524       -0.164331861536159      -0.293000296990478      -0.0467840089262074     0.446874543704018
+0.0741223511181148      -0.188148827933233      -0.437489645636895      -0.721457012681718      0.252022761394524       102.916955013743        0.152547824876444       0.0348694038433209      0.351859314487375       -0.19185970948189
+-0.089570788736336      0.299898351980997       0.452636491628001       0.383006331888443       -0.164331861536159      0.152547824876444       104.335333830839        0.171357737085679       -0.0241931939767038     -0.503721281866243
+0.10506655970495        0.256723521229446       -0.261896250304409      0.790131316038556       -0.293000296990478      0.0348694038433209      0.171357737085679       104.30371024785 -0.540713198123637      -0.335305050751415
+-0.289817264359026      0.0859897378969636      -0.0194313400446552     -0.522914825808277      -0.0467840089262074     0.351859314487375       -0.0241931939767038     -0.540713198123637      104.011350289842        -0.22599384934544
+-0.0825976554133261     -0.721466560552924      -0.483590502140725      0.218842405046132       0.446874543704018       -0.19185970948189       -0.503721281866243      -0.335305050751415      -0.22599384934544       104.217231243244
+Pakistani Pakistani
+865.892175069916        -0.240047015924097      -3.71898027740689       -2.76683868385201       -5.26718358243354       -4.8897637329676        0.978811548006155       -0.601034976814738      -4.00458171005366       -2.57748738700129
+-0.240047015924097      931.639205765153        -1.9960227850618        -5.58560633334792       -5.54432036460975       0.331252274882156       -2.27277503921216       -5.6252610382811        -0.345185817603312      -2.66633769962261
+-3.71898027740689       -1.9960227850618        840.362137708379        -6.59377889703454       -3.06800890924788       1.18207001677622        1.37754391289624        2.43933596124625        -1.51516380258977       -4.51559966211272
+-2.76683868385201       -5.58560633334792       -6.59377889703454       903.82178173462 2.74137107558443        -3.83987793491002       -2.55826965012709       2.66664908842265        2.58401517043668        -2.17775510822283
+-5.26718358243354       -5.54432036460975       -3.06800890924788       2.74137107558443        854.341158857609        -0.699938747685572      0.665644325056482       3.63091425954191        -2.09450299343767       1.32216974928929
+-4.8897637329676        0.331252274882156       1.18207001677622        -3.83987793491002       -0.699938747685572      954.654829998225        -3.8095616824501        -2.27391675396312       -1.15108816809481       1.56189682803332
+0.978811548006155       -2.27277503921216       1.37754391289624        -2.55826965012709       0.665644325056482       -3.8095616824501        824.96519664974 -0.578287451765991      0.579461391009944       0.858950860767659
+-0.601034976814738      -5.6252610382811        2.43933596124625        2.66664908842265        3.63091425954191        -2.27391675396312       -0.578287451765991      833.491984096912        -0.201078164834396      -0.801708420613096
+-4.00458171005366       -0.345185817603312      -1.51516380258977       2.58401517043668        -2.09450299343767       -1.15108816809481       0.579461391009944       -0.201078164834396      929.196604812551        2.2704171194417
+-2.57748738700129       -2.66633769962261       -4.51559966211272       -2.17775510822283       1.32216974928929        1.56189682803332        0.858950860767659       -0.801708420613096      2.2704171194417 913.743069403719
 
 
 
