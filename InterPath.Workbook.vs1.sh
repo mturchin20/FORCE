@@ -1361,7 +1361,7 @@ done
 #Indn: 13253.066; 
 #African: 45gb
 #Brit10k: ~133gb, had success with a 180gb interactive node (like less than an hour?); 110gb for the per-chr version succeeded; (Irish worked with 225g on ccmb-condo) 
-#20191128 NOTE -- info for post-change to imputation
+#20191128 NOTE -- info for post-change to imputation (~425gb probably enough to cover everything?)
 #Afr: mem 190331060K (~190gb?), time 532.272
 #Brit10k: mem 290996496K, time 2445.701 (Irish: mem 346579616K, time 3505.491)
  
@@ -13019,23 +13019,15 @@ British British.Ran4000 Brit4k
 >
 >
       0       0       0
-
 British British.Ran10000 Brit10k
 1220050 2440100 28367734
 1220050 1220050 16623967
 1220050 7320300 35688034
-
 > Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.British.Ran10000.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
-Error in file(file, ifelse(append, "a", "w")) :
-  cannot open the connection
-Calls: write.table -> file
-In addition: Warning message:
-In file(file, ifelse(append, "a", "w")) :
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt': No such file or directory
-Execution halted
-cat: /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt: No such file or directory
-   9604   19208  163260
+>
+>
 
+      0       0       0
 Caribbean Caribbean Carib
 2420859 4841718 56292098
 2420859 2420859 32987767
