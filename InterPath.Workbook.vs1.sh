@@ -13021,6 +13021,10 @@ African African Afr
 2479822 4959644 57663680
 2479822 2479822 33791484
 2479822 14878932 72542612
+> Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.African.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
+>
+>
+      0       0       0
 British British.Ran4000 Brit4k
 1221091 2442182 28392416
 1221091 1221091 16638390
@@ -13043,6 +13047,38 @@ Caribbean Caribbean Carib
 2420859 2420859 32987767
 2420859 14525154 70817252
 > Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.Caribbean.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
+>
+>
+      0       0       0
+Chinese Chinese Chi
+1034285 2068570 24051266
+1034285 1034285 14094203
+1034285 6205710 30256976
+> Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.Chinese.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
+>
+>
+      0       0       0
+Indian Indian Indn
+1352374 2704748 31446316
+1352374 1352374 18427906
+1352374 8114244 39560560
+> Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.Indian.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
+>
+>
+      0       0       0
+Irish Irish Irish
+1206342 2412684 28049586
+1206342 1206342 16437477
+1206342 7238052 35287638
+> Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.Irish.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
+>
+>
+      0       0       0
+Pakistani Pakistani Pkstn
+1344328 2688656 31258978
+1344328 1344328 18318145
+1344328 8065968 39324946
+> Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.Pakistani.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
 >
 >
       0       0       0
