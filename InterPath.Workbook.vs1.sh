@@ -1181,7 +1181,7 @@ done
 
 #20190910 NOTE -- separating this out for the moment since jumping in here to get the 'wthnPop' versions going, but it's not in conjunction yet with the other parts of the code; so just a stand alone moment until it's time to come back to it
 #20191123 NOTE -- back here now continuing things, not just with 'wthnPop' but also with '...dose.QCed.Ovrlp.pruned.raw...' and '...BMIAdj.wCovars.yIntrcptFix.BMIage.wAC...'
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 4`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
         ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`
@@ -1229,7 +1229,7 @@ FID IID Height BMI Waist Hip
 1002190 1002190 0.702770705686875 2.16658692659075 2.51658292045675 2.64645755214058
 1002805 1002805 0.31568676247995 -1.25459712603051 -0.283450856036853 -0.0445114443704853
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 4`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 7`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		
@@ -1263,7 +1263,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 done
 
 #nonsynonymous, exonic, exonic + intronic + UTR, exonic + intronic + UTR + upstream/downstream + 20kb away
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 8`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 7`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`; echo $pheno1 $ancestry1 $ancestry2 $ancestry3;
 
 	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | grep nonsynonymous | sort -k 1,1 | perl -lane 'if ($. == 1) { @gene1; push(@gene1, $F[0]); push(@gene1, $F[3]); } else { if ($F[0] ne $gene1[0]) { print $gene1[0], "\t", join(",", @gene1[1..$#gene1]); @gene1 = (); push(@gene1, $F[0]); push(@gene1, $F[3]); } else { push(@gene1, $F[3]); } if (eof()) { print $gene1[0], "\t", join(",", @gene1[1..$#gene1]); } };' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.NonSyn.txt
@@ -1272,7 +1272,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | grep -E 'exonic|intronic|UTR|upstream|downstream' | sort -k 1,1 | perl -lane 'my @info1 = split(/,/, $F[2]); if ($info1[0] =~ m/intergenic/) { my @dists1 = split(/=/, $info1[1]); if ($dists1[1] <= 20000) { print join("\t", @F); } } else { print join("\t", @F); }' | perl -lane 'if ($. == 1) { @gene1; push(@gene1, $F[0]); push(@gene1, $F[3]); } else { if ($F[0] ne $gene1[0]) { print $gene1[0], "\t", join(",", @gene1[1..$#gene1]); @gene1 = (); push(@gene1, $F[0]); push(@gene1, $F[3]); } else { push(@gene1, $F[3]); } if (eof()) { print $gene1[0], "\t", join(",", @gene1[1..$#gene1]); } };' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.txt
 	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | grep -E 'intronic|UTR|upstream|downstream' | grep -v -E 'exonic|splicing' | sort -k 1,1 | perl -lane 'my @info1 = split(/,/, $F[2]); if ($info1[0] =~ m/intergenic/) { my @dists1 = split(/=/, $info1[1]); if ($dists1[1] <= 20000) { print join("\t", @F); } } else { print join("\t", @F); }' | perl -lane 'if ($. == 1) { @gene1; push(@gene1, $F[0]); push(@gene1, $F[3]); } else { if ($F[0] ne $gene1[0]) { print $gene1[0], "\t", join(",", @gene1[1..$#gene1]); @gene1 = (); push(@gene1, $F[0]); push(@gene1, $F[3]); } else { push(@gene1, $F[3]); } if (eof()) { print $gene1[0], "\t", join(",", @gene1[1..$#gene1]); } };' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.IntronicPlus20kb.txt
 done
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 8`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 7`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`; echo $pheno1 $ancestry1 $ancestry2 $ancestry3;
 
 	cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | perl -slane 'if ($. == 1) { $input_file = "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1b/$ancestry2b/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2b.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.NonSyn.txt"; %hash1; open( my $input_fh, "<", $input_file ) || die "Cannot open $input_file: $!"; while(my @row = split(/\s+/, <$input_fh>)) { chomp @row; $hash1{$row[0]} = \$row[1]; } close($input_fh); } my @info1; foreach my $entry1 (@F[2..$#F]) { if ($hash1{$entry1}) { push(@info1, ${$hash1{$entry1}}); } } print $F[0], "\t", $F[1], "\t", join(",", @info1);' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 | perl -lane 'if ($#F == 2) { print join("\t", @F); }' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.NonSyn.txt
@@ -1305,7 +1305,7 @@ done > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additi
 #paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt) <(for l in `cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | awk '{ print $3 }'`; do val1=`echo $l | perl -ane 'my @vals1=split(",", $F[0]); print join("\n", @vals1), "\n";' | wc | awk '{ print $1 }'`; val2=`echo $l | perl -ane 'my @vals1=split(",", $F[0]); print join("\n", @vals1), "\n";' | sort | uniq | wc | awk '{ print $1 }'`; echo $val1 $val2; done | awk '{ if ($1 != $2) { print "1" } else { print "0" } }') | head -n 10   
 #paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt) <(for l in `cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.txt | awk '{ print $3 }'`; do val1=`echo $l | perl -ane 'my @vals1=split(",", $F[0]); print join("\n", @vals1), "\n";' | wc | awk '{ print $1 }'`; val2=`echo $l | perl -ane 'my @vals1=split(",", $F[0]); print join("\n", @vals1), "\n";' | sort | uniq | wc | awk '{ print $1 }'`; echo $val1 $val2; done | awk '{ if ($1 != $2) { print "1" } else { print "0" } }') > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.wDupFlag.txt
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 4`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 7`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`; echo $pheno1 $ancestry1 $ancestry2 $ancestry3;
 
 	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.NonSyn.txt | perl -lane 'my @pos1 = split(/,/, $F[2]); my @pos2; my %hash1; my $dupFlag1 = 0; foreach my $snp (@pos1) { if ($hash1{$snp}) { $dupFlag1 = 1; } else { push(@pos2, $snp); $hash1{$snp} = 1; } } $F[2] = join(",", @pos2); print join("\t", @F), "\t", $dupFlag1;' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.NonSyn.noDups.txt
@@ -1375,7 +1375,7 @@ done
 #Indn: 13253.066; 
 #African: 45gb
 #Brit10k: ~133gb, had success with a 180gb interactive node (like less than an hour?); 110gb for the per-chr version succeeded; (Irish worked with 225g on ccmb-condo) 
-#20191128 NOTE -- info for post-change to imputation (~425gb probably enough to cover everything?)
+#20191128 NOTE -- info for post-change to imputation (~425gb probably enough to cover everything?); use '-p bigmem' or '-q bigmem' (former for sbatch, latter for interact)
 #Afr: mem 190331060K (~190gb?), time 532.272
 #Brit10k: mem 290996496K, time 2445.701 (Irish: mem 346579616K, time 3505.491)
  
@@ -1447,12 +1447,11 @@ done
 #<10k: 24g
 #>=10k: 65g (75g for Irish)
 
-
 #20190619 NOTE -- in some few cases for Irish getting a `Warning message: system call failed: Cannot allocate memory` error in the error files, but investigating at least one of the source and underlying files (`ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/slurmTemp/*error | awk '{ if ($5 == 61) { print $0 } }'`) doesn't seem to show anything obvious? all files are present and look fine, no obvious issues or discrepancies; so for the moment moving forward, since it's only affect 9 collection of files, only 2 of which are really ultimately analyzed at the moment anyways; NOTE -- there's slight differences between 'k' on which files showup/have issues, thought 'Pathways1' seems to be consistent possibly?
 #ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/slurmTemp/*error | awk '{ if ($5 == 61) { print $0 } }'
 #Afr & Brit4k: 100gb
 module load R/3.4.3_mkl; for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | head -n 1`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 2`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1 | head -n 1`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
@@ -1482,7 +1481,7 @@ module load R/3.4.3_mkl; for i in `cat <(echo "Height BMI Waist Hip" | perl -lan
 		done; 
 	done;
 done;	
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 7 | tail -n 1`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		echo $i $ancestry1 $ancestry2 $ancestry3 $k
@@ -13299,6 +13298,236 @@ African African ExonicPlus20kb 4734
    4734 1
 British British.Ran4000 ExonicPlus20kb 4734
    4734 1
+[  mturchin@node1162  ~/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3]$for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 4 | tail -n 4`; do
+>         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+>         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>         ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`
+>
+>         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+>
+>         zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -lane 'print j
+oin("\n", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.SNPIDs
+>         paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.SNPIDs | sed 's/_/ /g' | awk '{ pr
+int $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | awk '{ print $2 }') | awk '{ if ($1 =
+= $2) { print $0 } } ' | wc
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.SNPIDs | wc
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | wc
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.SNPIDs | awk '{ print $1 "\t" NR }' > /use
+rs/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.SNPIDsRowPos
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw | perl -lane 'print join("\t", @F[0..6]);'
+ | sed 's/_/ /g' | awk '{ print $1 "\t" $2 }' | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID2\"); \
+>         Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.$ancestry2.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt\", header=T); \
+>         Data3 <- merge(Data1, Data2, by=\"FID\"); \
+>         write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.
+raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);"
+>         paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw | perl -lane 'print join("\t", @F[
+0..6]);' | sed 's/_/ /g' | awk '{ print $1 "\t" $2 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose
+.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt | awk '{ print $1 }') | awk '{ if ($1 != $3) { print $0 } }' | wc
+> #       rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw
+>
+> #       cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.BMIAdj.txt | awk '{ print $1 "\t" $2 }' | R -q -e "Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c(\"FID\", \"IID2\"); \
+> #       Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.BMIAdj.Edit.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.top10resids.txt\", header=T); \
+> #       Data3 <- merge(Data1, Data2, by=\"FID\"); \
+> #       write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.BMIAdj.flashpca.top10resids.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);"
+> #       paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.BMIAdj.txt | awk '{ print $1 "\t" $2 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.BMIAdj.flashpca.top10resids.txt | awk '{ print $1 }') | awk '{ if ($1 != $3) { print $0 } }' | wc
+>
+> done
+African African Afr
+ 374466  748932 8715122
+ 374466  374466 5108147
+ 374466 2246796 10965719
+> Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.African.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
+>
+>
+      0       0       0
+British British.Ran4000 Brit4k
+ 600006 1200012 13974812
+ 600006  600006 8189049
+ 600006 3600036 17578726
+> Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.British.Ran4000.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
+>
+>
+      0       0       0
+British British.Ran10000 Brit10k
+ 597298 1194596 13911862
+ 597298  597298 8152154
+ 597298 3583788 17499509
+> Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.British.Ran10000.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
+>
+>
+      0       0       0
+Caribbean Caribbean Carib
+ 410017  820034 9543850
+ 410017  410017 5593672
+ 410017 2460102 12007918
+> Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.Caribbean.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
+>
+>
+      0       0       0
+Chinese Chinese Chi
+ 345221  690442 8035582
+ 345221  345221 4709602
+ 345221 2071326 10109767
+> Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.Chinese.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
+>
+>
+      0       0       0
+Indian Indian Indn
+ 505854 1011708 11779274
+ 505854  505854 6902946
+ 505854 3035124 14817991
+> Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.Indian.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
+>
+>
+      0       0       0
+Irish Irish Irish
+ 588324 1176648 13702998
+ 588324  588324 8029769
+ 588324 3529944 17236786
+> Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.Irish.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
+>
+>
+      0       0       0
+Pakistani Pakistani Pkstn
+ 516806 1033612 12034368
+ 516806  516806 7052434
+ 516806 3100836 15138882
+> Data1 <- read.table(file('stdin'), header=T); colnames(Data1) <- c("FID", "IID2");         Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.Pakistani.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt", header=T);         Data3 <- merge(Data1, Data2, by="FID");         write.table(Data3[,c(1,3:ncol(Data3))], "/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", quote=FALSE, row.name=FALSE, col.name=TRUE);
+>
+>
+      0       0       0
+[  mturchin@node1162  ~/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3]$for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 8`; do
+>         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+>         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+> 
+>         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+> 
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.hg19_multianno.txt | wc  
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.txt | wc
+>         join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.hg19_multianno.txt | awk '{ print $1 "_" $2 }' | sort) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.txt | awk '{ print $1 "_" $2 }' | sort) | wc
+> 
+> done
+African African Carib
+ 374467 3767884 26723168
+ 374467 3767688 26750265
+ 374467  374467 4357571
+British British.Ran4000 Carib
+ 600007 6027894 42126397
+ 600007 6027723 42165684
+ 600007  600007 6987416
+British British.Ran10000 Carib
+ 597299 6000552 41924931
+ 597299 6000383 41963411
+ 597299  597299 6955941
+Caribbean Caribbean Carib
+ 410018 4124863 29203011
+ 410018 4124660 29233042
+ 410018  410018 4771935
+Chinese Chinese Carib
+ 345222 3470586 24414508
+ 345222 3470477 24438452
+ 345222  345222 4017801
+Indian Indian Carib
+ 505855 5083455 35623843
+ 505855 5083296 35657794
+ 505855  505855 5889647
+Irish Irish Carib
+ 588325 5910593 41306430
+ 588325 5910424 41344789
+ 588325  588325 6851509
+Pakistani Pakistani Carib
+ 516807 5193537 36398370
+ 516807 5193369 36433198
+ 516807  516807 6017194
+[  mturchin@node1162  ~/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3]$for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8`; do
+>         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+>         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>
+>         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+>
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt | head -n 10 | perl -lane 'print join("\t", @F[0..9]);'
+>
+> done
+African African Pkstn
+112.792578162183        0.545271289445521       -0.226911355917821      -0.446942439234822      0.963108408612535       0.200633426222005       0.0183386482297863      -2.59026974656647       -0.00496609852141815    -0.598242968975763
+0.545271289445521       122.655428736933        -0.663991600837321      -0.649595084467077      0.552583326745332       -0.231840497600548      -0.863593613756951      1.55978685868083        -0.702233185964297      -0.747418778892459
+-0.226911355917821      -0.663991600837321      111.49644982504 -0.0367030112957951     0.0860381797113971      0.464446321786291       0.866090520846844       -2.77832214923984       0.259810018515551       0.138124467230348
+-0.446942439234822      -0.649595084467077      -0.0367030112957951     114.184280979309        -0.474802651950047      0.283908438484611       -0.00535039469441713    -2.6954533451232        0.708236935178508       0.212245275125354
+0.963108408612535       0.552583326745332       0.0860381797113971      -0.474802651950047      113.007041267002        -0.678093445326458      0.303850323032159       -2.90088966932489       0.011306496795821       -0.295132221928482
+0.200633426222005       -0.231840497600548      0.464446321786291       0.283908438484611       -0.678093445326458      112.551597477829        0.531764148624439       -2.96661987473895       0.963809587234614       -0.0637911550692949
+0.0183386482297863      -0.863593613756951      0.866090520846844       -0.00535039469441713    0.303850323032159       0.531764148624439       112.054462877981        -2.47480584053861       0.212336656941371       0.217594297425862
+-2.59026974656647       1.55978685868083        -2.77832214923984       -2.6954533451232        -2.90088966932489       -2.96661987473895       -2.47480584053861       188.269252389805        -1.86587117899388       -3.69999345634061
+-0.00496609852141815    -0.702233185964297      0.259810018515551       0.708236935178508       0.011306496795821       0.963809587234614       0.212336656941371       -1.86587117899388       114.641232747417        -0.0568418914900867
+-0.598242968975763      -0.747418778892459      0.138124467230348       0.212245275125354       -0.295132221928482      -0.0637911550692949     0.217594297425862       -3.69999345634061       -0.0568418914900867     110.529612240043
+British British.Ran4000 Pkstn
+156.132566002013        0.189847884359417       0.504949942086795       -1.21946279235861       -0.250757111054829      -0.270000862010844      0.397020108667835       -0.813223412479112      -0.275384907470934      0.00977277972664221
+0.189847884359417       154.144339124974        -0.0103922991939353     -0.0180789225611625     0.244102661090907       0.155703941892339       0.97222776258217        -0.136969955059947      -0.281857060916805      -0.289421092494161
+0.504949942086795       -0.0103922991939353     157.157553607253        -0.359131587807918      -0.956403625268848      0.0762415971943869      0.538383178218504       0.689921374053233       0.126327565685188       0.121893951599642
+-1.21946279235861       -0.0180789225611625     -0.359131587807918      157.605324579794        0.122778325741453       0.291362736092143       0.175143793657907       -0.62096325626835       0.430859041447906       0.132366312705362
+-0.250757111054829      0.244102661090907       -0.956403625268848      0.122778325741453       157.340599000238        0.130410940666414       -0.549444821558974      0.359535339262517       0.18196789550629        -0.382690537587844
+-0.270000862010844      0.155703941892339       0.0762415971943869      0.291362736092143       0.130410940666414       156.2043624498  -0.117807003461223      -0.355744585022552      0.0698620115758415      -0.303616948469954
+0.397020108667835       0.97222776258217        0.538383178218504       0.175143793657907       -0.549444821558974      -0.117807003461223      155.924248823865        -0.0670675162707053     -0.747875877797583      -0.261435169382273
+-0.813223412479112      -0.136969955059947      0.689921374053233       -0.62096325626835       0.359535339262517       -0.355744585022552      -0.0670675162707053     156.49807174576 -0.149811091348326      -0.211101798266966
+-0.275384907470934      -0.281857060916805      0.126327565685188       0.430859041447906       0.18196789550629        0.0698620115758415      -0.747875877797583      -0.149811091348326      155.735835513255        -0.456166483981016
+0.00977277972664221     -0.289421092494161      0.121893951599642       0.132366312705362       -0.382690537587844      -0.303616948469954      -0.261435169382273      -0.211101798266966      -0.456166483981016      156.70694091657
+British British.Ran10000 Pkstn
+62.1645930023009        0.236713462781507       -0.187861754158849      -0.197280693652023      -0.151279000472152      0.182834787350943       -0.146582197546291      0.502943764116451       -0.323204953047031      -0.363807617540667
+0.236713462781507       61.2940454979007        -0.271877234880667      -0.125964090568312      -0.1469928335244        -0.382400694367261      0.0697296892894289      -0.0521173312148526     -0.188336862388845      -0.118024776166403
+-0.187861754158849      -0.271877234880667      62.0944043863434        -0.329142968342293      0.261353227239532       0.0685137363209789      0.00656700124770281     -0.147300002070525      0.197015684136545       -0.0726100814844358
+-0.197280693652023      -0.125964090568312      -0.329142968342293      62.1189356531898        0.0107259950960481      -0.191600355196876      -0.0888063123448699     0.0855624016911253      -0.16977176483097       0.279437246929876
+-0.151279000472152      -0.1469928335244        0.261353227239532       0.0107259950960481      62.77131075595  0.209760474837816       -0.150675536501204      0.335681980113806       -0.0444766525914557     -0.00337222076898347
+0.182834787350943       -0.382400694367261      0.0685137363209789      -0.191600355196876      0.209760474837816       62.0623397345945        -0.178243124984317      -0.493291741701192      -0.0439996581846832     0.0185557581396462
+-0.146582197546291      0.0697296892894289      0.00656700124770281     -0.0888063123448699     -0.150675536501204      -0.178243124984317      61.8755753082881        0.103826033045409       -0.2147409744215        0.217685688335047
+0.502943764116451       -0.0521173312148526     -0.147300002070525      0.0855624016911253      0.335681980113806       -0.493291741701192      0.103826033045409       61.9199246852099        -0.350499269718619      -0.147140679138682
+-0.323204953047031      -0.188336862388845      0.197015684136545       -0.16977176483097       -0.0444766525914557     -0.0439996581846832     -0.2147409744215        -0.350499269718619      61.7866121409879        -0.179366341575494
+-0.363807617540667      -0.118024776166403      -0.0726100814844358     0.279437246929876       -0.00337222076898347    0.0185557581396462      0.217685688335047       -0.147140679138682      -0.179366341575494      61.6412888773045
+Caribbean Caribbean Pkstn
+105.816654602715        -0.457229775837438      0.0884302458080791      -0.256372132215111      -0.138384485917771      -0.19272720108703       0.497242626836259       -0.106419234229856      0.341039355254377       -0.516994705044506
+-0.457229775837438      143.64338415579 0.763046929918563       -1.71696504389359       -2.74346191596404       0.517622416524021       -2.18320602876304       9.461471695823  -0.936500802307292      -0.170880966111297
+0.0884302458080791      0.763046929918563       108.339506712056        0.291728994244406       0.300848719285039       0.740340798563671       -0.641970376475765      0.363901304475481       -0.0228467907183028     0.388981340456264
+-0.256372132215111      -1.71696504389359       0.291728994244406       97.5857525648652        0.536798667670424       -0.520428190552737      0.559184308157471       -2.44303013597373       -0.241457674741292      -0.0377151588232418
+-0.138384485917771      -2.74346191596404       0.300848719285039       0.536798667670424       95.3484411537617        -0.301728103697816      0.239235018572143       -3.22734612214666       -0.211692727325066      0.15164098633566
+-0.19272720108703       0.517622416524021       0.740340798563671       -0.520428190552737      -0.301728103697816      109.636486893452        0.419280858964439       1.66617463959818        -0.135902735764188      -0.241277337946164
+0.497242626836259       -2.18320602876304       -0.641970376475765      0.559184308157471       0.239235018572143       0.419280858964439       99.2894124644832        -1.63994354411347       0.346521461094201       -0.340891105243382
+-0.106419234229856      9.461471695823  0.363901304475481       -2.44303013597373       -3.22734612214666       1.66617463959818        -1.63994354411347       148.422532995855        -1.01151795272956       -0.440059118584024
+0.341039355254377       -0.936500802307292      -0.0228467907183028     -0.241457674741292      -0.211692727325066      -0.135902735764188      0.346521461094201       -1.01151795272956       102.52014493358 1.04047546477914
+-0.516994705044506      -0.170880966111297      0.388981340456264       -0.0377151588232418     0.15164098633566        -0.241277337946164      -0.340891105243382      -0.440059118584024      1.04047546477914        103.986227240661
+Chinese Chinese Pkstn
+233.358196880223        0.857795321015785       -1.74094930794662       -1.12657842819436       -2.40653018173153       0.948135722135885       -3.05282210603284       -0.520786525622398      0.251997800076017       -1.59624891309806
+0.857795321015785       236.302114709734        0.602962794301101       -1.39245826943027       -0.2045960744575        0.498425211396947       -1.58476530731956       -0.633864699199562      -1.04858037488955       1.22562848839877
+-1.74094930794662       0.602962794301101       231.413909024431        -3.12983630033238       0.454816434045318       -1.13015151750772       -0.706019236849109      0.122485021412343       0.0162422882631734      2.4096843575749
+-1.12657842819436       -1.39245826943027       -3.12983630033238       237.914512638838        1.05176796721912        -1.81311684656805       2.51636580130691        -2.59920014647539       0.699685389402248       -2.04106793437739
+-2.40653018173153       -0.2045960744575        0.454816434045318       1.05176796721912        236.604635287474        -0.254600927153924      2.49110343168453        0.821160080349123       -0.802116072013845      0.0681771844603697
+0.948135722135885       0.498425211396947       -1.13015151750772       -1.81311684656805       -0.254600927153924      235.519971033758        0.572851920940595       -1.2097757525055        -0.596057912927055      -0.519750681447801
+-3.05282210603284       -1.58476530731956       -0.706019236849109      2.51636580130691        2.49110343168453        0.572851920940595       231.490678987313        2.26194463624706        -0.600552572508461      0.799972450220368
+-0.520786525622398      -0.633864699199562      0.122485021412343       -2.59920014647539       0.821160080349123       -1.2097757525055        2.26194463624706        233.612576011214        -0.0985900732238108     -0.0511961691188453
+0.251997800076017       -1.04858037488955       0.0162422882631734      0.699685389402248       -0.802116072013845      -0.596057912927055      -0.600552572508461      -0.0985900732238108     236.191210340679        0.45562908512883
+-1.59624891309806       1.22562848839877        2.4096843575749 -2.04106793437739       0.0681771844603697      -0.519750681447801      0.799972450220368       -0.0511961691188453     0.45562908512883        234.824679384477
+Indian Indian Pkstn
+102.571498585737        0.0788509783740037      0.0561521649251247      -0.227689130505468      -0.0171848726726658     -0.21208842972826       0.346133831256468       0.221085332039397       -0.892475508160215      -0.303974714528938
+0.0788509783740037      93.9437910773544        -0.467331767696241      0.263290255132253       0.398851987092644       0.593672680810521       -0.434963809482645      0.0396401632627414      0.358973932034587       0.533204278564839
+0.0561521649251247      -0.467331767696241      104.654542339801        0.0498336076395695      -0.617309933134144      0.00963749439864684     0.13320582964886        -0.294206743224446      -1.03203853450064       0.328907012859014
+-0.227689130505468      0.263290255132253       0.0498336076395695      93.9580538378597        1.5107328789326 0.743746409670604       0.0281412627276517      0.832736562196361       0.643263489419931       0.138217067154964
+-0.0171848726726658     0.398851987092644       -0.617309933134144      1.5107328789326 91.1122447072961        0.843324066219419       -0.531527909001827      1.57162820590475        2.30887558353224        -0.0345435989366522
+-0.21208842972826       0.593672680810521       0.00963749439864684     0.743746409670604       0.843324066219419       96.0222113474546        -0.325673740084861      0.137394233106814       0.201464342681557       0.268577733257239
+0.346133831256468       -0.434963809482645      0.13320582964886        0.0281412627276517      -0.531527909001827      -0.325673740084861      102.174063459111        -0.417376469540314      -0.346049980047592      -0.414718097955823
+0.221085332039397       0.0396401632627414      -0.294206743224446      0.832736562196361       1.57162820590475        0.137394233106814       -0.417376469540314      95.1471863596196        1.23729942752099        -0.171438669920428
+-0.892475508160215      0.358973932034587       -1.03203853450064       0.643263489419931       2.30887558353224        0.201464342681557       -0.346049980047592      1.23729942752099        91.8993432721568        -0.104489664356399
+-0.303974714528938      0.533204278564839       0.328907012859014       0.138217067154964       -0.0345435989366522     0.268577733257239       -0.414718097955823      -0.171438669920428      -0.104489664356399      99.7117775424924
+Pakistani Pakistani Pkstn
+327.507774318712        0.772622156829873       -1.28933246129564       -0.633486327272645      -1.44431235160309       -1.74144253716239       0.416765470150591       -1.51399066803602       -1.36550195844651       -0.677496859869966
+0.772622156829873       341.655078930203        -0.00906800284126006    -1.13002830184525       -0.695064387928877      1.46652252439676        -0.423800050186507      -2.26056824080576       -0.51860796656376       -1.0347753069819
+-1.28933246129564       -0.00906800284126006    324.759086301557        -3.06021046494786       -0.68220440828397       -0.949954771768677      0.38562687277543        0.96528822359318        -1.09728083793239       -0.94565213792043
+-0.633486327272645      -1.13002830184525       -3.06021046494786       350.247198516368        1.26442838783436        -0.790296904304364      -1.77757608705849       0.590805798736408       0.367611767566131       -1.98735002510173
+-1.44431235160309       -0.695064387928877      -0.68220440828397       1.26442838783436        344.816138970925        0.207346002559474       -1.39939567951377       1.70319770181106        -0.140606416167187      0.304959657088143
+-1.74144253716239       1.46652252439676        -0.949954771768677      -0.790296904304364      0.207346002559474       368.427311318017        -2.21487322771972       -1.38723979367537       1.25417410185339        1.04041440237573
+0.416765470150591       -0.423800050186507      0.38562687277543        -1.77757608705849       -1.39939567951377       -2.21487322771972       317.833217870084        -0.620517018328342      1.22149353736854        0.0279927691032792
+-1.51399066803602       -2.26056824080576       0.96528822359318        0.590805798736408       1.70319770181106        -1.38723979367537       -0.620517018328342      323.907197847176        -0.367493954024293      -0.607146962617614
+-1.36550195844651       -0.51860796656376       -1.09728083793239       0.367611767566131       -0.140606416167187      1.25417410185339        1.22149353736854        -0.367493954024293      357.521284100307        0.809767572950595
+-0.677496859869966      -1.0347753069819        -0.94565213792043       -1.98735002510173       0.304959657088143       1.04041440237573        0.0279927691032792      -0.607146962617614      0.809767572950595       349.80864538368
+
+
+
 
 
 
