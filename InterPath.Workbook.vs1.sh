@@ -1409,17 +1409,19 @@ done
 #Brit10k: mem 290996496K, time 2445.701 (Irish: mem 346579616K, time 3505.491)
  
 #From https://blog.rstudio.com/2016/03/29/feather/, https://blog.dominodatalab.com/the-r-data-i-o-shootout/, https://stackoverflow.com/questions/1727772/quickly-reading-very-large-tables-as-dataframes
-module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 4`; do
+module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		
 	echo $pheno1 $ancestry1 $ancestry2 $ancestry3
 
-	R -q -e "library("data.table"); library("feather"); \ 
-	ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); print(proc.time() - ptm); \ 
-	ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); \
-	ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm); \
-	write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt.2\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
+	mv /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt.2 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt
+
+#	R -q -e "library("data.table"); library("feather"); \ 
+#	ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); print(proc.time() - ptm); \ 
+#	ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); \
+#	ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm); \
+#	write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
 done 
 
 #& 
