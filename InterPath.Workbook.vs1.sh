@@ -2375,6 +2375,11 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 #201905** 20190603 -- Prob: Redo collection of results with dropping of pathways that just have a single variant in them? Soln: took care of this like last week or so, see re: the creation of the '...noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt' files 
 #20191201 NOTE -- in process of editing and updating for post-imputation-rerun runs
 
+#Perm1
+9638333              63      batch  mturchin    default 2020-01-09T16:41:55 2020-01-10T14:15:48 2-03:29:36          4     FAILED      6:0    WaistAdjBMI British.Ran10000 ExonicPlus20kb 801
+9638333.bat+      batch                         default 2020-01-10T01:23:24 2020-01-10T14:15:48 2-03:29:36          4     FAILED      6:0
+(error: arma::memory::acquire(): out of memory)
+
 
 #pathway*remaining genome
 #NOTE -- copy and pasted `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp` & `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.Vs2.R` from associated Slack channel and from Lorin's code posted on 20180731
