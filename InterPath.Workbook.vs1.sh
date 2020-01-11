@@ -2379,7 +2379,9 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 9638333              63      batch  mturchin    default 2020-01-09T16:41:55 2020-01-10T14:15:48 2-03:29:36          4     FAILED      6:0    WaistAdjBMI British.Ran10000 ExonicPlus20kb 801
 9638333.bat+      batch                         default 2020-01-10T01:23:24 2020-01-10T14:15:48 2-03:29:36          4     FAILED      6:0
 (error: arma::memory::acquire(): out of memory)
-
+9638574              63      batch  mturchin    default 2020-01-09T16:44:02 2020-01-10T20:44:25   19:19:32          4     FAILED      9:0               WaistAdjBMI Irish ExonicPlus20kb 401 
+9638574.bat+      batch                         default 2020-01-10T15:54:32 2020-01-10T20:44:25   19:19:32          4     FAILED      9:0                                                    
+/var/spool/slurmd/job9638574/slurm_script: line 3: 132600 Killed             
 
 #pathway*remaining genome
 #NOTE -- copy and pasted `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp` & `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.Vs2.R` from associated Slack channel and from Lorin's code posted on 20180731
