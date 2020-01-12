@@ -2382,6 +2382,27 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 9638574              63      batch  mturchin    default 2020-01-09T16:44:02 2020-01-10T20:44:25   19:19:32          4     FAILED      9:0               WaistAdjBMI Irish ExonicPlus20kb 401 
 9638574.bat+      batch                         default 2020-01-10T15:54:32 2020-01-10T20:44:25   19:19:32          4     FAILED      9:0                                                    
 /var/spool/slurmd/job9638574/slurm_script: line 3: 132600 Killed             
+#Below finished really fast? Irish usually takes 4 days' worth of computational time...
+9638525              63      batch  mturchin    default 2020-01-09T16:43:59 2020-01-11T03:04:40 1-23:57:20          4  COMPLETED      0:0                      BMI Irish ExonicPlus20kb 1281
+9638525.bat+      batch                         default 2020-01-10T15:05:20 2020-01-11T03:04:40 1-23:57:20          4  COMPLETED      0:0
+#Answer -- 1281 is in the range where the 'actually used pathways' ends, so there are not actually 80 pathways being analyzed in this set
+9638585              63      batch  mturchin    default 2020-01-09T16:44:02 2020-01-11T06:26:21 1-19:55:32          4  COMPLETED      0:0              WaistAdjBMI Irish ExonicPlus20kb 1281
+9638585.bat+      batch                         default 2020-01-10T19:27:28 2020-01-11T06:26:21 1-19:55:32          4  COMPLETED      0:0
+#Oscar down began at Brit.Ran10k WaistAdjBMI runs, so redo/rerun Waist/HipAdjBMI
+9641857              63      batch  mturchin    default 2020-01-09T23:02:56 2020-01-12T04:14:57 2-08:26:52          4     FAILED      9:0       Height British.Ran10000.5 ExonicPlus20kb 561 
+9641857.bat+      batch                         default 2020-01-11T14:08:14 2020-01-12T04:14:57 2-08:26:52          4     FAILED      9:0                                                    
+9642031              63      batch  mturchin    default 2020-01-09T23:03:07 2020-01-12T02:27:53   09:46:48          4     FAILED      6:0           BMI British.Ran10000.4 ExonicPlus20kb 81 
+9642031.bat+      batch                         default 2020-01-12T00:01:11 2020-01-12T02:27:53   09:46:48          4     FAILED      6:0                                                    
+9642045              63      batch  mturchin    default 2020-01-09T23:03:07 2020-01-12T04:14:56   07:07:52          4     FAILED      9:0         BMI British.Ran10000.4 ExonicPlus20kb 1201 
+9642045.bat+      batch                         default 2020-01-12T02:27:58 2020-01-12T04:14:56   07:07:52          4     FAILED      9:0                                                    
+(InterPath) [  mturchin@login003  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$myjobinfo | grep FAIL
+9641857              63 2020-01-09T23:02:56     FAILED   14:06:43       28Gn                       
+9641857.bat+      batch 2020-01-11T14:08:14     FAILED   14:06:43       28Gn  23256428K  22801332K 
+9642031              63 2020-01-09T23:03:07     FAILED   02:26:42       28Gn                       
+9642031.bat+      batch 2020-01-12T00:01:11     FAILED   02:26:42       28Gn  23413780K  21685132K 
+9642045              63 2020-01-09T23:03:07     FAILED   01:46:58       28Gn                       
+9642045.bat+      batch 2020-01-12T02:27:58     FAILED   01:46:58       28Gn  20516412K  20329192K 
+
 
 #pathway*remaining genome
 #NOTE -- copy and pasted `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp` & `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.Vs2.R` from associated Slack channel and from Lorin's code posted on 20180731
@@ -2507,7 +2528,7 @@ done
 
 #Vs2 Results Collection
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip'`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 			SECONDS=0;
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
