@@ -2395,6 +2395,10 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 9642031.bat+      batch                         default 2020-01-12T00:01:11 2020-01-12T02:27:53   09:46:48          4     FAILED      6:0                                                    
 9642045              63      batch  mturchin    default 2020-01-09T23:03:07 2020-01-12T04:14:56   07:07:52          4     FAILED      9:0         BMI British.Ran10000.4 ExonicPlus20kb 1201 
 9642045.bat+      batch                         default 2020-01-12T02:27:58 2020-01-12T04:14:56   07:07:52          4     FAILED      9:0                                                    
+9642032              63      batch  mturchin    default 2020-01-09T23:03:07 2020-01-12T09:52:26 1-15:09:04          4     FAILED      6:0          BMI British.Ran10000.4 ExonicPlus20kb 161 
+9642032.bat+      batch                         default 2020-01-12T00:05:10 2020-01-12T09:52:26 1-15:09:04          4     FAILED      6:0                                                    
+9642045              63      batch  mturchin    default 2020-01-09T23:03:07 2020-01-12T04:14:56   07:07:52          4     FAILED      9:0         BMI British.Ran10000.4 ExonicPlus20kb 1201 
+9642045.bat+      batch                         default 2020-01-12T02:27:58 2020-01-12T04:14:56   07:07:52          4     FAILED      9:0                                                    
 (InterPath) [  mturchin@login003  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$myjobinfo | grep FAIL
 9641857              63 2020-01-09T23:02:56     FAILED   14:06:43       28Gn                       
 9641857.bat+      batch 2020-01-11T14:08:14     FAILED   14:06:43       28Gn  23256428K  22801332K 
@@ -2402,6 +2406,56 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 9642031.bat+      batch 2020-01-12T00:01:11     FAILED   02:26:42       28Gn  23413780K  21685132K 
 9642045              63 2020-01-09T23:03:07     FAILED   01:46:58       28Gn                       
 9642045.bat+      batch 2020-01-12T02:27:58     FAILED   01:46:58       28Gn  20516412K  20329192K 
+9642032              63 2020-01-09T23:03:07     FAILED   09:47:16       28Gn                       
+9642032.bat+      batch 2020-01-12T00:05:10     FAILED   09:47:16       28Gn  24115384K  20021216K 
+9642045              63 2020-01-09T23:03:07     FAILED   01:46:58       28Gn                       
+9642045.bat+      batch 2020-01-12T02:27:58     FAILED   01:46:58       28Gn  20516412K  20329192K 
+
+
+
+
+#reg
+Height British British.Ran10000.5 ExonicPlus20kb
+Error in file(file, "rt") : cannot open the connection
+Calls: read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v3.British.Ran10000.5.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_GK.Paths241.Est.txt': No such file or directory
+Execution halted
+BMI British British.Ran10000.2 ExonicPlus20kb
+Error in file(file, "rt") : cannot open the connection
+Calls: read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/mturchin20/Analyses/InterPath/BMI/ExonicPlus20kb/ukb_chrAll_v3.British.Ran10000.2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_GK.Paths961.Est.txt': No such file or directory
+Execution halted
+Error in file(file, "rt") : cannot open the connection
+Calls: read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/mturchin20/Analyses/InterPath/BMI/ExonicPlus20kb/ukb_chrAll_v3.British.Ran10000.2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_GK.Paths1201.Est.txt': No such file or directory
+Execution halted
+
+#perm1
+
+WaistAdjBMI British British.Ran10000 ExonicPlus20kb
+Error in file(file, "rt") : cannot open the connection
+Calls: read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/WaistAdjBMI/ExonicPlus20kb/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths801.Est.txt': No such file or directory
+Execution halted
+1 minutes and 40 seconds elapsed.
+WaistAdjBMI Irish Irish ExonicPlus20kb
+Error in file(file, "rt") : cannot open the connection
+Calls: read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/InterPath/WaistAdjBMI/ExonicPlus20kb/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.WaistAdjBMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths401.Est.txt': No such file or directory
+Execution halted
+1 minutes and 45 seconds elapsed.
+
+
 
 
 #pathway*remaining genome
@@ -2528,7 +2582,7 @@ done
 
 #Vs2 Results Collection
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip'`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 12 | head -n 12 | tail -n 12`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 			SECONDS=0;
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
@@ -2540,9 +2594,9 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 			for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+80 )); do
 				R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
 				Pathways <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\", header=F); \ 
-				InterPath.output.Est <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK.Paths${PathNum}.Est.txt\", header=F); \
-				InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK.Paths${PathNum}.Eigenvalues.txt\", header=F); \
-				InterPath.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK.Paths${PathNum}.PVE.txt\", header=F); \
+				InterPath.output.Est <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths${PathNum}.Est.txt\", header=F); \
+				InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths${PathNum}.Eigenvalues.txt\", header=F); \
+				InterPath.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.Paths${PathNum}.PVE.txt\", header=F); \
 				Results1 <- c(); Counter1 <- 1; for (i in $PathNum:($PathNum+79)) { \
 					if (i <= $NumPaths) { if (neg.is.na(InterPath.output.Est[Counter1,1])) { \ 
 						Lambda <- sort(InterPath.output.Eigenvalues[,Counter1], decreasing=TRUE); \
@@ -2552,7 +2606,7 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 						Counter1 = Counter1 + 1; \
 					} else { Results1 <- rbind(Results1, c(as.character(Pathways[i,1]), rep(NA, 5))); }; \
 				};}; write.table(Results1, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
-			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.txt.pre.gz
+			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK_perm1.AllPaths.Results.txt.pre.gz
 			duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 		done;
 	done;
