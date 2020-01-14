@@ -2399,6 +2399,14 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 9642032.bat+      batch                         default 2020-01-12T00:05:10 2020-01-12T09:52:26 1-15:09:04          4     FAILED      6:0                                                    
 9642045              63      batch  mturchin    default 2020-01-09T23:03:07 2020-01-12T04:14:56   07:07:52          4     FAILED      9:0         BMI British.Ran10000.4 ExonicPlus20kb 1201 
 9642045.bat+      batch                         default 2020-01-12T02:27:58 2020-01-12T04:14:56   07:07:52          4     FAILED      9:0                                                    
+9642343              63      batch  mturchin    default 2020-01-09T23:03:26 2020-01-13T06:32:57 2-00:33:00          4     FAILED      9:0 WaistAdjBMI British.Ran10000.5 ExonicPlus20kb 1041
+9642343.bat+      batch                         default 2020-01-12T18:24:42 2020-01-13T06:32:57 2-00:33:00          4     FAILED      9:0
+9642400              63      batch  mturchin    default 2020-01-09T23:03:29 2020-01-13T06:32:57 1-15:36:04          4     FAILED      9:0    HipAdjBMI British.Ran10000.2 ExonicPlus20kb 801
+9642400.bat+      batch                         default 2020-01-12T20:38:56 2020-01-13T06:32:57 1-15:36:04          4     FAILED      9:0
+9642510              63      batch  mturchin    default 2020-01-09T23:03:36 2020-01-13T06:11:27   02:57:32          4     FAILED      6:0      HipAdjBMI British.Ran10000.4 ExonicPlus20kb 1
+9642510.bat+      batch                         default 2020-01-13T05:27:04 2020-01-13T06:11:27   02:57:32          4     FAILED      6:0
+9642511              63      batch  mturchin    default 2020-01-09T23:03:36 2020-01-13T12:09:56 1-02:51:28          4     FAILED      9:0     HipAdjBMI British.Ran10000.4 ExonicPlus20kb 81
+9642511.bat+      batch                         default 2020-01-13T05:27:04 2020-01-13T12:09:56 1-02:51:28          4     FAILED      9:0
 (InterPath) [  mturchin@login003  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$myjobinfo | grep FAIL
 9641857              63 2020-01-09T23:02:56     FAILED   14:06:43       28Gn                       
 9641857.bat+      batch 2020-01-11T14:08:14     FAILED   14:06:43       28Gn  23256428K  22801332K 
