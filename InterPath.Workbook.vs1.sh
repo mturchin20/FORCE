@@ -1961,11 +1961,11 @@ done;
 
 #for l in `cat <(echo "yTyAdj GjDrop PCadj wCov GjDrop_wCov" | perl -lane 'print join("\n", @F);')`; do
 #for l in `cat <(echo "GjOnly GjOnly_wCov" | perl -lane 'print join("\n", @F);')`; do
-for l in `cat <(echo "Vs2.noDups.GjDrop_wCov_GK Vs2.noDups.GjDrop_wCov_GK_perm1 Vs2.noDups.GjDrop_wCov_Kgene Vs2.noDups.GjDrop_wCov_Kgene_perm1" | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+for l in `cat <(echo "Vs2.noDups.GjDrop_wCov_GK Vs2.noDups.GjDrop_wCov_GK_perm1 Vs2.noDups.GjDrop_wCov_Kgene Vs2.noDups.GjDrop_wCov_Kgene_perm1" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
 for l in `cat <(echo "Vs2.noDups.GjDrop_wCov_GK.Cis Vs2.noDups.GjDrop_wCov_GK_perm1.Cis" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
-	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 1 | tail -n 1`; do
-		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish | head -n 1 | tail -n 1`; do
-  for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 10 | tail -n 2`; do
+	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 4 | tail -n 4`; do
+		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
+  for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 11 | tail -n 1`; do
 				SECONDS=0;
 				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 				ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -1998,12 +1998,11 @@ done;
 
 #for l in `cat <(echo "yTyAdj GjDrop PCadj wCov GjDrop_wCov" | perl -lane 'print join("\n", @F);')`; do
 #for l in `cat <(echo "GjOnly GjOnly_wCov" | perl -lane 'print join("\n", @F);')`; do
-for l in `cat <(echo "Vs2.noDups.GjDrop_wCov_GK.Cis Vs2.noDups.GjDrop_wCov_GK_perm1.Cis" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
 for l in `cat <(echo "Vs2.noDups.GjDrop_wCov_GK Vs2.noDups.GjDrop_wCov_GK_perm1 Vs2.noDups.GjDrop_wCov_Kgene Vs2.noDups.GjDrop_wCov_Kgene_perm1" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
 for l in `cat <(echo "Vs2.noDups.GjDrop_wCov_GK.Cis Vs2.noDups.GjDrop_wCov_GK_perm1.Cis" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
 	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 4 | tail -n 4`; do
 		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | tail -n 8`; do
-  for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 10 | tail -n 2`; do
+  for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 11 | tail -n 1`; do
 				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 				ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 				
@@ -2376,8 +2375,7 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.GG.cpp
 
-tar/zip Genes vs2, get plink going, get mapit going, do African version without assessment center as covariate (all 4 phenos, exonicplus20kb), do a version where PCs are corrected via regressing out and not in the projection matrix thingie, (was there other tar/zip things that were needed? Irish/Ran10000 possibly)
-
+tar/zip Genes vs2 (+), get plink going (+), get mapit going, do African version without assessment center as covariate (all 4 phenos, exonicplus20kb), do a version where PCs are corrected via regressing out and not in the projection matrix thingie, (was there other tar/zip things that were needed? Irish/Ran10000 possibly -- yes, there were multiple things to tar/zip/rm actually) (+)
 
 module load R/3.4.3_mkl gcc; sleep 1; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2`; do
 	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -E 'African|Ran4000' | head -n 2`; do
