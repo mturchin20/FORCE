@@ -3493,7 +3493,7 @@ R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); 
 mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/Comps	/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/PopComps
 
 R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); library(\"cowplot\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
-	for (i in DataTypes1[1]) { for (l in DataTypes2[1]) { for (m in Paths[2:3]) { \
+	for (i in DataTypes1[c(1,3)]) { for (l in DataTypes2[1]) { for (m in Paths[2:3]) { \
 		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/PopComps/ukb_chrAll_v3.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.wGenes.wVars.ArchExplr.\", i, \".PopComp.vs1.png\", sep=\"\"), height=4250, width=7500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \ 
 		plotPoints1 <- c(); ListCounter1 <- 1; for (j in Strats[4]) { \	
 			for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
@@ -3511,13 +3511,13 @@ R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); 
 				ggplot1 <- ggplot(Paths1.Overlap.Melted, aes(ind.1, ind.2, fill=value)) + geom_tile(colour=\"white\") + scale_fill_gradient(low = \"lightgoldenrodyellow\", high=\"red\", name=\"Pathways\", na.value=\"white\") + geom_text(aes(ind.1, ind.2, label = value), color = \"black\", size=10) + theme_minimal() + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), plot.margin=unit(c(5,5,5,5),\"points\"), panel.grid.major = element_blank(), panel.border = element_blank(), panel.background = element_blank(), axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1, size=30), axis.text.y = element_text(size=30), legend.position=c(.825,.125), legend.direction=\"horizontal\", legend.title=element_text(size=17), legend.text=element_text(size=15)) + guides(fill = guide_colorbar(barwidth = 14, barheight = 3, title.position = \"top\", title.hjust = 0.5)); plotPoints1[[ListCounter1]] <- ggplot1; ListCounter1 <- ListCounter1 + 1; \
 			}; \
 		}; print(length(plotPoints1)); grid.newpage(); pushViewport(viewport(layout = grid.layout(4, 4, height=unit(c(.1,.2,.5,5), \"null\"), width=unit(c(.1,5,5,.4), \"null\")))); \ 
-		grid.text(m, gp=gpar(cex=5), just=c(.3,.5), vp=viewport(layout.pos.row=2, layout.pos.col=2:3)); grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=3, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=3, layout.pos.col=3)); \ 
+		grid.text(paste(m, \" (\", i, \")\", sep=\"\"), gp=gpar(cex=5), just=c(.3,.5), vp=viewport(layout.pos.row=2, layout.pos.col=2:3)); grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=3, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=3, layout.pos.col=3)); \ 
 		for (i2 in 1:1) { grid.text(\"\", gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+3, layout.pos.col=1)); for (j2 in 1:2) { print(plotPoints1[[(2*i2)-2+j2]], vp=viewport(layout.pos.row=i2+3, layout.pos.col=j2+1)); };}; dev.off(); }; \
 	};}; print(warnings()); \
 "
 
-R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); library(\"cowplot\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
-        for (i in DataTypes1[1]) { for (l in DataTypes2[1]) { for (m in Paths[2:3]) { \
+echo -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); library(\"cowplot\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
+        for (i in DataTypes1[c(1,3,4)]) { for (l in DataTypes2[1]) { for (m in Paths[2:3]) { \
                 png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/PopComps/ukb_chrAll_v3.BritReps.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.wGenes.wVars.ArchExplr.\", i, \".PopComp.vs1.png\", sep=\"\"), height=4250, width=7500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \
                 plotPoints1 <- c(); ListCounter1 <- 1; for (j in Strats[4]) { \
                         for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
@@ -3531,28 +3531,16 @@ R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); 
                                 Data8 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", m, \"/\", i, \"/ukb_chrAll_v3.British.Ran10000.3.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", l, \".AllPaths.Results.wGenes.wVars.\", m, \".ArchExplr.\", i, \".txt\", sep=\"\"), header=F); \
                                 Data9 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", m, \"/\", i, \"/ukb_chrAll_v3.British.Ran10000.4.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", l, \".AllPaths.Results.wGenes.wVars.\", m, \".ArchExplr.\", i, \".txt\", sep=\"\"), header=F); \
                                 Data10 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", m, \"/\", i, \"/ukb_chrAll_v3.British.Ran10000.5.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", l, \".AllPaths.Results.wGenes.wVars.\", m, \".ArchExplr.\", i, \".txt\", sep=\"\"), header=F); \
-                                Paths1 <- list(
-\"British.Ran4k\" = as.character(Data1[,1]), 
-\"British.Ran4k.2\" = as.character(Data2[,1]), 
-\"British.Ran4k.3\" = as.character(Data3[,1]), 
-\"British.Ran4k.4\" = as.character(Data4[,1]), 
-\"British.Ran4k.5\" = as.character(Data5[,1]), 
-\"British.Ran10k\" = as.character(Data6[,1]), 
-\"British.Ran10k.2\" = as.character(Data7[,1]), 
-\"British.Ran10k.3\" = as.character(Data8[,1]), 
-\"British.Ran10k.4\" = as.character(Data9[,1]), 
-\"British.Ran10k.5\" = as.character(Data10[,1]), 
-); \
-                                Paths1.Overlap <- crossprod(table(stack(Paths1))); Paths1.Overlap[lower.tri(Paths1.Overlap, diag=FALSE)] <- NA; Paths1.Overlap.Melted <- melt(Paths1.Overlap); colnames(Paths1.Overlap.Melted)[1] <- \"ind.1\"; colnames(Paths1.Overlap.Melted)[2] <- \"ind.2\"; Paths1.Overlap.Melted\$ind.1 <- factor(Paths1.Overlap.Melted\$ind.1, levels=c(\"African\", \"British.Ran4k\", \"British.Ran10k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\")); Paths1.Overlap.Melted\$ind.2 <- factor(Paths1.Overlap.Melted\$ind.2, levels=c(\"African\", \"British.Ran4k\", \"British.Ran10k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\")); \
+                                Paths1 <- list(\"British.Ran4k\" = as.character(Data1[,1]), \"British.Ran4k.2\" = as.character(Data2[,1]), \"British.Ran4k.3\" = as.character(Data3[,1]), \"British.Ran4k.4\" = as.character(Data4[,1]), \"British.Ran4k.5\" = as.character(Data5[,1]), \"British.Ran10k\" = as.character(Data6[,1]), \"British.Ran10k.2\" = as.character(Data7[,1]), \"British.Ran10k.3\" = as.character(Data8[,1]), \"British.Ran10k.4\" = as.character(Data9[,1]), \"British.Ran10k.5\" = as.character(Data10[,1])); \
+                                Paths1.Overlap <- crossprod(table(stack(Paths1))); Paths1.Overlap[lower.tri(Paths1.Overlap, diag=FALSE)] <- NA; Paths1.Overlap.Melted <- melt(Paths1.Overlap); colnames(Paths1.Overlap.Melted)[1] <- \"ind.1\"; colnames(Paths1.Overlap.Melted)[2] <- \"ind.2\"; Paths1.Overlap.Melted\$ind.1 <- factor(Paths1.Overlap.Melted\$ind.1, levels=c(\"British.Ran4k\", \"British.Ran4k.2\", \"British.Ran4k.3\", \"British.Ran4k.4\", \"British.Ran4k.5\", \"British.Ran10k\", \"British.Ran10k.2\", \"British.Ran10k.3\", \"British.Ran10k.4\", \"British.Ran10k.5\")); Paths1.Overlap.Melted\$ind.2 <- factor(Paths1.Overlap.Melted\$ind.2, levels=c(\"British.Ran4k\", \"British.Ran4k.2\", \"British.Ran4k.3\", \"British.Ran4k.4\", \"British.Ran4k.5\", \"British.Ran10k\", \"British.Ran10k.2\", \"British.Ran10k.3\", \"British.Ran10k.4\", \"British.Ran10k.5\")); \
                                 print(Paths1.Overlap); \
                                 ggplot1 <- ggplot(Paths1.Overlap.Melted, aes(ind.1, ind.2, fill=value)) + geom_tile(colour=\"white\") + scale_fill_gradient(low = \"lightgoldenrodyellow\", high=\"red\", name=\"Pathways\", na.value=\"white\") + geom_text(aes(ind.1, ind.2, label = value), color = \"black\", size=10) + theme_minimal() + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), plot.margin=unit(c(5,5,5,5),\"points\"), panel.grid.major = element_blank(), panel.border = element_blank(), panel.background = element_blank(), axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1, size=30), axis.text.y = element_text(size=30), legend.position=c(.825,.125), legend.direction=\"horizontal\", legend.title=element_text(size=17), legend.text=element_text(size=15)) + guides(fill = guide_colorbar(barwidth = 14, barheight = 3, title.position = \"top\", title.hjust = 0.5)); plotPoints1[[ListCounter1]] <- ggplot1; ListCounter1 <- ListCounter1 + 1; \
                         }; \
                 }; print(length(plotPoints1)); grid.newpage(); pushViewport(viewport(layout = grid.layout(4, 4, height=unit(c(.1,.2,.5,5), \"null\"), width=unit(c(.1,5,5,.4), \"null\")))); \
-                grid.text(m, gp=gpar(cex=5), just=c(.3,.5), vp=viewport(layout.pos.row=2, layout.pos.col=2:3)); grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=3, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=3, layout.pos.col=3)); \
+                grid.text(paste(m, \" (\", i, \")\", sep=\"\"), gp=gpar(cex=5), just=c(.3,.5), vp=viewport(layout.pos.row=2, layout.pos.col=2:3)); grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=3, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=3, layout.pos.col=3)); \
                 for (i2 in 1:1) { grid.text(\"\", gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+3, layout.pos.col=1)); for (j2 in 1:2) { print(plotPoints1[[(2*i2)-2+j2]], vp=viewport(layout.pos.row=i2+3, layout.pos.col=j2+1)); };}; dev.off(); }; \
         };}; print(warnings()); \
-"
-
+" > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/PopComps/ukb_chrAll_v3.BritReps.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.Paths.Results.wGenes.wVars.ArchExplr.pVals.PopComp.vs1.R; Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/PopComps/ukb_chrAll_v3.BritReps.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.Paths.Results.wGenes.wVars.ArchExplr.pVals.PopComp.vs1.R
 
 #		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllStrats.noDups.Vs2.\", l, \".\", m, \".Results.wGenes.wVars.ArchExplr.\", i, \".PopComp.vs1.png\", sep=\"\"), height=14000, width=10250, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \ 
 #		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllStrats.noDups.Vs2.\", l, \".\", m, \".Results.wGenes.wVars.ArchExplr.\", i, \".PopComp.vs1.ForESHG.vs1.png\", sep=\"\"), height=2500, width=5000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \ 
@@ -3573,7 +3561,7 @@ R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); 
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllStrats.noDups.Vs2.GjDrop_wCov_*.*.Results.wGenes.wVars.ArchExplr.pVal*.*Comp.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/.
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/ukb_chrAll_v2.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllStrats.noDups.Vs2.GjDrop_wCov_*.*.Results.wGenes.wVars.ArchExplr.pVal*.*Comp.*ForESHG*png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/.
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/ukb_chrAll_v2.AfrBrit4kCaribIndn.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.AllPhenos.AllStrats.noDups.Vs2*ForProbGen*png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/. 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/PopComps/ukb_chrAll_v3.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2*PopComp.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/PopComps/. 
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/PopComps/ukb_chrAll_v3.*.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2*PopComp.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/PopComps/. 
 
 
 cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.Regions.c2.${k}.txt | perl -lane 'if ($F[$#F] eq "TRUE") { print join("\t", @F); }' | sed 's/_/ /g' | awk '{ print $1 }' | sort | uniq -c
@@ -3625,8 +3613,8 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 			echo $i
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
-				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
-#				pValBonf=.01; pValCutoff="pVal01";
+#				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
+				pValBonf=.01; pValCutoff="pVal01";
 #				pValBonf=1; pValCutoff="pValAll";
 				echo $k $pValBonf
 		
@@ -3636,14 +3624,14 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 					mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff
 				fi
 		
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $0 } }' | awk '{ print $1 "\t" $5 "\t" $13 }' | grep ^$l"_" > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
+				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $0 } }' | awk '{ print $1 "\t" $5 "\t" $8 "\t" $9 "\t" $10 "\t" $13 }' | grep ^$l"_" > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
 	
 				if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt ] ; then 
 					if [ ! -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt ]; then
-						echo "NA NA NA" > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
+						echo "NA NA NA NA NA NA" > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
 					fi
 				else
-					echo "NA NA NA" > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
+					echo "NA NA NA NA NA NA" > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
 				fi
 			done
 		done 
@@ -8091,26 +8079,110 @@ pValCutoff="pValBonf"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl 
 	echo $pValCutoff; echo $l;
 	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2`; do
 		echo $i
-		for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -v Irish`; do
+		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 			echo $j
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
-				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
+				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
 				pValBonf=`echo ".05 / $NumPaths" | bc -l`; #pValCutoff="pValBonf";
 #				pValBonf=.001; #pValCutoff="pVal001";
 				echo $k;
 		
-				cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | sort -g -k 3,3 | perl -lane 'my @vals1 = split(/,/, $F[1]); print $F[0], "\t", $F[2], "\t", scalar(@vals1);' | grep -w -v NA
+				cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | sort -g -k 3,3 | perl -lane 'my @vals1 = split(/,/, $F[1]); print $F[0], "\t", $F[2], "\t", scalar(@vals1);' | grep -w -v NA
 
 				echo ""
 	
 			done;
 		done;
-	done | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/201900917.KG.TopResults.$l.AllPops.HeightBMI.ExonicPlus20kb.$pValCutoff.vs1.txt.gz
+	done | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/20200122.KG.TopResults.$l.AllPops.HeightBMI.ExonicPlus20kb.$pValCutoff.vs1.txt.gz
 done 
 				
 #				cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | sort -g -k 3,3 | awk '{ print $1 "\t" $3 }' | grep -v NA
+
+cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*Height.ExonicPlus20kb*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }' 
+cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*BMI.ExonicPlus20kb*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }' 
+cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*Height.ExonicPlus20kb*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }' 
+cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*BMI.ExonicPlus20kb*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }' 
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $0 } }'  
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $0 } }'  
+
+for i in `cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $1 "," $2 } }'`; do path1=`echo $i | perl -ane 'my @vals1 = split(/,/, $F[0]); print $vals1[1];'`; count1=`echo $i | perl -ane 'my @vals1 = split(/,/, $F[0]); print $vals1[0];'`; cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*KEGG*pValBonf.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); print $F[0], "\t", scalar(@vals1);' | sort -rg -k 2,2 | uniq | grep $path1 | xargs echo $count1; done
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*REACTOME*pValBonf.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); print $F[0], "\t", scalar(@vals1);' | sort -rg -k 2,2 | uniq | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(Data1[,2][order(Data1[,2])]);"
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 < 2) { print $1 "," $2 } }' | wc
+for i in `cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $1 "," $2 } }'`; do path1=`echo $i | perl -ane 'my @vals1 = split(/,/, $F[0]); print $vals1[1];'`; count1=`echo $i | perl -ane 'my @vals1 = split(/,/, $F[0]); print $vals1[0];'`; cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*REACTOME*pValBonf.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); print $F[0], "\t", scalar(@vals1);' | sort -rg -k 2,2 | uniq | grep $path1 | xargs echo $count1; done
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*KEGG*pValBonf.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); print $F[0], "\t", scalar(@vals1);' | sort -rg -k 2,2 | uniq | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(Data1[,2][order(Data1[,2])]);"
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 < 2) { print $1 "," $2 } }' | wc
+
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*Height.ExonicPlus20kb*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }'
+      3 KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION
+      2 KEGG_TYPE_I_DIABETES_MELLITUS
+      2 KEGG_GRAFT_VERSUS_HOST_DISEASE
+      2 KEGG_ALLOGRAFT_REJECTION
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*Height.ExonicPlus20kb*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }'
+      2 REACTOME_CLASS_A1_RHODOPSIN_LIKE_RECEPTORS
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*BMI.ExonicPlus20kb*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }'
+      4 KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION
+      2 KEGG_VIRAL_MYOCARDITIS
+      2 KEGG_TYPE_I_DIABETES_MELLITUS
+      2 KEGG_SYSTEMIC_LUPUS_ERYTHEMATOSUS
+      2 KEGG_NATURAL_KILLER_CELL_MEDIATED_CYTOTOXICITY
+      2 KEGG_GRAFT_VERSUS_HOST_DISEASE
+      2 KEGG_CHEMOKINE_SIGNALING_PATHWAY
+      2 KEGG_ALLOGRAFT_REJECTION
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*BMI.ExonicPlus20kb*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }'
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $0 } }'
+      2 KEGG_TYPE_I_DIABETES_MELLITUS
+      2 KEGG_HYPERTROPHIC_CARDIOMYOPATHY_HCM
+      2 KEGG_GRAFT_VERSUS_HOST_DISEASE
+      2 KEGG_CHEMOKINE_SIGNALING_PATHWAY
+      2 KEGG_AXON_GUIDANCE
+      2 KEGG_AUTOIMMUNE_THYROID_DISEASE
+      2 KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION
+      2 KEGG_ALLOGRAFT_REJECTION
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*KEGG*pValBonf.txt | wc
+     31      93   19076
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $0 } }'
+      2 REACTOME_SIGNALING_BY_RHO_GTPASES
+      2 REACTOME_INNATE_IMMUNE_SYSTEM
+      2 REACTOME_HEPARAN_SULFATE_HEPARIN_HS_GAG_METABOLISM
+      2 REACTOME_GASTRIN_CREB_SIGNALLING_PATHWAY_VIA_PKC_AND_MAPK
+      2 REACTOME_CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*REACTOME*pValBonf.txt | wc
+     29      87   24122
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$for i in `cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $1 "," $2 } }'`; do path1=`echo $i | perl -ane 'my @vals1 = split(/,/, $F[0]); print $vals1[1];'`; count1=`echo $i | perl -ane 'my @vals1 = split(/,/, $F[0]); print $vals1[0];'`; cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*REACTOME*pValBonf.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); print $F[0], "\t", scalar(@vals1);' | sort -rg -k 2,2 | uniq | grep $path1 | xargs echo $count1; done
+2 REACTOME_SIGNALING_BY_RHO_GTPASES 96
+2 REACTOME_INNATE_IMMUNE_SYSTEM 236
+2 REACTOME_HEPARAN_SULFATE_HEPARIN_HS_GAG_METABOLISM 43
+2 REACTOME_GASTRIN_CREB_SIGNALLING_PATHWAY_VIA_PKC_AND_MAPK 183
+2 REACTOME_CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM 253
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 < 2) { print $1 "," $2 } }' | wc
+     15      15     483
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*REACTOME*pValBonf.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); print $F[0], "\t", scalar(@vals1);' | sort -rg -k 2,2 | uniq | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(Data1[,2][order(Data1[,2])]);"
+> Data1 <- read.table(file('stdin'), header=F); print(Data1[,2][order(Data1[,2])]);
+ [1]  41  43  66  67  71  71  73  73  75  86  89  92  95  96 115 125 128 164 171
+[20] 175 183 236 253 261
+> 
+> 
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$for i in `cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $1 "," $2 } }'`; do path1=`echo $i | perl -ane 'my @vals1 = split(/,/, $F[0]); print $vals1[1];'`; count1=`echo $i | perl -ane 'my @vals1 = split(/,/, $F[0]); print $vals1[0];'`; cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*KEGG*pValBonf.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); print $F[0], "\t", scalar(@vals1);' | sort -rg -k 2,2 | uniq | grep $path1 | xargs echo $count1; done
+2 KEGG_TYPE_I_DIABETES_MELLITUS 38
+2 KEGG_HYPERTROPHIC_CARDIOMYOPATHY_HCM 77
+2 KEGG_GRAFT_VERSUS_HOST_DISEASE 35
+2 KEGG_CHEMOKINE_SIGNALING_PATHWAY 170
+2 KEGG_AXON_GUIDANCE 120
+2 KEGG_AUTOIMMUNE_THYROID_DISEASE 48
+2 KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION 74
+2 KEGG_ALLOGRAFT_REJECTION 32
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 < 2) { print $1 "," $2 } }' | wc
+     19      19     816
+[  mturchin@node1307  ~/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*KEGG*pValBonf.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); print $F[0], "\t", scalar(@vals1);' | sort -rg -k 2,2 | uniq | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(Data1[,2][order(Data1[,2])]);"
+> Data1 <- read.table(file('stdin'), header=F); print(Data1[,2][order(Data1[,2])]);
+ [1]  32  35  38  48  53  64  64  74  77  78  83  83  85 102 111 120 127 135 138
+[20] 141 170 194 234
 
 for m in `cat <(echo "GO_Biological_Process_2018 GO_Molecular_Function_2018 GO_Cellular_Component_2018" | perl -lane 'print join("\n", @F);')`; do 
 	gene_set_library1=$m; for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);')`; do
