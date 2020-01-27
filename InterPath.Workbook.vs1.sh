@@ -2635,23 +2635,21 @@ done;
 
 cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep ^"KEGG_" | perl -lane 'print $F[0], "\t", $F[1], "\t", join(",", @F[2..$#F]);' > /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.gmt 
 cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep ^"REACTOME_" | perl -lane 'print $F[0], "\t", $F[1], "\t", join(",", @F[2..$#F]);' > /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.REACTOME.forRtm.gmt 
+vals1 <- read.table("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.gmt", header=F)
 vals2 <- unlist(lapply(strsplit(as.character(vals1[,3]), ","), function(x) { return(paste(x, collapse=" "));}))
 x <- TermDocumentMatrix(Corpus(VectorSource(vals2)))
 y <- sparseMatrix( i=x$i, j=x$j, x=x$v, dimnames = dimnames(x) )
 hclust(dist(t(y)))$order
 set.seed(1234)
 y.clust <- hclust(dist(t(y)))
-y.clust.cut <- cutree(y.clust, k=75)
-vals1.tree <- cbind(as.character(vals1[,1]), y.clust.cut)
-vals4 <- c(); for (i in 1:length(unique(vals1.tree[,3]))) { 
-	vals1.tree.sub <- vals1.tree[vals1.tree[,3] == i,]; 
-	if (nrow(vals1.tree.sub) > 1) { vals1.tree.sub <- vals1.tree.sub[sample(1:nrow(vals1.tree.sub))[1],] }; 
-	vals4 <- rbind(vals4, vals1.tree.sub); 
-};
 png("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.hclust.vs1.png", height=2000, width=8000, res=300)
 plot(y.clust)
 rect.hclust(y.clust, k = 75)
 dev.off()
+y.clust.cut <- cutree(y.clust, k=75)
+vals1.tree <- cbind(as.character(vals1[,1]), y.clust.cut)
+vals4 <- c(); for (i in 1:length(unique(vals1.tree[,3]))) { vals1.tree.sub <- vals1.tree[vals1.tree[,3] == i,]; if (nrow(vals1.tree.sub) > 1) { vals1.tree.sub <- vals1.tree.sub[sample(1:nrow(vals1.tree.sub))[1],] }; vals4 <- rbind(vals4, vals1.tree.sub); };
+write.table(vals4, file="/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.cut.gmt", quote=FALSE, row.name=FALSE, col.name=FALSE);
 
 #From MacBook Air
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/Broad
