@@ -2633,29 +2633,31 @@ done;
 ~#			write.table(InterPath.AllPaths.output, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.GjDrop_wCov_GG.AllPaths.Results.Recal.txt.pre.gz
 #Vs3: GjDrop + wCov + GK setup
 
+#From: https://cran.r-project.org/web/packages/tm/vignettes/tm.pdf, https://www.datacamp.com/community/tutorials/hierarchical-clustering-R, https://www.rdocumentation.org/packages/dendextend/versions/1.13.2/topics/cutree
+
 cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep ^"KEGG_" | perl -lane 'print $F[0], "\t", $F[1], "\t", join(",", @F[2..$#F]);' > /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.gmt 
 cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep ^"REACTOME_" | perl -lane 'print $F[0], "\t", $F[1], "\t", join(",", @F[2..$#F]);' > /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.REACTOME.forRtm.gmt 
-#vals1 <- read.table("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.gmt", header=F)
-vals1 <- read.table("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.REACTOME.forRtm.gmt", header=F)
+vals1 <- read.table("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.gmt", header=F)
+#vals1 <- read.table("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.REACTOME.forRtm.gmt", header=F)
 vals2 <- unlist(lapply(strsplit(as.character(vals1[,3]), ","), function(x) { return(paste(x, collapse=" "));}))
 x <- TermDocumentMatrix(Corpus(VectorSource(vals2)))
 y <- sparseMatrix( i=x$i, j=x$j, x=x$v, dimnames = dimnames(x) )
 #hclust(dist(t(y)))$order
 set.seed(1234)
 y.clust <- hclust(dist(t(y)))
-#png("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.hclust.vs1.png", height=2000, width=8000, res=300)
-png("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.REACTOME.forRtm.hclust.vs1.png", height=2000, width=8000, res=300)
+png("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.hclust.vs1.png", height=2000, width=8000, res=300)
+#png("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.REACTOME.forRtm.hclust.vs1.png", height=2000, width=8000, res=300)
 plot(y.clust)
-#rect.hclust(y.clust, k = 75)
-rect.hclust(y.clust, k = 250)
+rect.hclust(y.clust, k = 25)
+#rect.hclust(y.clust, k = 250)
 dev.off()
-#y.clust.cut <- cutree(y.clust, k=75)
-y.clust.cut <- cutree(y.clust, k=250)
+y.clust.cut <- cutree(y.clust, k=25)
+#y.clust.cut <- cutree(y.clust, k=250)
 vals1.tree <- cbind(vals1[,1:2], y.clust.cut)
 vals1.tree[,2] <- NA
 vals4 <- c(); for (i in 1:length(unique(vals1.tree[,3]))) { vals1.tree.sub <- vals1.tree[vals1.tree[,3] == i,]; if (nrow(vals1.tree.sub) > 1) { vals1.tree.sub <- vals1.tree.sub[sample(1:nrow(vals1.tree.sub))[1],] }; vals4 <- rbind(vals4, vals1.tree.sub); };
-#write.table(vals4, file="/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.cut.gmt", quote=FALSE, row.name=FALSE, col.name=FALSE);
-write.table(vals4, file="/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.REACTOME.forRtm.cut.gmt", quote=FALSE, row.name=FALSE, col.name=FALSE);
+write.table(vals4, file="/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.cut.gmt", quote=FALSE, row.name=FALSE, col.name=FALSE);
+#write.table(vals4, file="/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.REACTOME.forRtm.cut.gmt", quote=FALSE, row.name=FALSE, col.name=FALSE);
 
 #lapply(strsplit(as.character(head(vals1[,3])), ","), function(x) { return(paste(x, collapse=" "));})
 
@@ -2664,7 +2666,7 @@ write.table(vals4, file="/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/Broad/MSigDB
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/mturchin/Broad/MSigDB/*hclust.vs*.png /Users/mturchin20/Documents/Work/LabMisc/Data/Broad/MSigDB/.
 
-for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do
 	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 4 | tail -n 4`; do
 		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 	 for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
@@ -4954,7 +4956,7 @@ done
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.bed
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.bed
 
-module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 8`; do
+module load R/3.4.3_mkl; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | tail -n 2`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
