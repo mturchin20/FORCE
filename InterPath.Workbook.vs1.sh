@@ -2601,20 +2601,20 @@ done
 
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 4 | tail -n 4`; do
-		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
+		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 	 for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				SECONDS=0; ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 				
 				echo $l $i $ancestry1 $ancestry2 $ancestry3 $k
 				R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
-				InterPath.$l.output <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.$l.Results.txt.pre.gz\", header=F); \
+				InterPath.$l.output <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.$l.Results.tmRcut.txt.pre.gz\", header=F); \
 				InterPath.$l.output.pValQC <- InterPath.$l.output[InterPath.$l.output[,4] > 0 & neg.is.na(InterPath.$l.output[,4]),]; \
 				pVals <- InterPath.$l.output.pValQC[,4]; \
 				quants <- qchisq(pVals, df=1, lower.tail=FALSE); \
 				quants.medn <- median(quants); m <- 0.4549; \
 				pVals <- pchisq((quants/quants.medn) * m, df=1, lower.tail=FALSE); \
 				InterPath.$l.output.pValQC[,4] <- pVals; \
-				write.table(InterPath.$l.output.pValQC, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.$l.Results.Recal.txt.pre.gz
+				write.table(InterPath.$l.output.pValQC, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.$l.Results.tmRcut.Recal.txt.pre.gz
 				duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 			done;
 		done;
@@ -2635,28 +2635,53 @@ done;
 
 cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep ^"KEGG_" | perl -lane 'print $F[0], "\t", $F[1], "\t", join(",", @F[2..$#F]);' > /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.gmt 
 cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep ^"REACTOME_" | perl -lane 'print $F[0], "\t", $F[1], "\t", join(",", @F[2..$#F]);' > /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.REACTOME.forRtm.gmt 
-vals1 <- read.table("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.gmt", header=F)
+#vals1 <- read.table("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.gmt", header=F)
+vals1 <- read.table("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.REACTOME.forRtm.gmt", header=F)
 vals2 <- unlist(lapply(strsplit(as.character(vals1[,3]), ","), function(x) { return(paste(x, collapse=" "));}))
 x <- TermDocumentMatrix(Corpus(VectorSource(vals2)))
 y <- sparseMatrix( i=x$i, j=x$j, x=x$v, dimnames = dimnames(x) )
-hclust(dist(t(y)))$order
+#hclust(dist(t(y)))$order
 set.seed(1234)
 y.clust <- hclust(dist(t(y)))
-png("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.hclust.vs1.png", height=2000, width=8000, res=300)
+#png("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.hclust.vs1.png", height=2000, width=8000, res=300)
+png("/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.REACTOME.forRtm.hclust.vs1.png", height=2000, width=8000, res=300)
 plot(y.clust)
-rect.hclust(y.clust, k = 75)
+#rect.hclust(y.clust, k = 75)
+rect.hclust(y.clust, k = 250)
 dev.off()
-y.clust.cut <- cutree(y.clust, k=75)
-vals1.tree <- cbind(as.character(vals1[,1]), y.clust.cut)
+#y.clust.cut <- cutree(y.clust, k=75)
+y.clust.cut <- cutree(y.clust, k=250)
+vals1.tree <- cbind(vals1[,1:2], y.clust.cut)
+vals1.tree[,2] <- NA
 vals4 <- c(); for (i in 1:length(unique(vals1.tree[,3]))) { vals1.tree.sub <- vals1.tree[vals1.tree[,3] == i,]; if (nrow(vals1.tree.sub) > 1) { vals1.tree.sub <- vals1.tree.sub[sample(1:nrow(vals1.tree.sub))[1],] }; vals4 <- rbind(vals4, vals1.tree.sub); };
-write.table(vals4, file="/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.cut.gmt", quote=FALSE, row.name=FALSE, col.name=FALSE);
+#write.table(vals4, file="/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.KEGG.forRtm.cut.gmt", quote=FALSE, row.name=FALSE, col.name=FALSE);
+write.table(vals4, file="/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.REACTOME.forRtm.cut.gmt", quote=FALSE, row.name=FALSE, col.name=FALSE);
+
+#lapply(strsplit(as.character(head(vals1[,3])), ","), function(x) { return(paste(x, collapse=" "));})
 
 #From MacBook Air
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/Broad
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/Data/Broad/MSigDB
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/mturchin/Broad/MSigDB/*hclust.vs*.png /Users/mturchin20/Documents/Work/LabMisc/Data/Broad/MSigDB/.
 
-#lapply(strsplit(as.character(head(vals1[,3])), ","), function(x) { return(paste(x, collapse=" "));})
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 4 | tail -n 4`; do
+		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
+	 for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+				SECONDS=0; ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+				
+				echo $l $i $ancestry1 $ancestry2 $ancestry3 $k
+				
+				join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.$l.Results.txt.pre.gz | sort -k 1,1) <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.$l.forRtm.cut.gmt | awk '{ print $1 }' | sort) | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.$l.Results.tmRcut.txt.pre.gz
+			
+			done;
+		done;
+	done;
+done;
+
+#			pVals <- InterPath.AllPaths.output[,ncol(InterPath.AllPaths.output)]; pVals.no0 <- pVals[pVals > 0]; \
+#			quants <- qchisq(pVals.no0, df=1, lower.tail=FALSE); \
+#			InterPath.AllPaths.output <- InterPath.AllPaths.output[pVals > 0,];  InterPath.AllPaths.output[,ncol(InterPath.AllPaths.output)] <- pVals.no0; \
 
 
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 4`; do
@@ -8583,19 +8608,21 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscrip
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/QQPlots
 
+Results.tmRcut
+
 echo -e "library(\"RColorBrewer\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
         for (i in DataTypes1[1]) { for (l in DataTypes2[1:1]) { for (m in Paths[2:3]) { \
-                png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/QQPlots/ukb_v3.AllPops.AllPhenos.\", l, \".\", m, \".QQplots.Recal.vs1.png\", sep=\"\"), height=4000, width=4000, res=300); par(oma=c(1,1,4,14), mar=c(5,5,4,2), mfrow=c(2,2)); \
+                png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/QQPlots/ukb_v3.AllPops.AllPhenos.\", l, \".\", m, \".QQplots.tmRcut.Recal.vs1.png\", sep=\"\"), height=4000, width=4000, res=300); par(oma=c(1,1,4,14), mar=c(5,5,4,2), mfrow=c(2,2)); \
                 for (j in Strats[4]) { \
                         for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:4]) { \
-	                        Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.Recal.txt.pre.gz\", sep=\"\"), header=F); \
-                                Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.Recal.txt.pre.gz\", sep=\"\"), header=F); \
-                                Data3 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.Recal.txt.pre.gz\", sep=\"\"), header=F); \
-                                Data4 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.Recal.txt.pre.gz\", sep=\"\"), header=F); \
-                                Data5 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.Recal.txt.pre.gz\", sep=\"\"), header=F); \
-                                Data6 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.Recal.txt.pre.gz\", sep=\"\"), header=F); \
-                                Data7 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.Recal.txt.pre.gz\", sep=\"\"), header=F); \
-                                Data8 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.Recal.txt.pre.gz\", sep=\"\"), header=F); \
+	                        Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.tmRcut.Recal.txt.pre.gz\", sep=\"\"), header=F); \
+                                Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.tmRcut.Recal.txt.pre.gz\", sep=\"\"), header=F); \
+                                Data3 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.tmRcut.Recal.txt.pre.gz\", sep=\"\"), header=F); \
+                                Data4 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.tmRcut.Recal.txt.pre.gz\", sep=\"\"), header=F); \
+                                Data5 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.tmRcut.Recal.txt.pre.gz\", sep=\"\"), header=F); \
+                                Data6 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.tmRcut.Recal.txt.pre.gz\", sep=\"\"), header=F); \
+                                Data7 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.tmRcut.Recal.txt.pre.gz\", sep=\"\"), header=F); \
+                                Data8 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".\", m, \".Results.tmRcut.Recal.txt.pre.gz\", sep=\"\"), header=F); \
 				numPaths1 <- max(c(nrow(Data1), nrow(Data2), nrow(Data3), nrow(Data4), nrow(Data5), nrow(Data6), nrow(Data7), nrow(Data8))); pValBonf1 <- .05 / numPaths1; print(pValBonf1); \
                                 Data1 <- Data1[!is.na(Data1[,4]) & Data1[,4] != 0,]; Data2 <- Data2[!is.na(Data2[,4]) & Data2[,4] != 0,]; Data3 <- Data3[!is.na(Data3[,4]) & Data3[,4] != 0,]; Data4 <- Data4[!is.na(Data4[,4]) & Data4[,4] != 0,]; Data5 <- Data5[!is.na(Data5[,4]) & Data5[,4] != 0,]; Data6 <- Data6[!is.na(Data6[,4]) & Data6[,4] != 0,]; Data7 <- Data7[!is.na(Data7[,4]) & Data7[,4] != 0,]; Data8 <- Data8[!is.na(Data8[,4]) & Data8[,4] != 0,]; \
                                 xVals1 <- seq(1/nrow(Data1), 1, by=1/nrow(Data1)); xVals2 <- seq(1/nrow(Data2), 1, by=1/nrow(Data2)); xVals3 <- seq(1/nrow(Data3), 1, by=1/nrow(Data3)); xVals4 <- seq(1/nrow(Data4), 1, by=1/nrow(Data4)); xVals5 <- seq(1/nrow(Data5), 1, by=1/nrow(Data5)); xVals6 <- seq(1/nrow(Data6), 1, by=1/nrow(Data6)); xVals7 <- seq(1/nrow(Data7), 1, by=1/nrow(Data7)); xVals8 <- seq(1/nrow(Data8), 1, by=1/nrow(Data8)); \
@@ -8612,7 +8639,7 @@ echo -e "library(\"RColorBrewer\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", 
                         }; \
                 }; mtext(m, side=3, outer=TRUE, at=.5, cex=2.5); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Brit.Ran10k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\", \"Bonf pVal\"), pch=c(16,16,16,16,16,16,16,16,NA), lty=c(NA,NA,NA,NA,NA,NA,NA,NA,3), lwd=c(NA,NA,NA,NA,NA,NA,NA,NA,3), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7], \"RED\"), xpd=TRUE, inset=c(.0175,.1), bg=\"transparent\", cex=1.5, y.intersp=2); dev.off(); }; \
         };}; print(warnings()); \
-" > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/QQPlots/ukb_v3.AllPops.AllPhenos.QQplots.Recal.vs1.R; Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/QQPlots/ukb_v3.AllPops.AllPhenos.QQplots.Recal.vs1.R
+" > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/QQPlots/ukb_v3.AllPops.AllPhenos.QQplots.tmRcut.Recal.vs1.R; Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/QQPlots/ukb_v3.AllPops.AllPhenos.QQplots.tmRcut.Recal.vs1.R
 
 #		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/QQplots/ukb_chrAll_v3.AfrBrit4kCaribIndn.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", l, \".ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.\", m, \".Results.QQplots.vs1.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,4,14), mar=c(5,5,4,2), mfrow=c(1,2)); \
 
