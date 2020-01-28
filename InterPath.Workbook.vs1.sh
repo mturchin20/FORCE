@@ -8785,11 +8785,11 @@ paste <(echo -e "\nKEGG_Height\nKEGG_BMI\nREACTOME_Height\nREACTOME_BMI") <(cat 
 
 R -q -e "library(\"RColorBrewer\"); Data1 <- read.table(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.AllPhenos.AllPaths.pValBonf.Barplots.Info.vs1.txt\", header=T); \
 Data1.KEGG <- t(Data1)[,1:2]; Data1.REACTOME <- t(Data1)[,3:4]; \
-png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.AllPhenos.AllPaths.pValBonf.Barplots.plots.vs1.png\", height=4000, width=4000, res=300); par(oma=c(1,1,4,8), mar=c(5,5,4,2), mfrow=c(2,1)); \
+png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.AllPhenos.AllPaths.pValBonf.Barplots.plots.vs1.png\", height=4000, width=4000, res=300); par(oma=c(1,1,4,10), mar=c(5,5,4,2), mfrow=c(2,1)); \
 Data1.colors <- c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7]); \
-barplot(Data1.KEGG, col=Data1.colors, beside=TRUE, cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-barplot(Data1.REACTOME, col=Data1.colors, beside=TRUE, cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-mtext(\"UKB InterPath Results\", side=3, outer=TRUE, at=.5, cex=2.5); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Brit.Ran10k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\"), pch=c(15,15,15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.0175,.1), bg=\"transparent\", cex=1.5, y.intersp=2); \
+barplot(Data1.KEGG, ylab=\"Number of Significant SNPs\", col=Data1.colors, beside=TRUE, cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+barplot(Data1.REACTOME, ylab=\"Number of Significant SNPs\", col=Data1.colors, beside=TRUE, cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+mtext(\"UKBioBank InterPath Results\", side=3, outer=TRUE, at=.5, cex=2.5); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Brit.Ran10k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\"), pch=c(15,15,15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.29), bg=\"transparent\", cex=1.5, y.intersp=2); \
 dev.off();"
 
 
