@@ -2422,6 +2422,17 @@ tar/zip Genes vs2 (+), get plink going (+), get mapit going (..), do African ver
 9894553              63      batch  mturchin    default 2020-01-22T01:13:06 2020-01-23T12:42:17   05:54:16          4     FAILED      1:0    BMI British.Ran10000.3 ExonicPlus20kb 801 perm3 
 9894553.bat+      batch                         default 2020-01-23T11:13:43 2020-01-23T12:42:17   05:54:16          4     FAILED      1:0                                                    
 
+10020743             63      batch  mturchin    default 2020-01-26T16:06:36 2020-01-28T05:58:24 1-16:43:36          4     FAILED      9:0 Height British.Ran10000.2 ExonicPlus20kb 721 perm7 
+10020743.ba+      batch                         default 2020-01-27T19:47:30 2020-01-28T05:58:24 1-16:43:36          4     FAILED      9:0                                                    
+10020805             63      batch  mturchin    default 2020-01-26T16:06:39 2020-01-28T01:35:11   12:09:08          4     FAILED      6:0 Height British.Ran10000.3 ExonicPlus20kb 881 perm7 
+10020805.ba+      batch                         default 2020-01-27T22:32:54 2020-01-28T01:35:11   12:09:08          4     FAILED      6:0                                                    
+10020867             63      batch  mturchin    default 2020-01-26T16:06:43 2020-01-28T05:58:24   18:22:08          4     FAILED      9:0 Height British.Ran10000.4 ExonicPlus20kb 1041 per+ 
+10020867.ba+      batch                         default 2020-01-28T01:22:52 2020-01-28T05:58:24   18:22:08          4     FAILED      9:0                                                    
+10020928             63      batch  mturchin    default 2020-01-26T16:06:47 2020-01-28T05:33:06   01:22:36          4     FAILED      6:0 Height British.Ran10000.5 ExonicPlus20kb 1041 per+ 
+10020928.ba+      batch                         default 2020-01-28T05:12:27 2020-01-28T05:33:06   01:22:36          4     FAILED      6:0                                                    
+10020930             63      batch  mturchin    default 2020-01-26T16:06:47 2020-01-28T05:39:10   00:22:40          4     FAILED      6:0 Height British.Ran10000.5 ExonicPlus20kb 1201 per+ 
+10020930.ba+      batch                         default 2020-01-28T05:33:30 2020-01-28T05:39:10   00:22:40          4     FAILED      6:0                                                    
+
 
 
 
@@ -5049,9 +5060,9 @@ done
 #
 #
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 8`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 8 | head -n 1`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
-	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2 | tail -n 1`; do
 	        echo $ancestry1 $ancestry2 $i
 		
 		if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/slurm ]; then
@@ -5616,10 +5627,7 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturch
 #410017 variants loaded from .bim file.
 #505854 variants loaded from .bim file.
 
-
-fix axis so that it begins at 1 and ends at 50 (currently begins at 0)
-
-
+#20200127 20200127 CHECK_1 -- Prob: fix axis so that it begins at 1 and ends at 50 (currently begins at 0) Soln: took care of it
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/ukb_chrAll_v3.AfrBrit4kCaribIndn.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.HeightBMI.epi.qt.Results.ProportionPlots.vs1.png\",  height=2000, width=5000, res=300); par(oma=c(1,1,1,17), mar=c(5,6,4,2), mfrow=c(1,2)); \
         for (k in c(\"Height\", \"BMI\")[1:2]) { \
                 Data1 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
