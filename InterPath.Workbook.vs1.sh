@@ -2492,7 +2492,7 @@ done
 #				LpCnt=LpCnt+1; if [ $LpCnt == 100 ] ; then LpCnt=1; sleep 30; fi
 
 #Others: --mem 10g 
-#Brit.Ran10k: -n 4 -N 1-1 --mem 28g (-n 4 -N 1-1 42g for Irish)
+#Brit.Ran10k: -n 4 -N 1-1 --mem 28/32g (-n 4 -N 1-1 42g for Irish)
 #Pops for GD25000: African, Brit4k, Brit10k, Indn
 #20191216 Mem updates after imputation move
 #Others: --mem 25g
@@ -6223,6 +6223,22 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterP
 
 
 
+
+
+
+
+
+#GridLMM
+#20200129
+
+#From https://github.com/deruncie/GridLMM
+#NOTE -- don't have any conda environment active when doing something like this
+##module load R/3.5.2
+module load R/3.6.0
+#Below in R
+install.packages("openssl")
+install.packages("devtools")
+devtools::install_github('deruncie/GridLMM')
 
 
 
