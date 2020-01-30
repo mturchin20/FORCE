@@ -80,7 +80,7 @@ conda create -n InterPath2
 conda install R perl java-jdk r-base r-devtools r-tm 
 #conda install -c r r-tm
 #NOTE -- stopped after this once realized the need for anaconda/3-5.2.0 but also able to install 'tm' onto R/3.5.2)
-
+#NOTE -- did continue using anaconda InterPath2 though, for instance in trying to get GridLMM working on cluster
 
 #20190603
 #Backup (just a place to put any particular files that might be worth having extra levels of backup for via the github repo)
@@ -6234,7 +6234,10 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterP
 #From https://github.com/deruncie/GridLMM
 #NOTE -- don't have any conda environment active when doing something like this
 ##module load R/3.5.2
-module load R/3.6.0
+##module load R/3.6.0
+#NOTE -- now using the specific anaconda environment InterPath2 to get this to work
+module load anaconda
+source activate InterPath2
 #Below in R
 install.packages("openssl")
 install.packages("devtools")
@@ -8837,11 +8840,9 @@ echo -e "library(\"RColorBrewer\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", 
 
 #		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/QQplots/ukb_chrAll_v3.AfrBrit4kCaribIndn.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", l, \".ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.\", m, \".Results.QQplots.vs1.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,4,14), mar=c(5,5,4,2), mfrow=c(1,2)); \
 
-/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.txt.pre.gz
-
 R -q -e "library(\"RColorBrewer\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
         for (i in DataTypes1[1]) { for (l in DataTypes2[1:1]) { for (m in Paths[2:2]) { \
-                png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/QQPlots/ukb_v3.AllPops.AllPhenos.\", l, \".KEGGsubsets.QQplots.vs1.png\", sep=\"\"), height=4000, width=4000, res=300); par(oma=c(1,1,4,14), mar=c(5,5,4,2), mfrow=c(1,2)); \
+                png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/QQPlots/ukb_v3.African.HeightBMI.\", l, \".KEGG.subsets.QQplots.vs1.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,4,14), mar=c(5,5,4,2), mfrow=c(1,2)); \
                 for (j in Strats[4]) { \
                         for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
 	                        Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".KEGG.Results.txt.pre.gz\", sep=\"\"), header=F); \
@@ -8863,8 +8864,6 @@ R -q -e "library(\"RColorBrewer\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", 
                 }; mtext(m, side=3, outer=TRUE, at=.5, cex=2.5); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"KEGG\", \"KEGG75\", \"KEGG50\", \"KEGG25\", \"KEGG10\", \"Bonf pVal\"), pch=c(16,16,16,16,16,NA), lty=c(NA,NA,NA,NA,NA,3), lwd=c(NA,NA,NA,NA,NA,3), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], \"RED\"), xpd=TRUE, inset=c(.0175,.1), bg=\"transparent\", cex=1.5, y.intersp=2); dev.off(); }; \
         };}; print(warnings()); \
 " 
-
-
 
 ~R -q -e "library(\"RColorBrewer\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
 ~        for (i in DataTypes1[1]) { for (l in DataTypes2[1:2]) { for (m in Paths[2:3]) { \
@@ -9023,6 +9022,31 @@ dev.off();"
 
 
 
+
+
+
+
+
+
+
+
+#OverleafRpWrk
+#20200130
+
+#OvrlfRpStp (/MvgDssrttnRepoMscOvr)
+#20180213
+
+#MacBook Pro
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Production
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Production/Manuscript
+#NOTE -- in EndNote, make sure using 'BibTeX export' style
+#cat /Users/mturchin20/Google\ Drive/EndNote/Libraries/InterPath/TurchinMichael_MasterLibrary_1.vs1.txt | perl -lane 'if ($. == 1) { $type = "article"; } if ($F[0] =~ m/^\@(article|book)/) { $type2 = $1; if (@tempRefLog) { $author =~ s/\{//g; $author =~ s/\}//g; $author =~ s/,//g; $year =~ s/\{//g; $year =~ s/\}//g; $year=~ s/,//g; print "\@$type\{$author$year,"; print "\t", join("\n\t", @tempRefLog[0..$#tempRefLog-2]); print $tempRefLog[$#tempRefLog-1], "\n"; @tempRefLog = (); $author = ""; $year = ""; $type = $type2;} else { push(@tempRefLog, join(" ", @F)); } } else { if ($F[0] =~ /^author/) { $author = $F[2]; }; if ($F[0] =~ /^year/) { $year = $F[2]; }; push(@tempRefLog, join(" ", @F)); }; if(eof()) { $author =~ s/\{//g; $author =~ s/\}//g; $author =~ s/,//g; $year =~ s/\{//g; $year =~ s/\}//g; $year=~ s/,//g; print "\@article{$author$year,"; print "\t", join("\n\t", @tempRefLog[0..$#tempRefLog-2]); print $tempRefLog[$#tempRefLog-1], "\n";}' > /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Production/Manuscript/Main.bib 
+
+cat /Users/mturchin20/Google\ Drive/EndNote/Libraries/TurchinMichael_MasterLibrary_1.Data/bibtex_files/TurchinMichael_MasterLibrary_1.ch04.vs5.txt | perl -lane 'if ($. == 1) { $type = "article"; } if ($F[0] =~ m/^\@(article|book)/) { $type2 = $1; if (@tempRefLog) { $author =~ s/\{//g; $author =~ s/\}//g; $author =~ s/,//g; $year =~ s/\{//g; $year =~ s/\}//g; $year=~ s/,//g; print "\@$type\{$author$year,"; print "\t", join("\n\t", @tempRefLog[0..$#tempRefLog-2]); print $tempRefLog[$#tempRefLog-1], "\n"; @tempRefLog = (); $author = ""; $year = ""; $type = $type2;} else { push(@tempRefLog, join(" ", @F)); } } else { if ($F[0] =~ /^author/) { $author = $F[2]; }; if ($F[0] =~ /^year/) { $year = $F[2]; }; push(@tempRefLog, join(" ", @F)); }; if(eof()) { $author =~ s/\{//g; $author =~ s/\}//g; $author =~ s/,//g; $year =~ s/\{//g; $year =~ s/\}//g; $year=~ s/,//g; print "\@article{$author$year,"; print "\t", join("\n\t", @tempRefLog[0..$#tempRefLog-2]); print $tempRefLog[$#tempRefLog-1], "\n";}' | sed '/@article{RN565,/d' > /Users/mturchin20/Documents/Work/LabMisc/StephensLab/Multivariate/Production/Manuscript/Main.bib
+#NOTE -- still have to manually edit Minka/MacArthur thing afterwards
+cp -p /Users/mturchin20/Documents/Work/LabMisc/StephensLab/Multivariate/Production/Manuscript/Main.bib /Users/mturchin20/Documents/Work/LabMisc/StephensLab/Multivariate/Production/Manuscript/Supplementary.bib
+#20190204 NOTE -- now have to manually edit both Li2016's as well (change them to: Li2016a & Li2016b), and Astle thing at top
+#20190731 NOTE -- now doing '/Users/mturchin20/Google\ Drive/EndNote/Libraries/TurchinMichael_MasterLibrary_1.Data/bibtex_files/TurchinMichael_MasterLibrary_1.ch04.vs5.txt', same post-manual edits as before
 
 
 
