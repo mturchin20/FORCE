@@ -5812,7 +5812,7 @@ git clone https://github.com/lorinanthony/MAPIT
 #ls -lrt /users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.cpp
 
 
-for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
@@ -5870,8 +5870,8 @@ done
 
 #Pops: -n 8 -N 1-1 --mem 101g (might be overkill, but at 41g some runs were failing; Brit for approx took ~7-8 days? Afr 3-4 days?)
 
-for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 1`; do
+for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 2`; do
 		SECONDS=0; ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`; 
 		echo $i $ancestry1 $ancestry2 $ancestry3 $k
 
@@ -5879,32 +5879,32 @@ for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82
 			mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles
 		fi
 		
-	   rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.r3.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.Subset*; cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.r3.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.txt | perl -F, -slane 'for (my $i=0; $i <= $#F; $i += 10000) { my $output1 = "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1b/$ancestry2b/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v2.$ancestry2b.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.r3.MAPIT.Results.$Pheno1Bash.DaviesApprox.3.Eigenvalues.Subset." . $i . ".txt"; open(my $outfile1, ">>", $output1) or die; my $end1 = $i + 9999; if ($end1 > $#F) { $end1 = $i + ($#F - $i); } print $outfile1 join("\t", @F[$i..$end1]); close($outfile1); }' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 -Pheno1Bash=$Pheno1
-		gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.r3.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.Subset*txt
+	   rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Eigenvalues.Subset*; cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Eigenvalues.txt | perl -F, -slane 'for (my $i=0; $i <= $#F; $i += 10000) { my $output1 = "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1b/$ancestry2b/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v3.$ancestry2b.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1Bash.DaviesApprox.Eigenvalues.Subset." . $i . ".txt"; open(my $outfile1, ">>", $output1) or die; my $end1 = $i + 9999; if ($end1 > $#F) { $end1 = $i + ($#F - $i); } print $outfile1 join("\t", @F[$i..$end1]); close($outfile1); }' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 -Pheno1Bash=$Pheno1
+		gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Eigenvalues.Subset*txt
 
 	done;
 done;
 
-module load R/3.4.3_mkl gcc; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 2`; do
+module load R/3.4.3_mkl gcc; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 1 | tail -n 1`; do
 		SECONDS=0; ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`; 
-		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.r3.MAPIT.Results.$Pheno1.DaviesApprox.3.Est.txt | wc | awk '{ print $1 }'`
-#		NumPaths=20002
+#		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.r3.MAPIT.Results.$Pheno1.DaviesApprox.3.Est.txt | wc | awk '{ print $1 }'`
+		NumPaths=20002
 		echo $i $ancestry1 $ancestry2 $ancestry3 $k
                      
 		for (( PathNum=0; PathNum <= $NumPaths; PathNum=PathNum+10000 )); do
 			sbatch -t 24:00:00 --mem 8g --account=ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/slurm4.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/slurm4.error --comment "$i $ancestry1 $ancestry2 $PathNum" <(echo -e '#!/bin/sh';
 			echo -e "\nR -q -e \"options(scipen=999); library(\\\"data.table\\\"); library(\\\"CompQuadForm\\\"); neg.is.na <- Negate(is.na); \
-			MAPIT.output.Est <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.r3.MAPIT.Results.$Pheno1.DaviesApprox.3.Est.txt\\\", header=F); \
-			MAPIT.output.Eigenvalues <- as.data.frame(fread(paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.r3.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.Subset.\\\", $PathNum, \\\".txt.gz\\\", sep=\\\"\\\"), header=F)); \
-			MAPIT.output.PVE <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.r3.MAPIT.Results.$Pheno1.DaviesApprox.3.PVE.txt\\\", header=F); \
+			MAPIT.output.Est <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Est.txt\\\", header=F); \
+			MAPIT.output.Eigenvalues <- as.data.frame(fread(paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Eigenvalues.Subset.\\\", $PathNum, \\\".txt.gz\\\", sep=\\\"\\\"), header=F)); \
+			MAPIT.output.PVE <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.PVE.txt\\\", header=F); \
 			Results1 <- c(); for (i in 1:10000) { \
 				i2 <- i+$PathNum; if (i2 <= $NumPaths) { \
 				Lambda <- sort(MAPIT.output.Eigenvalues[,i], decreasing=TRUE); \
 				Davies.Output <- davies(MAPIT.output.Est[i2,1], lambda=Lambda, acc=1e-8); \
 				pVal <- 2*min(1-Davies.Output\\\$Qq, Davies.Output\\\$Qq); \
 				Results1 <- rbind(Results1, c(i2, MAPIT.output.Est[i2,1], MAPIT.output.PVE[i2,1], pVal, Davies.Output\\\$Qq, Davies.Output\\\$ifault)); }; \
-			}; write.table(Results1, file=\\\"\\\", quote=FALSE, col.name=FALSE, row.name=FALSE);\" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.r3.MAPIT.Results.$Pheno1.DaviesApprox.Results.Subset$PathNum.txt.pre.gz;"); 
+			}; write.table(Results1, file=\\\"\\\", quote=FALSE, col.name=FALSE, row.name=FALSE);\" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Results.Subset$PathNum.txt.pre.gz;"); 
 #			duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
 		done;
 	done;
@@ -5913,12 +5913,12 @@ done;
 #		Results1 <- c(); for (i in 1:length(MAPIT.output.Est)) { \
 #		ptm <- proc.time(); MAPIT.output.Eigenvalues <- fread(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.3.Eigenvalues.txt\", header=F); print(proc.time() - ptm); \
 
-for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 2`; do
+for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 2`; do
 		SECONDS=0; ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`; 
 		echo $i $ancestry1 $ancestry2 $ancestry3 $k
 
-		zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.r3.MAPIT.Results.$Pheno1.DaviesApprox.Results.Subset*.txt.pre.gz | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.r3.MAPIT.Results.$Pheno1.DaviesApprox.Results.txt.pre.gz
+		zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/Subfiles/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Results.Subset*.txt.pre.gz | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.$Pheno1.DaviesApprox.Results.txt.pre.gz
 
 	done;
 done;
@@ -6242,7 +6242,9 @@ source activate InterPath2
 install.packages("openssl")
 install.packages("devtools")
 devtools::install_github('deruncie/GridLMM')
-
+#To get vignettes, run the following two commands below on desktop in R:
+devtools::install_github('deruncie/GridLMM', build_opts = c("--no-resave-data", "--no-manual"),force = TRUE,build_vignettes = TRUE)
+vignette(topic = 'Running_GridLMM_GWAS',package='GridLMM')
 
 
 
@@ -9041,11 +9043,8 @@ dev.off();"
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Production/Manuscript
 #NOTE -- in EndNote, make sure using 'BibTeX export' style
 #cat /Users/mturchin20/Google\ Drive/EndNote/Libraries/InterPath/TurchinMichael_MasterLibrary_1.vs1.txt | perl -lane 'if ($. == 1) { $type = "article"; } if ($F[0] =~ m/^\@(article|book)/) { $type2 = $1; if (@tempRefLog) { $author =~ s/\{//g; $author =~ s/\}//g; $author =~ s/,//g; $year =~ s/\{//g; $year =~ s/\}//g; $year=~ s/,//g; print "\@$type\{$author$year,"; print "\t", join("\n\t", @tempRefLog[0..$#tempRefLog-2]); print $tempRefLog[$#tempRefLog-1], "\n"; @tempRefLog = (); $author = ""; $year = ""; $type = $type2;} else { push(@tempRefLog, join(" ", @F)); } } else { if ($F[0] =~ /^author/) { $author = $F[2]; }; if ($F[0] =~ /^year/) { $year = $F[2]; }; push(@tempRefLog, join(" ", @F)); }; if(eof()) { $author =~ s/\{//g; $author =~ s/\}//g; $author =~ s/,//g; $year =~ s/\{//g; $year =~ s/\}//g; $year=~ s/,//g; print "\@article{$author$year,"; print "\t", join("\n\t", @tempRefLog[0..$#tempRefLog-2]); print $tempRefLog[$#tempRefLog-1], "\n";}' > /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Production/Manuscript/Main.bib 
+#NOTE -- manually edit top entry/Abraham2017 line(s)
 
-cat /Users/mturchin20/Google\ Drive/EndNote/Libraries/TurchinMichael_MasterLibrary_1.Data/bibtex_files/TurchinMichael_MasterLibrary_1.ch04.vs5.txt | perl -lane 'if ($. == 1) { $type = "article"; } if ($F[0] =~ m/^\@(article|book)/) { $type2 = $1; if (@tempRefLog) { $author =~ s/\{//g; $author =~ s/\}//g; $author =~ s/,//g; $year =~ s/\{//g; $year =~ s/\}//g; $year=~ s/,//g; print "\@$type\{$author$year,"; print "\t", join("\n\t", @tempRefLog[0..$#tempRefLog-2]); print $tempRefLog[$#tempRefLog-1], "\n"; @tempRefLog = (); $author = ""; $year = ""; $type = $type2;} else { push(@tempRefLog, join(" ", @F)); } } else { if ($F[0] =~ /^author/) { $author = $F[2]; }; if ($F[0] =~ /^year/) { $year = $F[2]; }; push(@tempRefLog, join(" ", @F)); }; if(eof()) { $author =~ s/\{//g; $author =~ s/\}//g; $author =~ s/,//g; $year =~ s/\{//g; $year =~ s/\}//g; $year=~ s/,//g; print "\@article{$author$year,"; print "\t", join("\n\t", @tempRefLog[0..$#tempRefLog-2]); print $tempRefLog[$#tempRefLog-1], "\n";}' | sed '/@article{RN565,/d' > /Users/mturchin20/Documents/Work/LabMisc/StephensLab/Multivariate/Production/Manuscript/Main.bib
-#NOTE -- still have to manually edit Minka/MacArthur thing afterwards
-cp -p /Users/mturchin20/Documents/Work/LabMisc/StephensLab/Multivariate/Production/Manuscript/Main.bib /Users/mturchin20/Documents/Work/LabMisc/StephensLab/Multivariate/Production/Manuscript/Supplementary.bib
-#20190204 NOTE -- now have to manually edit both Li2016's as well (change them to: Li2016a & Li2016b), and Astle thing at top
 #20190731 NOTE -- now doing '/Users/mturchin20/Google\ Drive/EndNote/Libraries/TurchinMichael_MasterLibrary_1.Data/bibtex_files/TurchinMichael_MasterLibrary_1.ch04.vs5.txt', same post-manual edits as before
 
 
