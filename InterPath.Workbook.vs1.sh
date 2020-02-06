@@ -6280,29 +6280,34 @@ module load anaconda; source activate InterPath2; for j in `cat <(echo $UKBioBan
         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
 
         for m in `cat <(echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 2`; do
-                R -q -e "ptm <- proc.time(); library(\"GridLMM\"); for (i in c(\"Height\", \"BMI\")) { ptm <- proc.time(); \ 
-			Y <- read.table(paste(\"$m.ownK.Vs1.localPCs.\", i, \".YMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F); K <- read.table(paste(\"$m.ownK.Vs1.localPCs.\", i, \".KMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F); K2 <- read.table(paste(\"$m.ownK.Vs1.localPCs.\", i, \".K2MRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F); \
+                R -q -e "ptm <- proc.time(); library(\"data.table\"); library(\"GridLMM\"); for (i in c(\"Height\", \"BMI\")[1]) { ptm <- proc.time(); \ 
+			Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.localPCs.\", i, \".YMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); 
+			K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.localPCs.\", i, \".KMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); 
+			K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.localPCs.\", i, \".K2MRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
 			colnames(Y) <- \"y\"; rownames(K) <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); colnames(K) <- rownames(K); rownames(K2) <- colnames(K); colnames(K2) <- colnames(K);
 			IndvNames <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\");
 			Data1 <- data.frame(Y=Y, K_Grid=IndvNames, K2_Grid=IndvNames);
 			NullModel <- GridLMM_ML(formula = y~1 + (1|K2_Grid), data = Data1, relmat = list(K2_Grid=as.matrix(K2)), REML = T, save_V_folder = \"V_folder\", tolerance = 1e-3);
-			Data1 <- data.frame(y=Y, ); \ 
-			NullModel <- GridLMM_ML(formula = y~1 + (1|K_Grid) + (1|K2_Grid), data = Data1, relmat = list(K_Grid=K, K2_Grid=K2), REML = T, save_V_folder = 'V_folder', tolerance = 1e-3); \
-			print(NullModel$results[,c('K_Grid.REML','K2_Grid.REML')]); \
+			print(NullModel$results[,c(\"K_Grid.REML\",\"K2_Grid.REML\")]); \
 			print(proc.time() - ptm); ptm <- proc.time(); \
                 };"
         done
 done
 
 #null_model = GridLMM_ML(formula = y~1 + (1|Geno) + (1|Plot),data = data,relmat = list(Geno = K_G, Plot = K_plot),REML = T,save_V_folder = 'V_folder',tolerance = 1e-3)
-library("GridLMM")
-Y <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.ownK.Vs1.localPCs.Height.YMRescale.noFix.cov.ColCrct.txt", header=F); 
-K <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.ownK.Vs1.localPCs.Height.KMRescale.noFix.cov.ColCrct.txt", header=F); 
-K2 <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.ownK.Vs1.localPCs.Height.K2MRescale.noFix.cov.ColCrct.txt", header=F); 
+library("data.table"); library("GridLMM")
+#Y <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.ownK.Vs1.localPCs.Height.YMRescale.noFix.cov.ColCrct.txt", header=F); 
+#K <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.ownK.Vs1.localPCs.Height.KMRescale.noFix.cov.ColCrct.txt", header=F); 
+#K2 <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.ownK.Vs1.localPCs.Height.K2MRescale.noFix.cov.ColCrct.txt", header=F); 
+Y <- fread(cmd=paste("cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.ownK.Vs1.localPCs.Height.YMRescale.noFix.cov.ColCrct.txt", sep=""), header=F);  
+K <- as.matrix(fread(cmd=paste("cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.ownK.Vs1.localPCs.Height.KMRescale.noFix.cov.ColCrct.txt", sep=""), header=F));  
+K2 <- as.matrix(fread(cmd=paste("cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.ownK.Vs1.localPCs.Height.K2MRescale.noFix.cov.ColCrct.txt", sep=""), header=F));  
 colnames(Y) <- "y"; rownames(K) <- paste("Indv", seq(1:nrow(K)), sep=""); colnames(K) <- rownames(K); rownames(K2) <- colnames(K); colnames(K2) <- colnames(K);
 IndvNames <- paste("Indv", seq(1:nrow(K)), sep="");
 Data1 <- data.frame(Y=Y, K_Grid=IndvNames, K2_Grid=IndvNames);
-NullModel <- GridLMM_ML(formula = y~1 + (1|K2_Grid), data = Data1, relmat = list(K2_Grid=as.matrix(K2)), REML = T, save_V_folder = 'V_folder', tolerance = 1e-3);
+#NullModel <- GridLMM_ML(formula = y~1 + (1|K2_Grid), data = Data1, relmat = list(K2_Grid=as.matrix(K2)), REML = T, save_V_folder = 'V_folder', tolerance = 1e-3);
+NullModel <- GridLMM_ML(formula = y~1 + (1|K2_Grid), data = Data1, relmat = list(K2_Grid=K2), REML = T, save_V_folder = 'V_folder', tolerance = 1e-3);
+NullModel$results[,c("K2_Grid.REML")])
 
 n_geno = 300
 n_chr = 5
