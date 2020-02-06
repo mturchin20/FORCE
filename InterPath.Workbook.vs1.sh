@@ -6280,29 +6280,62 @@ module load anacond; source activate InterPath2; for j in `cat <(echo $UKBioBank
         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
 
         for m in `cat <(echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 2`; do
-                R -q -e "ptm <- proc.time(); library(\"MASS\"); for (i in c(\"Height\", \"BMI\")) { \ 
-			Y <- read.table(paste(\"$m.ownK.Vs1.localPCs.\", i, \".YMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F);
-			K <- read.table(paste(\"$m.ownK.Vs1.localPCs.\", i, \".KMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F);
-			K2 <- read.table(paste(\"$m.ownK.Vs1.localPCs.\", i, \".K2MRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F);
-			Data1 <- read.table(\"$m.raw.edit.noFix.cov.ColCrct.txt\", header=F); 
-			Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt\", header=T); 
-			Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt\", header=T); neg.is.na <- Negate(is.na); \
-                K <- as.matrix(Data1); Y <- as.matrix(Data2[,c(3:4,7:8)]); Z <- as.matrix(Data3[,(ncol(Data3)-9):ncol(Data3)]); for (i in 1:2) { print(proc.time() - ptm); \
-                        Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \
-                        M <- diag(nrow(Z.Pheno.noNAs)) - (Z.Pheno.noNAs %*% chol2inv(chol(t(Z.Pheno.noNAs) %*% Z.Pheno.noNAs)) %*% t(Z.Pheno.noNAs)); \
-                        Y.Pheno.noNAs.M <- M %*% Y.Pheno.noNAs; K.Pheno.noNAs.M <- M %*% K.Pheno.noNAs %*% M; K.Pheno.noNAs.2.M <- M %*% K.Pheno.noNAs.2 %*% M; K.Pheno.noNAs.3.M <- M %*% K.Pheno.noNAs.3 %*% M; Error.M <- M %*% diag(nrow(M)); \
-                        RescaleVector <- function(X) { n1 <- length(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - v1 %*% t(v1) / n1; X1 <- m1 %*% X; X1 <- (X1 - mean(X1)) / sd(X1) ; return(X1); }; \
-                        RescaleMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - v1 %*% t(v1) / n1; X1 <- m1 %*% X %*% m1; X1 <- X1/mean(diag(X1)); return(X1); }; \
-                        Y.Pheno.noNAs.Rescale <- RescaleVector(Y.Pheno.noNAs); K.Pheno.noNAs.Rescale <- RescaleMatrix(K.Pheno.noNAs); K.Pheno.noNAs.2.Rescale <- RescaleMatrix(K.Pheno.noNAs.2); K.Pheno.noNAs.3.Rescale <- RescaleMatrix(K.Pheno.noNAs.3); \
-                        Y.Pheno.noNAs.M.Rescale <- RescaleVector(Y.Pheno.noNAs.M); K.Pheno.noNAs.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.M); K.Pheno.noNAs.2.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.2.M); K.Pheno.noNAs.3.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.3.M); Error.M.Rescale <- RescaleMatrix(Error.M); \
-                        write.table(Y.Pheno.noNAs.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".YMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".KMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".K2MRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".K3MRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
-                        print(proc.time() - ptm); ptm <- proc.time(); \
+                R -q -e "ptm <- proc.time(); library(\"GridLMM\"); for (i in c(\"Height\", \"BMI\")) { ptm <- proc.time(); \ 
+			Y <- read.table(paste(\"$m.ownK.Vs1.localPCs.\", i, \".YMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F); K <- read.table(paste(\"$m.ownK.Vs1.localPCs.\", i, \".KMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F); K2 <- read.table(paste(\"$m.ownK.Vs1.localPCs.\", i, \".K2MRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F); \
+			colnames(Y) <- \"y\";
+			Data1 <- data.frame(y=Y, ); \ 
+			NullModel <- GridLMM_ML(formula = y~1 + (1|K_Grid) + (1|K2_Grid), data = Data1, relmat = list(K_Grid=K, K2_Grid=K2), REML = T, save_V_folder = 'V_folder', tolerance = 1e-3); \
+			print(NullModel$results[,c('K_Grid.REML','K2_Grid.REML')]); \
+			print(proc.time() - ptm); ptm <- proc.time(); \
                 };"
         done
 done
 
+#null_model = GridLMM_ML(formula = y~1 + (1|Geno) + (1|Plot),data = data,relmat = list(Geno = K_G, Plot = K_plot),REML = T,save_V_folder = 'V_folder',tolerance = 1e-3)
+library("GridLMM")
+Y <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.ownK.Vs1.localPCs.Height.YMRescale.noFix.cov.ColCrct.txt", header=F); 
+K <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.ownK.Vs1.localPCs.Height.KMRescale.noFix.cov.ColCrct.txt", header=F); 
+K2 <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.ownK.Vs1.localPCs.Height.K2MRescale.noFix.cov.ColCrct.txt", header=F); 
+colnames(Y) <- "y"; rownames(K) <- paste("Indv", seq(1:nrow(K)), sep=""); colnames(K) <- rownames(K); rownames(K2) <- colnames(K); colnames(K2) <- colnames(K);
+IndvNames <- paste("Indv", seq(1:nrow(K)), sep="");
+Data1 <- data.frame(Y=Y, K_Grid=IndvNames, K2_Grid=IndvNames);
+NullModel <- GridLMM_ML(formula = y~1 + (1|K2_Grid), data = Data1, relmat = list(K2_Grid=as.matrix(K2)), REML = T, save_V_folder = 'V_folder', tolerance = 1e-3);
 
-
+n_geno = 300
+n_chr = 5
+n_markers_per_chr = 1000
+# layout of Plots
+Plots = matrix(1:n_geno,nc = 10) # rectangular array of plots
+Plot_Row = row(Plots)
+Plot_Col = col(Plots)
+# create genotypes and randomize in field
+data = data.frame(Geno = paste0('Geno',1:n_geno), Plot = sample(Plots))
+data$Row = Plot_Row[data$Plot]
+data$Col = Plot_Col[data$Plot]
+# create marker map and random genotypes
+map = expand.grid(pos = 1:n_markers_per_chr,Chr = 1:n_chr)[,2:1]
+map = data.frame(snp = paste0('snp_',1:nrow(map)),map)
+X = matrix(sample(c(0,2),n_geno*nrow(map),replace=T),ncol = nrow(map),dimnames = list(data$Geno,map$snp))
+# simulate 1 effect per chromosome
+beta = rep(0,nrow(map))
+beta[(1:n_chr-1)*n_markers_per_chr + sample(1:n_markers_per_chr,n_chr)] = 1
+# add background variation: modeled as small effects across all the markers
+beta_background = rnorm(length(beta),0,0.1)
+# create simulated data
+background_h2 = 0.6 # relative contribution of the background
+data$micro_env = rnorm(nrow(data)); data$micro_env = data$micro_env / sd(data$micro_env)
+data$background = X %*% beta_background; data$background = data$background / sd(data$background)
+data$SNPs = X %*% beta;data$SNPs = data$SNPs/sd(data$SNPs)
+data$y = data$SNPs + sqrt(background_h2) * data$background + sqrt(1-background_h2) * data$micro_env
+data$y = data$y/sd(data$y)
+library("KRLS")
+field = data[,c('Row','Col')]
+dists = as.matrix(dist(field))
+h = median(dists)
+K_plot = gausskernel(field,h^2/2); diag(K_plot)=1 # 
+rownames(K_plot) = colnames(K_plot) = data$Plot
+K_G = tcrossprod(X)/ncol(X)
+null_model = GridLMM_ML(formula = y~1 + (1|Geno) + (1|Plot),data = data,relmat = list(Geno = K_G, Plot = K_plot),REML = T,save_V_folder = 'V_folder',tolerance = 1e-3)
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
