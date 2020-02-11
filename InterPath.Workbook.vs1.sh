@@ -6305,16 +6305,19 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
                         RescaleMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - v1 %*% t(v1) / n1; X1 <- m1 %*% X %*% m1; X1 <- X1/mean(diag(X1)); return(X1); }; \
 			Y.Pheno.noNAs.Rescale <- RescaleVector(Y.Pheno.noNAs); K.Pheno.noNAs.Rescale <- RescaleMatrix(K.Pheno.noNAs); K.Pheno.noNAs.2.Rescale <- RescaleMatrix(K.Pheno.noNAs.2); K.Pheno.noNAs.3.Rescale <- RescaleMatrix(K.Pheno.noNAs.3); \
 			Y.Pheno.noNAs.M.Rescale <- RescaleVector(Y.Pheno.noNAs.M); K.Pheno.noNAs.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.M); K.Pheno.noNAs.2.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.2.M); K.Pheno.noNAs.3.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.3.M); Error.M.Rescale <- RescaleMatrix(Error.M); \
+			Y.Pheno.noNAs.M.Rescale2 <- RescaleVector2(Y.Pheno.noNAs.M); \ 
 			print(proc.time() - ptm); ptm <- proc.time(); \
-			n2 <- length(Y.Pheno.noNAs); v2 <- matrix(1, n2, 1); m2 <- diag(n2) - v2 %*% t(v2) / n2; Y2 <- m2 %*% Y.Pheno.noNAs; Y3 <- (Y2 - mean(Y2)) / sd(Y2); Y4 <- (Y.Pheno.noNAs - mean(Y.Pheno.noNAs)) / sd(Y.Pheno.noNAs);
 			write.table(Y.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".YnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			write.table(Y.Pheno.noNAs.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".YnoMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 			write.table(Y.Pheno.noNAs.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".YMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 			write.table(Y.Pheno.noNAs.M, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".YMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
-			Y.Pheno.noNAs.M.Rescale2 <- RescaleVector2(Y.Pheno.noNAs.M); write.table(Y.Pheno.noNAs.M.Rescale2, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".YMRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			write.table(Y.Pheno.noNAs.M.Rescale2, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".YMRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
                 };"
         done
 done
 			write.table(Y.Pheno.noNAs.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".YMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".KMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".K2MRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".K3MRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			
+			n2 <- length(Y.Pheno.noNAs); v2 <- matrix(1, n2, 1); m2 <- diag(n2) - v2 %*% t(v2) / n2; Y2 <- m2 %*% Y.Pheno.noNAs; Y3 <- (Y2 - mean(Y2)) / sd(Y2); Y4 <- (Y.Pheno.noNAs - mean(Y.Pheno.noNAs)) / sd(Y.Pheno.noNAs);
                         
 #			RescaleVector <- function(X) { n1 <- length(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - v1 %*% t(v1) / n1; X1 <- m1 %*% X; X1 <- (X1 - mean(X1)) / sd(X1) ; return(X1); }; \
 #			write.table(Z.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".ZNoMNoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
