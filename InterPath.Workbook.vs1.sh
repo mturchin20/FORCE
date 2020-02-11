@@ -5854,8 +5854,8 @@ done
 
 #Pops: -n 8 -N 1-1 --mem 101g (might be overkill, but at 41g some runs were failing; Brit for approx took ~7-8 days? Afr 3-4 days?)
 
-for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 1`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Indian' | head -n 2 | tail -n 2`; do
+for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | grep -vE 'Ran10000|Irish' | grep -E 'African|Ran4000|Caribbean|Indian' | head -n 4 | tail -n 2`; do
 		SECONDS=0; ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`; 
 		echo $i $ancestry1 $ancestry2 $ancestry3 $k
 
@@ -6310,7 +6310,11 @@ done
                         
 #			write.table(Z.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".ZNoMNoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 #			print(head(Y)); print(head(Z)); print(head(Y.Pheno.noNAs)); print(head(M[,1:5])); print(dim(Y)); print(dim(Z)); print(dim(K)); print(dim(M)); print(length(Y.Pheno.noNAs)); print(dim(Z.Pheno.noNAs)); print(dim(K.Pheno.noNAs)); print(dim(M)); \
-                        
+                
+#ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.GEMMA.v2.phenoMatch
+#ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt (technically '...wFullCovars.Match.txt')
+#ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.GEMMA.v3.phenoMatch.txt
+        
 source deactivate; module load anaconda; source activate InterPath2; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 2`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -6319,7 +6323,7 @@ source deactivate; module load anaconda; source activate InterPath2; for j in `c
 
         for m in `cat <(echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 2`; do echo $m; 
                 R -q -e "ptm <- proc.time(); library(\"data.table\"); library(\"GridLMM\"); for (i in c(\"Height\", \"BMI\")) { print(i); \ 
-			Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.localPCs.\", i, \".YNoMNoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.localPCs.\", i, \".KNoMNoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.localPCs.\", i, \".K2NoMNoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
+			Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.localPCs.\", i, \".YMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.localPCs.\", i, \".KMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.localPCs.\", i, \".K2MRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
 			colnames(Y) <- \"y\"; rownames(K) <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); colnames(K) <- rownames(K); rownames(K2) <- colnames(K); colnames(K2) <- colnames(K); \
 			IndvNames <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); \
 			Data1 <- data.frame(Y=Y, K_Grid=IndvNames, K2_Grid=IndvNames); \
