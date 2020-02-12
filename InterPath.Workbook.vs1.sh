@@ -2434,6 +2434,15 @@ Brit.Ran4k perm5
 10213898             63      batch  mturchin    default 2020-02-09T21:58:45 2020-02-10T12:40:10 1-20:15:12          4     FAILED      1:0 Height British.Ran10000.3 ExonicPlus20kb 241 perm1 
 10213898.ba+      batch                         default 2020-02-10T01:36:22 2020-02-10T12:40:10 1-20:15:12          4     FAILED      1:0                                                    
 
+10214522             63      batch  mturchin    default 2020-02-09T22:03:44 2020-02-12T02:29:15   01:27:32          4  NODE_FAIL      1:0 Height British.Ran10000.5 ExonicPlus20kb 1121 per+ 
+10214522.ba+      batch                         default 2020-02-12T02:07:22 2020-02-12T02:34:52   01:50:00          4     FAILED      0:0                                                    
+10214567             63      batch  mturchin    default 2020-02-09T22:03:44 2020-02-12T03:35:56   00:15:16          4  NODE_FAIL      1:0 Height British.Ran10000.5 ExonicPlus20kb 4721 per+ 
+10214567.ba+      batch                         default 2020-02-12T03:32:07 2020-02-12T04:00:24   01:53:08          4     FAILED      0:0                                                    
+10214569             63      batch  mturchin    default 2020-02-09T22:03:47 2020-02-12T04:42:37   00:42:04          4  NODE_FAIL      1:0     BMI British.Ran10000.2 ExonicPlus20kb 81 perm2 
+10214569.ba+      batch                         default 2020-02-12T04:32:06 2020-02-12T05:00:53   01:55:08          4     FAILED      0:0                                                    
+
+
+
 
 #		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 9 | tail -n 4 | head -n 4`; do
 module load R/3.4.3_mkl gcc; sleep 7200; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2`; do
@@ -6322,7 +6331,43 @@ done
 #			RescaleVector <- function(X) { n1 <- length(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - v1 %*% t(v1) / n1; X1 <- m1 %*% X; X1 <- (X1 - mean(X1)) / sd(X1) ; return(X1); }; \
 #			write.table(Z.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".ZNoMNoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 #			print(head(Y)); print(head(Z)); print(head(Y.Pheno.noNAs)); print(head(M[,1:5])); print(dim(Y)); print(dim(Z)); print(dim(K)); print(dim(M)); print(length(Y.Pheno.noNAs)); print(dim(Z.Pheno.noNAs)); print(dim(K.Pheno.noNAs)); print(dim(M)); \
-                
+               
+#Data1 <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.raw.edit.noFix.cov.ColCrct.txt", header=F)
+#Data1.sub <- Data1[1:100,1:100]
+#Data1.sub[1:10,1:10]
+#Data1.sub.solve <- solve(Data1.sub)
+#Data1.sub.solve[1:10,1:10]
+#Data1.sub.chol <- chol2inv(chol(t(as.matrix(Data1.sub)) %*% as.matrix((Data1.sub))))
+#Data1.sub.chol[1:10,1:10]
+#Data1.sub.solve[1:10,1:10]
+#cor(diag(Data1.sub.solve), diag(Data1.sub.chol))
+#cor(Data1.sub.solve[,1], Data1.sub.chol[,1])
+#var(diag(Data1.sub.solve))
+#var(diag(Data1.sub.chol))
+#var(Data1.sub.solve[,1])
+#var(Data1.sub.chol[,1])
+
+#Y <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", header=T);
+#head(Y)
+#i=3
+#neg.is.na <- Negate(is.na); 
+#Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)];
+#head(Y.Pheno)
+#n2 <- length(Y.Pheno.noNAs); v2 <- matrix(1, n2, 1); m2 <- diag(n2) - v2 %*% t(v2) / n2; Y2 <- m2 %*% Y.Pheno.noNAs;
+#n2
+#dim(v2)
+#dim(v2 %*% t(v2))
+#head(v2)
+#head(diag(n2))
+#dim(m2)
+#m2[1:10,1:10]
+#head(Y2)
+#head(Y.Pheno.noNAs)
+#Y3 <- (Y2 - mean(Y2)) / sd(Y2); Y4 <- (Y.Pheno.noNAs - mean(Y.Pheno.noNAs)) / sd(Y.Pheno.noNAs);
+#head(Y3)
+#head(Y4)
+#head(Y2)
+ 
 #ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.GEMMA.v2.phenoMatch
 #ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt (technically '...wFullCovars.Match.txt')
 #ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.GEMMA.v3.phenoMatch.txt
