@@ -977,7 +977,7 @@ cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mtur
 
 #20190603 NOTE -- Don't really use these files if you want to do something with them, wasn't updated with 'BMIAdj' results even though '.../phenos/' files didn't include 'BMIAdj' in output file name with input names changing 
 ##From https://stats.stackexchange.com/questions/11000/how-does-r-handle-missing-values-in-lm (for lm(..., na.action=na.exclude))
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
@@ -1009,7 +1009,7 @@ done
 
 #	join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt...)
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
@@ -2456,19 +2456,22 @@ module load R/3.4.3_mkl gcc; sleep 7200; for i in `cat <(echo "Height;1254 BMI;5
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k "perm3"
 			
 			LpCnt=1; LpCnt2=1; for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+80 )); do
- sbatch -t 72:00:00 -n 4 -N 1-1 --mem 32g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm4.ColCrct.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm4.ColCrct.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum perm4" <(echo -e '#!/bin/sh';
+ sbatch -t 72:00:00 --mem 12g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum perm4" <(echo -e '#!/bin/sh';
 				echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); sourceCpp(\\\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wMprovided.vs1.cpp\\\"); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
-				Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FullDataset.pruned.flashpca.pcs.wFullCovars.wAC.sort.ImptHRC.dose.100geno.raw.txt\\\", header=T); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\\\", header=F); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.v3.ImptHRC.dose.100geno.Regions.c2.${k}.noDups.txt\\\", header=F); Y.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.${ancestry2}.v3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.c2.${k}.Pathways1.noDups.txt.gz\\\", header=T); Y.Check.Pheno <- Y.Check\\\$$Pheno1; Y.Check.Pheno.noNAs <- Y.Check.Pheno[neg.is.na(Y.Check.Pheno)]; PermAdj <- 3; Y.Seed <- $AncSeed1 + $PhenoSeed1 + PermAdj; \
-				Pathways.Regions <- list(); cores = detectCores(); InterPath.output <- list(); InterPath.output\\\$Est <- c(); InterPath.output\\\$Eigenvalues <- c(); InterPath.output\\\$PVE <- c(); \ 
+				Y <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.top10resids.txt\\\", header=T); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\\\", header=F); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.v3.ImptHRC.dose.100geno.Regions.c2.${k}.noDups.txt\\\", header=F); Y.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.${ancestry2}.v3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.c2.${k}.Pathways1.noDups.txt.gz\\\", header=T); 
+				Y.Check.Pheno <- Y.Check\\\$$Pheno1; Y.Check.Pheno.noNAs <- Y.Check.Pheno[neg.is.na(Y.Check.Pheno)]; PermAdj <- 0; Y.Seed <- $AncSeed1 + $PhenoSeed1 + PermAdj; Pathways.Regions <- list(); cores = detectCores(); InterPath.output <- list(); InterPath.output\\\$Est <- c(); InterPath.output\\\$Eigenvalues <- c(); InterPath.output\\\$PVE <- c(); \ 
 				for (i in $PathNum:($PathNum+79)) { set.seed(Y.Seed); Y <- c(); Y.Pheno <- c(); Y.Pheno.noNAs <- c(); \
-					if (i > nrow(Pathways)) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, nrow(InterPath.output\\\$Eigenvalues)); } else if (neg.is.true(Pathways.Check[i,ncol(Pathways.Check)])) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, length(Y.Check.Pheno.noNAs)); } else { Pathways.Regions[[1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), \\\",\\\")))); \
-					Y <- read.table(paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.${ancestry2}.v3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.c2.${k}.Pathways\\\", i, \\\".noDups.txt.gz\\\", sep=\\\"\\\"), header=T); Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; Y.Pheno.noNAs <- sample(Y.Pheno.noNAs);}; \ 
+					if (i > nrow(Pathways)) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, nrow(InterPath.output\\\$Eigenvalues)); } else if (neg.is.true(Pathways.Check[i,ncol(Pathways.Check)])) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, length(Y.Check.Pheno.noNAs)); } else { Pathways.Regions[[1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), \\\",\\\")))); Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; }; \ 
 					if (length(Pathways.Regions[[1]]) > 1) { Data3 <- fread(cmd=paste(\\\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\\\", as.character(i), \\\".noDups.txt.gz\\\", sep=\\\"\\\"), header=T); Data3.cov <- as.matrix(read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.ColCrct.txt\\\", header=F)); \ 
+					
+					Data3.proj <- as.matrix(read.table(paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/  something  / 
+					ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\\\", as.character(i), \\\".noDups.txt.gz\\\", sep=\\\"\\\"), header=F); \
+					
 					Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); \ 
-					InterPath.output.temp <- list(); X <- Data3; X.cov <- Data3.cov; rm(Data3); rm(Data3.cov); X.Pheno.noNAs <- X[neg.is.na(Y.Pheno),]; X.cov.Pheno.noNAs <- X.cov[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z <- Covars[neg.is.na(Y.Pheno),(ncol(Covars)-9):ncol(Covars)]; \
-					K <- 1/ncol(X.Pheno.noNAs) * tcrossprod(as.matrix(X.Pheno.noNAs)); M <- \
-					InterPath.output.temp <- InterPath(t(X.Pheno.noNAs),Y.Pheno.noNAs,as.matrix(X.cov.Pheno.noNAs),K,t(as.matrix(Z)),Pathways.Regions,nrow(X.Pheno.noNAs),as.numeric(as.character($NumSNPs)),cores=cores); InterPath.output\\\$Est <- c(InterPath.output\\\$Est, InterPath.output.temp\\\$Est); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, InterPath.output.temp\\\$Eigenvalues); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, InterPath.output.temp\\\$PVE); } else { InterPath.output\\\$Est <- c(InterPath.output\\\$Est, NA); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, rep(NA, length(Y.Pheno.noNAs))); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, NA);};}; \
-				write.table(InterPath.output\\\$Est, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm4.ColCrct.Paths${PathNum}.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$Eigenvalues, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm4.ColCrct.Paths${PathNum}.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$PVE, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm4.ColCrct.Paths${PathNum}.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\"")
+					InterPath.output.temp <- list(); X <- Data3; X.cov <- Data3.cov; rm(Data3); rm(Data3.cov); X.Pheno.noNAs <- X[neg.is.na(Y.Pheno),]; X.cov.Pheno.noNAs <- X.cov[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; M <- Data3.proj;  M.noNAs <- M[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; \
+					K.noNAs <- 1/ncol(X.Pheno.noNAs) * tcrossprod(as.matrix(X.Pheno.noNAs)); \
+					InterPath.output.temp <- InterPath(t(X.Pheno.noNAs),Y.Pheno.noNAs,as.matrix(X.cov.Pheno.noNAs),K.noNAs,as.matrix(M.noNAs),Pathways.Regions,nrow(X.Pheno.noNAs),as.numeric(as.character($NumSNPs)),cores=cores); InterPath.output\\\$Est <- c(InterPath.output\\\$Est, InterPath.output.temp\\\$Est); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, InterPath.output.temp\\\$Eigenvalues); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, InterPath.output.temp\\\$PVE); } else { InterPath.output\\\$Est <- c(InterPath.output\\\$Est, NA); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, rep(NA, length(Y.Pheno.noNAs))); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, NA);};}; \
+				write.table(InterPath.output\\\$Est, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.Paths${PathNum}.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$Eigenvalues, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.Paths${PathNum}.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$PVE, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.Paths${PathNum}.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\"")
 			done; sleep 2
 		done; 
 	done; 
@@ -15330,6 +15333,31 @@ British British.Ran10000.5
 -0.00011218001156799    -0.00398840091713184    -0.0039404262609166     0.00430702225563656     -0.00366415420941019    0.00230003383706856     -0.000910755651027318   0.999811396050723       -0.000991402725524555   -0.0016580033338041
 -0.00079368228909317    0.00253514955523116     -0.00124329272125362    -6.25371939172445e-05   0.00159281425903354     -0.00332614271319751    0.00436502044405007     -0.000991402725524555   0.991005084619696       -0.00296165603170422
 -0.000951801666885387   -0.00287323983236634    -0.00250492002036566    0.000518833623586422    0.00211490204083567     -0.000286911296928702   0.00368484404071205     -0.0016580033338041     -0.00296165603170422    1.0003900170082
+#20200212
+> vals1 <- matrix(c(1,2,3,4,5,6,7,8,9), nrow=3)
+> vals1
+     [,1] [,2] [,3]
+[1,]    1    4    7
+[2,]    2    5    8
+[3,]    3    6    9
+> vals1.mean <- apply(vals1, 2, mean)
+> vals1.mean
+[1] 2 5 8
+> vals1 - vals1.mean
+     [,1] [,2] [,3]
+[1,]   -1    2    5
+[2,]   -3    0    3
+[3,]   -5   -2    1
+> t(vals1) - vals1.mean
+     [,1] [,2] [,3]
+[1,]   -1    0    1
+[2,]   -1    0    1
+[3,]   -1    0    1
+> t(t(vals1) - vals1.mean)
+     [,1] [,2] [,3]
+[1,]   -1   -1   -1
+[2,]    0    0    0
+[3,]    1    1    1
 
 
 
