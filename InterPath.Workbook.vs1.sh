@@ -6400,6 +6400,8 @@ join <(cat
 #pheno v3, geno v3, no pre-pheno adjustments, FullCovars has everything
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.txt
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt
+#below produces no 1s, only 0s
+#paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.txt | awk '{ print $1 }') <( cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FullDataset.pruned.flashpca.pcs.wFullCovars.wAC.txt | awk '{ print $1 }') | awk '{ if ($1 != $2) { print "1" } else { print "0" } }' | sort | uniq -c
 
 module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 2`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
@@ -6411,17 +6413,19 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
                 R -q -e "ptm <- proc.time(); library(\"MASS\"); Data1 <- read.table(\"$m.raw.edit.noFix.cov.ColCrct.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.txt\", header=T); Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt\", header=T); neg.is.na <- Negate(is.na); \
                 K <- as.matrix(Data1); Y <- as.matrix(Data2[,c(3:4)]); Z <- as.matrix(Data3[,c(3,5,6,(ncol(Data3)-9):ncol(Data3))]); print(head(Z)); for (i in 1:2) { print(proc.time() - ptm); \
                         Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \
-			M <- diag(nrow(Z.Pheno.noNAs)) - (Z.Pheno.noNAs %*% solve(t(Z.Pheno.noNAs) %*% Z.Pheno.noNAs) %*% t(Z.Pheno.noNAs)); \
-			Y.Pheno.noNAs.M <- M %*% Y.Pheno.noNAs; K.Pheno.noNAs.M <- M %*% K.Pheno.noNAs %*% M; K.Pheno.noNAs.2.M <- M %*% K.Pheno.noNAs.2 %*% M; K.Pheno.noNAs.3.M <- M %*% K.Pheno.noNAs.3 %*% M; Error.M <- M %*% diag(nrow(M)); \
-			RescaleVector2 <- function(X) { X1 <- (X - mean(X)) / sd(X); return(X1); }; \
-                        RescaleMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - v1 %*% t(v1) / n1; X1 <- m1 %*% X %*% m1; X1 <- X1/mean(diag(X1)); return(X1); }; \
-			Y.Pheno.noNAs.Rescale2 <- RescaleVector2(Y.Pheno.noNAs); K.Pheno.noNAs.Rescale <- RescaleMatrix(K.Pheno.noNAs); K.Pheno.noNAs.2.Rescale <- RescaleMatrix(K.Pheno.noNAs.2); K.Pheno.noNAs.3.Rescale <- RescaleMatrix(K.Pheno.noNAs.3); \
-			Y.Pheno.noNAs.M.Rescale2 <- RescaleVector2(Y.Pheno.noNAs.M); K.Pheno.noNAs.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.M); K.Pheno.noNAs.2.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.2.M); K.Pheno.noNAs.3.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.3.M); Error.M.Rescale <- RescaleMatrix(Error.M); \
-			write.table(Y.Pheno.noNAs.M.Rescale2, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".YMsolvExtraRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".KMsolvExtraRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".K2MsolvExtraRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".K3MsolvExtraRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+                        RescaleMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - ((v1 %*% t(v1)) / n1); X1 <- m1 %*% X %*% m1; X1 <- X1/mean(diag(X1)); return(X1); }; \
+			K.Pheno.noNAs.2.Rescale <- RescaleMatrix(K.Pheno.noNAs.2); K.Pheno.noNAs.3.Rescale <- RescaleMatrix(K.Pheno.noNAs.3); \
+			write.table(Y.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".YnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".KnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.Rescale, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".K2noMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".K3noMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 			print(proc.time() - ptm); ptm <- proc.time(); \
                 };"
         done
 done
+			
+#			M <- diag(nrow(Z.Pheno.noNAs)) - (Z.Pheno.noNAs %*% solve(t(Z.Pheno.noNAs) %*% Z.Pheno.noNAs) %*% t(Z.Pheno.noNAs)); \
+#			Y.Pheno.noNAs.M <- M %*% Y.Pheno.noNAs; K.Pheno.noNAs.M <- M %*% K.Pheno.noNAs %*% M; K.Pheno.noNAs.2.M <- M %*% K.Pheno.noNAs.2 %*% M; K.Pheno.noNAs.3.M <- M %*% K.Pheno.noNAs.3 %*% M; Error.M <- M %*% diag(nrow(M)); \
+#			RescaleVector2 <- function(X) { X1 <- (X - mean(X)) / sd(X); return(X1); }; \
+#			Y.Pheno.noNAs.M.Rescale2 <- RescaleVector2(Y.Pheno.noNAs.M); K.Pheno.noNAs.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.M); K.Pheno.noNAs.2.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.2.M); K.Pheno.noNAs.3.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.3.M); Error.M.Rescale <- RescaleMatrix(Error.M); \
+#			write.table(Y.Pheno.noNAs.M.Rescale2, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".YMsolvExtraRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".KMsolvExtraRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".K2MsolvExtraRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".K3MsolvExtraRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
                         
 #			RescaleVector <- function(X) { n1 <- length(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - v1 %*% t(v1) / n1; X1 <- m1 %*% X; X1 <- (X1 - mean(X1)) / sd(X1) ; return(X1); }; \
 #			write.table(Z.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".ZNoMNoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
@@ -15476,6 +15480,8 @@ African African ExonicPlus20kb 100
      19 2
      21 0
      24 1
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.txt | awk '{ print $1 }') <( cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FullDataset.pruned.flashpca.pcs.wFullCovars.wAC.txt | awk '{ print $1 }') | awk '{ if ($1 != $2) { print "1" } else { print "0" } }' | sort | uniq -c
+   3112 0
 
 
 
