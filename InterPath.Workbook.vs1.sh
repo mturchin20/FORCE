@@ -1117,21 +1117,6 @@ done;
 ##				PhenoNew <- cbind(PhenoNew, residuals(lm(Y.Pheno.noNAs ~ X.Pheno.noNAs, na.action=na.exclude))); \  
 ##				PhenoNew <- cbind(PhenoNew, residuals(lm(as.formula(paste(\"Y.Pheno.noNAs ~ \", paste(paste(\"X.Pheno.noNAs[,\", 1:ncol(X.Pheno.noNAs), \"]\", sep=\"\"), collapse=\" + \"), sep=\"\")), na.action=na.exclude))); \
 
-~10300876             63      batch  mturchin    default 2020-02-14T10:57:47 2020-02-14T11:22:15   00:24:25          1     FAILED      1:0              5 African African ExonicPlus20kb 1001
-~10300876.ba+      batch                         default 2020-02-14T10:57:50 2020-02-14T11:22:15   00:24:25          1     FAILED      1:0
-~10301239             63      batch  mturchin    default 2020-02-14T10:58:59 2020-02-14T11:28:28   00:10:42          1     FAILED      1:0          5 Caribbean Caribbean ExonicPlus20kb 1161 
-~10301239.ba+      batch                         default 2020-02-14T11:17:46 2020-02-14T11:28:28   00:10:42          1     FAILED      1:0                                                    
-~10301478             63      batch  mturchin    default 2020-02-14T10:59:09 2020-02-14T11:29:06   00:02:25          1     FAILED      1:0                5 Indian Indian ExonicPlus20kb 1201 
-~10301478.ba+      batch                         default 2020-02-14T11:26:41 2020-02-14T11:29:06   00:02:25          1     FAILED      1:0                                                    
-~10301327             63      batch  mturchin    default 2020-02-14T10:59:01 2020-02-14T11:51:41   00:30:40          1     FAILED      9:0          5 Caribbean Caribbean ExonicPlus20kb 4681 
-~10301327.ba+      batch                         default 2020-02-14T11:21:01 2020-02-14T11:51:41   00:30:40          1     FAILED      9:0                                                    
-~10302297             63      batch  mturchin    default 2020-02-14T11:24:34 2020-02-14T12:58:45   00:50:59          1     FAILED      1:0                  5 Irish Irish ExonicPlus20kb 1081 
-~10302297.ba+      batch                         default 2020-02-14T12:07:46 2020-02-14T12:58:45   00:50:59          1     FAILED      1:0                                                    
-~10301089             63      batch  mturchin    default 2020-02-14T10:58:56 2020-02-14T11:57:23   00:57:29          1 OUT_OF_ME+    0:125      5 British British.Ran4000 ExonicPlus20kb 4681 
-~10301089.ba+      batch                         default 2020-02-14T10:59:54 2020-02-14T11:57:23   00:57:29          1 OUT_OF_ME+    0:125                                                    
-~10302268             63      batch  mturchin    default 2020-02-14T11:24:33 2020-02-14T15:18:32   03:36:46          1 OUT_OF_ME+    0:125     5 British British.Ran10000 ExonicPlus20kb 4681
-~10302268.ba+      batch                         default 2020-02-14T11:41:46 2020-02-14T15:18:32   03:36:46          1 OUT_OF_ME+    0:125
-
 10304359             63      batch  mturchin    default 2020-02-14T15:02:53 2020-02-14T16:16:33   00:39:59          1     FAILED      1:0 Height;1254 British British.Ran4000.3 ExonicPlus2+ 841
 10304359.ba+      batch                         default 2020-02-14T15:36:34 2020-02-14T16:16:33   00:39:59          1     FAILED      1:0
 10304369             63      batch  mturchin    default 2020-02-14T15:02:53 2020-02-14T16:44:47   00:54:26          1     FAILED      1:0 Height;1254 British British.Ran4000.3 ExonicPlus2+ 1241
@@ -1169,13 +1154,30 @@ done;
 10306153.ba+      batch                         default 2020-02-14T20:47:30 2020-02-15T01:01:28   08:27:56          2 OUT_OF_ME+    0:125
 
 
+British British.Ran4000.2 ExonicPlus20kb 4734
+   1328 1
+      1 4717
+
+      1 1280
+      1 4717
+      1 880
+
+     1 1280
+      1 4717
+      1 80
+
+      1 1080
+      1 1240
+      1 4717
+
+
 
 #From: https://stats.idre.ucla.edu/r/codefragments/svd_demos/, https://math.stackexchange.com/questions/19948/pseudoinverse-matrix-and-svd, https://www.johndcook.com/blog/2018/05/05/svd/, https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse#Singular_value_decomposition_(SVD), https://rce-docs.hmdc.harvard.edu/faq/how-do-i-use-compressed-data-r
-module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -E 'Ran10000|Irish' | head -n 2 | tail -n 1`; do
+module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8 | head -n 4 | tail -n 1`; do
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1 | head -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 #		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
-		NumPaths=4720
+		NumPaths=1240
 		echo $ancestry1 $ancestry2 $ancestry3 $k
                          	
 		if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj ]; then
@@ -1183,8 +1185,8 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
 			mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm
 		fi
 
-		for (( PathNum=4716; PathNum <= $NumPaths; PathNum=PathNum+40 )); do
-			sbatch -t 72:00:00 --mem 60g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.Mproj.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.Mproj.slurm.error --comment "$ancestry2 $k $PathNum" <(echo -e '#!/bin/sh'; 
+		for (( PathNum=1201; PathNum <= $NumPaths; PathNum=PathNum+40 )); do
+			sbatch -t 72:00:00 --mem 25g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.Mproj.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.Mproj.slurm.error --comment "$ancestry2 $k $PathNum" <(echo -e '#!/bin/sh'; 
 			echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"MASS\\\"); neg.is.na <- Negate(is.na); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.v3.ImptHRC.dose.100geno.Regions.c2.${k}.noDups.txt\\\", header=F); \
 			for (i in $PathNum:($PathNum+39)) { \
 				if ((i <= $NumPaths) && (Pathways.Check[i,ncol(Pathways.Check)])) { \ 
@@ -1217,7 +1219,7 @@ done;
 ~	done;
 ~done;		
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8 | head -n 8 | tail -n 4`; do
    for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
@@ -1229,7 +1231,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 				if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${l}.noDups.Mproj.txt.gz ]; then
 					echo "1";
 				else
-					echo "0";
+					echo "$l";
 				fi 
 			fi
 		done | sort | uniq -c
