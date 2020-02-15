@@ -1117,43 +1117,6 @@ done;
 ##				PhenoNew <- cbind(PhenoNew, residuals(lm(Y.Pheno.noNAs ~ X.Pheno.noNAs, na.action=na.exclude))); \  
 ##				PhenoNew <- cbind(PhenoNew, residuals(lm(as.formula(paste(\"Y.Pheno.noNAs ~ \", paste(paste(\"X.Pheno.noNAs[,\", 1:ncol(X.Pheno.noNAs), \"]\", sep=\"\"), collapse=\" + \"), sep=\"\")), na.action=na.exclude))); \
 
-10304359             63      batch  mturchin    default 2020-02-14T15:02:53 2020-02-14T16:16:33   00:39:59          1     FAILED      1:0 Height;1254 British British.Ran4000.3 ExonicPlus2+ 841
-10304359.ba+      batch                         default 2020-02-14T15:36:34 2020-02-14T16:16:33   00:39:59          1     FAILED      1:0
-10304369             63      batch  mturchin    default 2020-02-14T15:02:53 2020-02-14T16:44:47   00:54:26          1     FAILED      1:0 Height;1254 British British.Ran4000.3 ExonicPlus2+ 1241
-10304369.ba+      batch                         default 2020-02-14T15:50:21 2020-02-14T16:44:47   00:54:26          1     FAILED      1:0
-10304458             63      batch  mturchin    default 2020-02-14T15:02:55 2020-02-14T16:06:03   00:09:34          1     FAILED      1:0 Height;1254 British British.Ran4000.4 ExonicPlus2+ 41 
-10304458.ba+      batch                         default 2020-02-14T15:56:29 2020-02-14T16:06:03   00:09:34          1     FAILED      1:0
-10304488             63      batch  mturchin    default 2020-02-14T15:02:56 2020-02-14T16:06:24   00:03:35          1     FAILED      1:0 Height;1254 British British.Ran4000.4 ExonicPlus2+ 1241
-10304488.ba+      batch                         default 2020-02-14T16:02:49 2020-02-14T16:06:24   00:03:35          1     FAILED      1:0
-10304842             63      batch  mturchin    default 2020-02-14T15:04:56 2020-02-14T16:44:24   00:27:35          1     FAILED      1:0 Height;1254 British British.Ran4000.5 ExonicPlus2+ 1041
-10304842.ba+      batch                         default 2020-02-14T16:16:49 2020-02-14T16:44:24   00:27:35          1     FAILED      1:0
-10304846             63      batch  mturchin    default 2020-02-14T15:04:56 2020-02-14T16:44:57   00:27:32          1     FAILED      1:0 Height;1254 British British.Ran4000.5 ExonicPlus2+ 1201
-10304846.ba+      batch                         default 2020-02-14T16:17:25 2020-02-14T16:44:57   00:27:32          1     FAILED      1:0
-
-10306043             63      batch  mturchin    default 2020-02-14T15:43:21 2020-02-14T22:34:08   05:22:28          2     FAILED      1:0 Height;1254 British British.Ran10000.3 ExonicPlus+ 281
-10306043.ba+      batch                         default 2020-02-14T19:52:54 2020-02-14T22:34:08   05:22:28          2     FAILED      1:0
-10306044             63      batch  mturchin    default 2020-02-14T15:43:21 2020-02-14T22:32:41   05:19:34          2     FAILED      1:0 Height;1254 British British.Ran10000.3 ExonicPlus+ 321
-10306044.ba+      batch                         default 2020-02-14T19:52:54 2020-02-14T22:32:41   05:19:34          2     FAILED      1:0
-10306046             63      batch  mturchin    default 2020-02-14T15:43:21 2020-02-14T22:31:08   05:13:18          2     FAILED      1:0 Height;1254 British British.Ran10000.3 ExonicPlus+ 401
-10306046.ba+      batch                         default 2020-02-14T19:54:29 2020-02-14T22:31:08   05:13:18          2     FAILED      1:0
-
-10304334             63      batch  mturchin    default 2020-02-14T15:02:48 2020-02-14T18:17:28   02:52:09          1 OUT_OF_ME+    0:125 Height;1254 British British.Ran4000.2 ExonicPlus2+ 4681
-10304334.ba+      batch                         default 2020-02-14T15:25:19 2020-02-14T18:17:28   02:52:09          1 OUT_OF_ME+    0:125
-10304455             63      batch  mturchin    default 2020-02-14T15:02:55 2020-02-14T18:56:57   03:00:28          1 OUT_OF_ME+    0:125 Height;1254 British British.Ran4000.3 ExonicPlus2+ 4681
-10304455.ba+      batch                         default 2020-02-14T15:56:29 2020-02-14T18:56:57   03:00:28          1 OUT_OF_ME+    0:125
-10304574             63      batch  mturchin    default 2020-02-14T15:03:02 2020-02-14T18:56:09   02:48:27          1 OUT_OF_ME+    0:125 Height;1254 British British.Ran4000.4 ExonicPlus2+ 4681
-10304574.ba+      batch                         default 2020-02-14T16:07:42 2020-02-14T18:56:09   02:48:27          1 OUT_OF_ME+    0:125
-10304933             63      batch  mturchin    default 2020-02-14T15:04:58 2020-02-14T19:22:54   02:57:05          1 OUT_OF_ME+    0:125 Height;1254 British British.Ran4000.5 ExonicPlus2+ 4681
-10304933.ba+      batch                         default 2020-02-14T16:25:49 2020-02-14T19:22:54   02:57:05          1 OUT_OF_ME+    0:125
-10305677             63      batch  mturchin    default 2020-02-14T15:41:43 2020-02-14T20:46:19   08:00:58          2 OUT_OF_ME+    0:125 Height;1254 British British.Ran10000.2 ExonicPlus+ 4681
-10305677.ba+      batch                         default 2020-02-14T16:45:50 2020-02-14T20:46:19   08:00:58          2 OUT_OF_ME+    0:125
-10305915             63      batch  mturchin    default 2020-02-14T15:41:58 2020-02-14T21:43:55   08:11:04          2 OUT_OF_ME+    0:125 Height;1254 British British.Ran10000.4 ExonicPlus+ 4681
-10305915.ba+      batch                         default 2020-02-14T17:38:23 2020-02-14T21:43:55   08:11:04          2 OUT_OF_ME+    0:125
-
-10306153             63      batch  mturchin    default 2020-02-14T15:43:23 2020-02-15T01:01:28   08:27:56          2 OUT_OF_ME+    0:125        Height;1254 British British.Ran10000.3 ExonicPlus20kb 4681
-10306153.ba+      batch                         default 2020-02-14T20:47:30 2020-02-15T01:01:28   08:27:56          2 OUT_OF_ME+    0:125
-
-
 British British.Ran4000.2 ExonicPlus20kb 4734
    1328 1
       1 4717
@@ -1170,14 +1133,22 @@ British British.Ran4000.2 ExonicPlus20kb 4734
       1 1240
       1 4717
 
-
+British British.Ran10000.2 ExonicPlus20kb 4734
+   1328 1
+      1 4717
+      
+      1 440
+   
+      1 4717
+   
+   1329 1
 
 #From: https://stats.idre.ucla.edu/r/codefragments/svd_demos/, https://math.stackexchange.com/questions/19948/pseudoinverse-matrix-and-svd, https://www.johndcook.com/blog/2018/05/05/svd/, https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse#Singular_value_decomposition_(SVD), https://rce-docs.hmdc.harvard.edu/faq/how-do-i-use-compressed-data-r
-module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8 | head -n 4 | tail -n 1`; do
+module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8 | head -n 6 | tail -n 1`; do
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1 | head -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 #		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
-		NumPaths=1240
+		NumPaths=440
 		echo $ancestry1 $ancestry2 $ancestry3 $k
                          	
 		if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj ]; then
@@ -1185,8 +1156,8 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
 			mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm
 		fi
 
-		for (( PathNum=1201; PathNum <= $NumPaths; PathNum=PathNum+40 )); do
-			sbatch -t 72:00:00 --mem 25g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.Mproj.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.Mproj.slurm.error --comment "$ancestry2 $k $PathNum" <(echo -e '#!/bin/sh'; 
+		for (( PathNum=401; PathNum <= $NumPaths; PathNum=PathNum+40 )); do
+			sbatch -t 72:00:00 --mem 65g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.Mproj.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.Mproj.slurm.error --comment "$ancestry2 $k $PathNum" <(echo -e '#!/bin/sh'; 
 			echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"MASS\\\"); neg.is.na <- Negate(is.na); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.v3.ImptHRC.dose.100geno.Regions.c2.${k}.noDups.txt\\\", header=F); \
 			for (i in $PathNum:($PathNum+39)) { \
 				if ((i <= $NumPaths) && (Pathways.Check[i,ncol(Pathways.Check)])) { \ 
