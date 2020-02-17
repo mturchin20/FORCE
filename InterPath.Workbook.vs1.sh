@@ -6493,26 +6493,31 @@ done
 #head(Y4)
 #head(Y2)
  
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets
+
 #ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.GEMMA.v2.phenoMatch
 #ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt (technically '...wFullCovars.Match.txt')
 #ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.GEMMA.v3.phenoMatch.txt
         
-source deactivate; module load anaconda; source activate InterPath2; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1 | tail -n 1`; do
+source deactivate; module load anaconda; source activate InterPath2; rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/UKB_v3_AllPops_GridLMM_Main_Results1_localPCs.output; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1 | tail -n 1`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
-        echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+        echo $pheno1 $ancestry1 $ancestry2 $ancestry3 
+>> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/UKB_v3_AllPops_GridLMM_Main_Results1_localPCs.output
 
         for m in `cat <(echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 2`; do echo $m; 
-                R -q -e "ptm <- proc.time(); library(\"data.table\"); library(\"GridLMM\"); for (i in c(\"Height\", \"BMI\")) { print(i); \ 
-			Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".YnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".KnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".K2noMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); Z <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".ZnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
+                R -q -e "ptm <- proc.time(); library(\"data.table\"); library(\"GridLMM\"); Results1 <- c(); for (i in c(\"Height\", \"BMI\")) { print(i); Results1.sub <- c(); Results1.sub <- rbind(Results1.sub, i); \ 
+			Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".YnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".KnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".K2noMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); Z <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".ZnoMnoRescale.localPCs.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
 			colnames(Y) <- \"y\"; rownames(K) <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); colnames(K) <- rownames(K); rownames(K2) <- colnames(K); colnames(K2) <- colnames(K); \
 			colnames(Z) <- c(\"SEX\", \"AGE\", \"AC\", \"PC1\", \"PC2\", \"PC3\", \"PC4\", \"PC5\", \"PC6\", \"PC7\", \"PC8\", \"PC9\", \"PC10\"); rownames(Z) <- colnames(K); 
 			IndvNames <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); \
 			Data1 <- data.frame(Y=Y, K_Grid=IndvNames, K2_Grid=IndvNames, AGE=Z[,c(\"AGE\")], SEX=Z[,c(\"SEX\")], AC=Z[,c(\"AC\")], PC1=Z[,c(\"PC1\")], PC2=Z[,c(\"PC2\")], PC3=Z[,c(\"PC3\")], PC4=Z[,c(\"PC4\")], PC5=Z[,c(\"PC5\")], PC6=Z[,c(\"PC6\")], PC7=Z[,c(\"PC7\")], PC8=Z[,c(\"PC8\")], PC9=Z[,c(\"PC9\")], PC10=Z[,c(\"PC10\")]); \
 			NullModel2 <- GridLMM_ML(formula = y~1 + AGE + SEX + factor(AC) + PC1 + PC2 + PC3 + PC4 + PC5 + PC6 + PC7 + PC8 + PC9 + PC10 + (1|K_Grid) + (1|K2_Grid), data = Data1, relmat = list(K_Grid=K, K2_Grid=K2), REML = T, save_V_folder = \"V_folder\", tolerance = 1e-3);
-			print(NullModel2\$results[,c(\"K_Grid.REML\",\"K2_Grid.REML\")]); \
-                };"
+			path.pre <- as.character(\"$m\"); path <- strsplit(path.pre, \"/\"); m <- paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/\", path[[1]][length(path[[1]])], sep=\"\");
+			Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K_Grid.REML\"]); Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K_Grid.REML\"]); Results1 <- cbind(Results1, Results1.sub); \
+	        }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.localPCs.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);"
         done
 done
 
