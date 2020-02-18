@@ -2524,6 +2524,20 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 10321757.ba+      batch                         default 2020-02-16T22:12:56 2020-02-17T01:34:33   13:26:28          4     FAILED      1:0                                                    
 10321825             63      batch  mturchin    default 2020-02-16T11:51:54 2020-02-17T11:00:12   23:45:56          4     FAILED      1:0   BMI British.Ran10000.3 ExonicPlus20kb 721 perm-1 
 10321825.ba+      batch                         default 2020-02-17T05:03:43 2020-02-17T11:00:12   23:45:56          4     FAILED      1:0                                                    
+10322485             63      batch  mturchin    default 2020-02-16T11:59:24 2020-02-17T22:17:10   00:13:04          1     FAILED      1:0       BMI British.Ran4000 ExonicPlus20kb 241 perm1 
+10322485.ba+      batch                         default 2020-02-17T22:04:06 2020-02-17T22:17:10   00:13:04          1     FAILED      1:0                                                    
+10322492             63      batch  mturchin    default 2020-02-16T11:59:24 2020-02-17T22:17:10   00:07:13          1     FAILED      1:0       BMI British.Ran4000 ExonicPlus20kb 801 perm1 
+10322492.ba+      batch                         default 2020-02-17T22:09:57 2020-02-17T22:17:10   00:07:13          1     FAILED      1:0                                                    
+10322493             63      batch  mturchin    default 2020-02-16T11:59:24 2020-02-17T22:17:11   00:07:02          1     FAILED      1:0       BMI British.Ran4000 ExonicPlus20kb 881 perm1 
+10322493.ba+      batch                         default 2020-02-17T22:10:09 2020-02-17T22:17:11   00:07:02          1     FAILED      1:0                                                    
+10322495             63      batch  mturchin    default 2020-02-16T11:59:24 2020-02-17T22:17:09   00:06:39          1     FAILED      1:0      BMI British.Ran4000 ExonicPlus20kb 1041 perm1 
+10322495.ba+      batch                         default 2020-02-17T22:10:30 2020-02-17T22:17:09   00:06:39          1     FAILED      1:0                                                    
+10322497             63      batch  mturchin    default 2020-02-16T11:59:24 2020-02-17T22:17:10   00:05:01          1     FAILED      1:0      BMI British.Ran4000 ExonicPlus20kb 1201 perm1 
+10322497.ba+      batch                         default 2020-02-17T22:12:09 2020-02-17T22:17:10   00:05:01          1     FAILED      1:0                                                    
+10322808             63      batch  mturchin    default 2020-02-16T12:02:08 2020-02-17T23:30:26   00:13:25          1     FAILED      1:0          Height Caribbean ExonicPlus20kb 321 perm1 
+10322808.ba+      batch                         default 2020-02-17T23:17:01 2020-02-17T23:30:26   00:13:25          1     FAILED      1:0                                                    
+10322880             63      batch  mturchin    default 2020-02-16T12:02:34 2020-02-17T23:32:25   00:01:44          1     FAILED      1:0            BMI Pakistani ExonicPlus20kb 1281 perm1 
+10322880.ba+      batch                         default 2020-02-17T23:30:41 2020-02-17T23:32:25   00:01:44          1     FAILED      1:0                                                    
 
 
 
@@ -3833,7 +3847,7 @@ done
 
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	echo $l
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 		echo $j
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 		ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -3841,9 +3855,9 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 			echo $i
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
-#				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
+				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
 #				pValBonf=.01; pValCutoff="pVal01";
-				pValBonf=1; pValCutoff="pValAll";
+#				pValBonf=1; pValCutoff="pValAll";
 				echo $k $pValBonf
 		
 				if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff ] ; then
@@ -3852,14 +3866,14 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 					mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff
 				fi
 		
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $0 } }' | awk '{ print $1 "\t" $5 "\t" $8 "\t" $9 "\t" $10 "\t" $13 }' | grep ^$l"_" > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
+				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.MCrct.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $0 } }' | awk '{ print $1 "\t" $5 "\t" $8 "\t" $9 "\t" $10 "\t" $13 }' | grep ^$l"_" > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.MCrct.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
 	
-				if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt ] ; then 
-					if [ ! -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt ]; then
-						echo "NA NA NA NA NA NA" > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
+				if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.MCrct.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt ] ; then 
+					if [ ! -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.MCrct.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt ]; then
+						echo "NA NA NA NA NA NA" > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.MCrct.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
 					fi
 				else
-					echo "NA NA NA NA NA NA" > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
+					echo "NA NA NA NA NA NA" > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.MCrct.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt
 				fi
 			done
 		done 
