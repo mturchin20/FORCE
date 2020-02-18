@@ -6438,7 +6438,7 @@ join <(cat
 
 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FullDataset.pruned.flashpca.pcs.wFullCovars.wAC.txt
 
-module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
+module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
@@ -6449,11 +6449,8 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
                 K <- as.matrix(Data1); Y <- as.matrix(Data2[,c(3:4)]); Z <- as.matrix(Data3[,c(3,5,6,(ncol(Data3)-9):ncol(Data3))]); print(head(Z)); for (i in 1:2) { print(proc.time() - ptm); \
                         Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \
                         RescaleMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - ((v1 %*% t(v1)) / n1); X1 <- m1 %*% X %*% m1; X1 <- X1/mean(diag(X1)); return(X1); }; \
-                        MeanCenterMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - ((v1 %*% t(v1)) / n1); X1 <- m1 %*% X %*% m1; return(X1); }; \
 			K.Pheno.noNAs.Rescale <- RescaleMatrix(K.Pheno.noNAs); \
-			K.Pheno.noNAs.MeanCenter <- MeanCenterMatrix(K.Pheno.noNAs); \
-			K.Pheno.noNAs.2.MeanCenter <- MeanCenterMatrix(K.Pheno.noNAs.2); \
-			write.table(K.Pheno.noNAs.Rescale, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".KnoMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.MeanCenter, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".KnoMnoRescaleCenter.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.MeanCenter, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".K2noMnoRescaleCenter.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			write.table(K.Pheno.noNAs.Rescale, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".KnoMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".KnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".K2noMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 			print(proc.time() - ptm); ptm <- proc.time(); \
                 };"
         done
@@ -6468,6 +6465,9 @@ done
 #			write.table(Y.Pheno.noNAs.M.Rescale2, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".YMsolvExtraRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".KMsolvExtraRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".K2MsolvExtraRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.M.Rescale, file=paste(\"$m.ownK.Vs1.localPCs.\", colnames(Y)[i] ,\".K3MsolvExtraRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 #			path.pre <- as.character(\"$m\"); path <- strsplit(path.pre, \"/\"); m <- paste(\"/gpfs/scratch/mturchin/GridLMM/\", path[[1]][length(path[[1]])], sep=\"\"); \
 #			write.table(Y.Pheno.noNAs, file=paste(m, \".ownK.Vs1.\", colnames(Y)[i] ,\".YnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs, file=paste(m, \".ownK.Vs1.\", colnames(Y)[i] ,\".KnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.Rescale, file=paste(m, \".ownK.Vs1.\", colnames(Y)[i] ,\".K2noMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.Rescale, file=paste(m, \".ownK.Vs1.\", colnames(Y)[i] ,\".K3noMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+#			MeanCenterMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - ((v1 %*% t(v1)) / n1); X1 <- m1 %*% X %*% m1; return(X1); }; \
+#			K.Pheno.noNAs.MeanCenter <- MeanCenterMatrix(K.Pheno.noNAs); \
+#			K.Pheno.noNAs.2.MeanCenter <- MeanCenterMatrix(K.Pheno.noNAs.2); \
 
 #localPCs
 ...Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt\", header=T);...
@@ -6538,7 +6538,7 @@ source deactivate; module load anaconda; source activate InterPath2; for j in `c
 
         for m in `cat <(echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 2`; do echo $m; 
                 R -q -e "ptm <- proc.time(); library(\"data.table\"); library(\"GridLMM\"); Results1 <- c(); for (i in c(\"Height\", \"BMI\")) { print(i); Results1.sub <- c(); Results1.sub <- rbind(Results1.sub, i); \ 
-			Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".YnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".KnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".K2noMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); Z <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".ZnoMnoRescale.localPCs.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
+			Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".YnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".KnoMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".K2noMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); Z <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".ZnoMnoRescale.localPCs.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
 			colnames(Y) <- \"y\"; rownames(K) <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); colnames(K) <- rownames(K); rownames(K2) <- colnames(K); colnames(K2) <- colnames(K); \
 			colnames(Z) <- c(\"SEX\", \"AGE\", \"AC\", \"PC1\", \"PC2\", \"PC3\", \"PC4\", \"PC5\", \"PC6\", \"PC7\", \"PC8\", \"PC9\", \"PC10\"); rownames(Z) <- colnames(K); 
 			IndvNames <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); \
@@ -6546,7 +6546,7 @@ source deactivate; module load anaconda; source activate InterPath2; for j in `c
 			NullModel2 <- GridLMM_ML(formula = y~1 + AGE + SEX + factor(AC) + PC1 + PC2 + PC3 + PC4 + PC5 + PC6 + PC7 + PC8 + PC9 + PC10 + (1|K_Grid) + (1|K2_Grid), data = Data1, relmat = list(K_Grid=K, K2_Grid=K2), REML = T, save_V_folder = \"V_folder\", tolerance = 1e-3);
 			path.pre <- as.character(\"$m\"); path <- strsplit(path.pre, \"/\"); m <- paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/\", path[[1]][length(path[[1]])], sep=\"\");
 			Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K_Grid.REML\"]); Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K2_Grid.REML\"]); Results1 <- cbind(Results1, Results1.sub); \
-	        }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.globalPCs.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);"
+	        }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.Scaled.globalPCs.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);"
         done
 done
 
