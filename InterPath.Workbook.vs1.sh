@@ -6449,8 +6449,11 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
                 K <- as.matrix(Data1); Y <- as.matrix(Data2[,c(3:4)]); Z <- as.matrix(Data3[,c(3,5,6,(ncol(Data3)-9):ncol(Data3))]); print(head(Z)); for (i in 1:2) { print(proc.time() - ptm); \
                         Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \
                         RescaleMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - ((v1 %*% t(v1)) / n1); X1 <- m1 %*% X %*% m1; X1 <- X1/mean(diag(X1)); return(X1); }; \
-			K.Pheno.noNAs.2.Rescale <- RescaleMatrix(K.Pheno.noNAs.2); K.Pheno.noNAs.3.Rescale <- RescaleMatrix(K.Pheno.noNAs.3); \
-			write.table(Z.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".ZnoMnoRescale.globalPCs.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+                        MeanCenterMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - ((v1 %*% t(v1)) / n1); X1 <- m1 %*% X %*% m1; return(X1); }; \
+			K.Pheno.noNAs.Rescale <- RescaleMatrix(K.Pheno.noNAs); \
+			K.Pheno.noNAs.MeanCenter <- MeanCenterMatrix(K.Pheno.noNAs); \
+			K.Pheno.noNAs.2.MeanCenter <- MeanCenterMatrix(K.Pheno.noNAs.2); \
+			write.table(K.Pheno.noNAs.Rescale, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".KnoMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.MeanCenter, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".KnoMnoRescaleCenter.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.MeanCenter, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".K2noMnoRescaleCenter.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 			print(proc.time() - ptm); ptm <- proc.time(); \
                 };"
         done
@@ -6615,35 +6618,36 @@ rownames(K_plot) = colnames(K_plot) = data$Plot
 K_G = tcrossprod(X)/ncol(X)
 null_model = GridLMM_ML(formula = y~1 + (1|Geno) + (1|Plot),data = data,relmat = list(Geno = K_G, Plot = K_plot),REML = T,save_V_folder = 'V_folder',tolerance = 1e-3)
 
-rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/ukb_chrAll_v3.AllPops.GridLMM.Main.Results.globalPCs.output; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
-	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
-	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
-	        echo $ancestry1 $ancestry2 $i
-	
-		cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/
+~rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/ukb_chrAll_v3.AllPops.GridLMM.Main.Results.globalPCs.output; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+~	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
+~	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+~	        echo $ancestry1 $ancestry2 $i
+~		cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/
+~		/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.globalPCs.output
+~		/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.GridLMM.Main.Results1.globalPCs.output
+~	done
+~done
 
-		/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.globalPCs.output
-		/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.GridLMM.Main.Results1.globalPCs.output
+R -q -e "PCs <- c(\"global\", \"local\"); for (q in PCs) { \
+	Data1 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
+	Data2 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
+	Data4 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
+	Data5 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
+	Data6 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
+	Data8 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
+	African <- rbind(matrix(Data1[,1], ncol=1), matrix(Data1[,2], ncol=1)); British.Ran4000 <- rbind(matrix(Data2[,1], ncol=1), matrix(Data2[,2], ncol=1)); Caribbean <- rbind(matrix(Data4[,1], ncol=1), matrix(Data4[,2], ncol=1)); Chinese <- rbind(matrix(Data5[,1], ncol=1), matrix(Data5[,2], ncol=1)); Indian <- rbind(matrix(Data6[,1], ncol=1), matrix(Data6[,2], ncol=1)); Pakistani <- rbind(matrix(Data8[,1], ncol=1), matrix(Data8[,2], ncol=1)); \
+	colnames(African) <- \"African\"; colnames(British.Ran4000) <- \"British.Ran4000\"; colnames(Caribbean) <- \"Caribbean\"; colnames(Chinese) <- \"Chinese\"; colnames(Indian) <- \"Indian\"; colnames(Pakistani) <- \"Pakistani\"; \
+	FullData.pre1 <- cbind(African, British.Ran4000, Caribbean, Chinese, Indian, Pakistani); \
+	FullData.pre2 <- rbind(c(\"\",\"\",\"\",\"\",\"\",\"\"), FullData.pre1[2:3,], c(\"\",\"\",\"\",\"\",\"\",\"\"), FullData.pre1[5:6,]); \
+	FullData <- cbind(c(\"Height\",\"G1\",\"G2\",\"BMI\",\"G1\",\"G2\"), FullData.pre2); \
+	print(paste(q, \" PCs\", sep=\"\")); write.table(FullData, sep=\",\", quote=FALSE, row.names=FALSE, col.names=TRUE); }; \
+" | grep -v ^\> | column -t -s, > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/ukb_chrAll_v3.AllPops.GridLMM.Main.Results.Pruned.BothPCs.output 
 
-
-	done
-done
-
-R -q -e "PCs <- c(\"global\", \"local\"); for (q in PCs[1]) { \
-	Data1 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
-	Data2 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
-	Data4 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
-	Data5 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
-	Data6 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
-	Data8 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
-	African <- rbind(matrix((Data1[,1]), ncol=1), matrix(Data1[,2], ncol=1)); British.Ran4000 <- rbind(Data2[,1], Data2[,2]); Caribbean <- rbind(Data4[,1], Data4[,2]); Chinese <- rbind(Data5[,1], Data5[,2]); Indian <- rbind(Data6[,1], Data6[,2]); Pakistani <- rbind(Data8[,1], Data8[,2]); \
-	print(Data1); print(African); \ 
-	FullData <- cbind(African, British.Ran4000, Caribbean, Chinese, Indian, Pakistani); \
-	write.table(FullData, quote=FALSE, row.names=FALSE, col.names=FALSE); }; \
-"
+#" | grep -v ^\> | column -t -s, > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/ukb_chrAll_v3.AllPops.GridLMM.Main.Results.NotPruned.BothPCs.output 
 
 #	Data3 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
 #	Data7 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
+#	print(Data1); print(African); \ 
 
 
 
