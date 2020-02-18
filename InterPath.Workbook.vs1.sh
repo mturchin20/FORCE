@@ -6632,17 +6632,18 @@ done
 R -q -e "PCs <- c(\"global\", \"local\"); for (q in PCs[1]) { \
 	Data1 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
 	Data2 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
-	Data3 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
 	Data4 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
 	Data5 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
 	Data6 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
-	Data7 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
 	Data8 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
-	African <- rbind(Data1[,1], Data1[,2]); British.Ran4000 <- rbind(Data2[,1], Data2[,2]); British.Ran10000 <- rbind(Data3[,1], Data3[,2]); Caribbean <- rbind(Data4[,1], Data4[,2]); Chinese <- rbind(Data5[,1], Data5[,2]); Indian <- rbind(Data6[,1], Data6[,2]); Irish <- rbind(Data7[,1], Data7[,2]); Pakistani <- rbind(Data8[,1], Data8[,2]); \
-	FullData <- cbind(African, British.Ran4000, British.Ran10000, Caribbean, Chinese, Indian, Irish, Pakistani); \
+	African <- rbind(matrix((Data1[,1]), ncol=1), matrix(Data1[,2], ncol=1)); British.Ran4000 <- rbind(Data2[,1], Data2[,2]); Caribbean <- rbind(Data4[,1], Data4[,2]); Chinese <- rbind(Data5[,1], Data5[,2]); Indian <- rbind(Data6[,1], Data6[,2]); Pakistani <- rbind(Data8[,1], Data8[,2]); \
+	print(Data1); print(African); \ 
+	FullData <- cbind(African, British.Ran4000, Caribbean, Chinese, Indian, Pakistani); \
 	write.table(FullData, quote=FALSE, row.names=FALSE, col.names=FALSE); }; \
 "
 
+#	Data3 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
+#	Data7 <- read.table(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.GridLMM.Main.Results1.\", q, \"PCs.output\", sep=\"\"), header=F); \
 
 
 
