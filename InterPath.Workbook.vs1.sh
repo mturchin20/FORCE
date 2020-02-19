@@ -6591,15 +6591,16 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 
         for m in `cat <(echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 2`; do echo $m; 
                 R -q -e "ptm <- proc.time(); library(\"data.table\"); library(\"GridLMM\"); Results1 <- c(); for (i in c(\"Height\", \"BMI\")) { print(i); Results1.sub <- c(); Results1.sub <- rbind(Results1.sub, i); \ 
-			Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".YnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".KnoMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".K2noMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); Z <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".ZnoMnoRescale.globalPCs.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
+			Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".YnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".KnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".K2noMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); Z <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".ZnoMnoRescale.globalPCs.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
 			colnames(Y) <- \"y\"; rownames(K) <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); colnames(K) <- rownames(K); rownames(K2) <- colnames(K); colnames(K2) <- colnames(K); \
 			colnames(Z) <- c(\"SEX\", \"AGE\", \"AC\", \"PC1\", \"PC2\", \"PC3\", \"PC4\", \"PC5\", \"PC6\", \"PC7\", \"PC8\", \"PC9\", \"PC10\"); rownames(Z) <- colnames(K); 
 			IndvNames <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); \
+			Y <- ((Y - mean(Y)) / sd(Y)); \
 			Data1 <- data.frame(Y=Y, K_Grid=IndvNames, K2_Grid=IndvNames, AGE=Z[,c(\"AGE\")], SEX=Z[,c(\"SEX\")], AC=Z[,c(\"AC\")], PC1=Z[,c(\"PC1\")], PC2=Z[,c(\"PC2\")], PC3=Z[,c(\"PC3\")], PC4=Z[,c(\"PC4\")], PC5=Z[,c(\"PC5\")], PC6=Z[,c(\"PC6\")], PC7=Z[,c(\"PC7\")], PC8=Z[,c(\"PC8\")], PC9=Z[,c(\"PC9\")], PC10=Z[,c(\"PC10\")]); \
 			NullModel2 <- GridLMM_ML(formula = y~1 + (1|K_Grid) + (1|K2_Grid), data = Data1, relmat = list(K_Grid=K, K2_Grid=K2), REML = T, save_V_folder = \"V_folder\", tolerance = 1e-3);
 			path.pre <- as.character(\"$m\"); path <- strsplit(path.pre, \"/\"); m <- paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/\", path[[1]][length(path[[1]])], sep=\"\");
 			Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K_Grid.REML\"]); Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K2_Grid.REML\"]); Results1 <- cbind(Results1, Results1.sub); \
-	        }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.Scaled.noCovs.K_K2.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);"
+	        }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.NotScaled.noCovs.yRescale.K_K2.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);"
         done
 done
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
@@ -6614,11 +6615,12 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 			colnames(Y) <- \"y\"; rownames(K) <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); colnames(K) <- rownames(K); rownames(K2) <- colnames(K); colnames(K2) <- colnames(K); \
 			colnames(Z) <- c(\"SEX\", \"AGE\", \"AC\", \"PC1\", \"PC2\", \"PC3\", \"PC4\", \"PC5\", \"PC6\", \"PC7\", \"PC8\", \"PC9\", \"PC10\"); rownames(Z) <- colnames(K); 
 			IndvNames <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); \
+			Y <- ((Y - mean(Y)) / sd(Y)); \
 			Data1 <- data.frame(Y=Y, K_Grid=IndvNames, K2_Grid=IndvNames, AGE=Z[,c(\"AGE\")], SEX=Z[,c(\"SEX\")], AC=Z[,c(\"AC\")], PC1=Z[,c(\"PC1\")], PC2=Z[,c(\"PC2\")], PC3=Z[,c(\"PC3\")], PC4=Z[,c(\"PC4\")], PC5=Z[,c(\"PC5\")], PC6=Z[,c(\"PC6\")], PC7=Z[,c(\"PC7\")], PC8=Z[,c(\"PC8\")], PC9=Z[,c(\"PC9\")], PC10=Z[,c(\"PC10\")]); \
 			NullModel2 <- GridLMM_ML(formula = y~1 + (1|K_Grid), data = Data1, relmat = list(K_Grid=K), REML = T, save_V_folder = \"V_folder\", tolerance = 1e-3);
 			path.pre <- as.character(\"$m\"); path <- strsplit(path.pre, \"/\"); m <- paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/\", path[[1]][length(path[[1]])], sep=\"\");
-			Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K_Grid.REML\"]); Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K2_Grid.REML\"]); Results1 <- cbind(Results1, Results1.sub); \
-	        }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.Scaled.noCovs.K.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);"
+			Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K_Grid.REML\"]); \
+	        }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.Scaled.noCovs.yRescale.K.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);"
         done
 done
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
