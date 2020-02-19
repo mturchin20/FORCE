@@ -2560,6 +2560,8 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 10342062.ba+      batch                         default 2020-02-18T12:21:28 2020-02-18T18:09:24   23:11:44          4     FAILED      1:0                                                    
 10323198             63      batch  mturchin    default 2020-02-16T12:56:21 2020-02-18T22:20:27 1-19:16:40          4     FAILED      1:0             Height Irish ExonicPlus20kb 1201 perm1 
 10323198.ba+      batch                         default 2020-02-18T11:31:17 2020-02-18T22:20:27 1-19:16:40          4     FAILED      1:0                                                    
+10335241             63      batch  mturchin    default 2020-02-17T13:50:11 2020-02-19T00:55:33   00:57:24          4     FAILED      1:0 Height British.Ran10000.4 ExonicPlus20kb 321 perm1 
+10335241.ba+      batch                         default 2020-02-19T00:41:12 2020-02-19T00:55:33   00:57:24          4     FAILED      1:0                                                    
 
 
 
@@ -5173,7 +5175,7 @@ done
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.top10resids.txt
 
 #20200213 NOTE -- 'gemmaK.Vs2' is just meant to indicate the stage at which things changed to the proper pheno/Y* and M setups throughout the pipeline, even though that ultimately doesn't change the 'YnoMnoRescale' file from 'Vs1' to 'Vs2' tehcnically
-module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 8 | grep -vE 'Ran10000|Irish' | head -n 2`; do
+module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 8 | grep -vE 'Ran10000|Irish'`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
@@ -5184,13 +5186,22 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
 	        K <- as.matrix(Data1); Y <- as.matrix(Data2[,c(3:4,7:8)]); Z <- as.matrix(Data3[,(ncol(Data3)-9):ncol(Data3)]); for (i in 1:2) { print(proc.time() - ptm); \
 			Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \ 
 			RescaleMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - ((v1 %*% t(v1)) / n1); X1 <- m1 %*% X %*% m1; X1 <- X1/mean(diag(X1)); return(X1); }; \
-			K.Pheno.noNAs.2.Rescale <- RescaleMatrix(K.Pheno.noNAs.2); K.Pheno.noNAs.3.Rescale <- RescaleMatrix(K.Pheno.noNAs.3); \	
-			path.pre <- as.character(\"$m\"); path <- strsplit(path.pre, \"/\"); m <- paste(\"/gpfs/scratch/mturchin/GEMMA/\", path[[1]][length(path[[1]])], sep=\"\"); \
-			write.table(Y.Pheno.noNAs, file=paste(m, \".gemmaK.Vs2.\", colnames(Y)[i] ,\".YnoMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs, file=paste(m, \".gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.Rescale, file=paste(m, \".gemmaK.Vs2.\", colnames(Y)[i] ,\".K2noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.Rescale, file=paste(m, \".gemmaK.Vs2.\", colnames(Y)[i] ,\".K3noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \ 
+			K.Pheno.noNAs.Rescale <- RescaleMatrix(K.Pheno.noNAs); K.Pheno.noNAs.2.Rescale <- RescaleMatrix(K.Pheno.noNAs.2); K.Pheno.noNAs.3.Rescale <- RescaleMatrix(K.Pheno.noNAs.3); \	
+			write.table(K.Pheno.noNAs.Rescale, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			write.table(K.Pheno.noNAs.2.Rescale, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".K2noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			write.table(K.Pheno.noNAs, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			write.table(K.Pheno.noNAs.2, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".K2noMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 			print(proc.time() - ptm); ptm <- proc.time(); \ 
 		};"
 	done
 done
+			RescaleMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - ((v1 %*% t(v1)) / n1); X1 <- m1 %*% X %*% m1; X1 <- X1/mean(diag(X1)); return(X1); }; \
+			Y.Pheno.noNAs.Rescale2 <- RescaleVector2(Y.Pheno.noNAs); \ 
+			Z.Pheno.noNAs[,2] <- RescaleVector2(Z.Pheno.noNAs[,2]); 
+			write.table(Y.Pheno.noNAs.Rescale2, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".YnoMRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			print(proc.time() - ptm); ptm <- proc.time(); \
+			
+			write.table(Y.Pheno.noNAs, file=paste(m, \".gemmaK.Vs2.\", colnames(Y)[i] ,\".YnoMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs, file=paste(m, \".gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.Rescale, file=paste(m, \".gemmaK.Vs2.\", colnames(Y)[i] ,\".K2noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.Rescale, file=paste(m, \".gemmaK.Vs2.\", colnames(Y)[i] ,\".K3noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \ 
 			
 			write.table(Y.Pheno.noNAs, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".YnoMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.Rescale, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".K2noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.Rescale, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".K3noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \ 
 			
@@ -5200,6 +5211,7 @@ done
 #			RescaleVector <- function(X) { n1 <- length(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - v1 %*% t(v1) / n1; X1 <- m1 %*% X; X1 <- (X1 - mean(X1)) / sd(X1) ; return(X1); }; \
 #			Y.Pheno.noNAs.Rescale <- RescaleVector(Y.Pheno.noNAs); K.Pheno.noNAs.Rescale <- RescaleMatrix(K.Pheno.noNAs); K.Pheno.noNAs.2.Rescale <- RescaleMatrix(K.Pheno.noNAs.2); K.Pheno.noNAs.3.Rescale <- RescaleMatrix(K.Pheno.noNAs.3); \	
 #			Y.Pheno.noNAs.M.Rescale <- RescaleVector(Y.Pheno.noNAs.M); K.Pheno.noNAs.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.M); K.Pheno.noNAs.2.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.2.M); K.Pheno.noNAs.3.M.Rescale <- RescaleMatrix(K.Pheno.noNAs.3.M); Error.M.Rescale <- RescaleMatrix(Error.M); \	
+#			path.pre <- as.character(\"$m\"); path <- strsplit(path.pre, \"/\"); m <- paste(\"/gpfs/scratch/mturchin/GEMMA/\", path[[1]][length(path[[1]])], sep=\"\"); \
 
 #4k pops: 20g
 #10k+ pops: 50g
@@ -6459,11 +6471,14 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
 
         for m in `cat <(echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 2`; do
-                R -q -e "ptm <- proc.time(); library(\"MASS\"); Data1 <- read.table(\"$m.raw.edit.noFix.cov.ColCrct.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.top10resids.txt\", header=T); Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FullDataset.pruned.flashpca.pcs.wFullCovars.wAC.txt\", header=T); neg.is.na <- Negate(is.na); \
+                R -q -e "ptm <- proc.time(); library(\"MASS\"); Data1 <- read.table(\"$m.raw.edit.noFix.cov.ColCrct.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.txt\", header=T); Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FullDataset.pruned.flashpca.pcs.wFullCovars.wAC.txt\", header=T); neg.is.na <- Negate(is.na); \
                 K <- as.matrix(Data1); Y <- as.matrix(Data2[,c(3:4)]); Z <- as.matrix(Data3[,c(3,5,6,(ncol(Data3)-9):ncol(Data3))]); print(head(Z)); for (i in 1:2) { print(proc.time() - ptm); \
                         Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \
-                        RescaleMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - ((v1 %*% t(v1)) / n1); X1 <- m1 %*% X %*% m1; X1 <- X1/mean(diag(X1)); return(X1); }; \
-			write.table(Y.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".YnoMnoRescale.Adjusted.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+                        RescaleVector2 <- function(X) { X1 <- (X - mean(X)) / sd(X); return(X1); }; \
+			RescaleMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - ((v1 %*% t(v1)) / n1); X1 <- m1 %*% X %*% m1; X1 <- X1/mean(diag(X1)); return(X1); }; \
+			Y.Pheno.noNAs.Rescale2 <- RescaleVector2(Y.Pheno.noNAs); \ 
+			Z.Pheno.noNAs[,2] <- RescaleVector2(Z.Pheno.noNAs[,2]); 
+			write.table(Y.Pheno.noNAs.Rescale2, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".YnoMRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 			print(proc.time() - ptm); ptm <- proc.time(); \
                 };"
         done
@@ -6474,10 +6489,15 @@ done
 
 #Raw Phenos
 Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.txt\", header=T); 
-write.table(Y.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".YnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); 
+			write.table(Y.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".YnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); 
 #Adjusted Phenos
 Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.top10resids.txt\", header=T);
-write.table(Y.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".YnoMnoRescale.Adjusted.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); 
+			write.table(Y.Pheno.noNAs, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".YnoMnoRescale.Adjusted.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); 
+#Raw, Rescaled2 Phenos
+Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.txt\", header=T); 
+                        RescaleVector2 <- function(X) { X1 <- (X - mean(X)) / sd(X); return(X1); }; \
+			Y.Pheno.noNAs.Rescale2 <- RescaleVector2(Y.Pheno.noNAs); \ 
+			write.table(Y.Pheno.noNAs.Rescale2, file=paste(\"$m.ownK.Vs1.\", colnames(Y)[i] ,\".YnoMRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 			
 #			M <- diag(nrow(Z.Pheno.noNAs)) - (Z.Pheno.noNAs %*% solve(t(Z.Pheno.noNAs) %*% Z.Pheno.noNAs) %*% t(Z.Pheno.noNAs)); \
 #			Y.Pheno.noNAs.M <- M %*% Y.Pheno.noNAs; K.Pheno.noNAs.M <- M %*% K.Pheno.noNAs %*% M; K.Pheno.noNAs.2.M <- M %*% K.Pheno.noNAs.2 %*% M; K.Pheno.noNAs.3.M <- M %*% K.Pheno.noNAs.3 %*% M; Error.M <- M %*% diag(nrow(M)); \
@@ -6564,7 +6584,7 @@ source deactivate; module load anaconda; source activate InterPath2; for j in `c
 			colnames(Z) <- c(\"SEX\", \"AGE\", \"AC\", \"PC1\", \"PC2\", \"PC3\", \"PC4\", \"PC5\", \"PC6\", \"PC7\", \"PC8\", \"PC9\", \"PC10\"); rownames(Z) <- colnames(K); 
 			IndvNames <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); \
 			Data1 <- data.frame(Y=Y, K_Grid=IndvNames, K2_Grid=IndvNames, AGE=Z[,c(\"AGE\")], SEX=Z[,c(\"SEX\")], AC=Z[,c(\"AC\")], PC1=Z[,c(\"PC1\")], PC2=Z[,c(\"PC2\")], PC3=Z[,c(\"PC3\")], PC4=Z[,c(\"PC4\")], PC5=Z[,c(\"PC5\")], PC6=Z[,c(\"PC6\")], PC7=Z[,c(\"PC7\")], PC8=Z[,c(\"PC8\")], PC9=Z[,c(\"PC9\")], PC10=Z[,c(\"PC10\")]); \
-			NullModel2 <- GridLMM_ML(formula = y~1 + AGE + SEX + factor(AC) + PC1 + PC2 + PC3 + PC4 + PC5 + PC6 + PC7 + PC8 + PC9 + PC10 + (1|K_Grid) + (1|K2_Grid), data = Data1, relmat = list(K_Grid=K, K2_Grid=K2), REML = T, save_V_folder = \"V_folder\", tolerance = 1e-3);
+			NullModel2 <- GridLMM_ML(formula = y~1 + factor(AGE) + factor(SEX) + factor(AC) + PC1 + PC2 + PC3 + PC4 + PC5 + PC6 + PC7 + PC8 + PC9 + PC10 + (1|K_Grid) + (1|K2_Grid), data = Data1, relmat = list(K_Grid=K, K2_Grid=K2), REML = T, save_V_folder = \"V_folder\", tolerance = 1e-3);
 			path.pre <- as.character(\"$m\"); path <- strsplit(path.pre, \"/\"); m <- paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/\", path[[1]][length(path[[1]])], sep=\"\");
 			Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K_Grid.REML\"]); Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K2_Grid.REML\"]); Results1 <- cbind(Results1, Results1.sub); \
 	        }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.Scaled.globalPCs.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);"
@@ -6583,7 +6603,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 			colnames(Z) <- c(\"SEX\", \"AGE\", \"AC\", \"PC1\", \"PC2\", \"PC3\", \"PC4\", \"PC5\", \"PC6\", \"PC7\", \"PC8\", \"PC9\", \"PC10\"); rownames(Z) <- colnames(K); 
 			IndvNames <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); \
 			Data1 <- data.frame(Y=Y, K_Grid=IndvNames, K2_Grid=IndvNames, AGE=Z[,c(\"AGE\")], SEX=Z[,c(\"SEX\")], AC=Z[,c(\"AC\")], PC1=Z[,c(\"PC1\")], PC2=Z[,c(\"PC2\")], PC3=Z[,c(\"PC3\")], PC4=Z[,c(\"PC4\")], PC5=Z[,c(\"PC5\")], PC6=Z[,c(\"PC6\")], PC7=Z[,c(\"PC7\")], PC8=Z[,c(\"PC8\")], PC9=Z[,c(\"PC9\")], PC10=Z[,c(\"PC10\")]); \
-			NullModel2 <- GridLMM_ML(formula = y~1 + AGE + SEX + factor(AC) + PC1 + PC2 + PC3 + PC4 + PC5 + PC6 + PC7 + PC8 + PC9 + PC10 + (1|K_Grid) + (1|K2_Grid), data = Data1, relmat = list(K_Grid=K, K2_Grid=K2), REML = T, save_V_folder = \"V_folder\", tolerance = 1e-3);
+			NullModel2 <- GridLMM_ML(formula = y~1 + factor(AGE) + factor(SEX) + factor(AC) + PC1 + PC2 + PC3 + PC4 + PC5 + PC6 + PC7 + PC8 + PC9 + PC10 + (1|K_Grid) + (1|K2_Grid), data = Data1, relmat = list(K_Grid=K, K2_Grid=K2), REML = T, save_V_folder = \"V_folder\", tolerance = 1e-3);
 			path.pre <- as.character(\"$m\"); path <- strsplit(path.pre, \"/\"); m <- paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/\", path[[1]][length(path[[1]])], sep=\"\");
 			Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K_Grid.REML\"]); Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K2_Grid.REML\"]); Results1 <- cbind(Results1, Results1.sub); \
 	        }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.NotScaled.globalPCs.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);"
@@ -6591,7 +6611,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 done
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`;         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;          echo $pheno1 $ancestry1 $ancestry2 $ancestry3;          for m in `cat <(echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 2`; do echo $m;                 R -q -e "ptm <- proc.time(); library(\"data.table\"); library(\"GridLMM\"); Results1 <- c(); for (i in c(\"Height\", \"BMI\")) { print(i); Results1.sub <- c(); Results1.sub <- rbind(Results1.sub, i); \ 
-                        Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".YnoMnoRescale.Adjusted.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".KnoMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".K2noMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); Z <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".ZnoMnoRescale.globalPCs.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
+                        Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".YnoMRescale2.Adjusted.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".KnoMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".K2noMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); Z <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".ZnoMnoRescale.globalPCs.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
                         colnames(Y) <- \"y\"; rownames(K) <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); colnames(K) <- rownames(K); rownames(K2) <- colnames(K); colnames(K2) <- colnames(K); \
                         colnames(Z) <- c(\"SEX\", \"AGE\", \"AC\", \"PC1\", \"PC2\", \"PC3\", \"PC4\", \"PC5\", \"PC6\", \"PC7\", \"PC8\", \"PC9\", \"PC10\"); rownames(Z) <- colnames(K);
                         IndvNames <- paste(\"Indv\", seq(1:nrow(K)), sep=\"\"); \
@@ -6599,7 +6619,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
                         NullModel2 <- GridLMM_ML(formula = y~1 + (1|K_Grid) + (1|K2_Grid), data = Data1, relmat = list(K_Grid=K, K2_Grid=K2), REML = T, save_V_folder = \"V_folder\", tolerance = 1e-3);
                         path.pre <- as.character(\"$m\"); path <- strsplit(path.pre, \"/\"); m <- paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GridLMM/subsets/\", path[[1]][length(path[[1]])], sep=\"\");
                         Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K_Grid.REML\"]); Results1.sub <- rbind(Results1.sub, NullModel2\$results[,\"K2_Grid.REML\"]); Results1 <- cbind(Results1, Results1.sub); \
-                }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.Scaled.globalPCs.YAdjust.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);";         done; done
+                }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.Scaled.globalPCs.YAdjust.YScaled.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);";         done; done
 
 
 #			Z <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.localPCs.\", i, \".ZNoMNoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); 
@@ -6632,6 +6652,14 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 			Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".YnoMnoRescale.Adjusted.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".KnoMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".K2noMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); Z <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".ZnoMnoRescale.globalPCs.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
 			NullModel2 <- GridLMM_ML(formula = y~1 + (1|K_Grid) + (1|K2_Grid), data = Data1, relmat = list(K_Grid=K, K2_Grid=K2), REML = T, save_V_folder = \"V_folder\", tolerance = 1e-3);
 	        }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.Scaled.globalPCs.YAdjust.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);"
+#Vs3: noM + Rescale + Zcov + globalPCs + Yrescale2
+			Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".YnoMRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".KnoMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".K2noMRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); Z <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".ZnoMnoRescale.globalPCs.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
+			NullModel2 <- GridLMM_ML(formula = y~1 + AGE + SEX + factor(AC) + PC1 + PC2 + PC3 + PC4 + PC5 + PC6 + PC7 + PC8 + PC9 + PC10 + (1|K_Grid) + (1|K2_Grid), data = Data1, relmat = list(K_Grid=K, K2_Grid=K2), REML = T, save_V_folder = \"V_folder\", tolerance = 1e-3);
+	        }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.Scaled.globalPCs.YScaled2.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);"
+#Vs3: noM + noRescale + Zcov + globalPCs + Yrescale2
+			Y <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".YnoMRescale2.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".KnoMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); K2 <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".K2noMnoRescale.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); Z <- as.matrix(fread(cmd=paste(\"cat $m.ownK.Vs1.\", i, \".ZnoMnoRescale.globalPCs.noFix.cov.ColCrct.txt\", sep=\"\"), header=F)); \
+			NullModel2 <- GridLMM_ML(formula = y~1 + AGE + SEX + factor(AC) + PC1 + PC2 + PC3 + PC4 + PC5 + PC6 + PC7 + PC8 + PC9 + PC10 + (1|K_Grid) + (1|K2_Grid), data = Data1, relmat = list(K_Grid=K, K2_Grid=K2), REML = T, save_V_folder = \"V_folder\", tolerance = 1e-3);
+	        }; write.table(Results1, paste(m, \".GridLMM.Main.Results1.NotScaled.globalPCs.YScaled2.output\", sep=\"\"), quote=FALSE, row.names=FALSE, col.names=FALSE);"
 
 #null_model = GridLMM_ML(formula = y~1 + (1|Geno) + (1|Plot),data = data,relmat = list(Geno = K_G, Plot = K_plot),REML = T,save_V_folder = 'V_folder',tolerance = 1e-3)
 library("data.table"); library("GridLMM")
