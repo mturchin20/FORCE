@@ -5191,22 +5191,33 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
         echo $pheno1 $ancestry1 $ancestry2 $ancestry3
 
 	for m in `cat <(echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA" "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 2`; do
-		R -q -e "ptm <- proc.time(); library(\"MASS\"); Data1 <- read.table(\"$m.sXX.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.txt\", header=T); Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt\", header=T); neg.is.na <- Negate(is.na); \
+		R -q -e "ptm <- proc.time(); library(\"MASS\"); Data1 <- read.table(\"$m.sXX.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.txt\", header=T); Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FullDataset.pruned.flashpca.pcs.wFullCovars.wAC.txt\", header=T); neg.is.na <- Negate(is.na); \
 	        K <- as.matrix(Data1); Y <- as.matrix(Data2[,c(3:4)]); Z <- as.matrix(Data3[,(ncol(Data3)-9):ncol(Data3)]); for (i in 1:2) { print(proc.time() - ptm); \
 			Y.Pheno <- Y[,i]; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; K.Pheno.noNAs <- K[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),]; K.Pheno.noNAs.2 <- K.Pheno.noNAs * K.Pheno.noNAs; K.Pheno.noNAs.3 <- K.Pheno.noNAs * K.Pheno.noNAs * K.Pheno.noNAs; \ 
 			RescaleMatrix <- function(X) { n1 <- nrow(X); v1 <- matrix(1, n1, 1); m1 <- diag(n1) - ((v1 %*% t(v1)) / n1); X1 <- m1 %*% X %*% m1; X1 <- X1/mean(diag(X1)); return(X1); }; \
+			Y.Pheno.noNAs.Rescale3 <- ((Y.Pheno.noNAs - mean(Y.Pheno.noNAs)) / sd(Y.Pheno.noNAs)); \
+			K.Pheno.noNAs.Rescale <- RescaleMatrix(K.Pheno.noNAs); K.Pheno.noNAs.2.Rescale <- RescaleMatrix(K.Pheno.noNAs.2); \ 
+			write.table(Y.Pheno.noNAs, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".YnoMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			write.table(Y.Pheno.noNAs.Rescale3, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".YnoMRescale3.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			Y.Pheno.noNAs.Adjusted <- lm(Y.Pheno.noNAs ~ factor(Z.Pheno.noNAs[,\"SEX\"]) + Y.Pheno.noNAs[,\"AGE\"] + factor(Y.Pheno.noNAs[,\"CENTER\"]) + Y.Pheno.noNAs[,\"PC1\"] + Y.Pheno.noNAs[,\"PC1\"] + Y.Pheno.noNAs[,\"PC1\"] + Y.Pheno.noNAs[,\"PC1\"] + Y.Pheno.noNAs[,\"PC1\"] + Y.Pheno.noNAs[,\"PC1\"] + Y.Pheno.noNAs[,\"PC1\"] + Y.Pheno.noNAs[,\"PC1\"] + Y.Pheno.noNAs[,\"PC1\"] + Y.Pheno.noNAs[,\"PC1\"] - 1, na.action=na.exclude); \ 
+			Y.Pheno.noNAs.Adjusted.noNAs <- Y.Pheno.noNAs.Adjusted[neg.is.na(Y.Pheno.noNAs.Adjusted)]; K.Pheno.noNAs.noNAs <- K.Pheno.noNAs[neg.is.na(Y.Pheno.noNAs.Adjusted),neg.is.na(Y.Pheno.noNAs.Adjusted)]; K.Pheno.noNAs.2.noNAs <- K.Pheno.noNAs.2[neg.is.na(Y.Pheno.noNAs.Adjusted),neg.is.na(Y.Pheno.noNAs.Adjusted)]; \
+			K.Pheno.noNAs.Rescale.noNAs <- K.Pheno.noNAs.Rescale[neg.is.na(Y.Pheno.noNAs.Adjusted),neg.is.na(Y.Pheno.noNAs.Adjusted)]; K.Pheno.noNAs.2.Rescale.noNAs <- K.Pheno.noNAs.2.Rescale[neg.is.na(Y.Pheno.noNAs.Adjusted),neg.is.na(Y.Pheno.noNAs.Adjusted)]; \ 
+			write.table(Y.Pheno.noNAs.Adjusted, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".YnoMnoRescale.Adjusted.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.noNAs, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMnoRescale.Adjusted.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.noNAs, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".K2noMnoRescale.Adjusted.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			write.table(K.Pheno.noNAs.Rescale.noNAs, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMRescale.Adjusted.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.Rescale.noNAs, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".K2MRescale.Adjusted.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			print(proc.time() - ptm); ptm <- proc.time(); \ 
+		};"
+	done
+done
+			Y <- ((Y - mean(Y)) / sd(Y)); \
+
+ Y <- as.matrix(Data2[,c(3:4,7:8)]);
+Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.top10resids.txt\", header=T); 
+Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt\", header=T); 
 			K.Pheno.noNAs.Rescale <- RescaleMatrix(K.Pheno.noNAs); K.Pheno.noNAs.2.Rescale <- RescaleMatrix(K.Pheno.noNAs.2); K.Pheno.noNAs.3.Rescale <- RescaleMatrix(K.Pheno.noNAs.3); \	
 			write.table(K.Pheno.noNAs.Rescale, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMRescale.rawY.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 			write.table(K.Pheno.noNAs.2.Rescale, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".K2noMRescale.rawY.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 			write.table(K.Pheno.noNAs, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMnoRescale.rawY.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 			write.table(K.Pheno.noNAs.2, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".K2noMnoRescale.rawY.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
-			print(proc.time() - ptm); ptm <- proc.time(); \ 
-		};"
-	done
-done
-
- Y <- as.matrix(Data2[,c(3:4,7:8)]);
-Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.top10resids.txt\", header=T); 
 			
 			write.table(Y.Pheno.noNAs, file=paste(m, \".gemmaK.Vs2.\", colnames(Y)[i] ,\".YnoMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs, file=paste(m, \".gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.Rescale, file=paste(m, \".gemmaK.Vs2.\", colnames(Y)[i] ,\".K2noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.Rescale, file=paste(m, \".gemmaK.Vs2.\", colnames(Y)[i] ,\".K3noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \ 
 			
@@ -5254,6 +5265,15 @@ Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$a
 #Vs3: Orig + local PCs + noAC + wRegrIntrcpt2 (ie Intrcpt included in Age regr step, ie prior to inverse norm step)
 #		R -q -e "ptm <- proc.time(); library(\"MASS\"); Data1 <- read.table(\"$m.sXX.txt\", header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wIntrcpt.txt\", header=T); Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.GEMMA.txt\", header=T); neg.is.na <- Negate(is.na); \
 #			write.table(Y.Pheno.noNAs.M.Rescale, file=paste(\"$m.gemmaK.Vs1.localPCs.noAC.wRegrIntrcpt2.\", colnames(Y)[i] ,\".YMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.M.Rescale, file=paste(\"$m.gemmaK.Vs1.localPCs.noAC.wRegrIntrcpt2.\", colnames(Y)[i] ,\".KMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.M.Rescale, file=paste(\"$m.gemmaK.Vs1.localPCs.noAC.wRegrIntrcpt2.\", colnames(Y)[i] ,\".K2MRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.3.M.Rescale, file=paste(\"$m.gemmaK.Vs1.localPCs.noAC.wRegrIntrcpt2.\", colnames(Y)[i] ,\".K3MRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \ 
+#Vs3: Orig + noCovs + noRescaling + only K
+
+#Vs3: Orig + noCovs + noRescaling + K & K2
+
+#Vs3: Orig + noCovs + noRescaling + only K + rescaleY
+
+
+
+
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
