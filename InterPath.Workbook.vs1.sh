@@ -1142,12 +1142,38 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
 	done;
 done;		
 
+10452645             63      batch  mturchin    default 2020-02-21T00:51:09 2020-02-21T00:51:36   00:00:01          1     FAILED      1:0                     Mproj African ExonicPlus20kb 1
+10452645.ba+      batch                         default 2020-02-21T00:51:35 2020-02-21T00:51:36   00:00:01          1     FAILED      1:0
+10452646             63      batch  mturchin    default 2020-02-21T00:51:09 2020-02-21T00:51:35   00:00:00          1     FAILED      1:0                    Mproj African ExonicPlus20kb 41
+10452646.ba+      batch                         default 2020-02-21T00:51:35 2020-02-21T00:51:35   00:00:00          1     FAILED      1:0
+10452942             63      batch  mturchin    default 2020-02-21T01:08:28 2020-02-21T01:33:53   00:24:04          1     FAILED      1:0                Mproj Caribbean ExonicPlus20kb 1121
+10452942.ba+      batch                         default 2020-02-21T01:09:49 2020-02-21T01:33:53   00:24:04          1     FAILED      1:0
+10453432             63      batch  mturchin    default 2020-02-21T01:10:03 2020-02-21T02:57:40   01:17:39          1     FAILED      1:0          Mproj British.Ran10000 ExonicPlus20kb 801
+10453432.ba+      batch                         default 2020-02-21T01:40:01 2020-02-21T02:57:40   01:17:39          1     FAILED      1:0
+10453433             63      batch  mturchin    default 2020-02-21T01:10:03 2020-02-21T02:33:47   00:53:27          1     FAILED      1:0          Mproj British.Ran10000 ExonicPlus20kb 841
+10453433.ba+      batch                         default 2020-02-21T01:40:20 2020-02-21T02:33:47   00:53:27          1     FAILED      1:0
+10453531             63      batch  mturchin    default 2020-02-21T01:10:17 2020-02-21T02:35:40   00:46:40          1     FAILED      1:0                       Mproj Irish ExonicPlus20kb 1
+10453531.ba+      batch                         default 2020-02-21T01:49:00 2020-02-21T02:35:40   00:46:40          1     FAILED      1:0
+10453543             63      batch  mturchin    default 2020-02-21T01:10:17 2020-02-21T03:02:42   01:08:41          1     FAILED      1:0                     Mproj Irish ExonicPlus20kb 481
+10453543.ba+      batch                         default 2020-02-21T01:54:01 2020-02-21T03:02:42   01:08:41          1     FAILED      1:0
+
+10452912             63      batch  mturchin    default 2020-02-21T01:08:20 2020-02-21T02:08:25   00:59:06          1 OUT_OF_ME+    0:125          Mproj British.Ran4000 ExonicPlus20kb 4681
+10452912.ba+      batch                         default 2020-02-21T01:09:19 2020-02-21T02:08:25   00:59:06          1 OUT_OF_ME+    0:125
+10453270             63      batch  mturchin    default 2020-02-21T01:08:52 2020-02-21T03:46:05   02:15:04          1 OUT_OF_ME+    0:125                   Mproj Indian ExonicPlus20kb 4681
+10453270.ba+      batch                         default 2020-02-21T01:31:01 2020-02-21T03:46:05   02:15:04          1 OUT_OF_ME+    0:125
+10453389             63      batch  mturchin    default 2020-02-21T01:09:04 2020-02-21T03:43:14   02:03:55          1 OUT_OF_ME+    0:125                Mproj Pakistani ExonicPlus20kb 4681
+10453389.ba+      batch                         default 2020-02-21T01:39:19 2020-02-21T03:43:14   02:03:55          1 OUT_OF_ME+    0:125
+10453529             63      batch  mturchin    default 2020-02-21T01:10:05 2020-02-21T05:54:37   04:06:07          1 OUT_OF_ME+    0:125         Mproj British.Ran10000 ExonicPlus20kb 4681
+10453529.ba+      batch                         default 2020-02-21T01:48:30 2020-02-21T05:54:37   04:06:07          1 OUT_OF_ME+    0:125
+10453648             63      batch  mturchin    default 2020-02-21T01:10:24 2020-02-21T06:26:15   03:58:01          1 OUT_OF_ME+    0:125                    Mproj Irish ExonicPlus20kb 4681
+10453648.ba+      batch                         default 2020-02-21T02:28:14 2020-02-21T06:26:15   03:58:01          1 OUT_OF_ME+    0:125
+
 #From: https://stats.idre.ucla.edu/r/codefragments/svd_demos/, https://math.stackexchange.com/questions/19948/pseudoinverse-matrix-and-svd, https://www.johndcook.com/blog/2018/05/05/svd/, https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse#Singular_value_decomposition_(SVD), https://rce-docs.hmdc.harvard.edu/faq/how-do-i-use-compressed-data-r
-module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8 | grep -E 'Ran10000|Irish'`; do
+module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 1`; do
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1 | head -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
-#		NumPaths=41
+#		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
+		NumPaths=42
 		echo $ancestry1 $ancestry2 $ancestry3 $k
                          	
 		if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj ]; then
@@ -1156,7 +1182,7 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
 		fi
 
 		for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+40 )); do
-			sbatch -t 72:00:00 --mem 32g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.Mproj.localPCs.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.Mproj.localPCs.slurm.error --comment "Mproj $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh'; 
+			sbatch -t 72:00:00 --mem 32g --account=ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.Mproj.localPCs.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/Mproj/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.Mproj.localPCs.slurm.error --comment "Mproj $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh'; 
 			echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"MASS\\\"); neg.is.na <- Negate(is.na); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.v3.ImptHRC.dose.100geno.Regions.c2.${k}.noDups.txt\\\", header=F); \
 			for (i in $PathNum:($PathNum+39)) { \
 				if ((i <= $NumPaths) && (Pathways.Check[i,ncol(Pathways.Check)])) { \ 
