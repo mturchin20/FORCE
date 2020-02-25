@@ -5201,7 +5201,7 @@ done
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.top10resids.txt
 
 #20200213 NOTE -- 'gemmaK.Vs2' is just meant to indicate the stage at which things changed to the proper pheno/Y* and M setups throughout the pipeline, even though that ultimately doesn't change the 'YnoMnoRescale' file from 'Vs1' to 'Vs2' tehcnically
-module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 8 | grep -vE 'Ran10000|Irish'`; do
+module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 8 | grep -E 'Ran10000|Irish'`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
@@ -5215,8 +5215,9 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
 			Y.Pheno.noNAs.Rescale3 <- ((Y.Pheno.noNAs - mean(Y.Pheno.noNAs)) / sd(Y.Pheno.noNAs)); \
 			K.Pheno.noNAs.Rescale <- RescaleMatrix(K.Pheno.noNAs); K.Pheno.noNAs.2.Rescale <- RescaleMatrix(K.Pheno.noNAs.2); \ 
 			write.table(Y.Pheno.noNAs, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".YnoMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			write.table(K.Pheno.noNAs, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".K2noMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
 			write.table(Y.Pheno.noNAs.Rescale3, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".YnoMRescale3.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
-			write.table(K.Pheno.noNAs.Rescale, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.Rescale, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".K2noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".K2noMnoRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \
+			write.table(K.Pheno.noNAs.Rescale, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".KnoMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); write.table(K.Pheno.noNAs.2.Rescale, file=paste(\"$m.gemmaK.Vs2.\", colnames(Y)[i] ,\".K2noMRescale.sXX.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.names=FALSE); \ 
 			Y.Pheno.noNAs.Adjusted <- residuals(lm(Y.Pheno.noNAs ~ factor(Z.Pheno.noNAs[,\"SEX\"]) + Z.Pheno.noNAs[,\"AGE\"] + factor(Z.Pheno.noNAs[,\"CENTER\"]) + Z.Pheno.noNAs[,\"PC1\"] + Z.Pheno.noNAs[,\"PC2\"] + Z.Pheno.noNAs[,\"PC3\"] + Z.Pheno.noNAs[,\"PC4\"] + Z.Pheno.noNAs[,\"PC5\"] + Z.Pheno.noNAs[,\"PC6\"] + Z.Pheno.noNAs[,\"PC7\"] + Z.Pheno.noNAs[,\"PC8\"] + Z.Pheno.noNAs[,\"PC9\"] + Z.Pheno.noNAs[,\"PC10\"] - 1, na.action=na.exclude)); \ 
 			Y.Pheno.noNAs.Adjusted.noNAs <- Y.Pheno.noNAs.Adjusted[neg.is.na(Y.Pheno.noNAs.Adjusted)]; K.Pheno.noNAs.noNAs <- K.Pheno.noNAs[neg.is.na(Y.Pheno.noNAs.Adjusted),neg.is.na(Y.Pheno.noNAs.Adjusted)]; K.Pheno.noNAs.2.noNAs <- K.Pheno.noNAs.2[neg.is.na(Y.Pheno.noNAs.Adjusted),neg.is.na(Y.Pheno.noNAs.Adjusted)]; \
 			K.Pheno.noNAs.Rescale.noNAs <- K.Pheno.noNAs.Rescale[neg.is.na(Y.Pheno.noNAs.Adjusted),neg.is.na(Y.Pheno.noNAs.Adjusted)]; K.Pheno.noNAs.2.Rescale.noNAs <- K.Pheno.noNAs.2.Rescale[neg.is.na(Y.Pheno.noNAs.Adjusted),neg.is.na(Y.Pheno.noNAs.Adjusted)]; \ 
@@ -5308,7 +5309,7 @@ done
 		echo /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.$i.KnoMRescale.Adjusted.sXX.txt | sed 's/ /\n/g' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.$i.noMRescale.Adjusted.VarCompList.onlyK.sXX.txt
 	done	
 done	
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 8 | grep -vE 'Ran10000|Irish'`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 8 | grep -E 'Ran10000|Irish'`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
 	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
 	        echo $ancestry1 $ancestry2 $i
@@ -5380,7 +5381,7 @@ ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100g
 
 
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
 	VS1="GEMMA.gemmaK.Vs2"
 	MRSCALE="noMnoRescale.onlyK"
@@ -5394,16 +5395,6 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 #		echo $i >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output	
 		echo "" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
 	
-		if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt ] ; then
-			cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt | grep "pve estimates" | awk '{ print $5 "," $6 }' >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
-		else
-			echo "NA" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
-		fi
-		if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt ]; then
-			cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt | grep "pve estimates" | awk '{ print $5 "," $6 }' >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
-		else
-			echo "NA" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
-		fi
 		if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt ]; then
 			cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt | grep "pve estimates" | awk '{ print $5 "," $6 }' >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
 		else
@@ -5417,24 +5408,33 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		echo "" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
 	done
 done
+		
+#		if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt ] ; then
+#			cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt | grep "pve estimates" | awk '{ print $5 "," $6 }' >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
+#		else
+#			echo "NA" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
+#		fi
+#		if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt ]; then
+#			cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.pruned.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt | grep "pve estimates" | awk '{ print $5 "," $6 }' >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
+#		else
+#			echo "NA" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
+#		fi
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
-	VS1="GEMMA.gemmaK.Vs2"
-	MRSCALE="noMnoRescale.onlyK"
 	GEMMA="GEMMA.noMnoRescale.onlyK"
 
 	paste 
 	<(cat <(echo -e "\nHeight\nNot Imputed, Not Pruned\nNot Imputed, Pruned\nImputed, Not Pruned\nImputed, Pruned\n\nBMI\nNot Imputed, Not Pruned\nNot Imputed, Pruned\nImputed, Not Pruned\nImputed, Pruned")) 
-	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.main.results.temp1.output) 
-	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.main.results.temp1.output) 
-	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.main.results.temp1.output) 
-	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.main.results.temp1.output) 
-	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.main.results.temp1.output) 
-	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.main.results.temp1.output) 
-	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.main.results.temp1.output) 
-	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.main.results.temp1.output) 
-	| column -t -s $'\t' | awk '{ if (NR == 7) { print "" } print $0 }' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_v3_AllPops_GEMMA_Main_Results1.output
+	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) 
+	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) 
+	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) 
+	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) 
+	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) 
+	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) 
+	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) 
+	<(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) 
+	| column -t -s $'\t' | awk '{ if (NR == 7) { print "" } print $0 }' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_v3_AllPops_$GEMMA_Main_Results1.output
 	
 	done
 done
