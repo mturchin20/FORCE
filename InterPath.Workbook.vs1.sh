@@ -5356,38 +5356,36 @@ done
 #mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA
 #mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles
 
-ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMRescale.Adjusted.Output.sXX.txt.log.txt
-ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMnoRescale.Adjusted.Output.sXX.txt.log.txt
-ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMRescale.Adjusted.onlyK.Output.sXX.txt.log.txt
-ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMnoRescale.Adjusted.onlyK.Output.sXX.txt.log.txt
-ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMRescale.onlyK.Output.sXX.txt.log.txt
-ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMnoRescale.onlyK.Output.sXX.txt.log.txt
-ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMnoRescale.YRescale3.onlyK.Output.sXX.txt.log.txt
-ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMRescale.YRescale3.onlyK.Output.sXX.txt.log.txt
-ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMnoRescale.YRescale3.Output.sXX.txt.log.txt
-ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMRescale.YRescale3.Output.sXX.txt.log.txt
-ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMRescale.Output.sXX.txt.log.txt
-
-noMnoRescale onlyK				MnoRescale localPCs onlyK
-noMnoRescale					MnoRescale localPCs
-noMRescale onlyK				MRescale localPCs onlyK
-noMRescale					MRescale localPCs
-noMnoRescale Adjusted localPCs onlyK		MnoRescale Adjusted localPCs onlyK
-noMnoRescale Adjusted localPCs			MnoRescale Adjusted localPCs
-noMRescale Adjusted localPCs onlyK		MRescale Adjusted localPCs onlyK
-noMRescale Adjusted localPCs			MRescale Adjusted localPCs
-
+#ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMRescale.Adjusted.Output.sXX.txt.log.txt
+#ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMnoRescale.Adjusted.Output.sXX.txt.log.txt
+#ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMRescale.Adjusted.onlyK.Output.sXX.txt.log.txt
+#ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMnoRescale.Adjusted.onlyK.Output.sXX.txt.log.txt
+#ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMRescale.onlyK.Output.sXX.txt.log.txt
+#ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMnoRescale.onlyK.Output.sXX.txt.log.txt
+#ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMnoRescale.YRescale3.onlyK.Output.sXX.txt.log.txt
+#ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMRescale.YRescale3.onlyK.Output.sXX.txt.log.txt
+#ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMnoRescale.YRescale3.Output.sXX.txt.log.txt
+#ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMRescale.YRescale3.Output.sXX.txt.log.txt
+#ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.gemmaK.Vs2.Height.noMRescale.Output.sXX.txt.log.txt
+#
+#noMnoRescale onlyK				MnoRescale localPCs onlyK
+#noMnoRescale					MnoRescale localPCs
+#noMRescale onlyK				MRescale localPCs onlyK
+#noMRescale					MRescale localPCs
+#noMnoRescale Adjusted localPCs onlyK		MnoRescale Adjusted localPCs onlyK
+#noMnoRescale Adjusted localPCs			MnoRescale Adjusted localPCs
+#noMRescale Adjusted localPCs onlyK		MRescale Adjusted localPCs onlyK
+#noMRescale Adjusted localPCs			MRescale Adjusted localPCs
+#
 #MRSCALE="noMnoRescale.onlyK", GEMMA="GEMMA.noMnoRescale.onlyK"
-
-UKBioBankPopsRnd2=`echo "African;African;Afr;472840 British;British.Ran4000;Brit4k;138503 British;British.Ran10000;Brit10k;9827442 Caribbean;Caribbean;Carib;328593"`;
-
-/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt
-/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
-ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs2.localPCs.$i.MnoRescale.YRescale3.onlyK.Output.sXX.txt";)
-ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs2.localPCs.$i.MRescale.YRescale3.Adjusted.onlyK.Output.sXX.txt";)
-$VS1;$MRSCALE;$GEMMA
-GEMMA.gemmaK.Vs2 or GEMMA.gemmaK.Vs2.localPCs
-
+#
+#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt
+#/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
+#ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs2.localPCs.$i.MnoRescale.YRescale3.onlyK.Output.sXX.txt";)
+#ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs2.localPCs.$i.MRescale.YRescale3.Adjusted.onlyK.Output.sXX.txt";)
+#$VS1;$MRSCALE;$GEMMA
+#GEMMA.gemmaK.Vs2 or GEMMA.gemmaK.Vs2.localPCs
+#
 #GEMMA.gemmaK.Vs2;noMRescale.onlyK;GEMMA.noMRescale.onlyK
 #GEMMA.gemmaK.Vs2;noMRescale;GEMMA.noMRescale
 #GEMMA.gemmaK.Vs2;noMnoRescale.YRescale3.onlyK;GEMMA.noMnoRescale.YRescale3.onlyK
@@ -5412,16 +5410,20 @@ GEMMA.gemmaK.Vs2;MRescale.YRescale3.onlyK;GEMMA.MRescale.YRescale3.onlyK
 GEMMA.gemmaK.Vs2;MRescale.YRescale3;GEMMA.YRescale3.MRescale
 GEMMA.gemmaK.Vs2.localPCs;MnoRescale.Adjusted.onlyK;GEMMA.localPCs.MnoRescale.Adjusted.onlyK
 GEMMA.gemmaK.Vs2.localPCs;MnoRescale.Adjusted;GEMMA.localPCs.MnoRescale.Adjusted
-GEMMA.gemmaK.Vs2.localPCs;MRescale.YRescale3.Adjusted.onlyK;GEMMA.localPCs.MRescale.Adjusted.onlyK
+GEMMA.gemmaK.Vs2.localPCs;MRescale.YRescale3.Adjusted.onlyK;GEMMA.localPCs.MRescale.Adjusted.onlyK 
 GEMMA.gemmaK.Vs2.localPCs;MRescale.YRescale3.Adjusted;GEMMA.localPCs.MRescale.Adjusted
 
-for
+GEMMATestsRnd2=`echo "GEMMA.gemmaK.Vs2;noMnoRescale.onlyK;GEMMA.noMnoRescale.onlyK GEMMA.gemmaK.Vs2;noMnoRescale;GEMMA.noMnoRescale GEMMA.gemmaK.Vs2;noMRescale.YRescale3.onlyK;GEMMA.noMRescale.YRescale3.onlyK GEMMA.gemmaK.Vs2;noMRescale.YRescale3;GEMMA.YRescale3.noMRescale GEMMA.gemmaK.Vs2.localPCs;noMnoRescale.Adjusted.onlyK;GEMMA.localPCs.noMnoRescale.Adjusted.onlyK GEMMA.gemmaK.Vs2.localPCs;noMnoRescale.Adjusted;GEMMA.localPCs.noMnoRescale.Adjusted GEMMA.gemmaK.Vs2.localPCs;noMRescale.YRescale3.Adjusted.onlyK;GEMMA.localPCs.noMRescale.Adjusted.onlyK GEMMA.gemmaK.Vs2.localPCs;noMRescale.YRescale3.Adjusted;GEMMA.localPCs.noMRescale.Adjusted GEMMA.gemmaK.Vs2;MnoRescale.onlyK;GEMMA.MnoRescale.onlyK GEMMA.gemmaK.Vs2;MnoRescale;GEMMA.MnoRescale GEMMA.gemmaK.Vs2;MRescale.YRescale3.onlyK;GEMMA.MRescale.YRescale3.onlyK GEMMA.gemmaK.Vs2;MRescale.YRescale3;GEMMA.YRescale3.MRescale GEMMA.gemmaK.Vs2.localPCs;MnoRescale.Adjusted.onlyK;GEMMA.localPCs.MnoRescale.Adjusted.onlyK GEMMA.gemmaK.Vs2.localPCs;MnoRescale.Adjusted;GEMMA.localPCs.MnoRescale.Adjusted GEMMA.gemmaK.Vs2.localPCs;MRescale.YRescale3.Adjusted.onlyK;GEMMA.localPCs.MRescale.Adjusted.onlyK GEMMA.gemmaK.Vs2.localPCs;MRescale.YRescale3.Adjusted;GEMMA.localPCs.MRescale.Adjusted"`;
 
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
+for GEMMAvals in `cat <(echo $GEMMATestsRnd2 | perl -lane 'print join("\n", @F);') | head -n 1`; do
+	VS1=`echo $GEMMAvals | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; MRSCALE=`echo $GEMMAvals | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; GEMMA=`echo $GEMMAvals | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`;
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
-		VS1="GEMMA.gemmaK.Vs2"
-		MRSCALE="noMnoRescale.onlyK"
-		GEMMA="GEMMA.noMnoRescale.onlyK"
+
+		echo /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt
+	done
+done
+
 		rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
 		
 		echo $ancestry2 >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
@@ -5446,6 +5448,9 @@ for
 	done
 done
 		
+#	VS1="GEMMA.gemmaK.Vs2"
+#	MRSCALE="noMnoRescale.onlyK"
+#	GEMMA="GEMMA.noMnoRescale.onlyK"
 #		if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt ] ; then
 #			cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt | grep "pve estimates" | awk '{ print $5 "," $6 }' >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
 #		else
