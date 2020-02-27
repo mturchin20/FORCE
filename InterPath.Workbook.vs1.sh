@@ -5381,10 +5381,39 @@ noMRescale Adjusted localPCs			MRescale Adjusted localPCs
 
 UKBioBankPopsRnd2=`echo "African;African;Afr;472840 British;British.Ran4000;Brit4k;138503 British;British.Ran10000;Brit10k;9827442 Caribbean;Caribbean;Carib;328593"`;
 
+/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt
 /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
+ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs2.localPCs.$i.MnoRescale.YRescale3.onlyK.Output.sXX.txt";)
+ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.GEMMA.gemmaK.Vs2.localPCs.$i.MRescale.YRescale3.Adjusted.onlyK.Output.sXX.txt";)
+$VS1;$MRSCALE;$GEMMA
+GEMMA.gemmaK.Vs2 or GEMMA.gemmaK.Vs2.localPCs
+
+#GEMMA.gemmaK.Vs2;noMRescale.onlyK;GEMMA.noMRescale.onlyK
+#GEMMA.gemmaK.Vs2;noMRescale;GEMMA.noMRescale
+#GEMMA.gemmaK.Vs2;noMnoRescale.YRescale3.onlyK;GEMMA.noMnoRescale.YRescale3.onlyK
+#GEMMA.gemmaK.Vs2;noMnoRescale.YRescale3;GEMMA.YRescale3.noMnoRescale
+#GEMMA.gemmaK.Vs2.localPCs;noMRescale.Adjusted.onlyK;GEMMA.localPCs.noMRescale.Adjusted.onlyK
+#GEMMA.gemmaK.Vs2.localPCs;noMRescale.Adjusted;GEMMA.localPCs.noMRescale.Adjusted
+#GEMMA.gemmaK.Vs2.localPCs;noMnoRescale.YRescale3.Adjusted.onlyK;GEMMA.localPCs.noMnoRescale.Adjusted.onlyK
+#GEMMA.gemmaK.Vs2.localPCs;noMnoRescale.YRescale3.Adjusted;GEMMA.localPCs.noMnoRescale.Adjusted
 
 GEMMATestsRnd2=`echo "
 GEMMA.gemmaK.Vs2;noMnoRescale.onlyK;GEMMA.noMnoRescale.onlyK
+GEMMA.gemmaK.Vs2;noMnoRescale;GEMMA.noMnoRescale
+GEMMA.gemmaK.Vs2;noMRescale.YRescale3.onlyK;GEMMA.noMRescale.YRescale3.onlyK
+GEMMA.gemmaK.Vs2;noMRescale.YRescale3;GEMMA.YRescale3.noMRescale
+GEMMA.gemmaK.Vs2.localPCs;noMnoRescale.Adjusted.onlyK;GEMMA.localPCs.noMnoRescale.Adjusted.onlyK
+GEMMA.gemmaK.Vs2.localPCs;noMnoRescale.Adjusted;GEMMA.localPCs.noMnoRescale.Adjusted
+GEMMA.gemmaK.Vs2.localPCs;noMRescale.YRescale3.Adjusted.onlyK;GEMMA.localPCs.noMRescale.Adjusted.onlyK
+GEMMA.gemmaK.Vs2.localPCs;noMRescale.YRescale3.Adjusted;GEMMA.localPCs.noMRescale.Adjusted
+GEMMA.gemmaK.Vs2;MnoRescale.onlyK;GEMMA.MnoRescale.onlyK
+GEMMA.gemmaK.Vs2;MnoRescale;GEMMA.MnoRescale
+GEMMA.gemmaK.Vs2;MRescale.YRescale3.onlyK;GEMMA.MRescale.YRescale3.onlyK
+GEMMA.gemmaK.Vs2;MRescale.YRescale3;GEMMA.YRescale3.MRescale
+GEMMA.gemmaK.Vs2.localPCs;MnoRescale.Adjusted.onlyK;GEMMA.localPCs.MnoRescale.Adjusted.onlyK
+GEMMA.gemmaK.Vs2.localPCs;MnoRescale.Adjusted;GEMMA.localPCs.MnoRescale.Adjusted
+GEMMA.gemmaK.Vs2.localPCs;MRescale.YRescale3.Adjusted.onlyK;GEMMA.localPCs.MRescale.Adjusted.onlyK
+GEMMA.gemmaK.Vs2.localPCs;MRescale.YRescale3.Adjusted;GEMMA.localPCs.MRescale.Adjusted
 
 for
 
