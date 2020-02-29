@@ -9824,25 +9824,25 @@ scp -p mturchin@ssh.ccv.brown.edu:/Users/mturchin20/Documents/Work/LabMisc/Ramac
 #Supplementary Figure: pVal Hists perm1
 
 mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists
-
-R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); pValCutoffs = c(\"pVal001\",\"pValBonf\", \"pValAll\"); \
-R -q -e "library(\"RColorBrewer\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\", \"pValAll\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
-        for (i in DataTypes1[5]) { for (l in DataTypes2[1:2]) { for (m in Paths[2:3]) { \
-                png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/QQPlots/ukb_v3.AllPops.HeightBMI.\", l, \".\", m, \".pValHists.ColCrct.vs1.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,4,14), mar=c(5,5,4,2), mfrow=c(1,2)); \
-                for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
-                        png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/GenDiv/ukb_chrAll_v2.AfrBrit4kCaribIndn.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.het.summary.\", l, \".\", k, \".ExonicPlus20kb.\", m, \".plots.vs1.png\", sep=\"\"), height=8200, width=6200, res=300); par(oma=c(1,7,7,1), mar=c(5,5,4,2), mfrow=c(4,3)); \
-                        for (j in UKBioBankPops[1:4]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
-				Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", i, \".\", l, \".ColCrct.\", m, \"Results.txt.pre.gz\", sep=\"\"), header=F); \	
-	                        
+				
 				Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".ColCrct.\", m, \".Results.txt.pre.gz\", sep=\"\"), header=F); \
-				Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.het.summary.\", l, \".\", k, \".ExonicPlus20kb.\", m, \".gz\", sep=\"\"), header=F); \ 
+
+R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\", \"pValAll\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
+	for (i in DataTypes1[5]) { for (l in DataTypes2[1:2]) { for (m in Paths[2:3]) { for (o in Strats[4]) { \
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/ukb_v3.AllPops.HeightBMI.\", l, \".\", m, \".pValHists.ColCrct.vs1.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,4,14), mar=c(5,5,4,2), mfrow=c(1,2)); \
+		for (j in UKBioBankPops[1:1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+                	for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
+				Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/\", k, \"/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".ExonicPlus20kb.noDups.Vs2.\", l, \".ColCrct.\", m, \"Results.txt.pre.gz\", sep=\"\"), header=F); \	
+                                Data1 <- Data1[!is.na(Data1[,4]),]; Data1[Data1[,4] == 0,4] <- 1e-11; \ 
+				hist(Data1[,4], main=\"\", xlab=\"p-Values\", breaks=25, cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+	                        
 
 Data1 <- Data1[order(-log10(Data1[,2]), decreasing=TRUE),]; xLimMax <- max(-log10(Data1[,2])); yLimMin <- min(Data1[,3]); yLimMax <- max(Data1[,3]); \ 
                                 
 				}; \
-                        }; mtext(paste(l, \" \", k, \": -log10(p-Values) vs. Pathway Mean Individual Heterozygosity\", sep=\"\"), side=3, line=2, outer=TRUE, cex=3); mtext(\"African\", side=2, line=1.5, outer=TRUE, at=.88, cex=3); mtext(\"British.Ran4000\", side=2, line=1.5, outer=TRUE, at=.63, cex=3); mtext(\"Caribbean\", side=2, line=1.5, outer=TRUE, at=.38, cex=3); mtext(\"Indian\", side=2, line=1.5, outer=TRUE, at=.13, cex=3); dev.off(); \
-                }; \
-        };};}; \
+			}; mtext(paste(l, \" \", k, \": -log10(p-Values) vs. Pathway Mean Individual Heterozygosity\", sep=\"\"), side=3, line=2, outer=TRUE, cex=3); mtext(\"African\", side=2, line=1.5, outer=TRUE, at=.88, cex=3); mtext(\"British.Ran4000\", side=2, line=1.5, outer=TRUE, at=.63, cex=3); mtext(\"Caribbean\", side=2, line=1.5, outer=TRUE, at=.38, cex=3); mtext(\"Indian\", side=2, line=1.5, outer=TRUE, at=.13, cex=3); dev.off(); \
+		}; \
+	};};};}; \
 "
 
 
