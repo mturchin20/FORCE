@@ -9212,6 +9212,12 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterP
 
 
 
+
+
+
+
+
+
 #Manuscript Work
 #20200114
 
@@ -9232,7 +9238,6 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscrip
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK
 
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK/ukb_v3.All4kPops.HeightBMI.PLINK.Proportions.Plots.vs1.png\", height=2000, width=5000, res=300); par(oma=c(1,1,1,17), mar=c(5,6,4,2), mfrow=c(1,2)); \
-/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/ukb_chrAll_v3.AfrBrit4kCaribIndn.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.HeightBMI.epi.qt.Results.ProportionPlots.vs1.png\",  height=2000, width=5000, res=300); par(oma=c(1,1,1,17), mar=c(5,6,4,2), mfrow=c(1,2)); \
         for (k in c(\"Height\", \"BMI\")[1:2]) { \
                 Data1 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
                 Data2 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
@@ -9244,13 +9249,15 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturch
 		Data1 <- Data1[1:50,]; Data2 <- Data2[1:50,]; Data3 <- Data3[1:50,]; Data4 <- Data4[1:50,]; \ 
                 xVals1 <- seq(1, nrow(Data1), by=1); xVals2 <- seq(1, nrow(Data2), by=1); xVals3 <- seq(1, nrow(Data3), by=1); xVals3 <- seq(1, nrow(Data4), by=1); \
                 xlimMax <- max(c(xVals1, xVals2, xVals3)); ylimMax <- max(c(Data1[,3], Data2[,3], Data3[,3], Data4[,3])); \
-                plot(xVals1[order(xVals1, decreasing=TRUE)], Data1[,3], main=paste(k, sep=\"\"), xaxt=\"n\", xlab=\"Top 50 SNPs\", ylab=\"Proportion of\nMarginally Significant Interactions\", xlim=c(1,xlimMax), ylim=c(.001,.006), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+                plot(xVals1[order(xVals1, decreasing=TRUE)], Data1[,3], main=paste(k, sep=\"\"), xaxt=\"n\", xlab=\"Top 50 SNPs\", ylab=\"Proportion of Marginally\nSignificant Interactions\", xlim=c(1,xlimMax), ylim=c(.001,.006), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
 		axis(1, at=c(1,10,20,30,40,50), labels=c(1,10,20,30,40,50), line=0, lwd=1, lwd.ticks=1, cex=1.5, cex.axis=1.5, cex.lab=1.5); \
 		points(xVals2[order(xVals2, decreasing=TRUE)], Data2[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[1], cex=1.5); \
                 points(xVals3[order(xVals3, decreasing=TRUE)], Data3[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
                 points(xVals3[order(xVals3, decreasing=TRUE)], Data4[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=1.5); \
 	}; par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African (p=374466)\", \"Brit.Ran4k (p=600006)\", \"Caribbean (p=410017)\", \"Indian (p=505854)\"), pch=c(16,16,16,16), col=c(brewer.pal(12, \"Paired\")[7], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[9]), xpd=TRUE, inset=c(.02,.15), bg=\"transparent\", cex=1.5, y.intersp=2); dev.off(); \
 "
+
+#	.../users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/ukb_chrAll_v3.AfrBrit4kCaribIndn.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.HeightBMI.epi.qt.Results.ProportionPlots.vs1.png\",... 
 
 #From MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK
@@ -9527,6 +9534,7 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscrip
 ~	};};}; \
 ~"
 
+#From: https://stackoverflow.com/questions/23988052/underline-text-in-a-barplot-in-r
 echo -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
 	for (i in DataTypes[1]) { print(i); \
                 for (j in UKBioBankPops) { ancestry1a = strsplit(j, \";\")[[1]][1]; ancestry2a = strsplit(j, \";\")[[1]][2]; \
@@ -9562,7 +9570,6 @@ echo -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 		dev.off(); }; \
 	}; print(warnings()); \
 " > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/ukb_v3.AllPops.HeightBMI.AllPaths.AllVers.ColCrct.PopComps.DotPlots.vs1.R; Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/ukb_v3.AllPops.HeightBMI.AllPaths.AllVers.ColCrct.PopComps.DotPlots.vs1.R
-                                
 
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots 
