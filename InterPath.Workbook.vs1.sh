@@ -3745,16 +3745,13 @@ mkdir /users/mturchin/data/mturchin/Broad/MSigDB/enrichr
 #20200302 NOTE -- also note, just moving to the R package 'enrichR' now too
 #From: https://cran.r-project.org/web/packages/enrichR/vignettes/enrichR.html
 module load anaconda; source activate InterPath2; 
-rm -f /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols*gmt; cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep -E 'KEGG|REACTOME' | grep "REACTOME_PROCESSING_OF_INTRONLESS_PRE_MRNAS" | perl -lane 'print $F[0], "\t", join(",", @F[2..$#F]);' | R -q -e "library(\"enrichR\"); dbs <- c(\"GO_Molecular_Function_2018\", \"GO_Cellular_Component_2018\", \"GO_Biological_Process_2018\", \"dbGaP\", \"GWAS_Catalog_2019\"); Data1 <-  read.table(file('stdin'), header=F); \ 
+rm -f /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols*gmt; cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep -E 'KEGG|REACTOME' | perl -lane 'print $F[0], "\t", join(",", @F[2..$#F]);' | R -q -e "library(\"enrichR\"); dbs <- c(\"GO_Molecular_Function_2018\", \"GO_Cellular_Component_2018\", \"GO_Biological_Process_2018\", \"dbGaP\", \"GWAS_Catalog_2019\", \"GTEx_Tissue_Sample_Gene_Expression_Profiles_up\", \"GTEx_Tissue_Sample_Gene_Expression_Profiles_down\"); Data1 <-  read.table(file('stdin'), header=F); \ 
 	for (j in 1:nrow(Data1)) { \
 		print(Data1[j,1]); \
 		genes1 <- strsplit(as.character(Data1[j,2]), split=\",\")[[1]]; \
 		genes1.enriched <- enrichr(genes1, dbs); \	
-		print(genes1.enriched); \
 		for (l in dbs) { 
-			print(l); \
 			numrows <- nrow(genes1.enriched[[l]]); \
-			print(numrows); \
 			genes1.enriched.dbs.subset.formatted <- c(); \
 			if (is.null(numrows) || numrows == 0) { \
 				genes1.enriched.dbs.subset.formatted <- cbind(as.character(Data1[j,1]), NA); \
@@ -3771,6 +3768,15 @@ rm -f /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols*gmt
 		}; \
 	}; \
 "
+
+join <(cat /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.GWAS_Catalog_2019.gmt | sort -k 1,1) <(cat /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.dbGaP.gmt | sort -k 1,1) | \ 
+join - <(cat /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.GO_Molecular_Function_2018.gmt | sort -k 1,1) | \
+join - <(cat /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.GO_Biological_Process_2018.gmt | sort -k 1,1) | \
+join - <(cat /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.GO_Cellular_Component_2018.gmt | sort -k 1,1) | \
+join - <(cat /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.GTEx_Tissue_Sample_Gene_Expression_Profiles_up.gmt | sort -k 1,1) | \
+join - <(cat /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.GTEx_Tissue_Sample_Gene_Expression_Profiles_down.gmt | sort -k 1,1) > /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.AllDBs.gmt 
+
+cat /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.AllDBs.gmt | perl -lane 'print join("\n", @F);' | head -n 50
 
 #			enriched[["GO_Biological_Process_2015"]][order(enriched[["GO_Biological_Process_2015"]][,8], decreasing=TRUE),][1:10,]
         
@@ -16451,6 +16457,24 @@ British British.Ran10000.5 /users/mturchin/data/ukbiobank_jun17/subsets/British/
    9597   19194  153544
    9597  153552 2253196
       0       0       0
+#20200303
+[  mturchin@node1124  ~]$for i in `ls -lrt /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/ | awk '{ print $9 }'`; do echo $i; cat /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/$i | wc; done
+c2.all.v6.1.symbols.GO_Molecular_Function_2018.gmt
+    860    1720  462189
+c2.all.v6.1.symbols.GO_Cellular_Component_2018.gmt
+    860    1720  387892
+c2.all.v6.1.symbols.GO_Biological_Process_2018.gmt
+    860    1720  632723
+c2.all.v6.1.symbols.dbGaP.gmt
+    860    1720  174847
+c2.all.v6.1.symbols.GWAS_Catalog_2019.gmt
+    860    1720  251570
+c2.all.v6.1.symbols.GTEx_Tissue_Sample_Gene_Expression_Profiles_up.gmt
+    860    1720  564185
+c2.all.v6.1.symbols.GTEx_Tissue_Sample_Gene_Expression_Profiles_down.gmt
+    860    1720  562185
+c2.all.v6.1.symbols.AllDBs.gmt
+    860    6880 2817383
 
 
 ~~~
