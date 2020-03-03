@@ -10109,21 +10109,18 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 			Data1a <- Data1a[,c(1,4)]; colnames(Data1a) <- c(\"Pathway\", \"pValue\"); Data1b <- Data1b[,c(1,4)]; colnames(Data1b) <- c(\"Pathway\", \"pValue\"); Data2a <- Data2a[,c(1,4)]; colnames(Data2a) <- c(\"Pathway\", \"pValue\"); Data2b <- Data2b[,c(1,4)]; colnames(Data2b) <- c(\"Pathway\", \"pValue\"); \
 			Data1c <- merge(Data1a, Data1b, by=\"Pathway\"); Data2c <- merge(Data2a, Data2b, by=\"Pathway\"); \
 			print(head(Data1c)); \	
-			plot(-log10(Data1c[,2]),-log10(Data1c[,3]), main=\"\", xlab=\"-log10(p-Values)\", ylab=\"-log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+			plot(-log10(Data1c[,2]),-log10(Data1c[,3]), main=\"\", xlab=\"Height -log10(p-Values)\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
 			abline(h=-log10(Data1b.Thresh), lwd=2, lty=3, col=\"RED\"); abline(v=-log10(Data1a.Thresh), lwd=2, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
-			plot(-log10(Data2c[,2]),-log10(Data2c[,3]), main=\"\", xlab=\"-log10(p-Values)\", ylab=\"-log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+			plot(-log10(Data2c[,2]),-log10(Data2c[,3]), main=\"\", xlab=\"Height -log10(p-Values)\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
 			abline(h=-log10(Data2b.Thresh), lwd=2, lty=3, col=\"RED\"); abline(v=-log10(Data2a.Thresh), lwd=2, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
-		}; mtext(\"KEGG Height\", side=3, outer=TRUE, at=.1325, cex=3); mtext(\"KEGG BMI\", side=3, outer=TRUE, at=.3825, cex=3); mtext(\"REACTOME Height\", side=3, outer=TRUE, at=.6325, cex=3); mtext(\"REACTOME BMI\", side=3, outer=TRUE, at=.8825, cex=3); \
+		}; mtext(\"KEGG\", side=3, outer=TRUE, at=.265, cex=3); mtext(\"REACTOME\", side=3, outer=TRUE, at=.77, cex=3); \
 		mtext(\"African\", side=2, line=4, outer=TRUE, at=.94, cex=3); mtext(\"Brit.Ran4k\", side=2, line=4, outer=TRUE, at=.815, cex=3); mtext(\"Brit.Ran10k\", side=2, line=4, outer=TRUE, at=.689, cex=3); mtext(\"Caribbean\", side=2, line=4, outer=TRUE, at=.564, cex=3); mtext(\"Chinese\", side=2, line=4, outer=TRUE, at=.43775, cex=3); mtext(\"Indian\", side=2, line=4, outer=TRUE, at=.31425, cex=3); mtext(\"Irish\", side=2, line=4, outer=TRUE, at=.18875, cex=3); mtext(\"Pakistani\", side=2, line=4, outer=TRUE, at=.0625, cex=3); \
 	dev.off(); }; print(warnings()); \
 "
 
-
-
-
-
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots
+#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.*.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/. 
 
 
 
