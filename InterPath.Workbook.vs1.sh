@@ -3744,25 +3744,30 @@ mkdir /users/mturchin/data/mturchin/Broad/MSigDB/enrichr
 #2020302 NOTE -- problems when getting this going again: had to now include 'as=\"parsed\", type=\"application/json\"' in the 2nd content call, which was not the case before; when doing the 'straight to R, no slashing-out version', make sure you keep certain backslashes ,such as the collapse '\n' one -- there were issues there because I did not keep it. Also include the 'verbose()' line at the end of the POST call, ie 'r <- POST("http://amp.pharm.mssm.edu/Enrichr/addList", body=list(list=paste(genes2, collapse="\n")), verbose())' for helping with diagnostic misc. 
 #20200302 NOTE -- also note, just moving to the R package 'enrichR' now too
 #From: https://cran.r-project.org/web/packages/enrichR/vignettes/enrichR.html
-module load anaconda; source activate InterPath2; for l in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
-	gene_set_library1=$l;
-
-	rm /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols*gmt; cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep -E 'KEGG|REACTOME' | perl -lane 'print $F[0], "\t", join(",", @F[2..$#F]);' | R -q -e "library(\"enrichR\"); dbs <- c(\"GO_Molecular_Function_2018\", \"GO_Cellular_Component_2018\", \"GO_Biological_Process_2018\", \"dbGaP\", \"GWAS_Catalog_2019\"); Data1 <-  read.table(file('stdin'), header=F); \ 
-	for (j in 1:2) { \
+module load anaconda; source activate InterPath2; 
+rm -f /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols*gmt; cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep -E 'KEGG|REACTOME' | perl -lane 'print $F[0], "\t", join(",", @F[2..$#F]);' | R -q -e "library(\"enrichR\"); dbs <- c(\"GO_Molecular_Function_2018\", \"GO_Cellular_Component_2018\", \"GO_Biological_Process_2018\", \"dbGaP\", \"GWAS_Catalog_2019\"); Data1 <-  read.table(file('stdin'), header=F); \ 
+	for (j in 1:nrow(Data1)) { \
+		print(Data1[j,1]); \
 		genes1 <- strsplit(as.character(Data1[j,2]), split=\",\")[[1]]; \
 		genes1.enriched <- enrichr(genes1, dbs); \	
 		for (l in dbs) { 
-			genes1.enriched.dbs.subset <- genes1.enriched[[l]][order(genes1.enriched[[l]][,4], decreasing=FALSE),][1:5,c(1,2,4,8,9)]; \
-			genes1.enriched.dbs.subset[,1] <- sapply(genes1.enriched.dbs.subset[,1], function(x) { return(paste(strsplit(x, \" \")[[1]], collapse=\"_\")); }); \	
+			numrows <- nrow(genes1.enriched); \
 			genes1.enriched.dbs.subset.formatted <- c(); \
-			for (m in 1:nrow(genes1.enriched.dbs.subset)) { \				
-				genes1.enriched.dbs.subset.formatted <- c(genes1.enriched.dbs.subset.formatted, paste(genes1.enriched.dbs.subset[m,], collapse=\",\")); \
+			if (is.null(numrows)) { \
+				genes1.enriched.dbs.subset.formatted <- cbind(as.character(Data1[j,1]), NA); \
+			} else { \	
+				if (numrows > 3) { numrows <- 3; }; \
+				genes1.enriched.dbs.subset <- genes1.enriched[[l]][order(genes1.enriched[[l]][,4], decreasing=FALSE),][1:numrows,c(1,2,4,8,9)]; \
+				genes1.enriched.dbs.subset[,1] <- sapply(genes1.enriched.dbs.subset[,1], function(x) { return(paste(strsplit(x, \" \")[[1]], collapse=\"_\")); }); \	
+				for (m in 1:nrow(genes1.enriched.dbs.subset)) { \				
+					genes1.enriched.dbs.subset.formatted <- c(genes1.enriched.dbs.subset.formatted, paste(genes1.enriched.dbs.subset[m,], collapse=\",\")); \
+				}; \
+				genes1.enriched.dbs.subset.formatted <- cbind(as.character(Data1[j,1]), paste(genes1.enriched.dbs.subset.formatted, collapse=\"|\")); \	
 			}; \
-			genes1.enriched.dbs.subset.formatted <- cbind(as.character(Data1[j,1]), paste(genes1.enriched.dbs.subset.formatted, collapse=\"|\")); \	
 			write.table(genes1.enriched.dbs.subset.formatted, file=paste(\"/users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.\", l, \".gmt\", sep=\"\"), append=TRUE, quote=FALSE, col.names=FALSE, row.names=FALSE); \
 		}; \
-	};"
-done
+	}; \
+"
 
 #			enriched[["GO_Biological_Process_2015"]][order(enriched[["GO_Biological_Process_2015"]][,8], decreasing=TRUE),][1:10,]
         
@@ -3776,16 +3781,6 @@ done
 #	}; write.table(enrichr1.GET.content.results, file=\"/users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.$gene_set_library1.gmt\", sep=\";\", quote=FALSE, col.names=FALSE, row.names=FALSE); \
 #	warnings();"
 #done
-
-
-
-
-
-
-
-
-
-
 
 #From https://stackoverflow.com/questions/24614391/intersect-all-possible-combinations-of-list-elements, http://www.di.fc.ul.pt/~jpn/r/GraphicalTools/Venn.html, https://rstudio-pubs-static.s3.amazonaws.com/13301_6641d73cfac741a59c0a851feb99e98b.html, http://www.sthda.com/english/wiki/ggplot2-quick-correlation-matrix-heatmap-r-software-and-data-visualization, https://cran.r-project.org/web/packages/egg/vignettes/Ecosystem.html, https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html, https://stackoverflow.com/questions/34838870/grid-arrange-from-gridextras-exiting-with-only-grobs-allowed-in-glist-afte/34839064, https://stackoverflow.com/questions/40877386/grid-arrange-ggplot2-plots-by-columns-instead-of-by-row-using-lists, https://stackoverflow.com/questions/51911009/show-na-values-change-the-color-range-ggplot2-in-r, https://stackoverflow.com/questions/38867430/add-labels-to-a-plot-made-by-grid-arrange-from-multiple-plots, https://stackoverflow.com/questions/36677777/how-to-give-a-title-to-each-column-created-with-grid-arrange-in-r, https://www.rdocumentation.org/packages/cowplot/versions/0.9.4/topics/plot_grid, https://bioinfo.iric.ca/introduction-to-cowplot/, https://stackoverflow.com/questions/10776139/r-grid-layout-title, https://stackoverflow.com/questions/8615530/place-title-of-multiplot-panel-with-ggplot2, https://stackoverflow.com/questions/8615530/place-title-of-multiplot-panel-with-ggplot2, https://stat.ethz.ch/pipermail/r-help/2008-February/154438.html, https://stackoverflow.com/questions/18252827/increasing-area-around-plot-area-in-ggplot2, https://ggplot2.tidyverse.org/reference/theme.html, https://stackoverflow.com/questions/11936339/replace-specific-characters-within-strings 
 R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes1 <- c(\"pValBonf\", \"pVal001\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
