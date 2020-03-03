@@ -3746,21 +3746,25 @@ mkdir /users/mturchin/data/mturchin/Broad/MSigDB/enrichr
 #From: https://cran.r-project.org/web/packages/enrichR/vignettes/enrichR.html
 module load anaconda; source activate InterPath2; for l in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
 	gene_set_library1=$l;
-		
-	echo $gene_set_library1 
 
-	cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep -E 'KEGG|REACTOME' | perl -lane 'print $F[0], "\t", join(",", @F[2..$#F]);' | \
-        R -q -e "library(\"enrichR\"); dbs <- c(\"GO_Molecular_Function_2018\", \"GO_Cellular_Component_2018\", \"GO_Biological_Process_2018\", \"dbGaP\", \"GWAS_Catalog_2019\"); \ 
-		
- 
-	library(\"httr\"); enrichr_retrieve = \"http://amp.pharm.mssm.edu/Enrichr/enrich\"; gene_set_library = \"$gene_set_library1\"; Data1 <- read.table(file('stdin'), header=F); for (j in 1:nrow(Data1)[1:2]) { \
+	rm /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols*gmt; cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep -E 'KEGG|REACTOME' | perl -lane 'print $F[0], "\t", join(",", @F[2..$#F]);' | R -q -e "library(\"enrichR\"); dbs <- c(\"GO_Molecular_Function_2018\", \"GO_Cellular_Component_2018\", \"GO_Biological_Process_2018\", \"dbGaP\", \"GWAS_Catalog_2019\"); Data1 <-  read.table(file('stdin'), header=F); \ 
+	for (j in 1:2) { \
 		genes1 <- strsplit(as.character(Data1[j,2]), split=\",\")[[1]]; \
-		
-		enrichr1.GET.content.results <- c(); for (i in 1:20) { enrichr1.GET.content.temp <- enrichr1.GET.content[[1]][[i]]; genes.sub1 <- unlist(enrichr1.GET.content.temp[6]); enrichr1.GET.content.temp[6] <- paste(genes.sub1, collapse=\",\"); enrichr1.GET.content.results <- rbind(enrichr1.GET.content.results, unlist(enrichr1.GET.content.temp)); }; \
-	}; write.table(enrichr1.GET.content.results, file=\"/users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.$gene_set_library1.gmt\", sep=\";\", quote=FALSE, col.names=FALSE, row.names=FALSE); \
-	warnings();"
+		genes1.enriched <- enrichr(genes1, dbs); \	
+		for (l in dbs) { 
+			genes1.enriched.dbs.subset <- genes1.enriched[[l]][order(genes1.enriched[[l]][,4], decreasing=FALSE),][1:5,c(1,2,4,8,9)]; \
+			genes1.enriched.dbs.subset[,1] <- sapply(genes1.enriched.dbs.subset[,1], function(x) { return(paste(strsplit(x, \" \")[[1]], collapse=\"_\")); }); \	
+			genes1.enriched.dbs.subset.formatted <- c(); \
+			for (m in 1:nrow(genes1.enriched.dbs.subset)) { \				
+				genes1.enriched.dbs.subset.formatted <- c(genes1.enriched.dbs.subset.formatted, paste(genes1.enriched.dbs.subset[m,], collapse=\",\")); \
+			}; \
+			genes1.enriched.dbs.subset.formatted <- cbind(as.character(Data1[j,1]), paste(genes1.enriched.dbs.subset.formatted, collapse=\"|\")); \	
+			write.table(genes1.enriched.dbs.subset.formatted, file=paste(\"/users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.\", l, \".gmt\", sep=\"\"), append=TRUE, quote=FALSE, col.names=FALSE, row.names=FALSE); \
+		}; \
+	};"
 done
 
+#			enriched[["GO_Biological_Process_2015"]][order(enriched[["GO_Biological_Process_2015"]][,8], decreasing=TRUE),][1:10,]
         
 #	R -q -e "library(\"httr\"); enrichr_retrieve = \"http://amp.pharm.mssm.edu/Enrichr/enrich\"; gene_set_library = \"$gene_set_library1\"; Data1 <- read.table(file('stdin'), header=F); for (j in 1:nrow(Data1)[1:2]) { \
 #		genes1 <- strsplit(as.character(Data1[j,2]), split=\",\")[[1]]; \
