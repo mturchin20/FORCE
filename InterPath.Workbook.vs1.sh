@@ -3745,15 +3745,18 @@ mkdir /users/mturchin/data/mturchin/Broad/MSigDB/enrichr
 #20200302 NOTE -- also note, just moving to the R package 'enrichR' now too
 #From: https://cran.r-project.org/web/packages/enrichR/vignettes/enrichR.html
 module load anaconda; source activate InterPath2; 
-rm -f /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols*gmt; cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep -E 'KEGG|REACTOME' | perl -lane 'print $F[0], "\t", join(",", @F[2..$#F]);' | R -q -e "library(\"enrichR\"); dbs <- c(\"GO_Molecular_Function_2018\", \"GO_Cellular_Component_2018\", \"GO_Biological_Process_2018\", \"dbGaP\", \"GWAS_Catalog_2019\"); Data1 <-  read.table(file('stdin'), header=F); \ 
+rm -f /users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols*gmt; cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep -E 'KEGG|REACTOME' | grep "REACTOME_PROCESSING_OF_INTRONLESS_PRE_MRNAS" | perl -lane 'print $F[0], "\t", join(",", @F[2..$#F]);' | R -q -e "library(\"enrichR\"); dbs <- c(\"GO_Molecular_Function_2018\", \"GO_Cellular_Component_2018\", \"GO_Biological_Process_2018\", \"dbGaP\", \"GWAS_Catalog_2019\"); Data1 <-  read.table(file('stdin'), header=F); \ 
 	for (j in 1:nrow(Data1)) { \
 		print(Data1[j,1]); \
 		genes1 <- strsplit(as.character(Data1[j,2]), split=\",\")[[1]]; \
 		genes1.enriched <- enrichr(genes1, dbs); \	
+		print(genes1.enriched); \
 		for (l in dbs) { 
-			numrows <- nrow(genes1.enriched); \
+			print(l); \
+			numrows <- nrow(genes1.enriched[[l]]); \
+			print(numrows); \
 			genes1.enriched.dbs.subset.formatted <- c(); \
-			if (is.null(numrows)) { \
+			if (is.null(numrows) || numrows == 0) { \
 				genes1.enriched.dbs.subset.formatted <- cbind(as.character(Data1[j,1]), NA); \
 			} else { \	
 				if (numrows > 3) { numrows <- 3; }; \
