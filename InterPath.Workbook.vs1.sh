@@ -3742,49 +3742,37 @@ done
 mkdir /users/mturchin/data/mturchin/Broad/MSigDB/enrichr
 
 #2020302 NOTE -- problems when getting this going again: had to now include 'as=\"parsed\", type=\"application/json\"' in the 2nd content call, which was not the case before; when doing the 'straight to R, no slashing-out version', make sure you keep certain backslashes ,such as the collapse '\n' one -- there were issues there because I did not keep it. Also include the 'verbose()' line at the end of the POST call, ie 'r <- POST("http://amp.pharm.mssm.edu/Enrichr/addList", body=list(list=paste(genes2, collapse="\n")), verbose())' for helping with diagnostic misc. 
-for l in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+#20200302 NOTE -- also note, just moving to the R package 'enrichR' now too
+#From: https://cran.r-project.org/web/packages/enrichR/vignettes/enrichR.html
+module load anaconda; source activate InterPath2; for l in `cat <(echo "GO_Biological_Process_2018" | perl -lane 'print join("\n", @F);') | head -n 1`; do
 	gene_set_library1=$l;
 		
 	echo $gene_set_library1 
 
 	cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | grep -E 'KEGG|REACTOME' | perl -lane 'print $F[0], "\t", join(",", @F[2..$#F]);' | \
-        R -q -e "library(\"httr\"); enrichr_retrieve = \"http://amp.pharm.mssm.edu/Enrichr/enrich\"; gene_set_library = \"$gene_set_library1\"; Data1 <- read.table(file('stdin'), header=F); for (j in 1:nrow(Data1)) { \
+        R -q -e "library(\"enrichR\"); dbs <- c(\"GO_Molecular_Function_2018\", \"GO_Cellular_Component_2018\", \"GO_Biological_Process_2018\", \"dbGaP\", \"GWAS_Catalog_2019\"); \ 
+		
+ 
+	library(\"httr\"); enrichr_retrieve = \"http://amp.pharm.mssm.edu/Enrichr/enrich\"; gene_set_library = \"$gene_set_library1\"; Data1 <- read.table(file('stdin'), header=F); for (j in 1:nrow(Data1)[1:2]) { \
 		genes1 <- strsplit(as.character(Data1[j,2]), split=\",\")[[1]]; \
-		enrichr1 <- POST(\"http://amp.pharm.mssm.edu/Enrichr/addList\", body=list(list=paste(genes1, collapse=\"\n\"))); \
-		userListId <- strsplit(strsplit(strsplit(content(enrichr1, as=\"text\"), split=\"\\n\")[[1]][3], split=\"\\\"\")[[1]][3], split=\": \")[[1]][2]; \
-		string1 <- paste(enrichr_retrieve, \"?userListId=\", userListId, \"&backgroundType=\", gene_set_library, sep=\"\"); \
-		enrichr1.GET <- GET(string1); enrichr1.GET.content <- content(enrichr1.GET, as=\"parsed\", type=\"application/json\"); \
+		
 		enrichr1.GET.content.results <- c(); for (i in 1:20) { enrichr1.GET.content.temp <- enrichr1.GET.content[[1]][[i]]; genes.sub1 <- unlist(enrichr1.GET.content.temp[6]); enrichr1.GET.content.temp[6] <- paste(genes.sub1, collapse=\",\"); enrichr1.GET.content.results <- rbind(enrichr1.GET.content.results, unlist(enrichr1.GET.content.temp)); }; \
-		write.table(enrichr1.GET.content.results, file=\"/users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.$gene_set_library1.gmt\", sep=\";\", quote=FALSE, col.names=FALSE, row.names=FALSE); \
-	}; warnings();"
+	}; write.table(enrichr1.GET.content.results, file=\"/users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.$gene_set_library1.gmt\", sep=\";\", quote=FALSE, col.names=FALSE, row.names=FALSE); \
+	warnings();"
 done
 
-r <- POST("http://amp.pharm.mssm.edu/Enrichr/addList", body=list(list=paste(genes2, collapse="\n")), verbose())
-userListId <- strsplit(strsplit(strsplit(content(r, as="text"), split="\\n")[[1]][3], split="\\\"")[[1]][3], split=": ")[[1]][2]
-string1 <- paste(ENRICHR_RETRIEVE, "?userListId=", userListId, "&backgroundType=", gene_set_library, sep="")
-r1 <- GET(string1)
-#r2 <- content(r1)
         
-	R -q -e "
-		library("httr"); enrichr_retrieve = "http://amp.pharm.mssm.edu/Enrichr/enrich"; gene_set_library = "$gene_set_library1"; Data1 <- read.table(file('stdin'), header=F); for (j in 1:nrow(Data1)) { 
-		genes1 <- strsplit(as.character(Data1[j,2]), split=",")[[1]]; 
-		enrichr1 <- POST("http://amp.pharm.mssm.edu/Enrichr/addList", body=list(list=paste(genes1, collapse="\n"))); 
-		userListId <- strsplit(strsplit(strsplit(content(enrichr1, as="text"), split="\n")[[1]][3], split="\\\"")[[1]][3], split=": ")[[1]][2]; 
-		string1 <- paste(enrichr_retrieve, "?userListId=", userListId, "&backgroundType=", gene_set_library, sep=""); 
-		enrichr1.GET <- GET(string1); enrichr1.GET.content <- content(enrichr1.GET, as="parsed", type="application/json"); 
-		enrichr1.GET.content.results <- c(); for (i in 1:20) { enrichr1.GET.content.temp <- enrichr1.GET.content[[1]][[i]]; genes.sub1 <- unlist(enrichr1.GET.content.temp[6]); enrichr1.GET.content.temp[6] <- paste(genes.sub1, collapse=","); enrichr1.GET.content.results <- rbind(enrichr1.GET.content.results, unlist(enrichr1.GET.content.temp)); }; 
-		write.table(enrichr1.GET.content.results, file=\"/users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.$gene_set_library1.gmt\", sep=\";\", quote=FALSE, col.names=FALSE, row.names=FALSE); \
-		
-	zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.txt.pre.gz | sort -g -k 13,13 | awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($13 != 0) && ($13 != "NA") && ($10 > 1)) { print $5 } }' | \ 
-	R -q -e "library(\"httr\"); enrichr_retrieve = \"http://amp.pharm.mssm.edu/Enrichr/enrich\"; gene_set_library = \"$gene_set_library1\"; Data1 <- read.table(file('stdin'), header=F); for (j in 1:nrow(Data1)) { genes1 <- strsplit(as.character(Data1[j,1]), split=\",\")[[1]]; \ 
-	enrichr1 <- POST(\"http://amp.pharm.mssm.edu/Enrichr/addList\", body=list(list=paste(genes1, collapse=\"\n\"))); \
-	userListId <- strsplit(strsplit(strsplit(content(enrichr1, as=\"text\"), split=\"\\n\")[[1]][3], split=\"\\\"\")[[1]][3], split=\": \")[[1]][2]; \
-	string1 <- paste(enrichr_retrieve, \"?userListId=\", userListId, \"&backgroundType=\", gene_set_library, sep=\"\"); \
-	enrichr1.GET <- GET(string1); enrichr1.GET.content <- content(enrichr1.GET); \
-	enrichr1.GET.content.results <- c(); for (i in 1:20) { enrichr1.GET.content.temp <- enrichr1.GET.content[[1]][[i]]; genes.sub1 <- unlist(enrichr1.GET.content.temp[6]); enrichr1.GET.content.temp[6] <- paste(genes.sub1, collapse=\",\"); enrichr1.GET.content.results <- rbind(enrichr1.GET.content.results, unlist(enrichr1.GET.content.temp)); }; \
-	write.table(enrichr1.GET.content.results, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/Analyses/ArchitectureExplore/enrichr/ukb_chrAll_v2.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.Regions.c2.InterPath.vs1.$i.$k.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.enrichr.$gene_set_library1.\", j, \".txt\", sep=\"\"), sep=\";\", quote=FALSE, col.names=FALSE, row.names=FALSE);}; warnings();"
-done
-				
+#	R -q -e "library(\"httr\"); enrichr_retrieve = \"http://amp.pharm.mssm.edu/Enrichr/enrich\"; gene_set_library = \"$gene_set_library1\"; Data1 <- read.table(file('stdin'), header=F); for (j in 1:nrow(Data1)[1:2]) { \
+#		genes1 <- strsplit(as.character(Data1[j,2]), split=\",\")[[1]]; \
+#		enrichr1 <- POST(\"http://amp.pharm.mssm.edu/Enrichr/addList\", body=list(list=paste(genes1, collapse=\"\n\"))); \
+#		userListId <- strsplit(strsplit(strsplit(content(enrichr1, as=\"text\"), split=\"\\n\")[[1]][3], split=\"\\\"\")[[1]][3], split=\": \")[[1]][2]; \
+#		string1 <- paste(enrichr_retrieve, \"?userListId=\", userListId, \"&backgroundType=\", gene_set_library, sep=\"\"); \
+#		enrichr1.GET <- GET(string1); enrichr1.GET.content <- content(enrichr1.GET, as=\"parsed\", type=\"application/json\"); \
+#		enrichr1.GET.content.results <- c(); for (i in 1:20) { enrichr1.GET.content.temp <- enrichr1.GET.content[[1]][[i]]; genes.sub1 <- unlist(enrichr1.GET.content.temp[6]); enrichr1.GET.content.temp[6] <- paste(genes.sub1, collapse=\",\"); enrichr1.GET.content.results <- rbind(enrichr1.GET.content.results, unlist(enrichr1.GET.content.temp)); }; \
+#	}; write.table(enrichr1.GET.content.results, file=\"/users/mturchin/data/mturchin/Broad/MSigDB/enrichr/c2.all.v6.1.symbols.$gene_set_library1.gmt\", sep=\";\", quote=FALSE, col.names=FALSE, row.names=FALSE); \
+#	warnings();"
+#done
+
 
 
 
