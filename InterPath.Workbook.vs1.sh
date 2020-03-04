@@ -1838,11 +1838,11 @@ for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
 	done;
 done;
 
-module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 1`; do
+module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -v African`; do
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1 | head -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`;
-#		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
-		NumPaths=9
+		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
+#		NumPaths=9
 		echo $ancestry1 $ancestry2 $ancestry3 $k
 
 		if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/MatrixStats ]; then
@@ -1868,9 +1868,9 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
 					Q.noDiag.var <- mean(apply(Q.noDiag, 2, var)); Q.noDiag.range <- mean(apply(Q.noDiag, 2, function(x) { range1 <- range(x); diff1 <- range1[2] - range1[1]; return(diff1); })); Q.noDiag.sum <- sum(colSums(abs(Q.noDiag))); \
 					Data2.cor <- cor(t(Data2)); Data2.cor.noDiag <- as.matrix(Data2.cor) - diag(nrow(Data2.cor))*diag(as.matrix(Data2.cor)); \
 					Data2.cor.noDiag.var <- mean(apply(Data2.cor.noDiag, 2, var)); Data2.cor.noDiag.range <- mean(apply(Data2.cor.noDiag, 2, function(x) { range1 <- range(x); diff1 <- range1[2] - range1[1]; return(diff1); })); Data2.cor.noDiag.sum <- sum(colSums(abs(Data2.cor.noDiag))); \
-					MatrixStats.Results1 <- rbind(MatrixStats.Results1, c(Pathways.Check[i,1], K.noDiag.var, K.noDiag.range, K.noDiag.sum, G.noDiag.var, G.noDiag.range, G.noDiag.sum, Q.noDiag.var, Q.noDiag.range, Q.noDiag.sum, Data2.cor.noDiag.var, Data2.cor.noDiag.range, Data2.cor.noDiag.sum)); \
+					MatrixStats.Results1 <- rbind(MatrixStats.Results1, c(as.character(Pathways.Check[i,1]), K.noDiag.var, K.noDiag.range, K.noDiag.sum, G.noDiag.var, G.noDiag.range, G.noDiag.sum, Q.noDiag.var, Q.noDiag.range, Q.noDiag.sum, Data2.cor.noDiag.var, Data2.cor.noDiag.range, Data2.cor.noDiag.sum)); \
 				}; \
-			}; print(\\\"here1\\\"); colnames(MatrixStats.Results1) <- c(\\\"Pathway\\\", \\\"K.var\\\", \\\"K.range\\\", \\\"K.sum\\\", \\\"G.var\\\", \\\"G.range\\\", \\\"G.sum\\\", \\\"Q.var\\\", \\\"Q.range\\\", \\\"Q.sum\\\", \\\"Geno.cor.var\\\", \\\"Geno.cor.range\\\", \\\"Geno.cor.sum\\\"); write.table(MatrixStats.Results1, file=\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/MatrixStats/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways$PathNum.noDups.MatrixStats.txt\\\", quote=FALSE, row.name=FALSE, col.name=TRUE); \
+			}; colnames(MatrixStats.Results1) <- c(\\\"Pathway\\\", \\\"K.var\\\", \\\"K.range\\\", \\\"K.sum\\\", \\\"G.var\\\", \\\"G.range\\\", \\\"G.sum\\\", \\\"Q.var\\\", \\\"Q.range\\\", \\\"Q.sum\\\", \\\"Geno.cor.var\\\", \\\"Geno.cor.range\\\", \\\"Geno.cor.sum\\\"); write.table(MatrixStats.Results1, file=\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/MatrixStats/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways$PathNum.noDups.MatrixStats.txt\\\", quote=FALSE, row.name=FALSE, col.name=TRUE); \
 			\""); 
 		done;		
 	done;
