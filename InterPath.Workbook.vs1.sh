@@ -9672,6 +9672,7 @@ echo -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); 
 scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompHeatplots/ukb_v3.*ColCrct.localPCs.PopComp.Heatplots.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompHeatplots/.
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/Subfiles
 
 ~R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); pValCutoffs = c(\"pVal001\",\"pValBonf\", \"pValAll\"); \
 ~        neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { for (m in pValCutoffs[3]) { for (l in Paths[2:3]) { \
@@ -9728,6 +9729,7 @@ echo -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 				abline(h=-log10(Data3b.Thresh), lwd=2, lty=3, col=\"RED\"); abline(v=-log10(Data3a.Thresh), lwd=2, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
 				plot(-log10(Data4c[,2]),-log10(Data4c[,3]), main=\"\", xlab=\"-log10(p-Values)\", ylab=\"-log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
 				abline(h=-log10(Data4b.Thresh), lwd=2, lty=3, col=\"RED\"); abline(v=-log10(Data4a.Thresh), lwd=2, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
+				write.table(cbind(Data1c, rep(Data1a.Thresh, nrow(Data1c)), rep(Data1b.Thresh, nrow(Data1c))), file=paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/Subfiles/ukb_v3.\", ancestry2a, \".Height.AllPaths.\", i, \".ColCrct.localPCs.PopComps.DotPlots.Info.\", ancestry2b, \".KEGG.vs1.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(cbind(Data2c, rep(Data2a.Thresh, nrow(Data2c)), rep(Data2b.Thresh, nrow(Data2c))), file=paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/Subfiles/ukb_v3.\", ancestry2a, \".BMI.AllPaths.\", i, \".ColCrct.localPCs.PopComps.DotPlots.Info.\", ancestry2b, \".KEGG.vs1.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(cbind(Data3c, rep(Data3a.Thresh, nrow(Data3c)), rep(Data3b.Thresh, nrow(Data3c))), file=paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/Subfiles/ukb_v3.\", ancestry2a, \".Height.AllPaths.\", i, \".ColCrct.localPCs.PopComps.DotPlots.Info.\", ancestry2b, \".REACTOME.vs1.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(cbind(Data4c, rep(Data4a.Thresh, nrow(Data4c)), rep(Data4b.Thresh, nrow(Data4c))), file=paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/Subfiles/ukb_v3.\", ancestry2a, \".BMI.AllPaths.\", i, \".ColCrct.localPCs.PopComps.DotPlots.Info.\", ancestry2b, \".REACTOME.vs1.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.name=FALSE); \
 			};}; \
 			mtext(bquote(underline(.(ancestry2a)~\"versus:\")), side=3, line=5.25, outer=TRUE, at=.045, cex=5); mtext(\"KEGG Height\", side=3, outer=TRUE, at=.1325, cex=3); mtext(\"KEGG BMI\", side=3, outer=TRUE, at=.3825, cex=3); mtext(\"REACTOME Height\", side=3, outer=TRUE, at=.6325, cex=3); mtext(\"REACTOME BMI\", side=3, outer=TRUE, at=.8825, cex=3); \
 			mtext(mtextList[1], side=2, line=4, outer=TRUE, at=.93, cex=3); mtext(mtextList[2], side=2, line=4, outer=TRUE, at=.785, cex=3); mtext(mtextList[3], side=2, line=4, outer=TRUE, at=.6435, cex=3); mtext(mtextList[4], side=2, line=4, outer=TRUE, at=.5, cex=3); mtext(mtextList[5], side=2, line=4, outer=TRUE, at=.3585, cex=3); mtext(mtextList[6], side=2, line=4, outer=TRUE, at=.2165, cex=3); mtext(mtextList[7], side=2, line=4, outer=TRUE, at=.0725, cex=3); \
@@ -9740,6 +9742,28 @@ echo -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/ukb_v3.*ColCrct.localPCs.PopComps.DotPlots.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/.
 
 ~mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PhenoCompDotPlots
+
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2`; do
+		for ja in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+			ancestry1a=`echo $ja | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2a=`echo $ja | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+			for jb in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
+				ancestry1b=`echo $jb | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2b=`echo $jb | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+	
+				echo $l $i $ancestry2a $ancestry2b
+
+				if [ $ancestry2a != $ancestry2b ]; then
+					cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/Subfiles/ukb_v3.$ancestry2a.$i.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PopComps.DotPlots.Info.$ancestry2b.$l.vs1.txt | perl -lane 'sub log10 { my $n = shift; return log($n)/log(10); }; if (($F[1] < $F[4]) || ($F[2] < $F[5])) { if (abs((-1*log10($F[1])) - (-1*log10($F[2]))) > 2) { print join("\t", @F), "\t", (-1*log10($F[1])) - (-1*log10($F[2])); }; };' 
+					join <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/Subfiles/ukb_v3.$ancestry2a.$i.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PopComps.DotPlots.Info.$ancestry2b.$l.SigDiffs.vs1.txt | sort -k 1,1) <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | awk '{ print $1 "\t" $8 "\t" $9 "\t" $10 }' | sort -k 1,1  
+> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/Subfiles/ukb_v3.$ancestry2a.$i.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PopComps.DotPlots.Info.$ancestry2b.$l.SigDiffs.vs1.txt 
+				fi	
+
+			done;
+		done;
+	done; 
+done;
+
+
 
 
 
