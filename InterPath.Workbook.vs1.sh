@@ -9745,7 +9745,7 @@ echo -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2`; do
-		for ja in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+		for ja in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep Carib`; do
 			ancestry1a=`echo $ja | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2a=`echo $ja | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 			for jb in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 				ancestry1b=`echo $jb | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2b=`echo $jb | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -9753,9 +9753,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 				echo $l $i $ancestry2a $ancestry2b
 
 				if [ $ancestry2a != $ancestry2b ]; then
-					cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/Subfiles/ukb_v3.$ancestry2a.$i.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PopComps.DotPlots.Info.$ancestry2b.$l.vs1.txt | perl -lane 'sub log10 { my $n = shift; return log($n)/log(10); }; if (($F[1] < $F[4]) || ($F[2] < $F[5])) { if (abs((-1*log10($F[1])) - (-1*log10($F[2]))) > 2) { print join("\t", @F), "\t", (-1*log10($F[1])) - (-1*log10($F[2])); }; };' 
-					join <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/Subfiles/ukb_v3.$ancestry2a.$i.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PopComps.DotPlots.Info.$ancestry2b.$l.SigDiffs.vs1.txt | sort -k 1,1) <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | awk '{ print $1 "\t" $8 "\t" $9 "\t" $10 }' | sort -k 1,1  
-> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/Subfiles/ukb_v3.$ancestry2a.$i.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PopComps.DotPlots.Info.$ancestry2b.$l.SigDiffs.vs1.txt 
+					cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/Subfiles/ukb_v3.$ancestry2a.$i.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PopComps.DotPlots.Info.$ancestry2b.$l.vs1.txt | perl -lane 'sub log10 { my $n = shift; return log($n)/log(10); }; if (($F[1] < $F[4]) || ($F[2] < $F[5])) { if (abs((-1*log10($F[1])) - (-1*log10($F[2]))) > 0) { print join("\t", @F), "\t", (-1*log10($F[1])) - (-1*log10($F[2])); }; };' | sort -k 1,1 | join - <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | awk '{ print $1 "\t" $8 "\t" $9 "\t" $10 }' | sort -k 1,1) > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompDotPlots/Subfiles/ukb_v3.$ancestry2a.$i.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PopComps.DotPlots.Info.$ancestry2b.$l.SigDiffs.vs1.txt 
 				fi	
 
 			done;
