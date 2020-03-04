@@ -1855,7 +1855,20 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
 			K.noDiag <- as.matrix(K) - diag(nrow(K))*diag(as.matrix(K));
 			G.noDiag <- as.matrix(G) - diag(nrow(G))*diag(as.matrix(G));
 			Q.noDiag <- as.matrix(Q) - diag(nrow(Q))*diag(as.matrix(Q));
+			K.noDiag.var <- mean(apply(K.noDiag, 2, var));
+			K.noDiag.range <- mean(apply(K.noDiag, 2, function(x) { range1 <- range(x); diff1 <- range1[2] - range1[1]; return(diff1); }));
+			K.noDiag.sum <- sum(colSums(abs(K.noDiag)))
+			G.noDiag.var <- mean(apply(G.noDiag, 2, var));
+			G.noDiag.range <- mean(apply(G.noDiag, 2, function(x) { range1 <- range(x); diff1 <- range1[2] - range1[1]; return(diff1); }));
+			G.noDiag.sum <- sum(colSums(abs(G.noDiag)))
+			Q.noDiag.var <- mean(apply(Q.noDiag, 2, var));
+			Q.noDiag.range <- mean(apply(Q.noDiag, 2, function(x) { range1 <- range(x); diff1 <- range1[2] - range1[1]; return(diff1); }));
+			Q.noDiag.sum <- sum(colSums(abs(Q.noDiag)))
 			Data2.cor <- cor(t(Data2)); 
+			Data2.cor.noDiag <- as.matrix(Data2.cor) - diag(nrow(Data2.cor))*diag(as.matrix(Data2.cor));
+			Data2.cor.noDiag.var <- mean(apply(Data2.cor.noDiag, 2, var));
+			Data2.cor.noDiag.range <- mean(apply(Data2.cor.noDiag, 2, function(x) { range1 <- range(x); diff1 <- range1[2] - range1[1]; return(diff1); }));
+			Data2.cor.noDiag.sum <- sum(colSums(abs(Data2.cor.noDiag)))
 
 			Data1 <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.ColCrct.txt", header=F);
 			Data2 <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/pathways/ExonicPlus20kb/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.ExonicPlus20kb.Pathways1.noDups.txt.gz", header=T)
