@@ -7109,25 +7109,21 @@ R -q -e "library(\"data.library\"); library(\"RColorBrewer\"); UKBioBankPops <- 
 			abline(h=-log10(Data1b.Thresh), lwd=2, lty=3, col=\"RED\"); abline(v=-log10(Data1a.Thresh), lwd=2, lty=3, col=\"RED\"); abline(h=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(v=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(0,1,col=\"BLACK\"); \ 
 			plot(-log10(Data2c[,2]),-log10(Data2c[,3]), main=\"\", xlab=\"GWAS -log10(p-Values)\", ylab=\"MAPIT -log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
 			abline(h=-log10(Data2b.Thresh), lwd=2, lty=3, col=\"RED\"); abline(v=-log10(Data2a.Thresh), lwd=2, lty=3, col=\"RED\"); abline(h=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(v=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(0,1,col=\"BLACK\"); \ 
-
-			write.table(cbind(Data1c, rep(Data1a.Thresh, nrow(Data1c)), rep(Data1b.Thresh, nrow(Data1c))), file=\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.GWASvsMAPIT.Height.merge.vs1.txt\"
-paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.\", ancestry2, \".HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.PhenoComps.DotPlots.Info.KEGG.vs1.txt\", sep=\"\")
-, quote=FALSE, row.name=FALSE, col.name=FALSE); 
-			write.table(cbind(Data2c, rep(Data1a.Thresh, nrow(Data2c)), rep(Data2b.Thresh, nrow(Data2c))), file=\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.GWASvsMAPIT.BMI.merge.vs1.txt\"
-paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.\", ancestry2, \".HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.PhenoComps.DotPlots.Info.REACTOME.vs1.txt\", sep=\"\")
-, quote=FALSE, row.name=FALSE, col.name=FALSE); \	
-
+			write.table(cbind(Data1c, rep(Data1a.Thresh, nrow(Data1c)), rep(Data1b.Thresh, nrow(Data1c))), file=\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.GWASvsMAPIT.Height.merge.vs1.txt\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(cbind(Data2c, rep(Data1a.Thresh, nrow(Data2c)), rep(Data2b.Thresh, nrow(Data2c))), file=\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.GWASvsMAPIT.BMI.merge.vs1.txt\", quote=FALSE, row.name=FALSE, col.name=FALSE); \	
 		}; mtext(\"Height\", side=3, outer=TRUE, at=.265, cex=3); mtext(\"BMI\", side=3, outer=TRUE, at=.77, cex=3); \
 		mtext(\"African\", side=2, outer=TRUE, at=.87, cex=3); mtext(\"Brit.Ran4k\", side=3, outer=TRUE, at=.62, cex=3); mtext(\"Caribbean\", side=3, outer=TRUE, at=.37, cex=3); mtext(\"Indian\", side=3, outer=TRUE, at=.12, cex=3); \	
-		}; mtext(\"KEGG Height\", side=3, outer=TRUE, at=.1325, cex=3); mtext(\"KEGG BMI\", side=3, outer=TRUE, at=.3825, cex=3); mtext(\"REACTOME Height\", side=3, outer=TRUE, at=.6325, cex=3); mtext(\"REACTOME BMI\", side=3, outer=TRUE, at=.8825, cex=3); \
-		
-		mtext(\"African\", side=2, line=4, outer=TRUE, at=.94, cex=3); mtext(\"Brit.Ran4k\", side=2, line=4, outer=TRUE, at=.815, cex=3); mtext(\"Brit.Ran10k\", side=2, line=4, outer=TRUE, at=.689, cex=3); mtext(\"Caribbean\", side=2, line=4, outer=TRUE, at=.564, cex=3); mtext(\"Chinese\", side=2, line=4, outer=TRUE, at=.43775, cex=3); mtext(\"Indian\", side=2, line=4, outer=TRUE, at=.31425, cex=3); mtext(\"Irish\", side=2, line=4, outer=TRUE, at=.18875, cex=3); mtext(\"Pakistani\", side=2, line=4, outer=TRUE, at=.0625, cex=3); \
 	dev.off(); }; print(warnings()); \
 "
 
 #On MacBook Pro
-#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots
-#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.*.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/. 
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS
+#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.*.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/.
+
+
+
+
+
+
 
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
