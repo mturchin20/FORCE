@@ -9208,20 +9208,67 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 		join - <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.$l.$i.$pValCutoff.txt.gz | awk '{ print $1 "\t" $2 "\t" $12 "\t" $13 }' | sort -k 1,1) | \
 		join - <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.$l.$i.$pValCutoff.txt.gz | awk '{ print $1 "\t" $2 "\t" $12 "\t" $13 }' | sort -k 1,1) | \
 		join - <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.$l.$i.$pValCutoff.txt.gz | awk '{ print $1 "\t" $2 "\t" $12 "\t" $13 }' | sort -k 1,1) | \
-		cat <(echo -e "Pathway\t
-AFR_IBS\tAFR_SNPS\tAFR_PVAL\t
-BRIT4K_IBS\tBRIT4K_SNPS\tBRIT4K_PVAL\t
-BRIT10K_IBS\tBRIT10K_SNPS\tBRIT10K_PVAL\t
-CARB_IBS\tCARB_SNPS\tCARB_PVAL\t
-CHI_IBS\tCHI_SNPS\tCHI_PVAL\t
-IND_IBS\tIND_SNPS\tIND_PVAL\t
-IRSH_IBS\tIRSH_SNPS\tIRSH_PVAL\t
-PAKI_IBS\tPAKI_SNPS\tPAKI_PVAL) | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/ukb_chrAll_v3.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.$l.$i.$pValCutoff.txt.gz
+		cat <(echo -e "Pathway\tAFR_IBS\tAFR_SNPS\tAFR_PVAL\tBRIT4K_IBS\tBRIT4K_SNPS\tBRIT4K_PVAL\tBRIT10K_IBS\tBRIT10K_SNPS\tBRIT10K_PVAL\tCARB_IBS\tCARB_SNPS\tCARB_PVAL\tCHI_IBS\tCHI_SNPS\tCHI_PVAL\tIND_IBS\tIND_SNPS\tIND_PVAL\tIRSH_IBS\tIRSH_SNPS\tIRSH_PVAL\tPAKI_IBS\tPAKI_SNPS\tPAKI_PVAL") - | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/ukb_chrAll_v3.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.$l.$i.$pValCutoff.txt.gz
 	
 	done;
 done;
 
+R -q -e "library(\"RColorBrewer\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/ukb_v3.AllPops.HeightBMI.AllPaths.ColCrct.localPCs.IBSpValsAncComps.plots.vs1.png\", height=8000, width=4250, res=300); par(oma=c(1,1,1,6), mar=c(5,5,4,2), mfrow=c(4,2)); \
+		Data1 <- read.table(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/ukb_chrAll_v3.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.KEGG.Height.pValAll.txt.gz\", header=T); \	
+		Data2 <- read.table(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/ukb_chrAll_v3.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.KEGG.BMI.pValAll.txt.gz\", header=T); \
+		Data3 <- read.table(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/ukb_chrAll_v3.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.REACTOME.Height.pValAll.txt.gz\", header=T); \
+		Data4 <- read.table(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/ukb_chrAll_v3.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.REACTOME.BMI.pValAll.txt.gz\", header=T); \
+		Data1[Data1[,4] == 0,4] <- 1e-11; Data1[Data1[,7] == 0,7] <- 1e-11; Data1[Data1[,10] == 0,10] <- 1e-11;	Data1[Data1[,13] == 0,13] <- 1e-11; Data1[Data1[,16] == 0,16] <- 1e-11; Data1[Data1[,19] == 0,19] <- 1e-11; Data1[Data1[,22] == 0,22] <- 1e-11;	Data1[Data1[,25] == 0,25] <- 1e-11; \	
+			Data1a <- Data1a[!is.na(Data1a[,13]),]; Data1b <- Data1b[!is.na(Data1b[,13]),]; Data2a <- Data2a[!is.na(Data2a[,13]),]; Data2b <- Data2b[!is.na(Data2b[,13]),]; \
+			Data1a[Data1a[,13] == 0,13] <- 1e-11; Data1b[Data1b[,13] == 0,13] <- 1e-11; Data2a[Data2a[,13] == 0,13] <- 1e-11; Data2b[Data2b[,13] == 0,13] <- 1e-11; \ 
+		Data1 <- Data1[order(Data1[,4], decreasing=FALSE),]; Data2 <- Data2[order(Data2[,4], decreasing=FALSE),]; Data3 <- Data3[order(Data3[,4], decreasing=FALSE),]; Data4 <- Data4[order(Data4[,4], decreasing=FALSE),]; \ 
+
+		plot(nrow(Data1):1, Data1[,2], main=\"\", xlab=\"\", ylab=\"\", ylim=c(.5,1), type=\"b\", col=brewer.pal(12, \"Paired\")[5], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+		points(nrow(Data1):1, Data1[,5], type=\"b\", col=brewer.pal(12, \"Paired\")[1], cex=1.5);  
+		points(nrow(Data1):1, Data1[,8], type=\"b\", col=brewer.pal(12, \"Paired\")[2], cex=1.5);  
+		points(nrow(Data1):1, Data1[,11], type=\"b\", col=brewer.pal(12, \"Paired\")[3], cex=1.5);  
+		points(nrow(Data1):1, Data1[,14], type=\"b\", col=brewer.pal(12, \"Set3\")[8], cex=1.5);  
+		points(nrow(Data1):1, Data1[,17], type=\"b\", col=brewer.pal(12, \"Paired\")[9], cex=1.5);  
+		points(nrow(Data1):1, Data1[,20], type=\"b\", col=brewer.pal(11, \"RdYlBu\")[11], cex=1.5);  
+		points(nrow(Data1):1, Data1[,23], type=\"b\", col=brewer.pal(12, \"Paired\")[7]), cex=1.5);  
 		
+		plot(nrow(Data1):1, -log10(Data1[,4]), main=\"\", xlab=\"\", ylab=\"\", ylim=c(0,11.5), type=\"b\", col=brewer.pal(12, \"Paired\")[5], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+		points(nrow(Data1):1, -log10(Data1[,7]), type=\"b\", col=brewer.pal(12, \"Paired\")[1], cex=1.5);  
+		points(nrow(Data1):1, -log10(Data1[,10]), type=\"b\", col=brewer.pal(12, \"Paired\")[2], cex=1.5);  
+		points(nrow(Data1):1, -log10(Data1[,13]), type=\"b\", col=brewer.pal(12, \"Paired\")[3], cex=1.5);  
+		points(nrow(Data1):1, -log10(Data1[,16]), type=\"b\", col=brewer.pal(12, \"Set3\")[8], cex=1.5);  
+		points(nrow(Data1):1, -log10(Data1[,19]), type=\"b\", col=brewer.pal(12, \"Paired\")[9], cex=1.5);  
+		points(nrow(Data1):1, -log10(Data1[,22]), type=\"b\", col=brewer.pal(11, \"RdYlBu\")[11], cex=1.5);  
+		points(nrow(Data1):1, -log10(Data1[,25]), type=\"b\", col=brewer.pal(12, \"Paired\")[7]), cex=1.5);  
+
+
+c(brewer.pal(12, \"Paired\")[5],
+brewer.pal(12, \"Paired\")[1], 
+brewer.pal(12, \"Paired\")[2], 
+brewer.pal(12, \"Paired\")[3], 
+brewer.pal(12, \"Set3\")[8], 
+brewer.pal(12, \"Paired\")[9], 
+brewer.pal(11, \"RdYlBu\")[11], 
+brewer.pal(12, \"Paired\")[7])
+
+Data1b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.KEGG.BMI.pValAll.txt.gz\", sep=\"\"), header=F); \
+			Data2a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.REACTOME.Height.pValAll.txt.gz\", sep=\"\"), header=F); \
+			Data2b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.REACTOME.BMI.pValAll.txt.gz\", sep=\"\"), header=F); \
+			Data1a <- Data1a[!is.na(Data1a[,13]),]; Data1b <- Data1b[!is.na(Data1b[,13]),]; Data2a <- Data2a[!is.na(Data2a[,13]),]; Data2b <- Data2b[!is.na(Data2b[,13]),]; \
+			Data1a[Data1a[,13] == 0,13] <- 1e-11; Data1b[Data1b[,13] == 0,13] <- 1e-11; Data2a[Data2a[,13] == 0,13] <- 1e-11; Data2b[Data2b[,13] == 0,13] <- 1e-11; \ 
+			RegrLine1 <- lm(-log10(Data1a[,13]) ~ Data1a[,2]); RegrLine2 <- lm(-log10(Data1b[,13]) ~ Data1b[,2]); RegrLine3 <- lm(-log10(Data2a[,13]) ~ Data2a[,2]); RegrLine4 <- lm(-log10(Data2b[,13]) ~ Data2b[,2]); \
+			plot(Data1a[,2], -log10(Data1a[,13]), main=\"\", xlab=\"Mean Pariwise IBS per Pathway\", ylab=\"-log10 p-Values\", ylim=c(0,11.25), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); abline(RegrLine1, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine1)\$coefficients[2,1], 4), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine1)\$coefficients[2,4], 4), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			plot(Data1b[,2], -log10(Data1b[,13]), main=\"\", xlab=\"Mean Pariwise IBS per Pathway\", ylab=\"-log10 p-Values\", ylim=c(0,11.25), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); abline(RegrLine2, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine2)\$coefficients[2,1], 4), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine2)\$coefficients[2,4], 4), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			plot(Data2a[,2], -log10(Data2a[,13]), main=\"\", xlab=\"Mean Pariwise IBS per Pathway\", ylab=\"-log10 p-Values\", ylim=c(0,11.25), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); abline(RegrLine3, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine3)\$coefficients[2,1], 4), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine3)\$coefficients[2,4], 4), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			plot(Data2b[,2], -log10(Data2b[,13]), main=\"\", xlab=\"Mean Pariwise IBS per Pathway\", ylab=\"-log10 p-Values\", ylim=c(0,11.25), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); abline(RegrLine4, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine4)\$coefficients[2,1], 4), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine4)\$coefficients[2,4], 4), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+		}; mtext(\"KEGG Height\", side=3, outer=TRUE, at=.1325, cex=3); mtext(\"KEGG BMI\", side=3, outer=TRUE, at=.3825, cex=3); mtext(\"REACTOME Height\", side=3, outer=TRUE, at=.6325, cex=3); mtext(\"REACTOME BMI\", side=3, outer=TRUE, at=.8825, cex=3); \
+		mtext(\"African\", side=2, line=4, outer=TRUE, at=.94, cex=3); mtext(\"Brit.Ran4k\", side=2, line=4, outer=TRUE, at=.815, cex=3); mtext(\"Brit.Ran10k\", side=2, line=4, outer=TRUE, at=.689, cex=3); mtext(\"Caribbean\", side=2, line=4, outer=TRUE, at=.564, cex=3); mtext(\"Chinese\", side=2, line=4, outer=TRUE, at=.43775, cex=3); mtext(\"Indian\", side=2, line=4, outer=TRUE, at=.31425, cex=3); mtext(\"Irish\", side=2, line=4, outer=TRUE, at=.18875, cex=3); mtext(\"Pakistani\", side=2, line=4, outer=TRUE, at=.0625, cex=3); \
+	dev.off(); }; print(warnings()); \
+"
+
+
+
+	
 
 
 
