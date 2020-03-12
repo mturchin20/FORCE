@@ -2627,6 +2627,59 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 10831243             63      batch  mturchin    default 2020-03-09T00:58:59 2020-03-10T05:16:22   16:36:28          2     FAILED      1:0                Height British.Ran10000.3 ExonicPlus20kb 161 perm7
 10831243.ba+      batch                         default 2020-03-09T20:58:08 2020-03-10T05:16:22   16:36:28          2     FAILED      1:0
 
+(InterPath) [  mturchin@login003  ~]$sacct | grep FAIL
+10831843             63      batch  mturchin    default 2020-03-09T00:59:53 2020-03-12T02:27:48 1-02:42:50          2     FAILED      1:0                Height British.Ran10000.5 ExonicPlus20kb 161 perm8 
+10831843.ba+      batch                         default 2020-03-11T13:06:23 2020-03-12T02:27:48 1-02:42:50          2     FAILED      1:0                                                                   
+10832093             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:28:16   00:00:36          2     FAILED      1:0                   BMI British.Ran10000.5 ExonicPlus20kb 961 perm8 
+10832093.ba+      batch                         default 2020-03-12T02:27:58 2020-03-12T02:28:16   00:00:36          2     FAILED      1:0                                                                   
+10832094             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:28:41   00:00:26          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1041 perm8 
+10832094.ba+      batch                         default 2020-03-12T02:28:28 2020-03-12T02:28:41   00:00:26          2     FAILED      1:0                                                                   
+10832095             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:29:10   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1121 perm8 
+10832095.ba+      batch                         default 2020-03-12T02:28:59 2020-03-12T02:29:10   00:00:22          2     FAILED      1:0                                                                   
+10832096             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:29:41   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1201 perm8 
+10832096.ba+      batch                         default 2020-03-12T02:29:30 2020-03-12T02:29:41   00:00:22          2     FAILED      1:0                                                                   
+10832097             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:30:12   00:00:24          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1281 perm8 
+10832097.ba+      batch                         default 2020-03-12T02:30:00 2020-03-12T02:30:12   00:00:24          2     FAILED      1:0                                                                   
+10832098             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:30:42   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1361 perm8 
+10832098.ba+      batch                         default 2020-03-12T02:30:31 2020-03-12T02:30:42   00:00:22          2     FAILED      1:0                                                                   
+10832099             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:31:14   00:00:26          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1441 perm8 
+10832099.ba+      batch                         default 2020-03-12T02:31:01 2020-03-12T02:31:14   00:00:26          2     FAILED      1:0                                                                   
+10832100             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:31:43   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1521 perm8 
+10832100.ba+      batch                         default 2020-03-12T02:31:32 2020-03-12T02:31:43   00:00:22          2     FAILED      1:0                                                                   
+10832101             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:32:13   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1601 perm8 
+10832101.ba+      batch                         default 2020-03-12T02:32:02 2020-03-12T02:32:13   00:00:22          2     FAILED      1:0                                                                   
+10832102             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:32:45   00:00:24          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1681 perm8 
+10832102.ba+      batch                         default 2020-03-12T02:32:33 2020-03-12T02:32:45   00:00:24          2     FAILED      1:0                                                                   
+10832103             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:33:14   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1761 perm8 
+10832103.ba+      batch                         default 2020-03-12T02:33:03 2020-03-12T02:33:14   00:00:22          2     FAILED      1:0                                                                   
+10832104             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:33:44   00:00:20          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1841 perm8 
+10832104.ba+      batch                         default 2020-03-12T02:33:34 2020-03-12T02:33:44   00:00:20          2     FAILED      1:0                                                                   
+10832105             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:34:15   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1921 perm8 
+10832105.ba+      batch                         default 2020-03-12T02:34:04 2020-03-12T02:34:15   00:00:22          2     FAILED      1:0                                                                   
+10832106             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:34:46   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2001 perm8 
+10832106.ba+      batch                         default 2020-03-12T02:34:35 2020-03-12T02:34:46   00:00:22          2     FAILED      1:0                                                                   
+10832107             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:35:16   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2081 perm8 
+10832107.ba+      batch                         default 2020-03-12T02:35:05 2020-03-12T02:35:16   00:00:22          2     FAILED      1:0                                                                   
+10832108             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:35:45   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2161 perm8 
+10832108.ba+      batch                         default 2020-03-12T02:35:34 2020-03-12T02:35:45   00:00:22          2     FAILED      1:0                                                                   
+10832109             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:36:18   00:00:24          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2241 perm8 
+10832109.ba+      batch                         default 2020-03-12T02:36:06 2020-03-12T02:36:18   00:00:24          2     FAILED      1:0                                                                   
+10832110             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:36:47   00:00:24          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2321 perm8 
+10832110.ba+      batch                         default 2020-03-12T02:36:35 2020-03-12T02:36:47   00:00:24          2     FAILED      1:0                                                                   
+10832111             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:37:18   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2401 perm8 
+10832111.ba+      batch                         default 2020-03-12T02:37:07 2020-03-12T02:37:18   00:00:22          2     FAILED      1:0                                                                   
+10832112             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:37:46   00:00:24          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2481 perm8 
+10832112.ba+      batch                         default 2020-03-12T02:37:34 2020-03-12T02:37:46   00:00:24          2     FAILED      1:0                                                                   
+10832113             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:38:19   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2561 perm8 
+10832113.ba+      batch                         default 2020-03-12T02:38:08 2020-03-12T02:38:19   00:00:22          2     FAILED      1:0                                                                   
+10832114             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:38:46   00:00:24          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2641 perm8 
+10832114.ba+      batch                         default 2020-03-12T02:38:34 2020-03-12T02:38:46   00:00:24          2     FAILED      1:0                                                                   
+10832115             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:39:22   00:00:26          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2721 perm8 
+10832115.ba+      batch                         default 2020-03-12T02:39:09 2020-03-12T02:39:22   00:00:26          2     FAILED      1:0                                                                   
+10832116             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:39:45   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2801 perm8 
+10832116.ba+      batch                         default 2020-03-12T02:39:34 2020-03-12T02:39:45   00:00:22          2     FAILED      1:0                                                                   
+
+
 #		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 9 | tail -n 4 | head -n 4`; do
 module load R/3.4.3_mkl gcc; sleep 7200; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
 	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8 | grep -E 'Ran10000|Irish' | head -n 2 | tail -n 1`; do
@@ -9034,6 +9087,83 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterP
 
 #Fst Work
 #From: https://www.cog-genomics.org/plink/1.9/basic_stats
+
+mkdir /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst
+
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.txt | perl -lane 'print $F[0], "\t", $F[1], "\t", $F[$#F];' | grep -v FID > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt
+
+#(MultiEthnicGWAS) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.txt | wc        
+#  40077  921771 17096423
+#(MultiEthnicGWAS) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.fam | wc
+#  40076  240456 1001900
+
+plink --bfile /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap --fst --within /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.fst
+
+for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+	ancestry1a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+	for j2 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -v African | head -n 1`; do
+		ancestry1b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+	
+		cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt | grep -E '$ancestry2a|$ancestry2b' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b.PLINK.FIDIIDs
+
+		cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.FIDIIDs | sed 's
+
+/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/sl 
+
+	done;
+done;
+
+
+plink --bfile /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap --recode vcf --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap
+gzip -f /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.vcf
+
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt | grep African | awk '{ print $1 "_" $2 }' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.African.FIDIIDs
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt | grep British.Ran4000 | awk '{ print $1 "_" $2 }' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.British.Ran4000.FIDIIDs
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt | grep British.Ran10000 | awk '{ print $1 "_" $2 }' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.British.Ran10000.FIDIIDs
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt | grep Caribbean | awk '{ print $1 "_" $2 }' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.Caribbean.FIDIIDs
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt | grep Chinese | awk '{ print $1 "_" $2 }' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.Chinese.FIDIIDs
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt | grep Indian | awk '{ print $1 "_" $2 }' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.Indian.FIDIIDs
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt | grep Irish | awk '{ print $1 "_" $2 }' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.Irish.FIDIIDs
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt | grep Pakistani | awk '{ print $1 "_" $2 }' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.Pakistani.FIDIIDs
+
+vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.vcf.gz --weir-fst-pop /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.African.FIDIIDs --weir-fst-pop /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.British.Ran4000.FIDIIDs --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.Fst.African_BritRan4k
+
+#[  mturchin@node1607  ~]$vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.vcf.gz --weir-fst-pop /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.African.FIDIIDs --weir-fst-pop /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.British.Ran4000.FIDIIDs --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.Fst.African_BritRan4k
+#(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.Fst.African_BritRan4k.weir.fst | head -n 10
+#CHROM   POS     WEIR_AND_COCKERHAM_FST
+#1       756604  0.369909
+#1       768448  0.00074944
+#1       779322  0.263949
+#1       808631  0.625305
+#1       809876  0.014297
+#1       835499  0.0959903
+#1       838555  0.0276384
+#1       846864  0.0180153
+#1       849998  -0.000120273
+#(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$plink --bfile /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap --fst --within shbdfihadsfihbsdf --out oinsdfodsf
+#(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$plink --bfile /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap --keep shbdfihadsfihbsdf.FIDIIDs --fst --within shbdfihadsfihbsdf --out oinsdfodsf.keep
+#(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat oinsdfodsf.keep.fst | head -n 10
+#CHR     SNP     POS     NMISS   FST
+#1       rs3131962       756604  6930    0.369909
+#1       rs12562034      768448  6944    0.00074944
+#1       rs4040617       779322  6909    0.263949
+#1       rs11240779      808631  6835    0.625305
+#1       rs57181708      809876  6949    0.014297
+#1       rs4422948       835499  6807    0.0959903
+#1       rs4970383       838555  6940    0.0276384
+#1       rs950122        846864  6894    0.0180153
+#1       rs13303222      849998  6950    -0.000120273
+#(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat oinsdfodsf.fst | head -n 10
+#CHR     SNP     POS     NMISS   FST
+#1       rs3131962       756604  6930    0.369909
+#1       rs12562034      768448  6944    0.00074944
+#1       rs4040617       779322  6909    0.263949
+#1       rs11240779      808631  6835    0.625305
+#1       rs57181708      809876  6949    0.014297
+#1       rs4422948       835499  6807    0.0959903
+#1       rs4970383       838555  6940    0.0276384
+#1       rs950122        846864  6894    0.0180153
+#1       rs13303222      849998  6950    -0.000120273
 
 
 
@@ -17101,6 +17231,11 @@ gzip: /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin2
 22:51193629_G   374464  374464 0.229831012094607 0.196033602526309 0.338605446273723 0.169302723136862 0
 22:51217954_A   374465  374465 0.231496104461399 0.198423031972605 0.144184832973958 0.0720924164869791 0
 22:51224208_A   374466  374466 -0.0447424018812574 -0.0493276221156954 0.822375583366457 0.588812208316771 0
+#20200312
+(MultiEthnicGWAS) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.txt | wc
+  40077  921771 17096423
+(MultiEthnicGWAS) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.fam | wc
+  40076  240456 1001900
 
 
 
