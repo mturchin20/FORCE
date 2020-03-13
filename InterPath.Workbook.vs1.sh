@@ -1911,6 +1911,23 @@ done;
 #			Data2.cor.noDiag.range <- mean(apply(Data2.cor.noDiag, 2, function(x) { range1 <- range(x); diff1 <- range1[2] - range1[1]; return(diff1); }));
 #			Data2.cor.noDiag.sum <- sum(colSums(abs(Data2.cor.noDiag)))
 
+module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -E 'Ran10000|Irish' | tail -n 1`; do
+	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1 | head -n 1`; do
+		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`;
+		echo $ancestry1 $ancestry2 $ancestry3 $k
+
+		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/MatrixStats/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways*.noDups.MatrixStats.txt | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/MatrixStats/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.AllPathways.noDups.MatrixStats.txt.gz
+
+		for (( PathNum=961; PathNum <= $NumPaths; PathNum=PathNum+160 )); do
+			sbatch -t 72:00:00 --mem 40g --account=ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/MatrixStats/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.MatrixStats.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/MatrixStats/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.MatrixStats.slurm.error --comment "MatrixStats $ancestry2 $k $PathNum" <(echo -e '#!/bin/sh'; 
+			Data1 <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.ColCrct.txt\\\", header=F); \ 
+			MatrixStats.Results1 <- c(); \	
+				}; \
+			}; if (neg.is.null(nrow(MatrixStats.Results1))) { colnames(MatrixStats.Results1) <- c(\\\"Pathway\\\", \\\"K.var\\\", \\\"K.range\\\", \\\"K.sum\\\", \\\"G.var\\\", \\\"G.range\\\", \\\"G.sum\\\", \\\"Q.var\\\", \\\"Q.range\\\", \\\"Q.sum\\\", \\\"Geno.cor.var\\\", \\\"Geno.cor.range\\\", \\\"Geno.cor.sum\\\"); write.table(MatrixStats.Results1, file=\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/MatrixStats/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways$PathNum.noDups.MatrixStats.txt\\\", quote=FALSE, row.name=FALSE, col.name=TRUE); }; \
+			\""); 
+		done;		
+	done;
+done;		
 
 
 
@@ -2623,76 +2640,19 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 9885162              63      batch  mturchin ccmb-condo 2020-01-21T14:19:44 2020-01-25T14:58:19 4-00:38:35          1  COMPLETED      0:0                                      Indian Indian
 9885162.bat+      batch                      ccmb-condo 2020-01-21T14:19:44 2020-01-25T14:58:19 4-00:38:35          1  COMPLETED      0:0
 
-
-10831243             63      batch  mturchin    default 2020-03-09T00:58:59 2020-03-10T05:16:22   16:36:28          2     FAILED      1:0                Height British.Ran10000.3 ExonicPlus20kb 161 perm7
-10831243.ba+      batch                         default 2020-03-09T20:58:08 2020-03-10T05:16:22   16:36:28          2     FAILED      1:0
-
-(InterPath) [  mturchin@login003  ~]$sacct | grep FAIL
-10831843             63      batch  mturchin    default 2020-03-09T00:59:53 2020-03-12T02:27:48 1-02:42:50          2     FAILED      1:0                Height British.Ran10000.5 ExonicPlus20kb 161 perm8 
-10831843.ba+      batch                         default 2020-03-11T13:06:23 2020-03-12T02:27:48 1-02:42:50          2     FAILED      1:0                                                                   
-10832093             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:28:16   00:00:36          2     FAILED      1:0                   BMI British.Ran10000.5 ExonicPlus20kb 961 perm8 
-10832093.ba+      batch                         default 2020-03-12T02:27:58 2020-03-12T02:28:16   00:00:36          2     FAILED      1:0                                                                   
-10832094             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:28:41   00:00:26          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1041 perm8 
-10832094.ba+      batch                         default 2020-03-12T02:28:28 2020-03-12T02:28:41   00:00:26          2     FAILED      1:0                                                                   
-10832095             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:29:10   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1121 perm8 
-10832095.ba+      batch                         default 2020-03-12T02:28:59 2020-03-12T02:29:10   00:00:22          2     FAILED      1:0                                                                   
-10832096             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:29:41   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1201 perm8 
-10832096.ba+      batch                         default 2020-03-12T02:29:30 2020-03-12T02:29:41   00:00:22          2     FAILED      1:0                                                                   
-10832097             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:30:12   00:00:24          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1281 perm8 
-10832097.ba+      batch                         default 2020-03-12T02:30:00 2020-03-12T02:30:12   00:00:24          2     FAILED      1:0                                                                   
-10832098             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:30:42   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1361 perm8 
-10832098.ba+      batch                         default 2020-03-12T02:30:31 2020-03-12T02:30:42   00:00:22          2     FAILED      1:0                                                                   
-10832099             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:31:14   00:00:26          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1441 perm8 
-10832099.ba+      batch                         default 2020-03-12T02:31:01 2020-03-12T02:31:14   00:00:26          2     FAILED      1:0                                                                   
-10832100             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:31:43   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1521 perm8 
-10832100.ba+      batch                         default 2020-03-12T02:31:32 2020-03-12T02:31:43   00:00:22          2     FAILED      1:0                                                                   
-10832101             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:32:13   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1601 perm8 
-10832101.ba+      batch                         default 2020-03-12T02:32:02 2020-03-12T02:32:13   00:00:22          2     FAILED      1:0                                                                   
-10832102             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:32:45   00:00:24          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1681 perm8 
-10832102.ba+      batch                         default 2020-03-12T02:32:33 2020-03-12T02:32:45   00:00:24          2     FAILED      1:0                                                                   
-10832103             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:33:14   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1761 perm8 
-10832103.ba+      batch                         default 2020-03-12T02:33:03 2020-03-12T02:33:14   00:00:22          2     FAILED      1:0                                                                   
-10832104             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:33:44   00:00:20          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1841 perm8 
-10832104.ba+      batch                         default 2020-03-12T02:33:34 2020-03-12T02:33:44   00:00:20          2     FAILED      1:0                                                                   
-10832105             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:34:15   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 1921 perm8 
-10832105.ba+      batch                         default 2020-03-12T02:34:04 2020-03-12T02:34:15   00:00:22          2     FAILED      1:0                                                                   
-10832106             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:34:46   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2001 perm8 
-10832106.ba+      batch                         default 2020-03-12T02:34:35 2020-03-12T02:34:46   00:00:22          2     FAILED      1:0                                                                   
-10832107             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:35:16   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2081 perm8 
-10832107.ba+      batch                         default 2020-03-12T02:35:05 2020-03-12T02:35:16   00:00:22          2     FAILED      1:0                                                                   
-10832108             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:35:45   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2161 perm8 
-10832108.ba+      batch                         default 2020-03-12T02:35:34 2020-03-12T02:35:45   00:00:22          2     FAILED      1:0                                                                   
-10832109             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:36:18   00:00:24          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2241 perm8 
-10832109.ba+      batch                         default 2020-03-12T02:36:06 2020-03-12T02:36:18   00:00:24          2     FAILED      1:0                                                                   
-10832110             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:36:47   00:00:24          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2321 perm8 
-10832110.ba+      batch                         default 2020-03-12T02:36:35 2020-03-12T02:36:47   00:00:24          2     FAILED      1:0                                                                   
-10832111             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:37:18   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2401 perm8 
-10832111.ba+      batch                         default 2020-03-12T02:37:07 2020-03-12T02:37:18   00:00:22          2     FAILED      1:0                                                                   
-10832112             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:37:46   00:00:24          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2481 perm8 
-10832112.ba+      batch                         default 2020-03-12T02:37:34 2020-03-12T02:37:46   00:00:24          2     FAILED      1:0                                                                   
-10832113             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:38:19   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2561 perm8 
-10832113.ba+      batch                         default 2020-03-12T02:38:08 2020-03-12T02:38:19   00:00:22          2     FAILED      1:0                                                                   
-10832114             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:38:46   00:00:24          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2641 perm8 
-10832114.ba+      batch                         default 2020-03-12T02:38:34 2020-03-12T02:38:46   00:00:24          2     FAILED      1:0                                                                   
-10832115             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:39:22   00:00:26          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2721 perm8 
-10832115.ba+      batch                         default 2020-03-12T02:39:09 2020-03-12T02:39:22   00:00:26          2     FAILED      1:0                                                                   
-10832116             63      batch  mturchin    default 2020-03-09T01:00:09 2020-03-12T02:39:45   00:00:22          2     FAILED      1:0                  BMI British.Ran10000.5 ExonicPlus20kb 2801 perm8 
-10832116.ba+      batch                         default 2020-03-12T02:39:34 2020-03-12T02:39:45   00:00:22          2     FAILED      1:0                                                                   
-
-
 #		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 9 | tail -n 4 | head -n 4`; do
 module load R/3.4.3_mkl gcc; sleep 7200; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8 | grep -E 'Ran10000|Irish' | head -n 2 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8 | grep -E 'Ran10000|Irish' | head -n 4 | tail -n 1`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; NumSNPs=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -ane 'print scalar(@F);'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; PhenoSeed1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 #			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
 			NumPaths=162
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k 
 			
-			LpCnt=1; LpCnt2=1; for (( PathNum=161; PathNum <= $NumPaths; PathNum=PathNum+80 )); do
- sbatch -t 72:00:00 -n 2 -N 1-1 --mem 32g --account=ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm10.ColCrct.localPCs.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm10.ColCrct.localPCs.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum perm10" <(echo -e '#!/bin/sh';
+			LpCnt=1; LpCnt2=1; for (( PathNum=961; PathNum <= $NumPaths; PathNum=PathNum+80 )); do
+ sbatch -t 72:00:00 -n 2 -N 1-1 --mem 32g --account=ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm8.ColCrct.localPCs.Pathways${PathNum}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm8.ColCrct.localPCs.Pathways${PathNum}.slurm.error --comment "$Pheno1 $ancestry2 $k $PathNum perm8" <(echo -e '#!/bin/sh';
 				echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); sourceCpp(\\\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp\\\"); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
-				Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt\\\", header=T); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\\\", header=F); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.v3.ImptHRC.dose.100geno.Regions.c2.${k}.noDups.txt\\\", header=F); Y.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.${ancestry2}.v3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.c2.${k}.Pathways1.noDups.txt.gz\\\", header=T); Y.Check.Pheno <- Y.Check\\\$$Pheno1; Y.Check.Pheno.noNAs <- Y.Check.Pheno[neg.is.na(Y.Check.Pheno)]; PermAdj <- 9; Y.Seed <- $AncSeed1 + $PhenoSeed1 + PermAdj; \
+				Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt\\\", header=T); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\\\", header=F); Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.v3.ImptHRC.dose.100geno.Regions.c2.${k}.noDups.txt\\\", header=F); Y.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.${ancestry2}.v3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.c2.${k}.Pathways1.noDups.txt.gz\\\", header=T); Y.Check.Pheno <- Y.Check\\\$$Pheno1; Y.Check.Pheno.noNAs <- Y.Check.Pheno[neg.is.na(Y.Check.Pheno)]; PermAdj <- 7; Y.Seed <- $AncSeed1 + $PhenoSeed1 + PermAdj; \
 				Pathways.Regions <- list(); cores = detectCores(); InterPath.output <- list(); InterPath.output\\\$Est <- c(); InterPath.output\\\$Eigenvalues <- c(); InterPath.output\\\$PVE <- c(); \ 
 				for (i in $PathNum:($PathNum+79)) { set.seed(Y.Seed); Y <- c(); Y.Pheno <- c(); Y.Pheno.noNAs <- c(); \
 					if (i > nrow(Pathways)) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, nrow(InterPath.output\\\$Eigenvalues)); } else if (neg.is.true(Pathways.Check[i,ncol(Pathways.Check)])) { Pathways.Regions[[1]] <- 1; Y.Pheno.noNAs <- rep(NA, length(Y.Check.Pheno.noNAs)); } else { Pathways.Regions[[1]] <- as.numeric(as.character(unlist(strsplit(as.character(Pathways[i,3]), \\\",\\\")))); \
@@ -2702,7 +2662,7 @@ module load R/3.4.3_mkl gcc; sleep 7200; for i in `cat <(echo "Height;1254 BMI;5
 					InterPath.output.temp <- list(); X <- Data3; X.cov <- Data3.cov; rm(Data3); rm(Data3.cov); X.Pheno.noNAs <- X[neg.is.na(Y.Pheno),]; X.cov.Pheno.noNAs <- X.cov[neg.is.na(Y.Pheno),neg.is.na(Y.Pheno)]; Z <- Covars[neg.is.na(Y.Pheno),(ncol(Covars)-9):ncol(Covars)]; \
 					K <- 1/ncol(X.Pheno.noNAs) * tcrossprod(as.matrix(X.Pheno.noNAs)); \
 					InterPath.output.temp <- InterPath(t(X.Pheno.noNAs),Y.Pheno.noNAs,as.matrix(X.cov.Pheno.noNAs),K,t(as.matrix(Z)),Pathways.Regions,nrow(X.Pheno.noNAs),as.numeric(as.character($NumSNPs)),cores=cores); InterPath.output\\\$Est <- c(InterPath.output\\\$Est, InterPath.output.temp\\\$Est); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, InterPath.output.temp\\\$Eigenvalues); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, InterPath.output.temp\\\$PVE); } else { InterPath.output\\\$Est <- c(InterPath.output\\\$Est, NA); InterPath.output\\\$Eigenvalues <- cbind(InterPath.output\\\$Eigenvalues, rep(NA, length(Y.Pheno.noNAs))); InterPath.output\\\$PVE <- c(InterPath.output\\\$PVE, NA);};}; \
-				write.table(InterPath.output\\\$Est, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm10.ColCrct.localPCs.Paths${PathNum}.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$Eigenvalues, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm10.ColCrct.localPCs.Paths${PathNum}.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$PVE, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm10.ColCrct.localPCs.Paths${PathNum}.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\"")
+				write.table(InterPath.output\\\$Est, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm8.ColCrct.localPCs.Paths${PathNum}.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$Eigenvalues, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm8.ColCrct.localPCs.Paths${PathNum}.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(InterPath.output\\\$PVE, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm8.ColCrct.localPCs.Paths${PathNum}.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\"")
 			done; sleep 2
 		done; 
 	done; 
@@ -9099,20 +9059,40 @@ cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.
 
 plink --bfile /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap --fst --within /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.fst
 
-for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 	ancestry1a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-	for j2 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -v African | head -n 1`; do
-		ancestry1b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-	
-		cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt | grep -E '$ancestry2a|$ancestry2b' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b.PLINK.FIDIIDs
+	echo $ancestry1a $ancestry2a
+	for j2 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -v $ancestry2a`; do
+		ancestry1b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`	
 
-		cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.FIDIIDs | sed 's
-
-/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/sl 
+		cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.txt | grep -E "$ancestry2a|$ancestry2b" | awk '{ print $0 }' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b.within
+		cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b.within | awk '{ print $1 "\t" $2 }' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b.PLINK.FIDIIDs
 
 	done;
 done;
 
+for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
+	ancestry1a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+	echo $ancestry1a $ancestry2a
+	for j2 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -v $ancestry2a`; do
+		ancestry1b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`	
+
+		plink --bfile /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap --keep /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b.PLINK.FIDIIDs --within /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b.within --fst --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b
+
+	done;
+done;
+
+rm -f /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt; for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
+	ancestry1a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+	echo $ancestry1a $ancestry2a >> /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt;
+	for j2 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -v $ancestry2a`; do
+		ancestry1b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`	
+
+		cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b.fst | R -q -e "Data1 <- read.table(file('stdin'), header=T); mean(Data1[,5]);" | grep -v ^\> | awk '{ print $2 }' | xargs echo $ancestry2b >> /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt
+
+	done;
+	echo "" >> /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt
+done;
 
 plink --bfile /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap --recode vcf --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap
 gzip -f /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.vcf
@@ -9164,8 +9144,6 @@ vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_c
 #1       rs4970383       838555  6940    0.0276384
 #1       rs950122        846864  6894    0.0180153
 #1       rs13303222      849998  6950    -0.000120273
-
-
 
 #Using 'module load anaconda; source activate InterPath2' for PopGenome misc work
 #From: https://cran.r-project.org/web/packages/PopGenome/vignettes/An_introduction_to_the_PopGenome_package.pdf
@@ -9368,6 +9346,10 @@ col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(1
 
 #On MacBook Pro
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/ukb_v3.AllPops.HeightBMI.AllPaths.ColCrct.localPCs.IBSpValsAncComps.plots.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/.
+
+
+
+
 
 
 	
@@ -17236,6 +17218,39 @@ gzip: /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin2
   40077  921771 17096423
 (MultiEthnicGWAS) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.fam | wc
   40076  240456 1001900
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.Fst.African_BritRan4k.weir.fst | head -n 10
+CHROM   POS     WEIR_AND_COCKERHAM_FST
+1       756604  0.369909
+1       768448  0.00074944
+1       779322  0.263949
+1       808631  0.625305
+1       809876  0.014297
+1       835499  0.0959903
+1       838555  0.0276384
+1       846864  0.0180153
+1       849998  -0.000120273
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat oinsdfodsf.fst | head -n 10
+CHR     SNP     POS     NMISS   FST
+1       rs3131962       756604  6930    0.369909
+1       rs12562034      768448  6944    0.00074944
+1       rs4040617       779322  6909    0.263949
+1       rs11240779      808631  6835    0.625305
+1       rs57181708      809876  6949    0.014297
+1       rs4422948       835499  6807    0.0959903
+1       rs4970383       838555  6940    0.0276384
+1       rs950122        846864  6894    0.0180153
+1       rs13303222      849998  6950    -0.000120273
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat oinsdfodsf.keep.fst | head -n 10
+CHR     SNP     POS     NMISS   FST
+1       rs3131962       756604  6930    0.369909
+1       rs12562034      768448  6944    0.00074944
+1       rs4040617       779322  6909    0.263949
+1       rs11240779      808631  6835    0.625305
+1       rs57181708      809876  6949    0.014297
+1       rs4422948       835499  6807    0.0959903
+1       rs4970383       838555  6940    0.0276384
+1       rs950122        846864  6894    0.0180153
+1       rs13303222      849998  6950    -0.000120273
 
 
 
