@@ -9074,17 +9074,74 @@ for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') |
 	done;
 done;
 
-rm -f /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt; for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
+for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 	ancestry1a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-	echo $ancestry1a $ancestry2a >> /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt;
-	for j2 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -v $ancestry2a`; do
+	echo $ancestry1a $ancestry2a
+		
+	rm -f /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.$ancestry2a.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt
+	echo $ancestry2a >> /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.$ancestry2a.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt 
+	for j2 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 		ancestry1b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`	
 
-		cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b.fst | R -q -e "Data1 <- read.table(file('stdin'), header=T); mean(Data1[,5]);" | grep -v ^\> | awk '{ print $2 }' | xargs echo $ancestry2b >> /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt
+		if [ $ancestry2a == $ancestry2b ] ; then
+			echo "0" >> /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.$ancestry2a.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt
+		else
+			cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b.fst | R -q -e "Data1 <- read.table(file('stdin'), header=T); mean(Data1[,5]);" | grep -v ^\> | awk '{ print $2 }' >> /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.$ancestry2a.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt 
+		fi
 
 	done;
-	echo "" >> /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt
 done;
+
+#	echo "" >> /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt
+
+R -q -e "library(\"ggplot2\"); library(\"reshape\"); \
+	png(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.heatplots.vs1.png\", height=2000, width=2000, res=300);
+		Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		Data4 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		Data5 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		Data6 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		Data7 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		Data8 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		DataAll <- cbind(c(\"African\", \"British.Ran4000\", \"British.Ran10000\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\", Data1, Data2, Data3, Data4, Data5, Data6, Data7, Data8)); \
+		DataAll.melted <- melt(DataAll); colnames(DataAll.melted)[1] <- \"ind.1\"; colnames(DataAll.melted)[2] <- \"ind.2\"; \
+		print(head(DataAll.melted)); \	
+
+	dev.off(); \
+"
+
+R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); library(\"cowplot\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
+	for (m in DataTypes1[c(1,4)]) { for (i in DataTypes2[1:2]) { for (l in Paths[2:3]) { \
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompHeatplots/ukb_v3.AllPops.HeightBMI.\", i, \".\", l, \".\", m, \".ColCrct.localPCs.PopComp.Heatplots.vs1.png\", sep=\"\"), height=4250, width=7500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \ 
+		plotPoints1 <- c(); ListCounter1 <- 1; for (j in Strats[4]) { \	
+			for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
+				Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+				Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.British.Ran4000.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+				Data3 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.British.Ran10000.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+				Data4 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.Caribbean.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+				Data5 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.Chinese.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+				Data6 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.Indian.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+				Data7 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.Irish.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+				Data8 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.Pakistani.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+				Paths1 <- list(\"African\" = as.character(Data1[,1]), \"British.Ran4k\" = as.character(Data2[,1]), \"British.Ran10k\" = as.character(Data3[,1]), \"Caribbean\" = as.character(Data4[,1]), \"Chinese\" = as.character(Data5[,1]), \"Indian\" = as.character(Data6[,1]), \"Irish\" = as.character(Data7[,1]), \"Pakistani\" = as.character(Data8[,1])); \
+				Paths1.Overlap <- crossprod(table(stack(Paths1))); Paths1.Overlap[lower.tri(Paths1.Overlap, diag=FALSE)] <- NA; Paths1.Overlap.Melted <- melt(Paths1.Overlap); colnames(Paths1.Overlap.Melted)[1] <- \"ind.1\"; colnames(Paths1.Overlap.Melted)[2] <- \"ind.2\"; Paths1.Overlap.Melted\$ind.1 <- factor(Paths1.Overlap.Melted\$ind.1, levels=c(\"African\", \"British.Ran4k\", \"British.Ran10k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\")); Paths1.Overlap.Melted\$ind.2 <- factor(Paths1.Overlap.Melted\$ind.2, levels=c(\"African\", \"British.Ran4k\", \"British.Ran10k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\")); \ 
+				print(Paths1.Overlap); \
+				ggplot1 <- ggplot(Paths1.Overlap.Melted, aes(ind.1, ind.2, fill=value)) + geom_tile(colour=\"white\") + scale_fill_gradient(low = \"lightgoldenrodyellow\", high=\"red\", name=\"Pathways\", na.value=\"white\") + geom_text(aes(ind.1, ind.2, label = value), color = \"black\", size=10) + theme_minimal() + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), plot.margin=unit(c(5,5,5,5),\"points\"), panel.grid.major = element_blank(), panel.border = element_blank(), panel.background = element_blank(), axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1, size=30), axis.text.y = element_text(size=30), legend.position=c(.825,.125), legend.direction=\"horizontal\", legend.title=element_text(size=17), legend.text=element_text(size=15)) + guides(fill = guide_colorbar(barwidth = 14, barheight = 3, title.position = \"top\", title.hjust = 0.5)); plotPoints1[[ListCounter1]] <- ggplot1; ListCounter1 <- ListCounter1 + 1; \
+			}; \
+		}; print(length(plotPoints1)); grid.newpage(); pushViewport(viewport(layout = grid.layout(4, 4, height=unit(c(.1,.2,.5,5), \"null\"), width=unit(c(.1,5,5,.4), \"null\")))); \ 
+		grid.text(paste(l, \" (\", m, \")\", sep=\"\"), gp=gpar(cex=5), just=c(.3,.5), vp=viewport(layout.pos.row=2, layout.pos.col=2:3)); grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=3, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=3, layout.pos.col=3)); \ 
+		for (i2 in 1:1) { grid.text(\"\", gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+3, layout.pos.col=1)); for (j2 in 1:2) { print(plotPoints1[[(2*i2)-2+j2]], vp=viewport(layout.pos.row=i2+3, layout.pos.col=j2+1)); };}; dev.off(); }; \
+	};}; print(warnings()); \
+"
+
+echo -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); library(\"cowplot\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
+        for (i in DataTypes1[c(1,4)]) { for (l in DataTypes2[1:2]) { for (m in Paths[2:3]) { \
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompHeatplots/ukb_v3.BritReps.HeightBMI.\", l, \".\", m, \".ColCrct.localPCs.PopComp.Heatplots.vs1.png\", sep=\"\"), height=4250, width=7500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \ 
+                plotPoints1 <- c(); ListCounter1 <- 1; for (j in Strats[4]) { \
+                        for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
+                                Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", m, \"/\", i, \"/ukb_chrAll_v3.British.Ran4000.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", l, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", m, \".ArchExplr.\", i, \".txt\", sep=\"\"), header=F); \
+                                Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", m, \"/\", i, \"/ukb_chrAll_v3.British.Ran4000.2.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", l, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", m, \".ArchExplr.\", i, \".txt\", sep=\"\"), header=F); \
 
 plink --bfile /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap --recode vcf --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap
 gzip -f /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.vcf
@@ -17311,6 +17368,71 @@ CHR     SNP     POS     NMISS   FST
 1       rs4970383       838555  6940    0.0276384
 1       rs950122        846864  6894    0.0180153
 1       rs13303222      849998  6950    -0.000120273
+> Data2.sub
+                    African British.Ran4000   Caribbean
+African         0.000000000      0.10410200 0.001742217
+British.Ran4000 0.104102000      0.00000000 0.088259010
+Caribbean       0.001742217      0.08825901 0.000000000
+> melt(Data2.sub)
+No id variables; using all as measure variables
+         variable       value
+1         African 0.000000000
+2         African 0.104102000
+3         African 0.001742217
+4 British.Ran4000 0.104102000
+5 British.Ran4000 0.000000000
+6 British.Ran4000 0.088259010
+7       Caribbean 0.001742217
+8       Caribbean 0.088259010
+9       Caribbean 0.000000000
+> Data2.sub.vrs2 <- cbind(c("African", "British.Ran4000", "Caribbean"), Data2.sub);
+> Data2.sub.vrs2
+                c("African", "British.Ran4000", "Caribbean")     African
+African                                              African 0.000000000
+British.Ran4000                              British.Ran4000 0.104102000
+Caribbean                                          Caribbean 0.001742217
+                British.Ran4000   Caribbean
+African              0.10410200 0.001742217
+British.Ran4000      0.00000000 0.088259010
+Caribbean            0.08825901 0.000000000
+> melt(Data2.sub.vrs2)
+Using c("African", "British.Ran4000", "Caribbean") as id variables
+  c("African", "British.Ran4000", "Caribbean")        variable       value
+1                                      African         African 0.000000000
+2                              British.Ran4000         African 0.104102000
+3                                    Caribbean         African 0.001742217
+4                                      African British.Ran4000 0.104102000
+5                              British.Ran4000 British.Ran4000 0.000000000
+6                                    Caribbean British.Ran4000 0.088259010
+7                                      African       Caribbean 0.001742217
+8                              British.Ran4000       Caribbean 0.088259010
+9                                    Caribbean       Caribbean 0.000000000
+> Data2.sub.vrs2.melt <- melt(Data2.sub.vrs2)
+Using c("African", "British.Ran4000", "Caribbean") as id variables
+> Data2.sub.vrs2.melt
+  c("African", "British.Ran4000", "Caribbean")        variable       value
+1                                      African         African 0.000000000
+2                              British.Ran4000         African 0.104102000
+3                                    Caribbean         African 0.001742217
+4                                      African British.Ran4000 0.104102000
+5                              British.Ran4000 British.Ran4000 0.000000000
+6                                    Caribbean British.Ran4000 0.088259010
+7                                      African       Caribbean 0.001742217
+8                              British.Ran4000       Caribbean 0.088259010
+9                                    Caribbean       Caribbean 0.000000000
+> colnames(Data2.sub.vrs2.melt)[1] <- "ind.1"
+> colnames(Data2.sub.vrs2.melt)[2] <- "ind.2"
+> Data2.sub.vrs2.melt
+            ind.1           ind.2       value
+1         African         African 0.000000000
+2 British.Ran4000         African 0.104102000
+3       Caribbean         African 0.001742217
+4         African British.Ran4000 0.104102000
+5 British.Ran4000 British.Ran4000 0.000000000
+6       Caribbean British.Ran4000 0.088259010
+7         African       Caribbean 0.001742217
+8 British.Ran4000       Caribbean 0.088259010
+9       Caribbean       Caribbean 0.000000000
 
 
 
