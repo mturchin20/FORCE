@@ -9345,9 +9345,9 @@ col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(1
 			}; if (neg.is.null(nrow(MatrixStats.Results1))) { 
 colnames(MatrixStats.Results1) <- c(\\\"Pathway\\\", \\\"K.var\\\", \\\"K.range\\\", \\\"K.sum\\\", \\\"G.var\\\", \\\"G.range\\\", \\\"G.sum\\\", \\\"Q.var\\\", \\\"Q.range\\\", \\\"Q.sum\\\", \\\"Geno.cor.var\\\", \\\"Geno.cor.range\\\", \\\"Geno.cor.sum\\\"); 
 
-for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2 | head -n 1`; do
-	for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2 | head -n 1`; do
-		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+	for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 				pValBonf=1; pValCutoff="pValAll";
@@ -9359,6 +9359,50 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 		done;
 	done;
 done;
+
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2 | head -n 1`; do
+	for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2 | head -n 1`; do
+		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2`; do
+			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+				pValBonf=1; pValCutoff="pValAll";
+				echo $l $i $ancestry1 $ancestry2 $k $pValBonf
+		
+				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/MatrixStats/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.AllPathways.noDups.MatrixStats.$i.ColCrct.localPCs.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=T); cor1 <- cor(Data1[,7],-log10(Data1[,6])); cor2 <- cor(Data1[,8],-log10(Data1[,6])); cor3 <- cor(Data1[,9],-log10(Data1[,6])); cor4 <- cor(Data1[,10],-log10(Data1[,6])); cor5 <- cor(Data1[,11],-log10(Data1[,6])); cor6 <- cor(Data1[,12],-log10(Data1[,6])); cor7 <- cor(Data1[,13],-log10(Data1[,6])); cor8 <- cor(Data1[,14],-log10(Data1[,6])); cor9 <- cor(Data1[,15],-log10(Data1[,6])); cor10 <- cor(Data1[,16],-log10(Data1[,6])); cor11 <- cor(Data1[,17],-log10(Data1[,6])); cor12 <- cor(Data1[,18],-log10(Data1[,6])); print(c(cor1,cor2,cor3,cor4,cor5,cor6,cor7,cor8,cor9,cor10,cor11,cor12));"
+	
+			done;
+		done;
+	done;
+done;
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/
+
+R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); library(\"cowplot\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
+	for (m in DataTypes1[c(1,4)]) { for (i in DataTypes2[1:2]) { for (l in Paths[2:3]) { \
+
+R -q -e "library(\"RColorBrewer\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\", \"pValAll\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); Phenos1 <- c(\"Height\", \"BMI\"); \
+	for (m in DataTypes1[5]) { for (i in DataTypes2[1]) { for (k in Phenos1) { for (l in Paths[2:3]) { \
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/ukb_v3.AllPops.\", k, \".ColCrct.localPCs.MatrixStats.\", l, \".\", m, \".plots.vs1.png\", sep=\"\"), 
+/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValsVsNumSNPs/ukb_v3.AllPops.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.pValsVsNumSNPs.vs1.png\", sep=\"\"), 
+		height=16000, width=25250, res=300); par(oma=c(1,12,8,1), mar=c(5,5,4,2), mfrow=c(8,12)); \
+                for (j in UKBioBankPops) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+			print(j); \
+			Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/Height/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.KEGG.Results.txt.pre.gz\", sep=\"\"), header=F); \	
+			Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.KEGG.Results.txt.pre.gz\", sep=\"\"), header=F); \	
+			Data3 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/Height/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.REACTOME.Results.txt.pre.gz\", sep=\"\"), header=F); \	
+			Data4 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.REACTOME.Results.txt.pre.gz\", sep=\"\"), header=F); \	
+			Data1 <- Data1[!is.na(Data1[,3]) & Data1[,4] >= 0,]; Data2 <- Data2[!is.na(Data2[,3]) & Data2[,4] >= 0,]; Data3 <- Data3[!is.na(Data3[,3]) & Data3[,4] >= 0,]; Data4 <- Data4[!is.na(Data4[,3]) & Data4[,4] >= 0,]; \
+			Data1[Data1[,4] == 0,4] <- 1e-11; Data2[Data2[,4] == 0,4] <- 1e-11; Data3[Data3[,4] == 0,4] <- 1e-11; Data4[Data4[,4] == 0,4] <- 1e-11; \
+			RegrLine1 <- lm(-log10(Data1[,4]) ~ Data1[,7]); RegrLine2 <- lm(-log10(Data2[,4]) ~ Data2[,7]); RegrLine3 <- lm(-log10(Data3[,4]) ~ Data3[,7]); RegrLine4 <- lm(-log10(Data4[,4]) ~ Data4[,7]); \
+			plot(Data1[,7], -log10(Data1[,4]), main=\"\", xlab=\"SNPs per Pathway\", ylab=\"-log10 p-Values\", ylim=c(0,11.25), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); abline(RegrLine1, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine1)\$coefficients[2,1], 4), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine1)\$coefficients[2,4], 4), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			plot(Data2[,7], -log10(Data2[,4]), main=\"\", xlab=\"SNPs per Pathway\", ylab=\"-log10 p-Values\", ylim=c(0,11.25), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); abline(RegrLine2, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine2)\$coefficients[2,1], 4), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine2)\$coefficients[2,4], 4), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			plot(Data3[,7], -log10(Data3[,4]), main=\"\", xlab=\"SNPs per Pathway\", ylab=\"-log10 p-Values\", ylim=c(0,11.25), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); abline(RegrLine3, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine3)\$coefficients[2,1], 4), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine3)\$coefficients[2,4], 4), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			plot(Data4[,7], -log10(Data4[,4]), main=\"\", xlab=\"SNPs per Pathway\", ylab=\"-log10 p-Values\", ylim=c(0,11.25), cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); abline(RegrLine4, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine4)\$coefficients[2,1], 4), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine4)\$coefficients[2,4], 4), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+		}; mtext(\"KEGG Height\", side=3, outer=TRUE, at=.1325, cex=3); mtext(\"KEGG BMI\", side=3, outer=TRUE, at=.3825, cex=3); mtext(\"REACTOME Height\", side=3, outer=TRUE, at=.6325, cex=3); mtext(\"REACTOME BMI\", side=3, outer=TRUE, at=.8825, cex=3); \
+		mtext(\"African\", side=2, line=4, outer=TRUE, at=.94, cex=3); mtext(\"Brit.Ran4k\", side=2, line=4, outer=TRUE, at=.815, cex=3); mtext(\"Brit.Ran10k\", side=2, line=4, outer=TRUE, at=.689, cex=3); mtext(\"Caribbean\", side=2, line=4, outer=TRUE, at=.564, cex=3); mtext(\"Chinese\", side=2, line=4, outer=TRUE, at=.43775, cex=3); mtext(\"Indian\", side=2, line=4, outer=TRUE, at=.31425, cex=3); mtext(\"Irish\", side=2, line=4, outer=TRUE, at=.18875, cex=3); mtext(\"Pakistani\", side=2, line=4, outer=TRUE, at=.0625, cex=3); \
+	dev.off(); };};};}; print(warnings()); \
+"
+                                
 
 
 
