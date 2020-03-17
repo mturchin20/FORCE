@@ -7129,7 +7129,7 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 5 10:100021983  0.17950 0.6975691
 6 10:100030768  0.05998 0.5151588
 
-R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.GWASvsMAPIT.vs1.png\", height=9000, width=5000, res=300); par(oma=c(1,6,6,20), mar=c(5,5,4,2), mfrow=c(4,2)); for (j in UKBioBankPops[c(1,2,4,6)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.GWASvsMAPIT.vs1.png\", height=8500, width=4250, res=300); par(oma=c(1,6,6,1), mar=c(5,5,4,2), mfrow=c(4,2)); for (j in UKBioBankPops[c(1,2,4,6)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 			print(j); \
 			Data1a <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD\", sep=\"\"), header=F)); \  
 			Data1b <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD\", sep=\"\"), header=F)); \  
@@ -7142,17 +7142,13 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 			Data1a <- Data1a[,c(2,9)]; colnames(Data1a) <- c(\"SNP\", \"pValue\"); Data1b <- Data1b[,c(2,9)]; colnames(Data1b) <- c(\"SNP\", \"pValue\"); Data2a <- Data2a[,c(1,7)]; colnames(Data2a) <- c(\"SNP\", \"pValue\"); Data2b <- Data2b[,c(1,7)]; colnames(Data2b) <- c(\"SNP\", \"pValue\"); \
 			Data3a <- merge(Data1a, Data2a, by=\"SNP\"); Data3b <- merge(Data1b, Data2b, by=\"SNP\"); Data3a[,2] <- as.numeric(as.character(Data3a[,2])); Data3a[,3] <- as.numeric(as.character(Data3a[,3])); Data3b[,2] <- as.numeric(as.character(Data3b[,2])); Data3b[,3] <- as.numeric(as.character(Data3b[,3])); \
 			print(head(Data3a)); \	
-			plot(-log10(Data3a[,2]),-log10(Data3a[,3]), main=\"\", xlab=\"GWAS -log10(p-Values)\", ylab=\"MAPIT -log10(p-Values)\", xlim=c(0,8), ylim=c(0,8), pch=16, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-			abline(h=-log10(Data1b.Thresh), lwd=2, lty=3, col=\"RED\"); abline(v=-log10(Data1a.Thresh), lwd=2, lty=3, col=\"RED\"); abline(h=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(v=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(0,1,col=\"BLACK\"); legend(\"topright\", c(paste(\"p-Value: \", mean(Data1a.Thresh, Data2a.Thresh), sep=\"\"), \"p-Value: 1e-4\), lty=c(3,3), lwd=c(2,2), col=c(\"RED\", \"BLUE\"), bg=\"transparent\", cex=1.5); \
-			plot(-log10(Data3b[,2]),-log10(Data3b[,3]), main=\"\", xlab=\"GWAS -log10(p-Values)\", ylab=\"MAPIT -log10(p-Values)\", xlim=c(0,8), ylim=c(0,8), pch=16, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-			abline(h=-log10(Data2b.Thresh), lwd=2, lty=3, col=\"RED\"); abline(v=-log10(Data2a.Thresh), lwd=2, lty=3, col=\"RED\"); abline(h=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(v=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(0,1,col=\"BLACK\"); legend(\"topright\", c(paste(\"p-Value: \", mean(Data1b.Thresh, Data2b.Thresh), sep=\"\"), \"p-Value: 1e-4\), lty=c(3,3), lwd=c(2,2), col=c(\"RED\", \"BLUE\"), bg=\"transparent\", cex=1.5); \ 
+			plot(-log10(Data3a[,2]),-log10(Data3a[,3]), main=\"\", xlab=\"GWAS -log10(p-Values)\", ylab=\"MAPIT -log10(p-Values)\", xlim=c(0,7.5), ylim=c(0,7.5), pch=16, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+		abline(h=-log10(Data1b.Thresh), lwd=2, lty=3, col=\"RED\"); abline(v=-log10(Data1a.Thresh), lwd=2, lty=3, col=\"RED\"); abline(h=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(v=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(0,1,col=\"BLACK\"); legend(\"topright\", c(paste(\"p-Value: \", signif(mean(Data1a.Thresh, Data2a.Thresh), 3), sep=\"\"), \"p-Value: 1e-4\"), lty=c(3,3), lwd=c(2,2), col=c(\"RED\", \"BLUE\"), cex=1.5, y.intersp=1); \
+			plot(-log10(Data3b[,2]),-log10(Data3b[,3]), main=\"\", xlab=\"GWAS -log10(p-Values)\", ylab=\"MAPIT -log10(p-Values)\", xlim=c(0,7.5), ylim=c(0,7.5), pch=16, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+		abline(h=-log10(Data2b.Thresh), lwd=2, lty=3, col=\"RED\"); abline(v=-log10(Data2a.Thresh), lwd=2, lty=3, col=\"RED\"); abline(h=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(v=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(0,1,col=\"BLACK\"); legend(\"topright\", c(paste(\"p-Value: \", signif(mean(Data1b.Thresh, Data2b.Thresh), 3), sep=\"\"), \"p-Value: 1e-4\"), lty=c(3,3), lwd=c(2,2), col=c(\"RED\", \"BLUE\"), cex=1.5, y.intersp=1); \ 
 			write.table(cbind(Data3a, rep(Data1a.Thresh, nrow(Data3a)), rep(Data1b.Thresh, nrow(Data3a))), file=\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.GWASvsMAPIT.Height.merge.vs1.txt\", quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(cbind(Data3b, rep(Data1a.Thresh, nrow(Data3b)), rep(Data2b.Thresh, nrow(Data3b))), file=\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.GWASvsMAPIT.BMI.merge.vs1.txt\", quote=FALSE, row.name=FALSE, col.name=FALSE); \	
 		}; mtext(\"Height\", side=3, outer=TRUE, at=.265, cex=3); mtext(\"BMI\", side=3, outer=TRUE, at=.77, cex=3); \
-		mtext(\"African\", side=2, outer=TRUE, line=1, at=.88, cex=3); mtext(\"Brit.Ran4k\", side=2, outer=TRUE, line=1, at=.63, cex=3); mtext(\"Caribbean\", side=2, outer=TRUE, line=1, at=.38, cex=3); mtext(\"Indian\", side=2, outer=TRUE, line=1, at=.13, cex=3); \
-	        par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"p-Value < 1e-4  
-
-legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Brit.Ran10k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\"), pch=c(16,16,16,16,16,16,16,16), lty=c(NA,NA,NA,NA,NA,NA,NA,NA), lwd=c(NA,NA,NA,NA,NA,NA,NA,NA), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.0185,.08225), bg=\"transparent\", cex=1.5, y.intersp=2); \
-	
+		mtext(\"African\", side=2, outer=TRUE, line=1, at=.8775, cex=3); mtext(\"Brit.Ran4k\", side=2, outer=TRUE, line=1, at=.6275, cex=3); mtext(\"Caribbean\", side=2, outer=TRUE, line=1, at=.3775, cex=3); mtext(\"Indian\", side=2, outer=TRUE, line=1, at=.1275, cex=3); \
 	dev.off(); print(warnings()); \
 "
 
@@ -7162,6 +7158,56 @@ legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Brit.Ran10k\", \"Caribbean
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.*.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/.
 
+[1] "Indian;Indian"
+     V1   V2         V3          V4  V5    V6     V7           V8
+[1,] " 1" "1:729632" "   729632" "T" "ADD" "4951" "-1.411e-02" "-2.906e-01"
+[2,] " 1" "1:752721" "   752721" "A" "ADD" "4951" " 1.306e-03" " 5.287e-02"
+[3,] " 1" "1:754105" "   754105" "T" "ADD" "4951" "-9.911e-03" "-2.025e-01"
+[4,] " 1" "1:756604" "   756604" "A" "ADD" "4951" " 1.070e-02" " 4.086e-01"
+[5,] " 1" "1:759036" "   759036" "A" "ADD" "4951" "-2.122e-02" "-4.319e-01"
+[6,] " 1" "1:761147" "   761147" "T" "ADD" "4951" " 5.406e-03" " 2.094e-01"
+     V9
+[1,] "7.714e-01"
+[2,] "9.578e-01"
+[3,] "8.395e-01"
+[4,] "6.829e-01"
+[5,] "6.659e-01"
+[6,] "8.342e-01"
+     V1         V2  V3       V4       V5                    V6
+[1,] "1:729632" "T" "     1" "     1" "0.242582769362374"   " 1.997830e-01"
+[2,] "1:752721" "A" "     2" "     2" "-0.0595262699830523" "-6.437280e-02"
+[3,] "1:754105" "T" "     3" "     3" "0.249464893482539"   " 2.042994e-01"
+[4,] "1:756604" "A" "     4" "     4" "-0.143496410074481"  "-1.693805e-01"
+[5,] "1:759036" "A" "     5" "     5" "0.165531994474127"   " 1.453417e-01"
+[6,] "1:761147" "T" "     6" "     6" "-0.133412363308751"  "-1.556024e-01"
+
+
+R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \ 
+	for (j in UKBioBankPops[c(1,2,4,6)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+			print(j); \
+			png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.\", ancestry2, \".HeightBMI.ColCrct.localPCs.GWASvsMAPIT.ManhattanPlots.vs1.png\", sep=\"\"),  height=4250, width=4250, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(2,2)); \ 
+			Data1a <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD\", sep=\"\"), header=F)); \  
+			Data1b <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD\", sep=\"\"), header=F)); \  
+			Data2a <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.Height.DaviesApprox.Results.wSNPInfo.txt.gz\", sep=\"\"), header=F)); \
+			Data2b <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.BMI.DaviesApprox.Results.wSNPInfo.txt.gz\", sep=\"\"), header=F)); \
+			Data1a <- Data1a[!is.na(Data1a[,9]),]; Data1b <- Data1b[!is.na(Data1b[,9]),]; Data2a <- Data2a[!is.na(Data2a[,7]),]; Data2b <- Data2b[!is.na(Data2b[,7]),]; \
+			Data1a[Data1a[,9] == 0,9] <- 1e-11; Data1b[Data1b[,9] == 0,9] <- 1e-11; Data2a[Data2a[,7] == 0,7] <- 1e-11; Data2b[Data2b[,7] == 0,7] <- 1e-11; \ 
+			Data1a <- cbind(Data1a, t(sapply(strsplit(Data1a[,2], \":\"), unlist))); \
+			Data1b <- cbind(Data1b, t(sapply(strsplit(Data1b[,2], \":\"), unlist))); \
+			Data2a <- cbind(Data2a, t(sapply(strsplit(Data2a[,1], \":\"), unlist))); \
+			Data2b <- cbind(Data2b, t(sapply(strsplit(Data2b[,1], \":\"), unlist))); \
+			print(head(Data1a)); print(head(Data2a)); \
+	dev.off(); }; print(warnings()); \
+"
+
+			plot(-log10(Data3a[,2]),-log10(Data3a[,3]), main=\"\", xlab=\"GWAS -log10(p-Values)\", ylab=\"MAPIT -log10(p-Values)\", xlim=c(0,7.5), ylim=c(0,7.5), pch=16, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+			plot(-log10(Data3b[,2]),-log10(Data3b[,3]), main=\"\", xlab=\"GWAS -log10(p-Values)\", ylab=\"MAPIT -log10(p-Values)\", xlim=c(0,7.5), ylim=c(0,7.5), pch=16, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+			mtext(\"Height\", side=3, outer=TRUE, at=.265, cex=3); mtext(\"BMI\", side=3, outer=TRUE, at=.77, cex=3); \
+			mtext(\"African\", side=2, outer=TRUE, line=1, at=.8775, cex=3); mtext(\"Brit.Ran4k\", side=2, outer=TRUE, line=1, at=.6275, cex=3); mtext(\"Caribbean\", side=2, outer=TRUE, line=1, at=.3775, cex=3); mtext(\"Indian\", side=2, outer=TRUE, line=1, at=.1275, cex=3); \
+	dev.off(); }; print(warnings()); \
+"
+
+#On MacBook Pro
 
 
 
