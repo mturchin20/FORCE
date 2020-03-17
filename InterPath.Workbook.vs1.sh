@@ -1375,15 +1375,19 @@ done
 #	write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.BMIAdj.flashpca.top10resids.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);"
 #	paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.BMIAdj.txt | awk '{ print $1 "\t" $2 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.Ovrlp.pruned.raw.Phenos.Transformed.BMIAdj.flashpca.top10resids.txt | awk '{ print $1 }') | awk '{ if ($1 != $3) { print $0 } }' | wc
 
-#20200317 NOTE -- this was going to be to make perms of files like '...raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt', but realized it should be done within the code of say the MAPIT part, in order to get the 'noNAs' part correctly the first time around (eg doing 'sample()' after the noNAs part)
-~for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8 | head -n 8`; do
-~	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-~		
-~	echo $pheno1 $ancestry1 $ancestry2 $ancestry3
-~
-~	cat 
-~
-~done
+#20200317 NOTE -- this was going to be to make perms of files like '...raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt', but realized it should be done within the code of say the MAPIT part, in order to get the 'noNAs' part correctly the first time around (eg doing 'sample()' after the noNAs part); 20200317 NOTE -- jk, using this for a slightly different person now
+for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
+		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`;
+			
+		echo $Pheno1 $ancestry1 $ancestry2 $ancestry3
+	
+		if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/perms ]; then
+			mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/perms
+		fi
+	
+	done	
+done
 
 #20181206 NOTE -- This was the incorrect way to go about adjusting for BMI in Waist & Hip; the correct way was to remove BMI after removing Age within each sex separately, then quantile normalizing within-sex, then bringing the two groups back together (eg doing it prior to within-sex quantile normalization)
 ##for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
@@ -6254,7 +6258,8 @@ done
 #cp -p /users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.cpp /users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.MTedits1.cpp; cp -p /users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.R /users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.MTedits1.R
 module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2`; do
 	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -E 'African|Ran4000|Caribbean|Indian' | head -n 4 | tail -n 1`; do
-		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`; 
+		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; PhenoSeed1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`; 
+
 		echo $i $ancestry1 $ancestry2 $ancestry3 $k
 
 		if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT ]; then
@@ -6262,11 +6267,16 @@ module load R/3.4.3_mkl gcc; sleep 10800; for i in `cat <(echo "Height;1254 BMI;
 			mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/slurm
 		fi
 
+PermAdj <- 9; Y.Seed <- $AncSeed1 + $PhenoSeed1 + PermAdj; \
+                                Pathways.Regions <- list(); cores = detectCores(); InterPath.output <- list(); InterPath.output\\\$Est <- c(); InterPath.output\\\$Eigenvalues <- c(); InterPath.output\\\$PVE <- c(); \
+                                for (i in $PathNum:($PathNum+79)) { set.seed(Y.Seed); Y <- c(); Y.Pheno <- c(); Y.Pheno.noNAs <- c(); \
+
 		sbatch -t 480:00:00 -n 32 --account=ccmb-condo --mem 251g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.vs1.localPCs.slurm.$Pheno1.perm1.DaviesApprox.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.vs1.localPCs.slurm.$Pheno1.perm1.DaviesApprox.error --comment "$Pheno1 $ancestry2 perm1" <(echo -e '#!/bin/sh';	
 			echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"doParallel\\\"); library(\\\"Rcpp\\\"); library(\\\"RcppArmadillo\\\"); library(\\\"RcppParallel\\\"); library(\\\"CompQuadForm\\\"); source(\\\"/users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.R\\\"); sourceCpp(\\\"/users/mturchin/Software/MAPIT/OpenMP\ Version/MAPIT_OpenMP.MTedits1.cpp\\\"); cores = detectCores(); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \
-			set.seed(8472); Y <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt\\\", header=T); X <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); Z <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt\\\", header=T); \
+			PermAdj <- 0; Y.seed <- $AncSeed1 + $PhenoSeed1 + PermAdj; set.seed(Y.Seed); \
+			Y <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt\\\", header=T); X <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); Z <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt\\\", header=T); \
 			Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; X.noNAs <- X[neg.is.na(Y.Pheno),]; Z.PCs.noNAs <- Z[neg.is.na(Y.Pheno),(ncol(Z)-9):ncol(Z)]; print(head(Y.Pheno.noNAs)); Y.Pheno.noNAs <- sample(Y.Pheno.noNAs); print(head(Y.Pheno.noNAs)); \
-			
+			write.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/perms/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.perm1.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); \	
 			MAPIT.Results <- MAPIT_Davies_Approx(X=t(X.noNAs),y=Y.Pheno.noNAs,Z=t(as.matrix(Z.PCs.noNAs)),cores=cores); \
 			fwrite(data.frame(MAPIT.Results\\\$Est), \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.$Pheno1.perm1.DaviesApprox.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); fwrite(data.frame(MAPIT.Results\\\$Eigenvalues), \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.$Pheno1.perm1.DaviesApprox.Eigenvalues.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE); fwrite(data.frame(MAPIT.Results\\\$PVE), \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.$Pheno1.perm1.DaviesApprox.PVE.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);\"");
         done;
