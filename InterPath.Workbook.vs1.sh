@@ -2635,7 +2635,10 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 #NOTE -- copy and pasted `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp` & `/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Simulations.Vs2.R` from associated Slack channel and from Lorin's code posted on 20180731
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Source.Vs2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.GjDrop.mtEdits.SingleRun.vs1.wCovs.vs1.GG.cpp
+#202003** NOTE -- below was done at some point when considering running a version of things from the most basic form the .cpp code, but did not end up needing that. However, did end up using this copy of the code to send to Greg anyways as 'original' forms of the code as reference points
 #scp -p /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.cpp mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/.
+#20200319 NOTE -- below done to provide Greg with copy that has the Z covar matrix additions
+#cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.wCovs.cpp
 
 #tar/zip Genes vs2 (+), get plink going (+), get mapit going (..), do African version without assessment center as covariate (all 4 phenos, exonicplus20kb), do a version where PCs are corrected via regressing out and not in the projection matrix thingie, (was there other tar/zip things that were needed? Irish/Ran10000 possibly -- yes, there were multiple things to tar/zip/rm actually) (+)
 
