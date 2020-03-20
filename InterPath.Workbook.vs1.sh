@@ -5636,7 +5636,6 @@ for GEMMAvals in `cat <(echo $GEMMATestsRnd3 | perl -lane 'print join("\n", @F);
 			else
 				echo "NA" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
 			fi
-			echo "" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
 			if [ -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt ]; then
 				cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/output/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned.$VS1.$i.$MRSCALE.Output.sXX.txt.log.txt | grep "pve estimates" | awk '{ print $5 "," $6 }' >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output
 			else
@@ -5676,16 +5675,45 @@ done
 #cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/UKB_v3_AllPops_GEMMA_Main_Results1.output
 
 #20200317 NOTE -- it seems like values, if not particularly small, are fairly stable between 'onlyK' and the full model; it seems like including M messes things up more than it helps; there's some examples where Irish/Brit.Ran10k makes sense but Brit.Ran4k doesn't, and vice versa, and when this happens it seems to flip along the 'pruned'/'not pruned' lines; feels like there needs to be an intermediate pruning situation between 'not pruned' and '.05 pruned'; it seems like rescaling vs. not rescaling doesn't always seem to be make a difference, aside from what appears to be failure vs. not failure in a few instances, but when things do work between both scenarios (and there's already a good signal) then nto much if anything changes between the two situations
-for GEMMAvals in `cat <(echo $GEMMATestsRnd2 | perl -lane 'print join("\n", @F);')`; do echo $GEMMAvals;
+for GEMMAvals in `cat <(echo $GEMMATestsRnd3 | perl -lane 'print join("\n", @F);')`; do echo $GEMMAvals;
 	VS1=`echo $GEMMAvals | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; MRSCALE=`echo $GEMMAvals | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; GEMMA=`echo $GEMMAvals | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`;
-	
-	echo $VS1 $MRSCALE $GEMMA
-	cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_v3_AllPops_${GEMMA}_Main_Results1.output;
-	echo ""
-
+	paste <(cat <(echo -e "\nHeight\nNot Pruned\nLoose Pruned\nStrict Pruned\n\nBMI\nNot Pruned\nLoose Pruned\nStrict Pruned")) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/subfiles/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.$GEMMA.main.results.temp1.output) | column -t -s $'\t' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_v3_AllPops_${GEMMA}_Main_Results1_all3.output
 done
 
-#	...| awk '{ if (NR == 7) { print "" } print $0 }' ...
+#cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_v3_AllPops_GEMMA.localPCs.noMnoRescale.Adjusted_Main_Results1_all3.output
+#cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_v3_AllPops_GEMMA.localPCs.noMRescale.YRescale3.Adjusted_Main_Results1_all3.output
+
+for GEMMAvals in `cat <(echo $GEMMATestsRnd3 | perl -lane 'print join("\n", @F);')`; do echo $GEMMAvals;
+	VS1=`echo $GEMMAvals | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; MRSCALE=`echo $GEMMAvals | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; GEMMA=`echo $GEMMAvals | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`;
+	cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_v3_AllPops_${GEMMA}_Main_Results1_all3.output
+done
+
+```
+(InterPath2) [  mturchin@login003  ~]$for GEMMAvals in `cat <(echo $GEMMATestsRnd3 | perl -lane 'print join("\n", @F);')`; do echo $GEMMAvals;
+>         VS1=`echo $GEMMAvals | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; MRSCALE=`echo $GEMMAvals | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; GEMMA=`echo $GEMMAvals | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`;
+>         cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GEMMA/ukb_v3_AllPops_${GEMMA}_Main_Results1_all3.output
+> done            
+GEMMA.gemmaK.Vs2.localPCs;noMnoRescale.Adjusted;GEMMA.localPCs.noMnoRescale.Adjusted
+               African                   British.Ran4000       British.Ran10000          Caribbean                Chinese                   Indian                Irish                 Pakistani
+Height                                                                                                                                                                                  
+Not Pruned     1.35223e-06,0.000106774   NA                    NA                        0.0004419,0.121997       NA                        0.0189275,0.334129    0.809752,0.190248     NA
+Loose Pruned   9.55033e-07,4.42687e-06   0.748714,1.35289e-76  NA                        0.000783582,0.125492     1.49094e-06,9.14189e-18   0.00119727,0.304492   0.782267,0.217733     4.12311e-212,8.44775e-70
+Strict Pruned  6.86491e-09,2.53426e-08   0.0199002,0.0126789   0.240846,0.148589         0.000232626,0.171111     0.0186157,1.89989e-08     0.162431,0.0880597    0.283534,0.716466     7.31013e-234,1.69403e-41
+BMI                                                                                                                                                                                     
+Not Pruned     7.9399e-06,8.94263e-12    NA                    1.07441e-07,1.94712e-273  1.40776e-05,1.54813e-05  NA                        0.000422387,0.643243  3.65592e-05,0.999963  0.2173,0.00994228
+Loose Pruned   5.85261e-08,2.16482e-05   NA                    1.92968e-06,8.67399e-288  3.88522e-06,5.36846e-06  0.000230984,9.01627e-08   0.000664489,0.554872  0.375203,0.624797     0.1188,0.0774031
+Strict Pruned  1.19664e-261,2.12486e-12  0.193631,6.75182e-06  0.00111113,0.000291409    7.89615e-21,1.1359e-08   3.28806e-116,0.000907085  0.00541803,0.363578   0.102312,0.897688     7.2232e-19,0.207005
+GEMMA.gemmaK.Vs2.localPCs;noMRescale.YRescale3.Adjusted;GEMMA.localPCs.noMRescale.YRescale3.Adjusted
+               African                  British.Ran4000        British.Ran10000         Caribbean              Chinese                  Indian                Irish                Pakistani
+Height                                                                                                                                                                             
+Not Pruned     0.00155711,3.56913e-134  0.00135942,0.00114745  0.785587,1.46752e-06     0.0004419,0.121997     6.64679e-05,0.000216983  0.0189275,0.334129    0.80977,0.174548     0.0488302,5.44209e-05
+Loose Pruned   0.000832401,4.06198e-06  0.748298,0.0233062     NA                       0.000783582,0.125492   0.0207776,0.00395286     0.00119727,0.304492   0.782426,0.190205    2.82053e-07,0.0038559
+Strict Pruned  0.000920385,0.00409451   0.263591,0.020513      0.240846,0.148589        0.000232626,0.171111   0.0342345,0.0442341      0.162431,0.0880597    0.283305,0.65685     0.00206313,9.90702e-07
+BMI                                                                                                                                                                                
+Not Pruned     NA                       0.24641,3.20786e-14    6.62686e-07,8.81273e-11  0.00089351,0.00242103  1.61658e-05,0.0500144    0.000422387,0.643243  0.000219501,0.9517   0.2173,0.00994228
+Loose Pruned   6.03914e-88,1.64812e-05  0.266728,5.41301e-145  2.36215e-06,4.95622e-13  0.00328796,0.00508375  0.00653208,0.00848188    0.000664489,0.554872  0.379704,0.620296    0.1188,0.0774031
+Strict Pruned  NA                       0.192057,0.0296138     0.00250682,0.0199494     0.00131992,0.00106392  NA                       0.0176367,0.358089    0.000583517,0.99938  0.00215488,0.210968
+```
 
 #wCovar Var Component
 
@@ -10160,16 +10188,16 @@ done;
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs
 
 #PopGroup1 either "AllPops" or "BritReps"
-PopGroup1="AllPops"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+PopGroup1="BritReps"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	PopGroupBash="error1"; if [ $PopGroup1 == "AllPops" ]; then PopGroupBash="head"; fi; if [ $PopGroup1 == "BritReps" ]; then PopGroupBash="tail"; fi;
-	echo $l;
-	rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.${l}.FDRs.vs1.txt; 
-	echo -e "$l" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.${l}.FDRs.vs1.txt
-	echo "" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.${l}.FDRs.vs1.txt
+#	echo $l;
+#	rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.${l}.FDRs.vs1.txt; 
+	echo -e "$l" 
+	echo -e "." 
 	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 2`; do
-		echo $i;
-		echo -e "$i" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.${l}.FDRs.vs1.txt
-		echo -e "Ancestry NumPaths pValBonf FDR pVal001 FDR pVal01 FDR" | column -t >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.${l}.FDRs.vs1.txt
+#		echo $i;
+		echo -e "$i" 
+		echo -e "Ancestry NumPaths pValBonf FDR pVal001 FDR pVal01 FDR" 
 		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | $PopGroupBash -n 8 | head -n 8 | tail -n 8 | grep -v Irish`; do
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
@@ -10178,15 +10206,16 @@ PopGroup1="AllPops"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -l
 		
 #				echo $i $ancestry1 $ancestry2 $k
 			
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^$l"_" | grep -v -w NA | R -q -e "Data1 <- read.table(file('stdin'), header=F); Results1 <- c(); Results1 <- c(Results1, \"$ancestry2\"); Results1 <- c(Results1, c(nrow(Data1), c(signif(.05/$NumPaths2, 4), nrow(Data1[Data1[,4] <= .05/$NumPaths2,])))); Results1 <- c(Results1, c(.001,  nrow(Data1[Data1[,4] <= .001,]))); Results1 <- c(Results1, c(.01,  nrow(Data1[Data1[,4] <= .01,]))); write.table(matrix(Results1, nrow=1), quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v ^\> | column -t >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.${l}.FDRs.vs1.txt 
+				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^$l"_" | grep -v -w NA | R -q -e "Data1 <- read.table(file('stdin'), header=F); Results1 <- c(); Results1 <- c(Results1, \"$ancestry2\"); Results1 <- c(Results1, c(nrow(Data1), c(signif(.05/$NumPaths2, 4), nrow(Data1[Data1[,4] <= .05/$NumPaths2,])))); Results1 <- c(Results1, c(.001,  nrow(Data1[Data1[,4] <= .001,]))); Results1 <- c(Results1, c(.01,  nrow(Data1[Data1[,4] <= .01,]))); write.table(matrix(Results1, nrow=1), quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v ^\> | column -t 
 
 	
 			done;
 		done;
-		echo "" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.${l}.FDRs.vs1.txt
-	done;
-	echo "" >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.${l}.FDRs.vs1.txt	
-done;	
+		echo "." 
+	done; 
+	echo "."
+	echo "."
+done | column -t > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.${l}.FDRs.vs1.txt 
 
 #				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^$l"_" | grep -v -w NA | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(nrow(Data1)); print(c(.05/$NumPaths2, nrow(Data1[Data1[,4] <= .05/$NumPaths2,]))); print(c(.001,  nrow(Data1[Data1[,4] <= .001,]))); print(c(.01,  nrow(Data1[Data1[,4] <= .01,])));" 
 
