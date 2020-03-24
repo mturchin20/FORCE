@@ -10879,9 +10879,83 @@ zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin
 zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | grep ^REACTOME | grep -vw NA | perl -lane 'my @vals1 = split(/,/, $F[4]); print join("\n", @vals1);' | sort | uniq -c | sort -gr -k 1,1 | grep UBA52
 
 #From: http://pedagogix-tagc.univ-mrs.fr/courses/ASG1/practicals/go_statistics_td/go_statistics_td_2015.html & https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Hypergeometric.html
+```
+Hypergeometric test
+In a first time, we model the association between genes and GO class using a hypergeometric distribution. The classical example for the hypergeometric is the ranomd selection of “k” balls in an urn containing “m” marked and “n” non-marked balls, and the observation that the selection contains “x” marked ball.
 
+To illustrate the way to perform the hypergeometric test, we will re-analyze the second row of the David result displayed above: correspondence between a set of predicted E2F target genes and the genes annotated in the functional class “cell cycle” of the GOTERM_BP_FAT terms.
 
+We define the parameters of the hypergeometric test in the following way:
 
+Variale	Description
+m=611	number of “marked” elements, i.e. total number of genes annotated for the selected GO term (cell cycle in GOTERM_BP_FAT annotations).
+N=13588	total number of genes with some annotation in GOTERM_BP_FAT. Note: this is lower than the total number of human genes, since many genes are of totally unknown function.
+n=N−m	number of “non-marked” elements, i.e. the number of genes that have some annotation in GOERM_BP_FAT, but are not associated to the selected GO term (cell cycle).
+k=59	Size of the selection, i.e. number of genes predicted as E2F targets, and associated to at least one “Biological Process” in the Gene Ontology.
+x=19	number of “marked” elements in the selection, i.e. number of genes predicted as E2F targets AND associated to the process “cell cycle” in GO annotations.
+```
+
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | grep PSM | head -n 5
+     13 PSMB8
+     12 PSMF1
+     12 PSME2
+     12 PSME1
+     12 PSMD9
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | wc
+     65     390   43332
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | wc
+     65     390   43332
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValAll/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.txt | wc  
+    658    3948  206511
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValAll/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.txt | grep -vw NA | wc
+    658    3948  206511
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValAll/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.txt | grep PSME1 | wc
+     44     264   29998
+
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | head -n 10
+     10 UBA52
+     10 RPS27A
+      9 PSMF1
+      9 PSME2
+      9 PSME1
+      9 PSMD9
+      9 PSMD8
+      9 PSMD7
+      9 PSMD6
+      9 PSMD5
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | wc
+     26     156   11561
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValAll/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | wc
+    577    3462  144291
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValAll/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | grep PSME1 | wc
+     34     204   17183
+
+```
+k <- 65
+m <- 44
+N <- 658
+n <- N - m
+n
+> n
+[1] 614
+x <- 12
+phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+> phyper(q=x -1, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 0.0005303724
+phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+> phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 0.0001191678
+
+k <- 26
+m <- 34
+N <- 577
+n <- N - m
+n
+x <- 9
+phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+
+```
 
 
 
