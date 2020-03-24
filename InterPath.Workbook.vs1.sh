@@ -10174,7 +10174,7 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterP
 #20200318
 
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 2`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -v Irish`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
@@ -10706,18 +10706,20 @@ pValCutoff="pValBonf"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl 
 	
 			done;
 		done;
-	done | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/20200303.KG.TopResults.$l.AllPops.HeightBMI.ColCrct.localPCs.ExonicPlus20kb.$pValCutoff.vs1.txt.gz
+	done | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/20200324.KG.TopResults.$l.AllPops.HeightBMI.ColCrct.localPCs.ExonicPlus20kb.$pValCutoff.vs1.txt.gz
 done 
 				
 #				cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/ArchitectureExplore/SubFiles/$l/$pValCutoff/ukb_chrAll_v2.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | sort -g -k 3,3 | awk '{ print $1 "\t" $3 }' | grep -v NA
 #				cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | sort -g -k 3,3 | perl -lane 'my @vals1 = split(/,/, $F[1]); print $F[0], "\t", $F[2], "\t", scalar(@vals1);' | grep -w -v NA
 
-cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*Height.ExonicPlus20kb*_GK.ColCrct.localPCs*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }' 
-cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*BMI.ExonicPlus20kb*_GK.ColCrct.localPCs*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }' 
-cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*Height.ExonicPlus20kb*_GK.ColCrct.localPCs*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }' 
-cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*BMI.ExonicPlus20kb*_GK.ColCrct.localPCs*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }' 
+#cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*Height.ExonicPlus20kb*_GK.ColCrct.localPCs*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }' 
 #cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $0 } }'  
 #cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $0 } }'  
+
+for i in `ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*Height.ExonicPlus20kb*_GK.ColCrct.localPCs*KEGG*pValBonf.txt | grep -v 000\..\/ | awk '{ print $9 }'`; do cat $i | awk '{ print $1 }'; done | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }' 
+for i in `ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*BMI.ExonicPlus20kb*_GK.ColCrct.localPCs*KEGG*pValBonf.txt | grep -v 000\..\/ | awk '{ print $9 }'`; do cat $i | awk '{ print $1 }'; done | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }' 
+for i in `ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*Height.ExonicPlus20kb*_GK.ColCrct.localPCs*REACTOME*pValBonf.txt | grep -v 000\..\/ | awk '{ print $9 }'`; do cat $i | awk '{ print $1 }'; done | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }' 
+for i in `ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*BMI.ExonicPlus20kb*_GK.ColCrct.localPCs*REACTOME*pValBonf.txt | grep -v 000\..\/ | awk '{ print $9 }'`; do cat $i | awk '{ print $1 }'; done | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }' 
 
 for i in `cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*_GK.ColCrct.localPCs*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $1 "," $2 } }'`; do path1=`echo $i | perl -ane 'my @vals1 = split(/,/, $F[0]); print $vals1[1];'`; count1=`echo $i | perl -ane 'my @vals1 = split(/,/, $F[0]); print $vals1[0];'`; cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*_GK.ColCrct.localPCs*KEGG*pValBonf.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); print $F[0], "\t", $F[3], "\t", $F[4];' | sort -rg -k 2,2 | uniq | grep $path1 | xargs echo $count1; done
 cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*_GK.ColCrct.localPCs*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 < 2) { print $1 "," $2 } }' | wc
@@ -10726,8 +10728,7 @@ for i in `cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturc
 cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*_GK.ColCrct.localPCs*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 < 2) { print $1 "," $2 } }' | wc
 cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/*/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*ExonicPlus20kb*_GK.ColCrct.localPCs*REACTOME*pValBonf.txt | perl -lane 'print $F[0], "\t", $F[3], "\t", $F[4];' | sort -rg -k 2,2 | uniq | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(Data1[,2][order(Data1[,2])]); print(Data1[,3][order(Data1[,3])]); quantile(Data1[,2]); quantile(Data1[,3]);"
 
-(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*Height.ExonicPlus20kb*_GK.ColCrct.localPCs*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }'
-BMI.ExonicPlus20kb*_GK.ColCrct.localPCs*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }'
+(InterPath2) [  mturchin@login003  ~]$for i in `ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*Height.ExonicPlus20kb*_GK.ColCrct.localPCs*KEGG*pValBonf.txt | grep -v 000\..\/ | awk '{ print $9 }'`; do cat $i | awk '{ print $1 }'; done | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }';
       3 KEGG_VASCULAR_SMOOTH_MUSCLE_CONTRACTION
       3 KEGG_TYPE_I_DIABETES_MELLITUS
       3 KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION
@@ -10744,7 +10745,7 @@ BMI.ExonicPlus20kb*_GK.ColCrct.localPCs*REACTOME*pValBonf.txt | awk '{ print $1 
       2 KEGG_AUTOIMMUNE_THYROID_DISEASE
       2 KEGG_ARRHYTHMOGENIC_RIGHT_VENTRICULAR_CARDIOMYOPATHY_ARVC
       2 KEGG_ALLOGRAFT_REJECTION
-(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*BMI.ExonicPlus20kb*_GK.ColCrct.localPCs*KEGG*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }'
+(InterPath2) [  mturchin@login003  ~]$for i in `ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.*BMI.ExonicPlus20kb*_GK.ColCrct.localPCs*KEGG*pValBonf.txt | grep -v 000\..\/ | awk '{ print $9 }'`; do cat $i | awk '{ print $1 }'; done | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }'
       4 KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION
       3 KEGG_TYPE_I_DIABETES_MELLITUS
       3 KEGG_REGULATION_OF_ACTIN_CYTOSKELETON
@@ -10764,12 +10765,12 @@ BMI.ExonicPlus20kb*_GK.ColCrct.localPCs*REACTOME*pValBonf.txt | awk '{ print $1 
       2 KEGG_AXON_GUIDANCE
       2 KEGG_AUTOIMMUNE_THYROID_DISEASE
       2 KEGG_ARRHYTHMOGENIC_RIGHT_VENTRICULAR_CARDIOMYOPATHY_ARVC
-(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*Height.ExonicPlus20kb*_GK.ColCrct.localPCs*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }'
+(InterPath2) [  mturchin@login003  ~]$for i in `ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*Height.ExonicPlus20kb*_GK.ColCrct.localPCs*REACTOME*pValBonf.txt | grep -v 000\..\/ | awk '{ print $9 }'`; do cat $i | awk '{ print $1 }'; done | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }'
       2 REACTOME_SIGNALING_BY_RHO_GTPASES
       2 REACTOME_MHC_CLASS_II_ANTIGEN_PRESENTATION
       2 REACTOME_METABOLISM_OF_CARBOHYDRATES
       2 REACTOME_CLASS_A1_RHODOPSIN_LIKE_RECEPTORS
-(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*BMI.ExonicPlus20kb*_GK.ColCrct.localPCs*REACTOME*pValBonf.txt | awk '{ print $1 }' | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }'
+(InterPath2) [  mturchin@login003  ~]$for i in `ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/*/*/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.*BMI.ExonicPlus20kb*_GK.ColCrct.localPCs*REACTOME*pValBonf.txt | grep -v 000\..\/ | awk '{ print $9 }'`; do cat $i | awk '{ print $1 }'; done | sort | uniq -c | sort -rg -k 1,1 | grep -vw NA | awk '{ if ($1 >= 2) { print $0 } }'
       2 REACTOME_METABOLISM_OF_CARBOHYDRATES
       2 REACTOME_GLYCOSAMINOGLYCAN_METABOLISM
       2 REACTOME_GASTRIN_CREB_SIGNALLING_PATHWAY_VIA_PKC_AND_MAPK
@@ -10959,6 +10960,12 @@ for n in `cat <(echo "GO_Biological_Process_2018 GO_Molecular_Function_2018 GO_C
                 done | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GK/TopResults/InDepth/enrichr/20190917.KG.TopResults.enrichr.$n.$l.AllPops.HeightBMI.ExonicPlus20kb.$pValCutoff.vs1.txt.gz
         done 
 done
+
+
+
+
+
+
 
 
 
