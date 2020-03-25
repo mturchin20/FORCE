@@ -10951,12 +10951,97 @@ m <- 34
 N <- 577
 n <- N - m
 n
+> n
+[1] 543
 x <- 9
+phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+> phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 4.46362e-06
+phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+> phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 3.545332e-07
+```
+
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | head -n 10
+     22 UBA52
+     22 RPS27A
+     15 SOS1
+     15 PIK3R1
+     15 PIK3CA
+     15 CDK1
+     14 MAPK1
+     14 GRB2
+     14 CREB1
+     13 PSMB8
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | wc
+     65     390   43332
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValAll/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.txt | grep -vw NA | wc
+    658    3948  206511
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValAll/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.txt | grep -vw NA | grep UBA52 | wc
+    106     636   55677
+
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.Exo
+nicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("
+\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | head -n 30
+     10 UBA52
+     10 RPS27A
+      9 PSMF1
+      9 PSME2
+      9 PSME1
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | wc
+     26     156   11561
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValAll/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | wc
+    577    3462  144291
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValAll/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | grep UBA52 | wc
+     84     504   33993
+
+```
+k <- 65
+m <- 106
+N <- 658
+n <- N - m
+n
+x <- 22
 phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
 phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
 
-```
+> k <- 65
+> m <- 106
+> N <- 658
+> n <- N - m
+> n
+[1] 552
+> x <- 22
+> phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 0.0001536891
+> phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 4.588312e-05
 
+
+k <- 26
+m <- 84
+N <- 577
+n <- N - m
+n
+x <- 10
+phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+
+> k <- 26
+> m <- 84
+> N <- 577
+> n <- N - m
+> n
+[1] 493
+> x <- 10
+> phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 0.001855224
+> phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 0.000401377
+
+
+
+```
 
 
 
