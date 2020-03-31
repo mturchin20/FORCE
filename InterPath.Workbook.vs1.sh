@@ -7234,8 +7234,6 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBPops <- c(NA, \"
         }; \
 "
 
-InterPath_Main_Figure_GWAS_vs1
-
 # par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Indian\"), pch=c(16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[9]), xpd=TRUE, inset=c(.0175,.134), bg=\"transparent\", cex=1.5, y.intersp=2); 
 
 #On MacBook Pro
