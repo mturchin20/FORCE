@@ -7241,12 +7241,9 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBPops <- c(NA, \"
         }; \
 "
 
-#R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
-#		for (j in UKBPops[1]) { \
-
-Data1.colors <- c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7]); \
-
 #On MacBook Pro
+#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.GWAS.Plots.*png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/.
+
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/MAPIT
 #scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/MAPIT/ukb_v3.*.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/MAPIT/.
 
