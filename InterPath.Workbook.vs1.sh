@@ -7284,6 +7284,7 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 			Data2b <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.BMI.DaviesApprox.Results.wSNPInfo.txt.gz\", sep=\"\"), header=F)); \
 			print(head(Data1a)); print(head(Data2a)); \
 			Data1a <- Data1a[!is.na(Data1a[,9]),]; Data1b <- Data1b[!is.na(Data1b[,9]),]; Data2a <- Data2a[!is.na(Data2a[,7]),]; Data2b <- Data2b[!is.na(Data2b[,7]),]; \
+			Data2a <- Data2a[as.numeric(as.character(Data2a[,7])) > 0,]; Data2b <- Data2b[as.numeric(as.character(Data2b[,7])) > 0,]; \
 			Data1a[Data1a[,9] == 0,9] <- 1e-11; Data1b[Data1b[,9] == 0,9] <- 1e-11; Data2a[Data2a[,7] == 0,7] <- 1e-11; Data2b[Data2b[,7] == 0,7] <- 1e-11; \ 
 			Data1a.Thresh <- .05 / nrow(Data1a); Data1b.Thresh <- .05 / nrow(Data1b); Data2a.Thresh <- .05 / nrow(Data2a); Data2b.Thresh <- .05 / nrow(Data2b); \ 
 			Data1a <- Data1a[,c(2,9)]; colnames(Data1a) <- c(\"SNP\", \"pValue\"); Data1b <- Data1b[,c(2,9)]; colnames(Data1b) <- c(\"SNP\", \"pValue\"); Data2a <- Data2a[,c(1,7)]; colnames(Data2a) <- c(\"SNP\", \"pValue\"); Data2b <- Data2b[,c(1,7)]; colnames(Data2b) <- c(\"SNP\", \"pValue\"); \
