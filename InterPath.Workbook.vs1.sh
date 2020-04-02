@@ -7359,7 +7359,17 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 4 1.004803e-02  0   1 318698
 5 8.062965e-01  0   1 319359
 6 1.649152e-02  0   1 319939
-	
+
+cd /users/mturchin/Data2/GIANT
+wget http://portals.broadinstitute.org/collaboration/giant/images/4/4b/Meta-analysis_Wood_et_al%2BUKBiobank_2018_top_3290_from_COJO_analysis.txt.gz
+wget http://portals.broadinstitute.org/collaboration/giant/images/e/e2/Meta-analysis_Locke_et_al%2BUKBiobank_2018_top_941_from_COJO_analysis_UPDATED.txt.gz
+wget http://portals.broadinstitute.org/collaboration/giant/images/0/01/README_summary_statistics_Yengo_et_al_2018.txt
+zcat /users/mturchin/Data2/GIANT/Meta-analysis_Wood_et_al+UKBiobank_2018_top_3290_from_COJO_analysis.txt.gz | head -n 10
+
+
+
+
+
 module load anaconda; source activate InterPath2; R -q -e "library(\"data.table\"); library(\"qqman\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \ 
 	for (j in UKBioBankPops[c(1,2,4,6)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 			print(j); \
@@ -18080,6 +18090,22 @@ BMI;58923 Indian Indian BMI
 169     183     169     2981
 365     389     365     3110
 48      53      48      1504
+#20200402
+(InterPath) [  mturchin@login003  ~/Data2/GIANT]$zcat /users/mturchin/Data2/GIANT/Meta-analysis_Wood_et_al+UKBiobank_2018_top_3290_from_COJO_analysis.txt.gz | wc
+   3291   42783  312540
+   (InterPath) [  mturchin@login003  ~/Data2/GIANT]$join <(zcat /users/mturchin/Data2/GIANT/Meta-analysis_Wood_et_al+UKBiobank_2018_top_3290_from_COJO_analysis.txt.gz | awk '{ print $2 ":" $3 }' | sort) <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $13 }' | sort) | wc
+       438     438    5551
+(InterPath) [  mturchin@login003  ~/Data2/GIANT]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 }' | sort) <(zcat /users/mturchin/Data2/GIANT/Meta-analysis_Wood_et_al+UKBiobank_2018_top_3290_from_COJO_analysis.txt.gz | awk '{ print $2 ":" $3 "\t" $13 }' | sort -k 1,1) | sort -g -k 2,2 | head -n 10
+3:185548683 0
+3:48268509 0
+6:26200677 0
+1:149906413 3.7962e-207
+12:93978504 9.02982e-201
+1:149908108 1.74267e-174
+17:29247715 6.84018e-170
+17:59497277 3.24313e-169
+12:66343400 5.36524e-136
+3:135854035 6.45935e-131
 
 
 
