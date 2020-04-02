@@ -10250,6 +10250,106 @@ done | column -t > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyse
 REACTOME_SIGNALING_BY_RHO_GTPASES
 [  mturchin@node1107  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | grep REACTOME_SIGNALING_BY_RHO_GTPASES | perl -lane 'my @vals1 = split(/,/, $F[2]); print $F[0], "\t", scalar(@vals1);'
 REACTOME_SIGNALING_BY_RHO_GTPASES       3888
+(InterPath) [  mturchin@node1301  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.AllPaths.FDRs.vs1.txt
+KEGG
+.
+Height
+Ancestry          NumPaths  pValBonf   FDR  pVal001  FDR  pVal01  FDR
+African           1800      0.0002778  0    0.001    1    0.01    10
+British.Ran4000   1730      0.000289   0    0.001    0    0.01    13
+British.Ran10000  1860      0.0002688  0    0.001    1    0.01    26
+Caribbean         1810      0.0002762  1    0.001    1    0.01    5
+Chinese           1530      0.0003268  0    0.001    3    0.01    24
+Indian            1810      0.0002762  1    0.001    1    0.01    20
+Pakistani         1410      0.0003546  0    0.001    2    0.01    17
+.
+BMI
+Ancestry          NumPaths  pValBonf   FDR  pVal001  FDR  pVal01  FDR
+African           1800      0.0002778  0    0.001    1    0.01    16
+British.Ran4000   1730      0.000289   1    0.001    2    0.01    14
+British.Ran10000  1860      0.0002688  0    0.001    1    0.01    25
+Caribbean         1810      0.0002762  0    0.001    1    0.01    25
+Chinese           1530      0.0003268  0    0.001    1    0.01    24
+Indian            1810      0.0002762  1    0.001    2    0.01    20
+Pakistani         1410      0.0003546  0    0.001    2    0.01    15
+.
+.
+.
+REACTOME
+.
+Height
+Ancestry          NumPaths  pValBonf   FDR  pVal001  FDR  pVal01  FDR
+African           6580      7.599e-05  0    0.001    6    0.01    47
+British.Ran4000   6500      7.692e-05  0    0.001    9    0.01    69
+British.Ran10000  6690      7.474e-05  0    0.001    4    0.01    55
+Caribbean         6610      7.564e-05  0    0.001    2    0.01    22
+Chinese           6260      7.987e-05  0    0.001    13   0.01    85
+Indian            6620      7.553e-05  1    0.001    5    0.01    90
+Pakistani         5960      8.389e-05  0    0.001    3    0.01    63
+.
+BMI
+Ancestry          NumPaths  pValBonf   FDR  pVal001  FDR  pVal01  FDR
+African           6580      7.599e-05  1    0.001    4    0.01    39
+British.Ran4000   6490      7.704e-05  1    0.001    4    0.01    52
+British.Ran10000  6690      7.474e-05  2    0.001    10   0.01    73
+Caribbean         6610      7.564e-05  0    0.001    13   0.01    97
+Chinese           6260      7.987e-05  0    0.001    6    0.01    49
+Indian            6620      7.553e-05  0    0.001    3    0.01    66
+Pakistani         5960      8.389e-05  0    0.001    4    0.01    45
+.
+.
+.
+[  mturchin@node1107  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.AllPaths.FDRs.vs1.txt                                                                                                                                 KEGG                                                                                                                                                                                                                                          .
+Height
+Ancestry            NumPaths  pValBonf   FDR  pVal001  FDR  pVal01  FDR
+British.Ran4000.2   1730      0.000289   0    0.001    1    0.01    18
+British.Ran4000.3   1730      0.000289   1    0.001    1    0.01    20
+British.Ran4000.4   1730      0.000289   0    0.001    4    0.01    23
+British.Ran4000.5   1730      0.000289   0    0.001    2    0.01    22
+British.Ran10000.2  1860      0.0002688  0    0.001    1    0.01    12
+British.Ran10000.3  1860      0.0002688  2    0.001    2    0.01    21
+British.Ran10000.4  1860      0.0002688  1    0.001    2    0.01    16
+British.Ran10000.5  1860      0.0002688  0    0.001    0    0.01    12
+.
+BMI
+Ancestry            NumPaths  pValBonf   FDR  pVal001  FDR  pVal01  FDR
+British.Ran4000.2   1730      0.000289   0    0.001    1    0.01    23
+British.Ran4000.3   1730      0.000289   0    0.001    3    0.01    21
+British.Ran4000.4   1730      0.000289   1    0.001    5    0.01    21
+British.Ran4000.5   1730      0.000289   2    0.001    7    0.01    23
+British.Ran10000.2  1860      0.0002688  2    0.001    4    0.01    22
+British.Ran10000.3  1860      0.0002688  0    0.001    2    0.01    20
+British.Ran10000.4  1860      0.0002688  1    0.001    2    0.01    23
+British.Ran10000.5  1860      0.0002688  0    0.001    0    0.01    20
+.
+.
+.
+REACTOME
+.
+Height
+Ancestry            NumPaths  pValBonf   FDR  pVal001  FDR  pVal01  FDR
+British.Ran4000.2   6500      7.692e-05  0    0.001    4    0.01    61
+British.Ran4000.3   6490      7.704e-05  1    0.001    8    0.01    59
+British.Ran4000.4   6500      7.692e-05  0    0.001    5    0.01    69
+British.Ran4000.5   6500      7.692e-05  0    0.001    6    0.01    53
+British.Ran10000.2  6690      7.474e-05  0    0.001    4    0.01    52
+British.Ran10000.3  6690      7.474e-05  2    0.001    11   0.01    60
+British.Ran10000.4  6690      7.474e-05  1    0.001    4    0.01    69
+British.Ran10000.5  6690      7.474e-05  0    0.001    4    0.01    60
+.
+BMI
+Ancestry            NumPaths  pValBonf   FDR  pVal001  FDR  pVal01  FDR
+British.Ran4000.2   6500      7.692e-05  1    0.001    14   0.01    63
+British.Ran4000.3   6490      7.704e-05  0    0.001    5    0.01    79
+British.Ran4000.4   6500      7.692e-05  2    0.001    6    0.01    61
+British.Ran4000.5   6500      7.692e-05  0    0.001    7    0.01    73
+British.Ran10000.2  6690      7.474e-05  0    0.001    3    0.01    42
+British.Ran10000.3  6690      7.474e-05  1    0.001    10   0.01    74
+British.Ran10000.4  6690      7.474e-05  0    0.001    7    0.01    65
+British.Ran10000.5  6690      7.474e-05  0    0.001    5    0.01    57
+.
+.
+.
 ```
  
 
