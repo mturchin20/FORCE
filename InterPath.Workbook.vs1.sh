@@ -10213,7 +10213,7 @@ done;
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs
 
 #PopGroup1 either "AllPops" or "BritReps"
-PopGroup1="AllPops"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+PopGroup1="BritReps"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	PopGroupBash="error1"; if [ $PopGroup1 == "AllPops" ]; then PopGroupBash="head"; fi; if [ $PopGroup1 == "BritReps" ]; then PopGroupBash="tail"; fi;
 #	echo $l;
 #	rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.${l}.FDRs.vs1.txt; 
@@ -10240,11 +10240,17 @@ PopGroup1="AllPops"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -l
 	done; 
 	echo "."
 	echo "."
-done | column -t > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.${l}.FDRs.vs1.txt 
+done | column -t > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.AllPaths.FDRs.vs1.txt 
 
 #				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^$l"_" | grep -v -w NA | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(nrow(Data1)); print(c(.05/$NumPaths2, nrow(Data1[Data1[,4] <= .05/$NumPaths2,]))); print(c(.001,  nrow(Data1[Data1[,4] <= .001,]))); print(c(.01,  nrow(Data1[Data1[,4] <= .01,])));" 
 
-
+#20200401 NOTE -- why 'British.Ran4000.3' (& 'Britian.Ran4000') has 6490 and not 6500: this one pathway has close to enough SNPs that it sometimes fails for the subsets that have just under 3888 individuals or so 
+```
+[  mturchin@node1107  ~]$join -v 2 <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.British.Ran4000.3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_perm1.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^$l"_" | grep -v -w NA | awk '{ print $1 }' | sort) <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.British.Ran4000.4.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_perm1.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^$l"_" | grep -v -w NA | awk '{ print $1 }' | sort)
+REACTOME_SIGNALING_BY_RHO_GTPASES
+[  mturchin@node1107  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | grep REACTOME_SIGNALING_BY_RHO_GTPASES | perl -lane 'my @vals1 = split(/,/, $F[2]); print $F[0], "\t", scalar(@vals1);'
+REACTOME_SIGNALING_BY_RHO_GTPASES       3888
+```
  
 
 
