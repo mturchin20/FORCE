@@ -7365,10 +7365,9 @@ wget http://portals.broadinstitute.org/collaboration/giant/images/4/4b/Meta-anal
 wget http://portals.broadinstitute.org/collaboration/giant/images/e/e2/Meta-analysis_Locke_et_al%2BUKBiobank_2018_top_941_from_COJO_analysis_UPDATED.txt.gz
 wget http://portals.broadinstitute.org/collaboration/giant/images/0/01/README_summary_statistics_Yengo_et_al_2018.txt
 zcat /users/mturchin/Data2/GIANT/Meta-analysis_Wood_et_al+UKBiobank_2018_top_3290_from_COJO_analysis.txt.gz | head -n 10
-
-
-
-
+join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 }' | sort) <(zcat /users/mturchin/Data2/GIANT/Meta-analysis_Wood_et_al+UKBiobank_2018_top_3290_from_COJO_analysis.txt.gz | awk '{ print $2 ":" $3 "\t" $13 }' | sort -k 1,1) | sort -g -k 2,2 | head -n 10
+ln -s /users/mturchin/Data2/GIANT/Meta-analysis_Wood_et_al+UKBiobank_2018_top_3290_from_COJO_analysis.txt.gz /users/mturchin/Data2/GIANT/GIANT2018_Height.GWASsnps.txt.gz
+ln -s /users/mturchin/Data2/GIANT/Meta-analysis_Locke_et_al+UKBiobank_2018_top_941_from_COJO_analysis_UPDATED.txt.gz /users/mturchin/Data2/GIANT/GIANT2018_BMI.GWASsnps.txt.gz
 
 module load anaconda; source activate InterPath2; R -q -e "library(\"data.table\"); library(\"qqman\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \ 
 	for (j in UKBioBankPops[c(1,2,4,6)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
@@ -7378,15 +7377,23 @@ module load anaconda; source activate InterPath2; R -q -e "library(\"data.table\
 			Data1b <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD\", sep=\"\"), header=F)); \  
 			Data2a <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.Height.DaviesApprox.Results.wSNPInfo.txt.gz\", sep=\"\"), header=F)); \
 			Data2b <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.BMI.DaviesApprox.Results.wSNPInfo.txt.gz\", sep=\"\"), header=F)); \
-			print(head(Data1a)); print(head(Data2a)); \
+			Data4a <- read.table(\"/users/mturchin/Data2/GIANT/GIANT2018_Height.GWASsnps.txt.gz\", header=T); Data4b <- read.table(\"/users/mturchin/Data2/GIANT/GIANT2018_BMI.GWASsnps.txt.gz\", header=T); \
 			Data1a <- Data1a[!is.na(Data1a[,9]),]; Data1b <- Data1b[!is.na(Data1b[,9]),]; Data2a <- Data2a[!is.na(Data2a[,7]),]; Data2b <- Data2b[!is.na(Data2b[,7]),]; \
 			Data2a <- Data2a[as.numeric(as.character(Data2a[,7])) > 0,]; Data2b <- Data2b[as.numeric(as.character(Data2b[,7])) > 0,]; \
 			Data1a[Data1a[,9] == 0,9] <- 1e-11; Data1b[Data1b[,9] == 0,9] <- 1e-11; Data2a[Data2a[,7] == 0,7] <- 1e-11; Data2b[Data2b[,7] == 0,7] <- 1e-11; \ 
 			Data1a <- cbind(Data1a, t(sapply(strsplit(Data1a[,2], \":\"), unlist))); Data1b <- cbind(Data1b, t(sapply(strsplit(Data1b[,2], \":\"), unlist))); Data2a <- cbind(Data2a, t(sapply(strsplit(Data2a[,1], \":\"), unlist))); Data2b <- cbind(Data2b, t(sapply(strsplit(Data2b[,1], \":\"), unlist))); \
 			colnames(Data1a) <- c(\"V1\", \"SNP\", \"V3\", \"V4\", \"V5\", \"V6\", \"V7\", \"V8\", \"pValue\", \"CHR\", \"BP\"); colnames(Data1b) <- c(\"V1\", \"SNP\", \"V3\", \"V4\", \"V5\", \"V6\", \"V7\", \"V8\", \"pValue\", \"CHR\", \"BP\"); colnames(Data2a) <- c(\"SNP\", \"V2\", \"V3\", \"V4\", \"V5\", \"V6\", \"pValue\", \"V8\", \"V9\", \"CHR\", \"BP\"); colnames(Data2b) <- c(\"SNP\", \"V2\", \"V3\", \"V4\", \"V5\", \"V6\", \"pValue\", \"V8\", \"V9\", \"CHR\", \"BP\"); \ 
-			Data1a <- data.frame(Data1a); Data1a\$CHR <- as.numeric(as.character(Data1a\$CHR)); Data1a\$BP <- as.numeric(as.character(Data1a\$BP)); Data1a\$pValue <- as.numeric(as.character(Data1a\$pValue)); Data1b <- data.frame(Data1b); Data1b\$CHR <- as.numeric(as.character(Data1b\$CHR)); Data1b\$BP <- as.numeric(as.character(Data1b\$BP)); Data1b\$pValue <- as.numeric(as.character(Data1b\$pValue)); Data2a <- data.frame(Data2a); Data2a\$CHR <- as.numeric(as.character(Data2a\$CHR)); Data2a\$BP <- as.numeric(as.character(Data2a\$BP)); Data2a\$pValue <- as.numeric(as.character(Data2a\$pValue)); Data2b <- data.frame(Data2b); Data2b\$CHR <- as.numeric(as.character(Data2b\$CHR)); Data2b\$BP <- as.numeric(as.character(Data2b\$BP)); Data2b\$pValue <- as.numeric(as.character(Data2b\$pValue)); \
+			Data1a.CHRBP <- paste(Data1a[,\"CHR\"], Data1a[,\"BP\"], sep=\":\"); Data1a.sub <- cbind(Data1a.CHRBP, Data1a[,\"pValue\"]); colnames(Data1a.sub) <- c(\"CHRBP\", \"pValue\"); Data1b.CHRBP <- paste(Data1b[,\"CHR\"], Data1b[,\"BP\"], sep=\":\"); Data1b.sub <- cbind(Data1b.CHRBP, Data1b[,\"pValue\"]); colnames(Data1b.sub) <- c(\"CHRBP\", \"pValue\"); Data2a.CHRBP <- paste(Data2a[,\"CHR\"], Data2a[,\"BP\"], sep=\":\"); Data2a.sub <- cbind(Data2a.CHRBP, Data2a[,\"pValue\"]); colnames(Data2a.sub) <- c(\"CHRBP\", \"pValue\"); Data2b.CHRBP <- paste(Data2b[,\"CHR\"], Data2b[,\"BP\"], sep=\":\"); Data2b.sub <- cbind(Data2b.CHRBP, Data2b[,\"pValue\"]); colnames(Data2b.sub) <- c(\"CHRBP\", \"pValue\"); \ 
+			Data4a.CHRBP <- paste(Data4a[,\"CHR\"], Data4a[,\"POS\"], sep=\":\"); Data4a.sub <- cbind(Data4a.CHRBP, Data4a[,\"P_COJO\"]); colnames(Data4a.sub) <- c(\"CHRBP\", \"pValue\"); Data4b.CHRBP <- paste(Data4b[,\"CHR\"], Data4b[,\"POS\"], sep=\":\"); Data4b.sub <- cbind(Data4b.CHRBP, Data4b[,\"P_COJO\"]); colnames(Data4b.sub) <- c(\"CHRBP\", \"pValue\"); \
+			Data3a <- merge(Data1a.sub, Data2a.sub, by=\"CHRBP\"); Data3b <- merge(Data1b.sub, Data2b.sub, by=\"CHRBP\"); \
 			print(head(Data1a)); print(head(Data2a)); \
-			manhattan(Data1a, chr=\"CHR\", bp=\"BP\", snp=\"SNP\", p=\"pValue\", main=\"GWAS Height\", ylim=c(0,8), cex.main=2, cex.axis=1.5, cex.lab=1.5); manhattan(Data1b, chr=\"CHR\", bp=\"BP\", snp=\"SNP\", p=\"pValue\", main=\"GWAS BMI\", ylim=c(0,8), cex.main=2, cex.axis=1.5, cex.lab=1.5); manhattan(Data2a, chr=\"CHR\", bp=\"BP\", snp=\"SNP\", p=\"pValue\", main=\"MAPIT Height\", ylim=c(0,8), cex.main=2, cex.axis=1.5, cex.lab=1.5); manhattan(Data2b, chr=\"CHR\", bp=\"BP\", snp=\"SNP\", p=\"pValue\", main=\"MAPIT BMI\", ylim=c(0,8), cex.main=2, cex.axis=1.5, cex.lab=1.5); \
+			Data5a <- merge(Data3a, Data4a.sub, by=\"CHRBP\"); Data5b <- merge(Data3b, Data4b.sub, by=\"CHRBP\"); \ 
+			print(head(Data5a)); print(head(Data5b)); print(nrow(Data4a.sub)); print(nrow(Data5a)); \
+			Data5a <- Data5a[order(as.numeric(as.character(Data5a[,4])), decreasing=FALSE),]; Data5b <- Data5b[order(as.numeric(as.character(Data5b[,4])), decreasing=FALSE),]; \ 
+			print(head(Data5a)); print(head(Data5b)); \
+			Data5a.top25 <- Data5a[1:25,1]; Data5b.top25 <- Data5b[1:25,1]; \
+			Data1a <- data.frame(Data1a); Data1a\$CHR <- as.numeric(as.character(Data1a\$CHR)); Data1a\$BP <- as.numeric(as.character(Data1a\$BP)); Data1a\$pValue <- as.numeric(as.character(Data1a\$pValue)); Data1b <- data.frame(Data1b); Data1b\$CHR <- as.numeric(as.character(Data1b\$CHR)); Data1b\$BP <- as.numeric(as.character(Data1b\$BP)); Data1b\$pValue <- as.numeric(as.character(Data1b\$pValue)); Data2a <- data.frame(Data2a); Data2a\$CHR <- as.numeric(as.character(Data2a\$CHR)); Data2a\$BP <- as.numeric(as.character(Data2a\$BP)); Data2a\$pValue <- as.numeric(as.character(Data2a\$pValue)); Data2b <- data.frame(Data2b); Data2b\$CHR <- as.numeric(as.character(Data2b\$CHR)); Data2b\$BP <- as.numeric(as.character(Data2b\$BP)); Data2b\$pValue <- as.numeric(as.character(Data2b\$pValue)); \
+			manhattan(Data1a, chr=\"CHR\", bp=\"BP\", snp=\"SNP\", p=\"pValue\", highlight=Data5a.top25, main=\"GWAS Height\", ylim=c(0,8), cex.main=2, cex.axis=1.5, cex.lab=1.5); manhattan(Data1b, chr=\"CHR\", bp=\"BP\", snp=\"SNP\", p=\"pValue\", highlight=Data5b.top25, main=\"GWAS BMI\", ylim=c(0,8), cex.main=2, cex.axis=1.5, cex.lab=1.5); manhattan(Data2a, chr=\"CHR\", bp=\"BP\", snp=\"SNP\", p=\"pValue\", highlight=Data5a.top25, main=\"MAPIT Height\", ylim=c(0,8), cex.main=2, cex.axis=1.5, cex.lab=1.5); manhattan(Data2b, chr=\"CHR\", bp=\"BP\", snp=\"SNP\", p=\"pValue\", highlight=Data5b.top25, main=\"MAPIT BMI\", ylim=c(0,8), cex.main=2, cex.axis=1.5, cex.lab=1.5); \
 			mtext(ancestry2, side=3, outer=TRUE, line=-2, at=.5, cex=3); \	
 	dev.off(); }; print(warnings()); \
 "
@@ -18106,7 +18113,66 @@ BMI;58923 Indian Indian BMI
 17:59497277 3.24313e-169
 12:66343400 5.36524e-136
 3:135854035 6.45935e-131
-
+(InterPath2) [  mturchin@login003  ~]$R -q -e "library(\"data.table\"); library(\"qqman\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
+>         for (j in UKBioBankPops[c(1,2,4,6)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+>                         print(j); \
+>                         png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.\", ancestry2, \".HeightBMI.ColCrct.localPCs.GWASvsMAPIT.ManhattanPlots.vs1.png\", sep=\"\"),  height=4250, width=4250, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(2,2)); \
+>                         Data1a <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD\", sep=\"\"), header=F)); \
+>                         Data1b <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD\", sep=\"\"), header=F)); \
+>                         Data2a <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.Height.DaviesApprox.Results.wSNPInfo.txt.gz\", sep=\"\"), header=F)); \
+>                         Data2b <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.BMI.DaviesApprox.Results.wSNPInfo.txt.gz\", sep=\"\"), header=F)); \
+>                         Data4a <- read.table(\"/users/mturchin/Data2/GIANT/GIANT2018_Height.GWASsnps.txt.gz\", header=T); Data4b <- read.table(\"/users/mturchin/Data2/GIANT/GIANT2018_BMI.GWASsnps.txt.gz\", header=T); \
+>                         Data1a <- Data1a[!is.na(Data1a[,9]),]; Data1b <- Data1b[!is.na(Data1b[,9]),]; Data2a <- Data2a[!is.na(Data2a[,7]),]; Data2b <- Data2b[!is.na(Data2b[,7]),]; \
+>                         Data2a <- Data2a[as.numeric(as.character(Data2a[,7])) > 0,]; Data2b <- Data2b[as.numeric(as.character(Data2b[,7])) > 0,]; \
+...
+[6,] "5.295e-02" "1" "761147"
+[1] "1:729632" "1:752721" "1:754105" "1:756604" "1:759036" "1:761147"
+         CHRBP  pValue.x      pValue.y
+1 10:100004799 5.159e-01  5.781498e-01
+2 10:100016196 4.266e-01  1.678001e-01
+3 10:100017453 1.641e-01  2.397609e-01
+4 10:100020880 8.556e-02  2.655741e-01
+5 10:100021983 1.795e-01  7.242857e-01
+6 10:100030768 5.998e-02  7.175123e-01
+         CHRBP  pValue.x      pValue.y
+1 10:100004799 2.050e-01  6.252199e-01
+2 10:100016196 3.304e-01  8.419343e-01
+3 10:100017453 2.017e-01  2.144599e-01
+4 10:100020880 2.006e-01  1.187550e-01
+5 10:100021983 2.422e-01  9.535495e-02
+6 10:100030768 1.198e-02  7.302616e-02
+[1] 374466
+[1] 374462
+         CHRBP  pValue.x      pValue.y      pValue
+1 10:101805442 4.841e-01  8.207357e-01 8.69483e-23
+2 10:104487443 5.313e-01  7.100473e-01 2.74906e-58
+3 10:105154089 3.999e-01  1.418607e-01 3.10338e-84
+4 10:105549440 4.943e-01  3.249848e-01  2.0613e-31
+5 10:105561887 5.108e-01  2.492828e-01 1.07453e-17
+6 10:114711983 6.994e-01  8.524118e-01  4.4188e-17
+         CHRBP  pValue.x      pValue.y      pValue
+1 10:100017453 2.017e-01  2.144599e-01 2.78521e-10
+2 10:102635475 1.762e-01  9.399911e-01 1.66842e-10
+3 10:103984060 8.274e-02  2.632044e-01 1.22652e-10
+4 10:105033015 6.452e-01  8.040516e-01 3.32796e-10
+5 10:114758349 5.732e-01  4.564420e-02 5.16961e-11
+6 11:113234679 2.966e-01  4.494921e-02 1.76889e-09
+[1] 3290
+[1] 438   
+          CHRBP  pValue.x      pValue.y       pValue
+299 3:185548683 5.051e-01  7.060825e-01            0
+306  3:48268509 7.132e-01  2.605246e-01            0
+360  6:26200677 1.654e-01  9.459332e-01            0
+200 1:149906413 2.786e-01  7.277835e-01  3.7962e-207
+78  12:93978504 5.461e-01  8.405329e-01 9.02982e-201
+201 1:149908108 6.336e-01  2.611780e-01 1.74267e-174
+         CHRBP  pValue.x      pValue.y       pValue
+68  3:49936102 7.259e-01  5.344249e-02  1.5432e-132
+46 1:177889480 1.393e-01  3.047781e-02 2.86043e-116
+73  4:45182527 4.474e-01  6.330989e-01  6.91577e-92
+13 11:47529947 9.551e-02  7.656083e-01  2.61265e-87
+14 11:48286256 2.865e-01  4.618014e-01  1.47824e-86
+38 18:58039276 4.672e-01  5.052688e-01  4.05929e-83
 
 
 ~~~
