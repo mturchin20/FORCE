@@ -7276,7 +7276,7 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBPops <- c(NA, \"
 5 10:100021983  0.17950 0.6975691
 6 10:100030768  0.05998 0.5151588
 
-R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.All4kPops.HeightBMI.ColCrct.localPCs.GWASvsMAPIT.vs1.png\", height=8500, width=4250, res=300); par(oma=c(1,6,6,1), mar=c(5,5,4,2), mfrow=c(4,2)); for (j in UKBioBankPops[c(1,2,4,6)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+echo -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.All4kPops.HeightBMI.ColCrct.localPCs.GWASvsMAPIT.vs1.png\", height=8500, width=4250, res=300); par(oma=c(1,6,6,1), mar=c(5,5,4,2), mfrow=c(4,2)); for (j in UKBioBankPops[c(1,2,4,6)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 			print(j); \
 			Data1a <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD\", sep=\"\"), header=F)); \  
 			Data1b <- as.matrix(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD\", sep=\"\"), header=F)); \  
@@ -7287,8 +7287,11 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 			Data2a <- Data2a[as.numeric(as.character(Data2a[,7])) > 0,]; Data2b <- Data2b[as.numeric(as.character(Data2b[,7])) > 0,]; \
 			Data1a[Data1a[,9] == 0,9] <- 1e-11; Data1b[Data1b[,9] == 0,9] <- 1e-11; Data2a[Data2a[,7] == 0,7] <- 1e-11; Data2b[Data2b[,7] == 0,7] <- 1e-11; \ 
 			Data1a.Thresh <- .05 / nrow(Data1a); Data1b.Thresh <- .05 / nrow(Data1b); Data2a.Thresh <- .05 / nrow(Data2a); Data2b.Thresh <- .05 / nrow(Data2b); \ 
+			Data1a.Thresh <- 5e-8; Data1b.Thresh <- 5e-8; Data2a.Thresh <- 5e-8; Data2b.Thresh <- 5e-8; \
 			Data1a <- Data1a[,c(2,9)]; colnames(Data1a) <- c(\"SNP\", \"pValue\"); Data1b <- Data1b[,c(2,9)]; colnames(Data1b) <- c(\"SNP\", \"pValue\"); Data2a <- Data2a[,c(1,7)]; colnames(Data2a) <- c(\"SNP\", \"pValue\"); Data2b <- Data2b[,c(1,7)]; colnames(Data2b) <- c(\"SNP\", \"pValue\"); \
+			print(head(Data1a)); print(head(Data2a)); \
 			Data3a <- merge(Data1a, Data2a, by=\"SNP\"); Data3b <- merge(Data1b, Data2b, by=\"SNP\"); Data3a[,2] <- as.numeric(as.character(Data3a[,2])); Data3a[,3] <- as.numeric(as.character(Data3a[,3])); Data3b[,2] <- as.numeric(as.character(Data3b[,2])); Data3b[,3] <- as.numeric(as.character(Data3b[,3])); \
+			print(head(Data3a[is.na(Data3a[,2]),])); print(head(Data3a[is.na(Data3a[,3]),])); \
 			Data4a.SNP <- paste(Data4a[,\"CHR\"], Data4a[,\"POS\"], sep=\":\"); Data4a.sub <- cbind(Data4a.SNP, Data4a[,\"P\"]); colnames(Data4a.sub) <- c(\"SNP\", \"pValue\"); Data4b.SNP <- paste(Data4b[,\"CHR\"], Data4b[,\"POS\"], sep=\":\"); Data4b.sub <- cbind(Data4b.SNP, Data4b[,\"P\"]); colnames(Data4b.sub) <- c(\"SNP\", \"pValue\"); \
 			Data5a <- merge(Data3a, Data4a.sub, by=\"SNP\"); Data5b <- merge(Data3b, Data4b.sub, by=\"SNP\"); \ 
 			print(head(Data5a)); print(head(Data5b)); print(nrow(Data4a.sub)); print(nrow(Data5a)); \
@@ -7297,16 +7300,16 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 			print(head(Data5a.top500)); print(head(Data5b.top500)); \
 			Data3a <- cbind(Data3a, rep(\"BLACK\", nrow(Data3a))); Data3b <- cbind(Data3b, rep(\"BLACK\", nrow(Data3b))); Data3a[,4] <- as.character(Data3a[,4]); Data3b[,4] <- as.character(Data3b[,4]); \ 
 			Data3a[as.character(Data3a[,1]) %in% as.character(Data5a.top500), ncol(Data3a)] <- \"GREEN\"; Data3b[as.character(Data3b[,1]) %in% as.character(Data5b.top500), ncol(Data3b)] <- \"GREEN\"; \ 
-			print(head(Data3a)); print(table(Data3a[,4])); print(table(as.character(Data3a[,1]) %in% as.character(Data5a.top500))); print(nrow(Data3a)); \	
-			plot(-log10(Data3a[,2]),-log10(Data3a[,3]), main=\"\", xlab=\"GWAS -log10(p-Values)\", ylab=\"MAPIT -log10(p-Values)\", xlim=c(0,7.5), ylim=c(0,7.5), pch=16, col=as.character(Data3a[,ncol(Data3a)]), cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+			print(head(Data3a)); print(table(Data3a[,4])); \	
+			plot(-log10(Data3a[,2]),-log10(Data3a[,3]), main=\"\", xlab=\"GWAS -log10(p-Values)\", ylab=\"MAPIT -log10(p-Values)\", xlim=c(0,7.5), ylim=c(0,7.5), pch=16, col=as.character(Data3a[,ncol(Data3a)]), cex.main=1.5, cex.axis=1.5, cex.lab=1.5); points(-log10(Data3a[Data3a[,4]==\"GREEN\",2]),-log10(Data3a[Data3a[,4]==\"GREEN\",3]), pch=16, col=as.character(Data3a[Data3a[,4]==\"GREEN\",ncol(Data3a)]), cex=1.5); \
 			abline(h=-log10(Data1b.Thresh), lwd=2, lty=3, col=\"RED\"); abline(v=-log10(Data1a.Thresh), lwd=2, lty=3, col=\"RED\"); abline(h=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(v=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(0,1,col=\"BLACK\"); legend(\"topright\", c(paste(\"p-Value: \", signif(mean(Data1a.Thresh, Data2a.Thresh), 3), sep=\"\"), \"p-Value: 1e-4\"), lty=c(3,3), lwd=c(2,2), col=c(\"RED\", \"BLUE\"), cex=1.5, y.intersp=1); \
-			plot(-log10(Data3b[,2]),-log10(Data3b[,3]), main=\"\", xlab=\"GWAS -log10(p-Values)\", ylab=\"MAPIT -log10(p-Values)\", xlim=c(0,7.5), ylim=c(0,7.5), pch=16, col=as.character(Data3b[,ncol(Data3b)]), cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+			plot(-log10(Data3b[,2]),-log10(Data3b[,3]), main=\"\", xlab=\"GWAS -log10(p-Values)\", ylab=\"MAPIT -log10(p-Values)\", xlim=c(0,7.5), ylim=c(0,7.5), pch=16, col=as.character(Data3b[,ncol(Data3b)]), cex.main=1.5, cex.axis=1.5, cex.lab=1.5); points(-log10(Data3b[Data3b[,4]==\"GREEN\",2]),-log10(Data3b[Data3b[,4]==\"GREEN\",3]), pch=16, col=as.character(Data3b[Data3b[,4]==\"GREEN\",ncol(Data3b)]), cex=1.5); \
 			abline(h=-log10(Data2b.Thresh), lwd=2, lty=3, col=\"RED\"); abline(v=-log10(Data2a.Thresh), lwd=2, lty=3, col=\"RED\"); abline(h=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(v=-log10(1e-4), lwd=2, lty=3, col=\"BLUE\"); abline(0,1,col=\"BLACK\"); legend(\"topright\", c(paste(\"p-Value: \", signif(mean(Data1b.Thresh, Data2b.Thresh), 3), sep=\"\"), \"p-Value: 1e-4\"), lty=c(3,3), lwd=c(2,2), col=c(\"RED\", \"BLUE\"), cex=1.5, y.intersp=1); \ 
 			write.table(cbind(Data3a, rep(Data1a.Thresh, nrow(Data3a)), rep(Data1b.Thresh, nrow(Data3a))), file=paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.\", ancestry2, \".HeightBMI.ColCrct.localPCs.GWASvsMAPIT.Height.merge.vs1.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.name=FALSE); write.table(cbind(Data3b, rep(Data1a.Thresh, nrow(Data3b)), rep(Data2b.Thresh, nrow(Data3b))), file=paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.\", ancestry2, \".HeightBMI.ColCrct.localPCs.GWASvsMAPIT.BMI.merge.vs1.txt\", sep=\"\"), quote=FALSE, row.name=FALSE, col.name=FALSE); \	
 		}; mtext(\"Height\", side=3, outer=TRUE, at=.265, cex=3); mtext(\"BMI\", side=3, outer=TRUE, at=.77, cex=3); \
 		mtext(\"African\", side=2, outer=TRUE, line=1, at=.8775, cex=3); mtext(\"Brit.Ran4k\", side=2, outer=TRUE, line=1, at=.6275, cex=3); mtext(\"Caribbean\", side=2, outer=TRUE, line=1, at=.3775, cex=3); mtext(\"Indian\", side=2, outer=TRUE, line=1, at=.1275, cex=3); \
 	dev.off(); print(warnings()); \
-"
+" > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.All4kPops.HeightBMI.ColCrct.localPCs.GWASvsMAPIT.vs1.R; Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GWAS/ukb_v3.All4kPops.HeightBMI.ColCrct.localPCs.GWASvsMAPIT.vs1.R
 
 #			Data2a <- fread(cmd=paste(\"paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/Imputation/mturchin20/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.SNPIDsRowPos) <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.Height.DaviesApprox.Results.txt.pre.gz | sort -g -k 1,1) | sed \\\"s/_/ /g\\\"\", sep=\"\"), header=F); \
 #			print(head(Data1a)); print(head(Data2a)); \
@@ -11530,9 +11533,6 @@ done;
 #OverleafRpWrk
 #20200130
 
-#OvrlfRpStp (/MvgDssrttnRepoMscOvr)
-#20180213
-
 #MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Production
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Production/Manuscript
@@ -11540,7 +11540,6 @@ done;
 #cat /Users/mturchin20/Google\ Drive/EndNote/Libraries/InterPath/TurchinMichael_MasterLibrary_1.vs1.txt | perl -lane 'if ($. == 1) { $type = "article"; } if ($F[0] =~ m/^\@(article|book)/) { $type2 = $1; if (@tempRefLog) { $author =~ s/\{//g; $author =~ s/\}//g; $author =~ s/,//g; $year =~ s/\{//g; $year =~ s/\}//g; $year=~ s/,//g; print "\@$type\{$author$year,"; print "\t", join("\n\t", @tempRefLog[0..$#tempRefLog-2]); print $tempRefLog[$#tempRefLog-1], "\n"; @tempRefLog = (); $author = ""; $year = ""; $type = $type2;} else { push(@tempRefLog, join(" ", @F)); } } else { if ($F[0] =~ /^author/) { $author = $F[2]; }; if ($F[0] =~ /^year/) { $year = $F[2]; }; push(@tempRefLog, join(" ", @F)); }; if(eof()) { $author =~ s/\{//g; $author =~ s/\}//g; $author =~ s/,//g; $year =~ s/\{//g; $year =~ s/\}//g; $year=~ s/,//g; print "\@article{$author$year,"; print "\t", join("\n\t", @tempRefLog[0..$#tempRefLog-2]); print $tempRefLog[$#tempRefLog-1], "\n";}' > /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Production/Manuscript/Main.bib 
 #NOTE -- manually edit top entry/Abraham2017 line(s)
 
-#20190731 NOTE -- now doing '/Users/mturchin20/Google\ Drive/EndNote/Libraries/TurchinMichael_MasterLibrary_1.Data/bibtex_files/TurchinMichael_MasterLibrary_1.ch04.vs5.txt', same post-manual edits as before
 
 
 
