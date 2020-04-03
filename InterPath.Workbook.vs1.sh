@@ -81,6 +81,9 @@ conda install R perl java-jdk r-base r-devtools r-tm
 #conda install -c r r-tm
 #NOTE -- stopped after this once realized the need for anaconda/3-5.2.0 but also able to install 'tm' onto R/3.5.2)
 #NOTE -- did continue using anaconda InterPath2 though, for instance in trying to get GridLMM working on cluster
+conda install git
+conda install armadillo eigen boost gcc
+
 
 #20190603
 #Backup (just a place to put any particular files that might be worth having extra levels of backup for via the github repo)
@@ -11545,7 +11548,29 @@ done;
 
 
 
+#ForPeople
 
+#ForGreg
+#20200403
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/ukb_chrAll_v3.African.QCed.Impt.100geno.raw.edit.gz
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/ukb_chrAll_v3.African.QCed.flashpca.pcs.local.txt
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/ukb_chrAll_v3.British.Ran4000.QCed.Impt.100geno.raw.edit.gz
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/ukb_chrAll_v3.British.Ran4000.QCed.flashpca.pcs.local.txt
+mkdir /users/mturchin/ForPeople/ForGreg
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz /users/mturchin/ForPeople/ForGreg/ukb_chrAll_v3.African.QCed.Impt.100geno.raw.edit.gz
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt /users/mturchin/ForPeople/ForGreg/ukb_chrAll_v3.African.QCed.flashpca.pcs.local.txt
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz /users/mturchin/ForPeople/ForGreg/ukb_chrAll_v3.British.Ran4000.QCed.Impt.100geno.raw.edit.gz
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt /users/mturchin/ForPeople/ForGreg/ukb_chrAll_v3.British.Ran4000.QCed.flashpca.pcs.local.txt
+chmod g+rw /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz
+chmod g+rw /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt
+chmod g+rw /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz
+chmod g+rw /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt
+
+
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt
 
 
 
