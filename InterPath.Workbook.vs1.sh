@@ -10689,6 +10689,18 @@ paste <(echo -e "\nKEGG_Height\nKEGG_BMI\nREACTOME_Height\nREACTOME_BMI") <(cat 
 <(cat <(echo "Irish") <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.Irish.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.Irish.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.Irish.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.Irish.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }')) \
 <(cat <(echo "Pakistani") <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.Pakistani.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.Pakistani.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.Pakistani.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.Pakistani.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }')) > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.AllPaths.pValBonf.Barplots.Info.vs1.txt
 
+paste <(echo -e "\nKEGG_Height\nKEGG_BMI\nREACTOME_Height\nREACTOME_BMI") <(cat <(echo "British.Ran4000.2") <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran4000.2.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran4000.2.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran4000.2.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran4000.2.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }')) \ 
+<(cat <(echo "British.Ran4000.3") <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran4000.3.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran4000.3.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran4000.3.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran4000.3.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }')) \ 
+<(cat <(echo "British.Ran4000.4") <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran4000.4.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran4000.4.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran4000.4.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran4000.4.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }')) \ 
+<(cat <(echo "British.Ran4000.5") <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran4000.5.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran4000.5.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran4000.5.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran4000.5.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }')) \
+<(cat <(echo "British.Ran10000.2") <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran10000.2.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran10000.2.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran10000.2.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran10000.2.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }')) \
+<(cat <(echo "British.Ran10000.3") <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran10000.3.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran10000.3.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran10000.3.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran10000.3.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }')) \
+<(cat <(echo "British.Ran10000.4") <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran10000.4.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran10000.4.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran10000.4.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran10000.4.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }')) \
+<(cat <(echo "British.Ran10000.5") <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran10000.5.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.British.Ran10000.5.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran10000.5.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }') <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.British.Ran10000.5.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw ^NA | wc | awk '{ print $1 }')) > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.BritReps.HeightBMI.ColCrct.localPCs.AllPaths.pValBonf.Barplots.Info.vs1.txt
+
+#From http://www.sthda.com/english/wiki/bar-plots-r-base-graphs
+
+
 #From http://www.sthda.com/english/wiki/bar-plots-r-base-graphs
 
 #20200127 NOTE -- include pop size ie 'n' for each population in legend?
@@ -10704,6 +10716,11 @@ dev.off();"
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots
 #scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.*.AllPaths.pValBonf.Barplots.plots.*png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/.
+
+
+
+
+
 
 
 
@@ -11092,6 +11109,17 @@ cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Anal
 zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | grep ^KEGG | grep PSMD14
 zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | grep ^REACTOME | grep PSMD14
 zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | grep ^REACTOME | grep -vw NA | perl -lane 'my @vals1 = split(/,/, $F[4]); print join("\n", @vals1);' | sort | uniq -c | sort -gr -k 1,1 | grep UBA52
+
+(InterPath) [  mturchin@login003  ~/Data2/GIANT]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 8) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1
+22      UBA52,RPS27A
+15      SOS1,PIK3R1,PIK3CA,CDK1
+14      MAPK1,GRB2,CREB1
+13      PSMB8,PRKACB,PRKACA,PIK3R2
+12      SKP1,RAC1,PSMF1,PSME2,PSME1,PSMD9,PSMD8,PSMD7,PSMD6,PSMD5,PSMD4,PSMD3,PSMD2,PSMD14,PSMD13,PSMD12,PSMD11,PSMD1,PSMC6,PSMC5,PSMC4,PSMC3,PSMC2,PSMC1,PSMB9,PSMB7,PSMB6,PSMB5,PSMB4,PSMB3,PSMB2,PSMB10,PSMB1,PSMA7,PSMA6,PSMA4,PSMA3,PSMA2,PSMA1,PRKAR2B,PDPK1,MAPK3,ITPR3,ITPR2,HRAS,CDKN1B,CDKN1A,ADCY8
+11      SRC,RAF1,PSME4,PSMA8,PRKCA,PRKACG,NRAS,MAP2K2,MAP2K1,KRAS,CHUK,AKT1,ADCY6,ADCY5,ADCY3,ADCY1
+10      YWHAB,TRIB3,THEM4,RICTOR,PRKCD,PRKAR2A,PRKAR1B,PRKAR1A,PPP2R1B,PPP2R1A,PPP2CB,PPP2CA,MTOR,MLST8,MDM2,MAPKAP1,GNGT2,GNGT1,GNG8,GNG7,GNG2,GNG13,GNG12,GNG11,GNG10,GNB5,GNB4,GNB3,GNB2,GNB1,CUL1,CASP9,BAD,AKT3,AKT2,ADCY9,ADCY7,ADCY4,ADCY2
+9       PTEN,PPP2R5D,PDE1B,PDE1A,FYN,CALM3,CALM2,CALM1
+8       VAV1,TSC2,RPS6KB2,PIK3R3,PHLPP1,NR4A1,HDAC1,GSK3A,FOXO3,FOXO1,CAMK4,BTRC,AKT1S1,AGRN
 
 #From: http://pedagogix-tagc.univ-mrs.fr/courses/ASG1/practicals/go_statistics_td/go_statistics_td_2015.html & https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Hypergeometric.html
 ```
@@ -11548,36 +11576,6 @@ done;
 
 
 
-#ForPeople
-
-#ForGreg
-#20200403
-
-mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer
-ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/ukb_chrAll_v3.African.QCed.Impt.100geno.raw.edit.gz
-ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/ukb_chrAll_v3.African.QCed.flashpca.pcs.local.txt
-ln -s /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/ukb_chrAll_v3.British.Ran4000.QCed.Impt.100geno.raw.edit.gz
-ln -s /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/ukb_chrAll_v3.British.Ran4000.QCed.flashpca.pcs.local.txt
-mkdir /users/mturchin/ForPeople/ForGreg
-ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz /users/mturchin/ForPeople/ForGreg/ukb_chrAll_v3.African.QCed.Impt.100geno.raw.edit.gz
-ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt /users/mturchin/ForPeople/ForGreg/ukb_chrAll_v3.African.QCed.flashpca.pcs.local.txt
-ln -s /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz /users/mturchin/ForPeople/ForGreg/ukb_chrAll_v3.British.Ran4000.QCed.Impt.100geno.raw.edit.gz
-ln -s /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt /users/mturchin/ForPeople/ForGreg/ukb_chrAll_v3.British.Ran4000.QCed.flashpca.pcs.local.txt
-chmod g+rw /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz
-chmod g+rw /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt
-chmod g+rw /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz
-chmod g+rw /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt
-
-
-ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz
-ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt
-
-
-
-
-
-
-
 
 
 
@@ -11639,6 +11637,64 @@ cat /users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.Br
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/Lorin 
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/ForPeople/Lorin/ukb_chrAll_v2.AfrBrit4k.QCed.Impt.100geno.*.SNPs /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/ForPeople/Lorin/.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#ForPeople
+
+#ForGreg
+#20200403
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/ukb_chrAll_v3.African.QCed.Impt.100geno.raw.edit.gz
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/ukb_chrAll_v3.African.QCed.flashpca.pcs.local.txt
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/ukb_chrAll_v3.British.Ran4000.QCed.Impt.100geno.raw.edit.gz
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/ukb_chrAll_v3.British.Ran4000.QCed.flashpca.pcs.local.txt
+mkdir /users/mturchin/ForPeople/ForGreg
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz /users/mturchin/ForPeople/ForGreg/ukb_chrAll_v3.African.QCed.Impt.100geno.raw.edit.gz
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt /users/mturchin/ForPeople/ForGreg/ukb_chrAll_v3.African.QCed.flashpca.pcs.local.txt
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz /users/mturchin/ForPeople/ForGreg/ukb_chrAll_v3.British.Ran4000.QCed.Impt.100geno.raw.edit.gz
+ln -s /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt /users/mturchin/ForPeople/ForGreg/ukb_chrAll_v3.British.Ran4000.QCed.flashpca.pcs.local.txt
+chmod g+rw /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz
+chmod g+rw /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt
+chmod g+rw /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz
+chmod g+rw /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wInfo.txt
+mkdir /gpfs/data/sramacha/mturchin/Transfer/
+cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/* /gpfs/data/sramacha/mturchin/Transfer/.
+/gpfs/data/sramacha/ukbiobank_jun17/mturchin/Transfer
+cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/* /gpfs/data/sramacha/ukbiobank_jun17/mturchin/Transfer/. 
+/gpfs/data/sramacha/mturchin/Transfer/.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
