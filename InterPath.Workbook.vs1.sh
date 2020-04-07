@@ -11407,7 +11407,7 @@ done
 R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_10perms\"); \
 	for (i in DataTypes[2:2]) { print(i); \
                 for (j in UKBioBankPops) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
-			png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/ukb_v3.\", ancestry2, \".HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.pValHists.vs1.png\", sep=\"\"), height=4250, width=4000, res=300); par(oma=c(1,1,4,1), mar=c(5,5,4,2), mfrow=c(2,2)); \
+			png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/ukb_v3.\", ancestry2, \".HeightBMI.AllPaths.10perms.pValHists.vs2.png\", sep=\"\"), height=4250, width=4000, res=300); par(oma=c(1,1,4,1), mar=c(5,5,4,2), mfrow=c(2,2)); \
 			Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/Height/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.KEGG.Results.txt.pre.gz\", sep=\"\"), header=F); \	
 			Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.KEGG.Results.txt.pre.gz\", sep=\"\"), header=F); \	
 			Data3 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/Height/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.REACTOME.Results.txt.pre.gz\", sep=\"\"), header=F); \	
@@ -11429,7 +11429,8 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/ukb_v3.*.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/.
+##scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/ukb_v3.*.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/.
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/ukb_v3.*10perms*.vs2.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/.
 
 
 
