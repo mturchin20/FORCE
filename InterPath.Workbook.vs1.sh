@@ -11584,33 +11584,63 @@ done;
 
 #Supplementary Table: UKB Subset Stats
 
-for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do
+	echo -e "Subset\tIndividuals\tSNPs\tPheno\tKEGG\tREACTOME" 
 	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 2`; do
 		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
-				echo $l $ancestry1 $ancestry2 $i $k 
 
-				/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bed
-				/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz
+				NumIndv=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.fam | wc | awk '{ print $1 }'`
+				NumSNPs=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | wc | awk '{ print $1 }'`
+				NumKEGG=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^KEGG"_" | grep -vw NA | wc | awk '{ print $1 }'`
+				NumREACTOME=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^REACTOME"_" | grep -vw NA | wc | awk '{ print $1 }'`
 
-				cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.fam | wc
-				cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | wc
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^KEGG"_" | wc
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^REACTOME"_" | wc
-
-
-
-	
-				join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK_perm1.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | perl -lane 'my @vals1 = split(/,/, $F[2]); print $F[0], "\t", scalar(@vals1);' | sort -k 1,1) | perl -lane 'if ($F[$#F] > 1) { print join("\t", @F); }' | grep ^$l"_" | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK_perm1.ColCrct.localPCs.$l.Results.txt.pre.gz
+				echo $ancestry2 $NumIndv $NumSNPs $i $NumKEGG $NumREACTOME
 
 			done;
 		done;
 	done; 
-done;
+done | column -t | R -q -e "library(\"xtable\"); Data1 <- read.table(file('stdin'), header=T); Data1.sub <- Data1[1:8,c(1,2,3,5,6)]; print(xtable(Data1.sub));"
 
-mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls
+#NOTE -- # for KEGG or REACTOME doesn't change between phenotypes, so do not have to worry about that; numbers for individuals and SNPs are pre-analysis
+```
+Subset            Individuals  SNPs    Pheno   KEGG  REACTOME
+African           3111         374466  Height  180   658
+British.Ran4000   3848         600006  Height  173   650
+British.Ran10000  9603         597298  Height  186   669
+Caribbean         3833         410017  Height  181   661
+Chinese           1448         345221  Height  153   626
+Indian            5077         505854  Height  181   662
+Irish             11575        588324  Height  186   671
+Pakistani         1581         516806  Height  141   596
+African           3111         374466  BMI     180   658
+British.Ran4000   3848         600006  BMI     173   649
+British.Ran10000  9603         597298  BMI     186   669
+Caribbean         3833         410017  BMI     181   661
+Chinese           1448         345221  BMI     153   626
+Indian            5077         505854  BMI     181   662
+Irish             11575        588324  BMI     186   671
+Pakistani         1581         516806  BMI     141   596
 
+Subset              Individuals  SNPs    Pheno   KEGG  REACTOME
+British.Ran4000.2   3869         599381  Height  173   650
+British.Ran4000.3   3836         600654  Height  173   649
+British.Ran4000.4   3838         599829  Height  173   650
+British.Ran4000.5   3853         599442  Height  173   650
+British.Ran10000.2  9628         597577  Height  186   669
+British.Ran10000.3  9636         597486  Height  186   669
+British.Ran10000.4  9593         597369  Height  186   669
+British.Ran10000.5  9596         597507  Height  186   669
+British.Ran4000.2   3869         599381  BMI     173   650
+British.Ran4000.3   3836         600654  BMI     173   649
+British.Ran4000.4   3838         599829  BMI     173   650
+British.Ran4000.5   3853         599442  BMI     173   650
+British.Ran10000.2  9628         597577  BMI     186   669
+British.Ran10000.3  9636         597486  BMI     186   669
+British.Ran10000.4  9593         597369  BMI     186   669
+British.Ran10000.5  9596         597507  BMI     186   669
+```
 
 
 
