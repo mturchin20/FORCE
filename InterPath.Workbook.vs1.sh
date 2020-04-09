@@ -7167,20 +7167,22 @@ R -q -e "PCs <- c(\"global\", \"local\"); for (q in PCs) { \
 #20200308
 
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/perms/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.$Pheno1.perm1.txt
-for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -E 'African|Ran4000|Caribbean|Indian' | head -n 4 | tail -n 4`; do
+for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 1`; do
 	        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 	        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	
 	        echo $i $ancestry1 $ancestry2
 
-		paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt | awk '{ print $1 "\t" $2 }') <(cat <(echo $i) /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/perms/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.$i.perm1.txt) > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/perms/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.$i.perm1.forPLINK.txt
-	
+#		paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt | awk '{ print $1 "\t" $2 }') <(cat <(echo $i) /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/perms/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.$i.perm1.txt) > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/perms/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.$i.perm1.forPLINK.txt
+		join <(cat /gpfs/data/sramacha/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Edit.pre.wCovars.txt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.fam | awk '{ print $1 "_" $1 }' | sort) | perl -lane 'print join("\t", @F[1..$#F]);' | awk '{ print $1 "\t" $2 "\t" $8 "\t" $9 "\t" $10 "\t" $11 }' | cat <(echo -e "FID\tIID\tHeight\tBMI\tWaist\tHip") - > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Phenos.raw.wCovars.Phenos.txt	
+		
+
 	done
 done
 
-for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -E 'African|Ran4000|Caribbean|Indian' | head -n 4 | tail -n 4`; do
+for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran1000|Irish' | head -n 1`; do
 	        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 	        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	
@@ -7191,13 +7193,19 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 			mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK
 		fi		
 	
-		plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --linear --pheno /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/perms/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.$i.perm1.forPLINK.txt --pheno-name $i --covar /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt --covar-name PC1,PC2,PC3,PC4,PC5,PC6,PC7,PC8,PC9,PC10 --allow-no-sex --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.perm1
-		gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.perm1.assoc.linear
+		plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --linear --pheno /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Phenos.raw.wCovars.Phenos.txt --pheno-name $i --covar /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt --covar-name AGE,SEX,CENTER,PC1,PC2,PC3,PC4,PC5,PC6,PC7,PC8,PC9,PC10 --allow-no-sex --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.raw.age.sex.center.localPCs
+		plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --linear --pheno /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Phenos.raw.wCovars.Phenos.txt --pheno-name $i --covar /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt --covar-name AGE,SEX,CENTER --allow-no-sex --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.raw.age.sex.center
+		plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --linear --pheno /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Phenos.raw.wCovars.Phenos.txt --pheno-name $i --covar /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt --covar-name AGE,SEX --allow-no-sex --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.raw.age.sex
+		gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.raw.age.sex.center.localPCs.assoc.linear
+		gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.raw.age.sex.center.assoc.linear
+		gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.raw.age.sex.assoc.linear
 	
 	done
 done
 
 #		...--pheno /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt...Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs
+#		plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --linear --pheno /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/perms/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.$i.perm1.forPLINK.txt --pheno-name $i --covar /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt --covar-name PC1,PC2,PC3,PC4,PC5,PC6,PC7,PC8,PC9,PC10 --allow-no-sex --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.perm1
+#		gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -E 'African|Ran4000|Caribbean|Indian'`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
@@ -7466,9 +7474,51 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 
 
 
+/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz
+/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz
+cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.1.Height.glm.linear
 
+join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $9 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.Height.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $12 }' | sort -k 1,1) | head -n 10
+join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $9 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.Height.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $12 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $9 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.Height.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $12 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
 
+join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.Height.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.Height.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
 
+join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+
+join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+
+```
+(InterPath) [  mturchin@login003  ~/Software/genee/Simulated_Data_Example]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $9 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.Height.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $12 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+> Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);
+[1] 0.003227765
+>
+>
+(InterPath) [  mturchin@login003  ~/Software/genee/Simulated_Data_Example]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+ze.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+> Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);
+[1] 0.09584296
+>
+>
+(InterPath) [  mturchin@login003  ~/Software/genee/Simulated_Data_Example]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+> Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);
+[1] 0.1571841
+>
+>
+(InterPath) [  mturchin@login003  ~/Software/genee/Simulated_Data_Example]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+> Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);
+[1] 0.001361392
+>
+>
+(InterPath) [  mturchin@login003  ~/Software/genee/Simulated_Data_Example]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+> Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);
+[1] -0.001351131
+>
+>
+```
 
 
 
@@ -18862,6 +18912,56 @@ BMI;58923 Indian Indian BMI
 [1] 0.07898585 0.05305765
 >
 >
+#20200409
+(InterPath) [  mturchin@login003  ~/Software/genee/Simulated_Data_Example]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $9 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.Height.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $12 }' | sort -k 1,1) | head -n 10
+10:100007694 0.3384 0.0612072
+10:100016196 0.9115 2.35621e-13
+10:100017453 0.5781 1.04566e-18
+10:100030768 0.1102 0.31298
+10:100032749 0.3647 0.0183295
+10:100046078 0.1785 0.233443
+10:100046757 0.7976 2.49683e-05
+10:100047185 0.3883 0.0214855
+10:100049599 0.1979 0.991126
+10:100050356 0.7721 0.528965
+(InterPath) [  mturchin@login003  ~/Software/genee/Simulated_Data_Example]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $9 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.Height.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $12 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+> Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);
+[1] 0.003227765
+> 
+> 
+(InterPath) [  mturchin@login003  ~/Software/genee/Simulated_Data_Example]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.Height.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+> Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);
+[1] 0.04084708
+>
+>
+(InterPath) [  mturchin@login003  ~/Software/genee/Simulated_Data_Example]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.Height.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+> Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);
+[1] 0.06975538
+>
+>
+(InterPath) [  mturchin@login003  ~/Software/genee/Simulated_Data_Example]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+ze.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+> Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);
+[1] 0.09584296
+>
+>
+(InterPath) [  mturchin@login003  ~/Software/genee/Simulated_Data_Example]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+> Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);
+[1] 0.1571841
+>
+>
+(InterPath) [  mturchin@login003  ~/Software/genee/Simulated_Data_Example]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+
+> Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);
+[1] 0.001361392
+> 
+> 
+(InterPath) [  mturchin@login003  ~/Software/genee/Simulated_Data_Example]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $7 }' | sort -k 1,1) <(cat /gpfs/data/sramacha/ukbiobank_jun17/wcheng8/ukb_genotyped_gwas_results/normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);"
+> Data1 <- read.table(file('stdin'), header=F); cor(Data1[,2], Data1[,3]);
+[1] -0.001351131
+> 
+> 
 
 
 
