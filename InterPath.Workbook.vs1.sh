@@ -10500,33 +10500,38 @@ R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PEGASUS 
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PEGASUS/ukb_chrAll_v3*vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PEGASUS/. 
 
-for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2 | head -n 1`; do
-        for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 2 | tail -n 1`; do
+for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2`; do
+        for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`;
-                echo $i $ancestry1 $ancestry2 $ancestry3 $k
 
 		NumGenes=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PEGASUS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$Pheno1.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.ADD.PEGASUS.out.gz | wc | awk '{ print $1 }';`
 		pValBonf=`echo ".05 / $NumGenes" | bc -l`;
 
-		NumBonf=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PEGASUS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$Pheno1.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.ADD.PEGASUS.out.gz | awk pValBonf=$pValBonf '{ if ($10 < pValBonf) { print $0 } }' | wc | awk '{ print $1 }'` 
+		NumBonf=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PEGASUS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$Pheno1.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.ADD.PEGASUS.out.gz | awk -v pValBonf=$pValBonf '{ if ($10 < pValBonf) { print $0 } }' | wc | awk '{ print $1 }'` 
 		Num1e5=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PEGASUS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$Pheno1.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.ADD.PEGASUS.out.gz | awk '{ if ($10 < 1e-5) { print $0 } }' | wc | awk '{ print $1 }'` 
 		Num1e4=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PEGASUS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$Pheno1.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.ADD.PEGASUS.out.gz | awk '{ if ($10 < 1e-4) { print $0 } }' | wc | awk '{ print $1 }'` 
 		Num1e3=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PEGASUS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$Pheno1.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.ADD.PEGASUS.out.gz | awk '{ if ($10 < 1e-3) { print $0 } }' | wc | awk '{ print $1 }'` 
 
-		awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf)
-	
-		R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
-		PEGASUS.AllPaths.output <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PEGASUS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$Pheno1.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.ADD.PEGASUS.out.gz\", header=F); \ 
-		pVals <- PEGASUS.AllPaths.output[,ncol(PEGASUS.AllPaths.output)]; pVals.no0 <- pVals[pVals > 0]; \
-		quants <- qchisq(pVals.no0, df=1, lower.tail=FALSE); \
-		quants.medn <- median(quants); m <- 0.4549; \
-		pVals.no0 <- pchisq((quants/quants.medn) * m, df=1, lower.tail=FALSE); \
-		PEGASUS.AllPaths.output <- PEGASUS.AllPaths.output[pVals > 0,];  PEGASUS.AllPaths.output[,ncol(PEGASUS.AllPaths.output)] <- pVals.no0; \
-		write.table(PEGASUS.AllPaths.output, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PEGASUS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$Pheno1.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.ADD.PEGASUS.out.recal.gz
-		duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
-	done;
-done;
+		echo $Pheno1 $ancestry2 $NumBonf $Num1e5 $Num1e4 $Num1e3
 
+	done;
+done | cat <(echo -e "Phenotype\tPopulation\tBonferroni\t1e-5\t1e-4\t1e-3") - | column -t
+
+```
+Phenotype  Population       Bonferroni  1e-5  1e-4  1e-3
+Height     African          0           1     47    335
+Height     British.Ran4000  2           5     39    480
+Height     Caribbean        0           1     30    429
+Height     Chinese          0           0     25    307
+Height     Indian           4           7     82    577
+Height     Pakistani        1           3     37    447
+BMI        African          2           3     52    366
+BMI        British.Ran4000  0           0     46    589
+BMI        Caribbean        2           4     49    430
+BMI        Chinese          1           1     28    245
+BMI        Indian           0           4     44    587
+BMI        Pakistani        0           9     50    484
+```
 
 
 
@@ -10558,6 +10563,19 @@ R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); 
 
 echo -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); library(\"cowplot\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
         for (i in DataTypes1[c(1,4)]) { for (l in DataTypes2[1:2]) { for (m in Paths[2:3]) { \
+
+
+
+
+
+
+#gene-e
+
+
+
+
+
+
 
 
 
