@@ -10453,33 +10453,22 @@ British.Ran10000.5  6690      7.474e-05  0    0.001    5    0.01    57
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PEGASUS
 
-for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | grep -E 'Height|BMI'`; do
-	for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);') | grep African`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb" | perl -lane 'print join("\n", @F);') | grep -v Plus`; do
-			SECONDS=0;
-			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
-			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-
-for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2 | head -n 2`; do
-        for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
-                ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`;
-                echo $i $ancestry1 $ancestry2 $ancestry3 $k
-			
-			R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
-			PEGASUS.AllPaths.output <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PEGASUS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$Pheno1.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.ADD.PEGASUS.out.gz
-/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.GjOnly.AllPaths.Results.txt.pre.gz
-\", header=F); \ 
-			pVals <- PEGASUS.AllPaths.output[,ncol(PEGASUS.AllPaths.output)]; pVals.no0 <- pVals[pVals > 0]; \
-			quants <- qchisq(pVals.no0, df=1, lower.tail=FALSE); \
-			quants.medn <- median(quants); m <- 0.4549; \
-			pVals.no0 <- pchisq((quants/quants.medn) * m, df=1, lower.tail=FALSE); \
-			PEGASUS.AllPaths.output <- PEGASUS.AllPaths.output[pVals > 0,];  PEGASUS.AllPaths.output[,ncol(PEGASUS.AllPaths.output)] <- pVals.no0; \
-			write.table(PEGASUS.AllPaths.output, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);" | grep -v \> | gzip > 
-/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.GjOnly.AllPaths.Results.Recal.txt.pre.gz
-			duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
-		done;
-	done;
-done;
+~for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2 | head -n 1`; do
+~        for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 2 | tail -n 1`; do
+~                ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`;
+~                echo $i $ancestry1 $ancestry2 $ancestry3 $k
+~			
+~		R -q -e "library(\"CompQuadForm\"); neg.is.na <- Negate(is.na); \
+~		PEGASUS.AllPaths.output <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PEGASUS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$Pheno1.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.ADD.PEGASUS.out.gz\", header=F); \ 
+~		pVals <- PEGASUS.AllPaths.output[,ncol(PEGASUS.AllPaths.output)]; pVals.no0 <- pVals[pVals > 0]; \
+~		quants <- qchisq(pVals.no0, df=1, lower.tail=FALSE); \
+~		quants.medn <- median(quants); m <- 0.4549; \
+~		pVals.no0 <- pchisq((quants/quants.medn) * m, df=1, lower.tail=FALSE); \
+~		PEGASUS.AllPaths.output <- PEGASUS.AllPaths.output[pVals > 0,];  PEGASUS.AllPaths.output[,ncol(PEGASUS.AllPaths.output)] <- pVals.no0; \
+~		write.table(PEGASUS.AllPaths.output, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);" | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PEGASUS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.$Pheno1.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.ADD.PEGASUS.out.recal.gz
+~		duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
+~	done;
+~done;
 
 R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
         for (i in DataTypes[1]) { \
