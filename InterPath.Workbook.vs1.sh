@@ -10984,6 +10984,11 @@ mv NCBI38.zip /users/mturchin/Software/magma/NCBI38/.
 cd /users/mturchin/Software/magma/NCBI38/
 unzip NCBI38.zip
 
+cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | perl -slane 'if ($. == 1) { $input_file = "/users/mturchin/Software/magma/NCBI38/NCBI38.gene.loc"; %hash1; open( my $input_fh, "<", $input_file ) || die "Cannot open $input_file: $!"; while(my @row = split(/\s+/, <$input_fh>)) { chomp @row; $hash1{$row[5]} = \$row[0];  } close($input_fh); } my @info1; foreach my $entry1 (@F[2..$#F]) { if ($hash1{$entry1}) { push(@info1, ${$hash1{$entry1}}); } } print $F[0], "\t", join("\t", @info1);' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 > /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.MAGMA.NCBI38.gmt 
+
+cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.MAGMA.NCBI38.gmt | grep ^KEGG"_" > /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.MAGMA.NCBI38.KEGG.gmt
+cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.MAGMA.NCBI38.gmt | grep ^REACTOME"_" > /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.MAGMA.NCBI38.REACTOME.gmt
+
 for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
 	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 3 | tail -n 1`; do
                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`;
@@ -11011,6 +11016,22 @@ for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82
 	
 	done
 done
+
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do
+	for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
+		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2 | tail -n 1`; do
+	                ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`;
+		        echo $Pheno1 $ancestry1 $ancestry2
+	
+			/users/mturchin/Software/magma/magma --gene-results /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAGMA/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAGMA.SNP.20kbWind.genes.annot.$Pheno1.genes.raw --set-annot /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.MAGMA.NCBI38.$l.gmt --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAGMA/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAGMA.SNP.20kbWind.genes.annot.$Pheno1.genes.raw.$l
+		
+		done
+	done
+done
+
+magma --gene-results [GENE_PREFIX].genes.raw --set-annot [SET_FILE] --out [GS_PREFIX]	
+
+
 
 
 
