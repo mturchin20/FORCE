@@ -7192,8 +7192,8 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 	done
 done
 
-for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2 | head -n 1`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 3 | tail -n 1`; do
+for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
 	        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 	        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	
@@ -10965,6 +10965,23 @@ cd /users/mturchin/Software
 
 
 
+
+
+
+
+
+
+
+
+#MAGMA
+#20200411
+
+cd /users/mturchin/Software
+wget https://ctg.cncr.nl/software/MAGMA/prog/magma_v1.07b.zip
+mkdir /users/mturchin/Software/magma
+mv magma_v1.07b.zip /users/mturchin/Software/magma/.
+cd /users/mturchin/Software/magma/.
+unzip magma_v1.07b.zip
 
 
 
