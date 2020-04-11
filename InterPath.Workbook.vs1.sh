@@ -1383,6 +1383,12 @@ done
 #	Data3 <- merge(Data1, Data2, by=\"FID\"); \	
 #	write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);" 
 #	print(nrow(Data1)); print(nrow(Data2)); print(nrow(Data3)); \
+#	Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.wthnPop.$ancestry2.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.Edit.txt\", header=T); \ 
+#	Data3 <- merge(Data1, Data2, by=\"FID\"); \	
+#	write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);" 
+#	Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.$ancestry2.Edit.txt\", header=T); \ 
+#	Data3 <- merge(Data1, Data2, by=\"FID\"); \	
+#	write.table(Data3[,c(1,3:ncol(Data3))], \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.raw.Phenos.txt\", quote=FALSE, row.name=FALSE, col.name=TRUE);" 
 
 #20200317 NOTE -- this was going to be to make perms of files like '...raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt', but realized it should be done within the code of say the MAPIT part, in order to get the 'noNAs' part correctly the first time around (eg doing 'sample()' after the noNAs part); 20200317 NOTE -- jk, using this for a slightly different person now
 for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2`; do
