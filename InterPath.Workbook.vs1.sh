@@ -10744,10 +10744,35 @@ for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82
 	done
 done
 
-for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2`; do
+for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
 	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2 | tail -n 1`; do
                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; Pheno1=`echo $i | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; tempDateTime1=`date +%F_%T`;
 	        echo $Pheno1 $ancestry1 $ancestry2
+
+		if [ $Pheno1 == "Height" ]; then
+			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${Pheno1}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | wc
+			zcat /users/mturchin/data/mturchin/Data/Neale2017/Vs2/50.assoc.tsv.gz | wc
+			join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${Pheno1}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $9 }' | sort -k 1,1) <(zcat /users/mturchin/data/mturchin/Data/Neale2017/Vs2/50.assoc.tsv.gz | sed 's/:/ /g' | perl -lane 'print $F[0], ":", $F[1], "\t", $F[$#F];' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(nrow(Data1)); print(cor(-log10(Data1[,2]), -log10(Data1[,3])));" | grep -v ^\>
+		
+			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${Pheno1}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | wc
+			zcat /users/mturchin/Data2/GIANT/GIANT2018.Height.allsnps.txt.gz | wc	
+			join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${Pheno1}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $9 }' | sort -k 1,1) <(zcat /users/mturchin/Data2/GIANT/GIANT2018.Height.allsnps.txt.gz | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(nrow(Data1)); print(cor(-log10(Data1[,2]), -log10(Data1[,3])));" | grep -v ^\>
+		
+			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${Pheno1}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | wc
+			zcat /users/mturchin/Data2/GIANT/GIANT_HEIGHT_Wood_et_al_2014_publicrelease_HapMapCeuFreq.wUCSCGenomeBrowser_dbSNP130.vs1.txt.gz | wc
+			join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${Pheno1}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $9 }' | sort -k 1,1) <(zcat /users/mturchin/Data2/GIANT/GIANT_HEIGHT_Wood_et_al_2014_publicrelease_HapMapCeuFreq.wUCSCGenomeBrowser_dbSNP130.vs1.txt.gz | sed 's/_/:/g' | awk '{ print $9 "\t" $7 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(nrow(Data1)); print(cor(-log10(Data1[,2]), -log10(Data1[,3])));" | grep -v ^\>
+		fi
+		if [ $Pheno1 == "BMI" ]; then
+			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${Pheno1}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | wc
+			zcat /users/mturchin/data/mturchin/Data/Neale2017/Vs2/21001.assoc.tsv.gz | wc
+			join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${Pheno1}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $9 }' | sort -k 1,1) <(zcat /users/mturchin/data/mturchin/Data/Neale2017/Vs2/21001.assoc.tsv.gz | sed 's/:/ /g' | perl -lane 'print $F[0], ":", $F[1], "\t", $F[$#F];' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(nrow(Data1)); print(cor(-log10(Data1[,2]), -log10(Data1[,3])));" | grep -v ^\>
+		
+			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${Pheno1}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | wc
+			zcat /users/mturchin/Data2/GIANT/GIANT2018.BMI.allsnps.txt.gz | wc	
+			join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${Pheno1}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $9 }' | sort -k 1,1) <(zcat /users/mturchin/Data2/GIANT/GIANT2018.BMI.allsnps.txt.gz | awk '{ print $1 ":" $2 "\t" $9 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(nrow(Data1)); print(cor(-log10(Data1[,2]), -log10(Data1[,3])));" | grep -v ^\>
+		fi
+	done
+done
 
 		#comp UKB GWAS to Ben Neale pVals & GIANT pvals
 		#comp UKB PLINK GWAS to GEMMA GWAS
@@ -10761,11 +10786,8 @@ for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82
 		#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz
 		#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/GWAS/output/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.$Pheno1.out
 
-		join
+#		join
 		
-			
-
-
 	done
 done
 
