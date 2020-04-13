@@ -10561,6 +10561,11 @@ British.Ran10000.5  6690      7.474e-05  0    0.001    5    0.01    57
 
 
 
+
+
+
+
+
 #PEGASUS
 #20200408
 
@@ -10683,6 +10688,14 @@ echo -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); 
 
 
 
+
+
+
+
+
+
+
+
 #GEMMA GWAS
 #20200409
 
@@ -10774,21 +10787,21 @@ for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82
 	done
 done
 
-		#comp UKB GWAS to Ben Neale pVals & GIANT pvals
-		#comp UKB PLINK GWAS to GEMMA GWAS
-	
-		#/users/mturchin/data/mturchin/Data/Loh2017/
-		#/users/mturchin/data/mturchin/Data/Neale2017
-		#/users/mturchin/Data2/GIANT/GIANT2018.Height.allsnps.txt.gz
-		#/users/mturchin/Data2/GIANT/GIANT_HEIGHT_Wood_et_al_2014_publicrelease_HapMapCeuFreq.wUCSCGenomeBrowser_dbSNP130.vs1.txt.gz
-		#/users/mturchin/Data2/GIANT/SNP_gwas_mc_merge_nogc.tbl.uniq.gz	
-
-		#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz
-		#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/GWAS/output/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.$Pheno1.out
-
-#		join
-	done
-done
+#		#comp UKB GWAS to Ben Neale pVals & GIANT pvals
+#		#comp UKB PLINK GWAS to GEMMA GWAS
+#	
+#		#/users/mturchin/data/mturchin/Data/Loh2017/
+#		#/users/mturchin/data/mturchin/Data/Neale2017
+#		#/users/mturchin/Data2/GIANT/GIANT2018.Height.allsnps.txt.gz
+#		#/users/mturchin/Data2/GIANT/GIANT_HEIGHT_Wood_et_al_2014_publicrelease_HapMapCeuFreq.wUCSCGenomeBrowser_dbSNP130.vs1.txt.gz
+#		#/users/mturchin/Data2/GIANT/SNP_gwas_mc_merge_nogc.tbl.uniq.gz	
+#
+#		#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz
+#		#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GEMMA/GWAS/output/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.GEMMA.$Pheno1.out
+#
+##		join
+#	done
+#done
 
 for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 2 | tail -n 2`; do
 	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 3`; do
@@ -10821,16 +10834,26 @@ join - <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10
 join - <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran10000.5.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep -w ADD | awk '{ print $2 "\t" $9 }' | sort -k 1,1) | grep -v -w NA | \
 R -q -e "Data1 <- read.table(file('stdin')); Data2 <- Data1[,2:ncol(Data1)]; Data2.neglog10 <- apply(Data2, 2, function(x) { return(-log10(x)); }); print(nrow(Data2.neglog10)); print(head(Data1)); print(head(Data2.neglog10)); print(cor(Data2.neglog10));" 
 
+#summary of the situation I sent to Sohini & Lorin describing where things were at by the time I really finished looking into things here
+```
+@sohini @lorin okay, so I've tried a handful of things, and basically I think the net result is that there is not a lot of power to find additive effects.
+running GEMMA did not improve power that much
+I tried running an additive pathway analysis method called MAGMA (I'm not sure if a shrinkage method like gene-e is best where we know power may already be low) and ultimately found at most maybe one 'hit' across the different ancestry/phenotype/database groups
+I do see an increase in power going from the British.Ran4000 to British.Ran10000 subsets, but still not a lot overall
+I compared my PLINK results to Ben Neale's UKB results and see similar p-value correlations (ranging around mid to high single digits) as I did comparing against Wei's full British UKB results
+comparing my PLINK results to the GEMMA results also showed mid-to-high single digit correlations in my British subsamples
+I also checked whether dropping local PCs or Assessment Center as covariates changed anything and saw nothing major
+lastly, I tried running some analyses using the UKB subsets prior to imputation -- so these should be subsets that have only experience SNP and individual level QC, nothing major, and again do not see any major changes
 
-
-
-
-
-
-
-
-
-	
+as a point of reference, here is the QQ-plot from one of the first height GWAS -- it had a little under 5k European individuals, and basically identified only 2 strong SNPs: (copy/pasted pic; ref: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3086278/)
+this was pre-GIANT
+this might be a better point of comparison than the WTCCC results since those were case/control
+I see like maybe 3-4 SNPs across all of my analyses that are either GWAS significant or close to the threshold
+.
+.
+.
+((and then some more thoughts about what to do moving forward))
+```
 
 
 
@@ -10994,12 +11017,6 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 	        done
 	done
 done
-
-cd /users/mturchin/Software
-
-
-
-
 
 
 
