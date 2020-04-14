@@ -11204,7 +11204,7 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscrip
 R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
         for (i in DataTypes[1]) { \
 		for (k in c(\"Height\", \"BMI\")[1:1]) { print(c(i,k)); \
-                	png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/MAPIT/ukb_v3.All4kPops.HeightBMI.MAPIT.Plots.vs3.\", k, \".png\", sep=\"\"), height=2250, width=2750, res=300); par(oma=c(1,1,1,10), mar=c(5,5,4,2), mfrow=c(1,1)); \
+                	png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/MAPIT/ukb_v3.All4kPops.HeightBMI.MAPIT.Plots.vs3.\", k, \".png\", sep=\"\"), height=2250, width=2750, res=300); par(oma=c(1,1,1,10), mar=c(5,5,4,2), mgp=c(3.5,1.5,0), mfrow=c(1,1)); \
 			Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.\", k, \".DaviesApprox.Results.txt.pre.gz\", sep=\"\"), header=F); \
 			Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.\", k, \".DaviesApprox.Results.txt.pre.gz\", sep=\"\"), header=F); \
 			Data3 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.\", k, \".DaviesApprox.Results.txt.pre.gz\", sep=\"\"), header=F); \
@@ -11222,6 +11222,7 @@ R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\
 		dev.off(); }; \
         }; \
 "
+			axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 
 #R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
 #		for (j in UKBPops[1]) { \
