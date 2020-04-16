@@ -10568,28 +10568,22 @@ PopGroup1="AllPops"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -l
 	cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.AllPaths.FDRs.vs1.txt		
 
 done
- | column -t > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FDRs/ukb_chrAll_v3.$PopGroup1.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.AllPaths.FDRs.vs1.txt 
 
 #PopGroup1 either "AllPops" or "BritReps"
-PopGroup1="BritReps"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+PopGroup1="AllPops"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do
 	PopGroupBash="error1"; if [ $PopGroup1 == "AllPops" ]; then PopGroupBash="head"; fi; if [ $PopGroup1 == "BritReps" ]; then PopGroupBash="tail"; fi;
-	echo $l;
-	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 2`; do
-		echo $i;
-		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | $PopGroupBash -n 8 | head -n 8 | tail -n 8 | grep -v Irish`; do
-	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 1 | tail -n 1`; do
+		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | $PopGroupBash -n 8 | head -n 8 | tail -n 8 | grep -vE "Ran10000|Irish"`; do
+			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
 				NumPaths1=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
 				NumPaths2=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^$l"_" | grep -v -w NA | wc | awk '{ print $1 }'`
-		
-#				echo $i $ancestry1 $ancestry2 $k
 			
 				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK_10perms.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^$l"_" | grep -v -w NA | R -q -e "Data1 <- read.table(file('stdin'), header=F); Results1 <- c(); Results1 <- c(Results1, \"$ancestry2\"); Results1 <- c(Results1, c(nrow(Data1), c(signif(.05/$NumPaths2, 4), nrow(Data1[Data1[,4] <= .05/$NumPaths2,])))); Results1 <- c(Results1, c(.001,  nrow(Data1[Data1[,4] <= .001,]))); Results1 <- c(Results1, c(.01,  nrow(Data1[Data1[,4] <= .01,]))); write.table(matrix(Results1, nrow=1), quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v ^\> | column -t 
-
 	
 			done;
 		done;
-	done; 
+		done | cat <(echo "Population Pathway_Counts Bonferroni_Threshold Bonferonni_Count .001_Threshold .001_Count .01_Threshold .01_Count") - | R -q -e "library(\"xtable\"); Data1 <- read.table(file('stdin'), header=T); print(xtable(Data1));" 
 done 
 
 
