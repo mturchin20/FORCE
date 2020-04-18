@@ -12831,6 +12831,58 @@ done
 
 
 
+#Supplementary Table: MAPIT-R Top Pathway Gene Counts
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathawyGeneCounts
+
+
+(InterPath) [  mturchin@login003  ~/Data2/GIANT]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 8) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1
+22      UBA52,RPS27A
+15      SOS1,PIK3R1,PIK3CA,CDK1
+14      MAPK1,GRB2,CREB1
+13      PSMB8,PRKACB,PRKACA,PIK3R2
+12      SKP1,RAC1,PSMF1,PSME2,PSME1,PSMD9,PSMD8,PSMD7,PSMD6,PSMD5,PSMD4,PSMD3,PSMD2,PSMD14,PSMD13,PSMD12,PSMD11,PSMD1,PSMC6,PSMC5,PSMC4,PSMC3,PSMC2,PSMC1,PSMB9,PSMB7,PSMB6,PSMB5,PSMB4,PSMB3,PSMB2,PSMB10,PSMB1,PSMA7,PSMA6,PSMA4,PSMA3,PSMA2,PSMA1,PRKAR2B,PDPK1,MAPK3,ITPR3,ITPR2,HRAS,CDKN1B,CDKN1A,ADCY8
+11      SRC,RAF1,PSME4,PSMA8,PRKCA,PRKACG,NRAS,MAP2K2,MAP2K1,KRAS,CHUK,AKT1,ADCY6,ADCY5,ADCY3,ADCY1
+10      YWHAB,TRIB3,THEM4,RICTOR,PRKCD,PRKAR2A,PRKAR1B,PRKAR1A,PPP2R1B,PPP2R1A,PPP2CB,PPP2CA,MTOR,MLST8,MDM2,MAPKAP1,GNGT2,GNGT1,GNG8,GNG7,GNG2,GNG13,GNG12,GNG11,GNG10,GNB5,GNB4,GNB3,GNB2,GNB1,CUL1,CASP9,BAD,AKT3,AKT2,ADCY9,ADCY7,ADCY4,ADCY2
+9       PTEN,PPP2R5D,PDE1B,PDE1A,FYN,CALM3,CALM2,CALM1
+8       VAV1,TSC2,RPS6KB2,PIK3R3,PHLPP1,NR4A1,HDAC1,GSK3A,FOXO3,FOXO1,CAMK4,BTRC,AKT1S1,AGRN
+
+#From: http://pedagogix-tagc.univ-mrs.fr/courses/ASG1/practicals/go_statistics_td/go_statistics_td_2015.html & https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Hypergeometric.html
+```
+
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 1`; do
+	echo $l
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
+		echo $j
+		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+		for i in `cat <(echo "Height BMI WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do
+			echo $i
+			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.${l}.txt | wc | awk '{ print $1 }'`	
+				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
+				echo $k $pValBonf
+		
+				cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | awk '{ print $1 "\t" $4 "\t" $5 "\t" $6 }' | R -q -e "library(\"xtable\"); Data1 <- read.table(file('stdin'), header=F); colnames(Data1) <- c(\"Pathway\", \"Genes\", \"SNPs\", \"p-Value\"); print(xtable(Data1, digits=c(0,0,0,0,-3)), include.rownames=FALSE);" 
+	
+			done
+		done 
+	done 
+done 
+
+#> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.R.xtable.txt
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
