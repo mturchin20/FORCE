@@ -12248,7 +12248,6 @@ n=N−m	number of “non-marked” elements, i.e. the number of genes that have 
 k=59	Size of the selection, i.e. number of genes predicted as E2F targets, and associated to at least one “Biological Process” in the Gene Ontology.
 x=19	number of “marked” elements in the selection, i.e. number of genes predicted as E2F targets AND associated to the process “cell cycle” in GO annotations.
 ```
-
 (InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | grep PSM | head -n 5
      13 PSMB8
      12 PSMF1
@@ -12859,7 +12858,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
 				echo $k $pValBonf
 
-				cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 5) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1 | R -q -e "library(\"xtable\"); File1 <- file('stdin'); File1.info <- file.info(File1); Data1 <- c(); if (rownames(File1.info[File1.info$size > 0,]) > 0 ) { Data1 <- read.table(file('stdin'), header=F); colnames(Data1) <- c(\"Gene Count\", \"Genes\"); print(xtable(Data1), include.rownames=FALSE);};" 
+				cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 5) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1 | R -q -e "library(\"xtable\"); Data1 <- read.table(file('stdin'), header=F); colnames(Data1) <- c(\"Gene Count\", \"Genes\"); print(xtable(Data1), include.rownames=FALSE);" 
 	
 			done
 		done 
@@ -12876,6 +12875,179 @@ done
 
 
 
+
+#Supplementary Table: MAPIT-R Top Pathway Gene Count Hypergeometric Tests
+
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | wc
+     29     174   21367
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | wc
+      2      12     755
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | head -n 10
+     11 MAPK3
+     11 MAPK1
+     10 TNF
+      9 PRKCB
+      9 PLCB4
+      9 PLCB3
+      9 PLCB2
+      9 PLCB1
+      9 HRAS
+      8 RAF1
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | head -n 10
+      2 PIK3R5
+      2 PIK3R3
+      2 PIK3R2
+      2 PIK3R1
+      2 PIK3CG
+      2 PIK3CD
+      2 PIK3CB
+      2 PIK3CA
+      2 MTOR
+      2 MAPK3
+
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | wc
+     47     282   28824
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | wc
+     11      66    3745
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | head -n 10
+     18 MAPK3
+     18 MAPK1
+     14 PIK3CG
+     14 PIK3CD
+     14 PIK3CB
+     14 PIK3CA
+     14 HRAS
+     13 RAF1
+     13 PIK3R5
+     13 PIK3R3
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | head -n 10
+      3 TP53
+      3 PTEN
+      3 PIK3CG
+      3 PIK3CD
+      3 PIK3CB
+      3 PIK3CA
+      3 MDM2
+      3 CDKN2A
+      3 CDKN1A
+      3 CDK6
+
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | wc
+     24     144   21235
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | wc
+      0       0       0
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | head -n 10
+      8 MAPK1
+      7 PIK3R2
+      7 PIK3R1
+      7 PIK3CA
+      6 SOS1
+      6 MAPK3
+      6 MAP2K2
+      6 MAP2K1
+      6 GRB2
+      6 CREB1
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | head -n 10 | wc
+      0       0       0
+
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | head -n 10
+     22 UBA52
+     22 RPS27A
+     15 SOS1
+     15 PIK3R1
+     15 PIK3CA
+     15 CDK1
+     14 MAPK1
+     14 GRB2
+     14 CREB1
+     13 PSMB8
+
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | grep PSM | head -n 5
+     13 PSMB8
+     12 PSMF1
+     12 PSME2
+     12 PSME1
+     12 PSMD9
+
+(InterPath2) [  mturchin@login003  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | head -n 10
+     10 UBA52
+     10 RPS27A
+      9 PSMF1
+      9 PSME2
+      9 PSME1
+      9 PSMD9
+      9 PSMD8
+      9 PSMD7
+      9 PSMD6
+      9 PSMD5
+
+```
+k <- 65
+m <- 44
+N <- 658
+n <- N - m
+n
+> n
+[1] 614
+x <- 12
+phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+> phyper(q=x -1, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 0.0005303724
+phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+> phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 0.0001191678
+
+k <- 26
+m <- 34
+N <- 577
+n <- N - m
+n
+> n
+[1] 543
+x <- 9
+phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+> phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 4.46362e-06
+phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+> phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 3.545332e-07
+
+k <- 65
+m <- 106
+N <- 658
+n <- N - m
+n
+> n
+[1] 552
+x <- 22
+phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+> phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 0.0001536891
+phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+> phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 4.588312e-05
+
+UBA52 (All Pathways) 65 106 658 22 1.537E-4
+UBA52 (Smaller Pathways) 26 84 577 10 1.855E-3
+
+PSM* (All Pathways) 65 44 658 12 5.304E-4 
+PSM* (Smaller Pathways) 26 34 577 9 4.464E-6
+
+k <- 26
+m <- 84
+N <- 577
+n <- N - m
+n
+> n
+[1] 493
+x <- 10
+phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+> phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 0.001855224
+phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+> phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+[1] 0.000401377
+```
 
 
 
