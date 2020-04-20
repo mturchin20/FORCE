@@ -11616,11 +11616,11 @@ REACTOME_BMI    1       0       1       2       0       0       0       2
 #20200127 NOTE -- include pop size ie 'n' for each population in legend?
 R -q -e "library(\"RColorBrewer\"); Data1 <- read.table(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.AllPaths.pValBonf.Barplots.Info.vs1.txt\", header=T); \
 Data1.KEGG <- t(Data1)[,1:2]; Data1.REACTOME <- t(Data1)[,3:4]; \
-png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.AllPaths.pValBonf.Barplots.plots.vs1.png\", height=4000, width=4350, res=300); par(oma=c(1,1,4,15.5), mar=c(5,5,4,2), mfrow=c(2,1)); \
+png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.AllPaths.pValBonf.Barplots.plots.vs2.png\", height=4000, width=4350, res=300); par(oma=c(1,1,4,15.5), mar=c(5,5,4,2), mfrow=c(2,1)); \
 Data1.colors <- c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7]); \
-barplot(Data1.KEGG, ylab=\"Number of Significant Pathways\", col=Data1.colors, beside=TRUE, cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-barplot(Data1.REACTOME, ylab=\"Number of Significant Pathways\", col=Data1.colors, beside=TRUE, cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-mtext(\"UKBioBank InterPath Results\", side=3, outer=TRUE, at=.5, cex=2.5); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African (n=1234)\", \"Brit.Ran4k (n=1234)\", \"Brit.Ran10k (n=1234)\", \"Caribbean (n=1234)\", \"Chinese (n=1234)\", \"Indian (n=1234)\", \"Irish (n=1234)\", \"Pakistani (n=1234)\"), pch=c(15,15,15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.29), bg=\"transparent\", cex=1.5, y.intersp=2); \
+barplot(Data1.KEGG, ylab=\"Number of Significant Pathways\", ylim=c(0,60), col=Data1.colors, beside=TRUE, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+barplot(Data1.REACTOME, ylab=\"Number of Significant Pathways\", ylim=c(0,60), col=Data1.colors, beside=TRUE, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+mtext(\"UKBioBank MAPIT-R Results\", side=3, outer=TRUE, at=.5, cex=3); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African (n=3111)\", \"Brit.Ran4k (n=3848)\", \"Brit.Ran10k (n=9603)\", \"Caribbean (n=3833)\", \"Chinese (n=1448)\", \"Indian (n=5077)\", \"Irish (n=11575)\", \"Pakistani (n=1581)\"), pch=c(15,15,15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.29), bg=\"transparent\", cex=1.5, y.intersp=2); \
 dev.off();"
 
 #On MacBook Pro
@@ -11632,7 +11632,7 @@ Data1.KEGG <- t(Data1)[,1]; Data1.REACTOME <- t(Data1)[,3:4]; \
 png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.Height.ColCrct.localPCs.KEGG.pValBonf.Barplots.plots.vs1.png\", height=2000, width=2750, res=300); par(oma=c(1,1,4,15.5), mar=c(5,5,4,2), mfrow=c(1,1)); \
 Data1.colors <- c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7]); \
 barplot(Data1.KEGG, xlab=\"KEGG Height\", ylab=\"Number of Significant Pathways\", names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African (n=1234)\", \"Brit.Ran4k (n=1234)\", \"Brit.Ran10k (n=1234)\", \"Caribbean (n=1234)\", \"Chinese (n=1234)\", \"Indian (n=1234)\", \"Irish (n=1234)\", \"Pakistani (n=1234)\"), pch=c(15,15,15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.23), bg=\"transparent\", cex=1.5, y.intersp=1.5); \
+par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African (n=3111)\", \"Brit.Ran4k (n=3848)\", \"Brit.Ran10k (n=9603)\", \"Caribbean (n=3833)\", \"Chinese (n=1448)\", \"Indian (n=5077)\", \"Irish (n=11575)\", \"Pakistani (n=1581)\"), pch=c(15,15,15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.23), bg=\"transparent\", cex=1.5, y.intersp=1.5); \
 dev.off();"
 
 #On MacBook Pro
@@ -11642,9 +11642,9 @@ R -q -e "library(\"RColorBrewer\"); Data1 <- read.table(\"/users/mturchin/LabMis
 Data1.KEGG <- t(Data1)[,1:2]; Data1.REACTOME <- t(Data1)[,3:4]; \
 png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.BritReps.HeightBMI.ColCrct.localPCs.AllPaths.pValBonf.Barplots.plots.vs2.png\", height=4000, width=4250, res=300); par(oma=c(1,1,4,13), mar=c(5,5,4,2), mfrow=c(2,1)); \
 Data1.colors <- c(brewer.pal(11, \"Spectral\")[1], brewer.pal(11, \"Spectral\")[2], brewer.pal(11, \"Spectral\")[3], brewer.pal(11, \"Spectral\")[4], brewer.pal(11, \"Spectral\")[5], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(11, \"RdYlBu\")[10], brewer.pal(11, \"RdYlBu\")[9], brewer.pal(11, \"RdYlBu\")[8], brewer.pal(11, \"RdYlBu\")[7]); \ 
-barplot(Data1.KEGG, ylab=\"Number of Significant Pathways\", ylim=c(0,7), col=Data1.colors, beside=TRUE, cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-barplot(Data1.REACTOME, ylab=\"Number of Significant Pathways\", ylim=c(0,7),col=Data1.colors, beside=TRUE, cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-mtext(\"UKBioBank MAPIT-R British Replicate Results\", side=3, outer=TRUE, at=.5, cex=2.5); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"Brit.Ran4k.1\", \"Brit.Ran4k.2\", \"Brit.Ran4k.3\", \"Brit.Ran4k.4\", \"Brit.Ran4k.5\", \"Brit.Ran10k.1\", \"Brit.Ran10k.2\", \"Brit.Ran10k.3\", \"Brit.Ran10k.4\", \"Brit.Ran10k.5\"), pch=c(16,16,16,16,16,16,16,16,16,16), col=c(brewer.pal(11, \"Spectral\")[1], brewer.pal(11, \"Spectral\")[2], brewer.pal(11, \"Spectral\")[3], brewer.pal(11, \"Spectral\")[4], brewer.pal(11, \"Spectral\")[5], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(11, \"RdYlBu\")[10], brewer.pal(11, \"RdYlBu\")[9], brewer.pal(11, \"RdYlBu\")[8], brewer.pal(11, \"RdYlBu\")[7]), xpd=TRUE, inset=c(.0375,.29), bg=\"transparent\", cex=1.5, y.intersp=2); \ 
+barplot(Data1.KEGG, ylab=\"Number of Significant Pathways\", ylim=c(0,7), col=Data1.colors, beside=TRUE, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+barplot(Data1.REACTOME, ylab=\"Number of Significant Pathways\", ylim=c(0,7),col=Data1.colors, beside=TRUE, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+mtext(\"UKBioBank MAPIT-R British Replicate Results\", side=3, outer=TRUE, at=.5, cex=3); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"Brit.Ran4k.1 (n= )\", \"Brit.Ran4k.2 (n= )\", \"Brit.Ran4k.3 (n= )\", \"Brit.Ran4k.4 (n= )\", \"Brit.Ran4k.5 (n= )\", \"Brit.Ran10k.1 (n= )\", \"Brit.Ran10k.2 (n= )\", \"Brit.Ran10k.3 (n= )\", \"Brit.Ran10k.4 (n= )\", \"Brit.Ran10k.5 (n= )\"), pch=c(16,16,16,16,16,16,16,16,16,16), col=c(brewer.pal(11, \"Spectral\")[1], brewer.pal(11, \"Spectral\")[2], brewer.pal(11, \"Spectral\")[3], brewer.pal(11, \"Spectral\")[4], brewer.pal(11, \"Spectral\")[5], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(11, \"RdYlBu\")[10], brewer.pal(11, \"RdYlBu\")[9], brewer.pal(11, \"RdYlBu\")[8], brewer.pal(11, \"RdYlBu\")[7]), xpd=TRUE, inset=c(.0375,.29), bg=\"transparent\", cex=1.5, y.intersp=2); \ 
 dev.off();"
 
 #On MacBook Pro
@@ -11652,7 +11652,7 @@ dev.off();"
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; 
-	echo $Pheno1 $ancestry1 $ancestry2
+	echo $ancestry1 $ancestry2
 
 	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.fam | wc	
 
@@ -11661,26 +11661,26 @@ done
 ```
 (InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
 >         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
->         echo $Pheno1 $ancestry1 $ancestry2
+>         echo $ancestry1 $ancestry2
 > 
 >         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.fam | wc
->         
+> 
 > done
-Height African African
+African African
    3111   18666   77775
-Height British British.Ran4000
+British British.Ran4000
    3848   23088   96200
-Height British British.Ran10000
+British British.Ran10000
    9603   57618  240075
-Height Caribbean Caribbean
+Caribbean Caribbean
    3833   22998   95825
-Height Chinese Chinese
+Chinese Chinese
    1448    8688   36200
-Height Indian Indian
+Indian Indian
    5077   30462  126925
-Height Irish Irish
+Irish Irish
   11575   69450  289375
-Height Pakistani Pakistani
+Pakistani Pakistani
    1581    9486   39525
 ```
 
