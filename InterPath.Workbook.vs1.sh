@@ -11640,17 +11640,17 @@ dev.off();"
 
 R -q -e "library(\"RColorBrewer\"); Data1 <- read.table(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.BritReps.HeightBMI.ColCrct.localPCs.AllPaths.pValBonf.Barplots.Info.vs2.txt\", header=T); \
 Data1.KEGG <- t(Data1)[,1:2]; Data1.REACTOME <- t(Data1)[,3:4]; \
-png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.BritReps.HeightBMI.ColCrct.localPCs.AllPaths.pValBonf.Barplots.plots.vs2.png\", height=4000, width=4250, res=300); par(oma=c(1,1,4,13), mar=c(5,5,4,2), mfrow=c(2,1)); \
+png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.BritReps.HeightBMI.ColCrct.localPCs.AllPaths.pValBonf.Barplots.plots.vs2.png\", height=4000, width=4750, res=300); par(oma=c(1,1,4,18), mar=c(5,5,4,2), mfrow=c(2,1)); \
 Data1.colors <- c(brewer.pal(11, \"Spectral\")[1], brewer.pal(11, \"Spectral\")[2], brewer.pal(11, \"Spectral\")[3], brewer.pal(11, \"Spectral\")[4], brewer.pal(11, \"Spectral\")[5], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(11, \"RdYlBu\")[10], brewer.pal(11, \"RdYlBu\")[9], brewer.pal(11, \"RdYlBu\")[8], brewer.pal(11, \"RdYlBu\")[7]); \ 
 barplot(Data1.KEGG, ylab=\"Number of Significant Pathways\", ylim=c(0,7), col=Data1.colors, beside=TRUE, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 barplot(Data1.REACTOME, ylab=\"Number of Significant Pathways\", ylim=c(0,7),col=Data1.colors, beside=TRUE, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-mtext(\"UKBioBank MAPIT-R British Replicate Results\", side=3, outer=TRUE, at=.5, cex=3); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"Brit.Ran4k.1 (n= )\", \"Brit.Ran4k.2 (n= )\", \"Brit.Ran4k.3 (n= )\", \"Brit.Ran4k.4 (n= )\", \"Brit.Ran4k.5 (n= )\", \"Brit.Ran10k.1 (n= )\", \"Brit.Ran10k.2 (n= )\", \"Brit.Ran10k.3 (n= )\", \"Brit.Ran10k.4 (n= )\", \"Brit.Ran10k.5 (n= )\"), pch=c(16,16,16,16,16,16,16,16,16,16), col=c(brewer.pal(11, \"Spectral\")[1], brewer.pal(11, \"Spectral\")[2], brewer.pal(11, \"Spectral\")[3], brewer.pal(11, \"Spectral\")[4], brewer.pal(11, \"Spectral\")[5], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(11, \"RdYlBu\")[10], brewer.pal(11, \"RdYlBu\")[9], brewer.pal(11, \"RdYlBu\")[8], brewer.pal(11, \"RdYlBu\")[7]), xpd=TRUE, inset=c(.0375,.29), bg=\"transparent\", cex=1.5, y.intersp=2); \ 
+mtext(\"UKBioBank MAPIT-R British Replicate Results\", side=3, outer=TRUE, at=.5, cex=3); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"Brit.Ran4k (n=3848)\", \"Brit.Ran4k.2 (n=3869)\", \"Brit.Ran4k.3 (n=3836)\", \"Brit.Ran4k.4 (n=3838)\", \"Brit.Ran4k.5 (n=3853)\", \"Brit.Ran10k (n=9603)\", \"Brit.Ran10k.2 (n=9628)\", \"Brit.Ran10k.3 (n=9636)\", \"Brit.Ran10k.4 (n=9593)\", \"Brit.Ran10k.5 (n=9596)\"), pch=c(16,16,16,16,16,16,16,16,16,16), col=c(brewer.pal(11, \"Spectral\")[1], brewer.pal(11, \"Spectral\")[2], brewer.pal(11, \"Spectral\")[3], brewer.pal(11, \"Spectral\")[4], brewer.pal(11, \"Spectral\")[5], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(11, \"RdYlBu\")[10], brewer.pal(11, \"RdYlBu\")[9], brewer.pal(11, \"RdYlBu\")[8], brewer.pal(11, \"RdYlBu\")[7]), xpd=TRUE, inset=c(.036,.29), bg=\"transparent\", cex=1.5, y.intersp=2); \ 
 dev.off();"
 
 #On MacBook Pro
 #scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.*.AllPaths.pValBonf.Barplots.plots.*png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/.
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; 
 	echo $ancestry1 $ancestry2
 
@@ -11682,6 +11682,29 @@ Irish Irish
   11575   69450  289375
 Pakistani Pakistani
    1581    9486   39525
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
+>         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
+>         echo $ancestry1 $ancestry2
+> 
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.fam | wc
+> 
+> done
+British British.Ran4000.2
+   3869   23214   96725
+British British.Ran4000.3
+   3836   23016   95900
+British British.Ran4000.4
+   3838   23028   95950
+British British.Ran4000.5
+   3853   23118   96325
+British British.Ran10000.2
+   9628   57768  240700
+British British.Ran10000.3
+   9636   57816  240900
+British British.Ran10000.4
+   9593   57558  239825
+British British.Ran10000.5
+   9596   57576  239900
 ```
 
 
