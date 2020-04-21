@@ -6130,6 +6130,8 @@ cat /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analys
 861 1:162852150 0.0014349856501435
 
 
+#20200421
+
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
 	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | grep -E 'African|Ran4000|Caribbean|Indian' | head -n 4 | tail -n 4`; do
 	        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
@@ -6137,10 +6139,24 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 	
 	        echo $i $ancestry1 $ancestry2
 
-		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt | head -n 5000 | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));"
+		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt | head -n 5000 | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));"
 
 	done
 done
+
+African African
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
+[1] 1
+British British.Ran4000
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
+[1] 1
+Caribbean Caribbean
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
+[1] 1
+Indian Indian
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
+[1] 1
+
 
 #		rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/perms/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.$i.perm1.top10localresids.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/perms/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.$i.perm1.top10localresids.forPLINK.txt
 
@@ -20209,6 +20225,58 @@ normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | s
 10:100032749 0.03339 0.5681 0.8343 0.5412 0.1951 0.9546 0.5674 0.312
 10:100046078 0.1338 0.2019 0.2733 0.6169 0.5568 0.4206 0.4662 0.7276
 10:100046757 0.8497 0.8655 0.5816 0.1765 0.8929 0.5672 0.9631 0.5267
+#20200421
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+>         for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | grep -E 'African|Ran4000|Caribbean|Indian' | head -n 4 | tail -n 4`; do
+>                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+>                 ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>
+>                 echo $pheno1 $ancestry1 $ancestry2
+>
+>                 cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt | head -n 5000 | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));"
+>
+>         done
+> done
+African African
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
+[1] 1
+>
+>
+British British.Ran4000
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
+[1] 1
+>
+>
+Caribbean Caribbean
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
+[1] 1
+>
+>
+Indian Indian
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
+[1] 1
+>
+>
+African African
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
+[1] 1
+>
+>
+British British.Ran4000
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
+[1] 1
+>
+>
+Caribbean Caribbean
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
+[1] 1
+>
+>
+Indian Indian
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
+[1] 1
+>
+>
 
 
 
