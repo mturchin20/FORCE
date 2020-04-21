@@ -6139,30 +6139,39 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 	
 	        echo $i $ancestry1 $ancestry2
 
-		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt | head -n 5000 | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));"
+#		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt | head -n 5000 | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));"
+		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | wc 
+		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt.summary | wc
 
 	done
 done
 
-African African
-> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
-[1] 1
-British British.Ran4000
-> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
-[1] 1
-Caribbean Caribbean
-> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
-[1] 1
-Indian Indian
-> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
-[1] 1
+Height African African
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));
+[1]  1.0000000 -0.8586016
+Height British British.Ran4000
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));
+[1]  1.0000000 -0.8775665
+Height Caribbean Caribbean
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));
+[1]  1.0000000 -0.8594706
+Height Indian Indian
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));
+[1]  1.00000 -0.86371
 
+Height African African
+ 374466 2246796 10965719
+ 374467 2995736 34076501
+Height British British.Ran4000
+ 600006 3600036 17578726
+ 600007 4800056 54600641
+Height Caribbean Caribbean
+ 410017 2460102 12007918
+ 410018 3280144 37311642
+Height Indian Indian
+ 505854 3035124 14817991
+ 505855 4046840 46032809
 
-#		rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/perms/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.$i.perm1.top10localresids.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/perms/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.$i.perm1.top10localresids.forPLINK.txt
-
-#cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.epi.qt | awk '{ print $2 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data2 <- cbind(Data1, Data1[,1] / 372841); write.table(Data2, quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v \> | head -n 20
-#cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.BMI.epi.qt | awk '{ print $2 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data2 <- cbind(Data1, Data1[,1] / 372841); write.table(Data2, quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v \> | head -n 20
-#cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.epi.qt | awk '{ print $2 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data2 <- cbind(Data1, Data1[,1] / 598811); write.table(Data2, quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v \> | head -n 20
 
 
 
@@ -10437,6 +10446,12 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterP
 
 
 
+
+
+
+
+
+
 #FDR Estimates
 #20200318
 
@@ -11964,6 +11979,72 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 done;
 
 #					...perl -lane 'sub log10 { my $n = shift; return log($n)/log(10); }; if (($F[1] < $F[4]) || ($F[2] < $F[5])) { if (abs((-1*log10($F[1])) - (-1*log10($F[2]))) > 0) { print join("\t", @F), "\t", (-1*log10($F[1])) - (-1*log10($F[2])); }; };' | ... Info.$ancestry2b.$l.SigDiffs.vs1.txt
+
+
+
+
+
+
+
+
+cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.KEGG.Diffs.vs1.txt | awk '{ if (($3 < 1e-4) && ($2 > 1e-3)) { print $0 } }' | perl -lane 'my @vals1 = split(/,/, $F[9]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1
+
+perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 8) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1
+
+
+
+cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.KEGG.Diffs.vs1.txt | awk '{ if (($3 < 1e-5) && ($2 > 1e-3)) { print $0 } }' | sort -g -k 6,6 | wc
+cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.KEGG.Diffs.vs1.txt | awk '{ if (($3 < 1e-5) && ($2 > 1e-3)) { print $0 } }' | perl -lane 'my @vals1 = split(/,/, $F[9]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1
+cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.KEGG.Diffs.vs1.txt | awk '{ if (($3 > 1e-4) && ($2 < 1e-4)) { print $0 } }' | sort -rg -k 6,6 | wc
+cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.KEGG.Diffs.vs1.txt | awk '{ if (($3 > 1e-4) && ($2 < 1e-4)) { print $0 } }' | perl -lane 'my @vals1 = split(/,/, $F[9]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1
+
+cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.REACTOME.Diffs.vs1.txt | awk '{ if (($3 > 1e-4) && ($2 < 1e-4)) { print $0 } }' | sort -rg -k 6,6 | wc
+cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.REACTOME.Diffs.vs1.txt | awk '{ if (($3 > 1e-4) && ($2 < 1e-4)) { print $0 } }' | perl -lane 'my @vals1 = split(/,/, $F[9]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1
+
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.KEGG.Diffs.vs1.txt | awk '{ if (($3 < 1e-5) && ($2 > 1e-3)) { print $0 } }' | sort -g -k 6,6 | wc
+      4      40    2379
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.KEGG.Diffs.vs1.txt | awk '{ if (($3 < 1e-5) && ($2 > 1e-3)) { print $0 } }' | sort -g -k 6,6
+KEGG_SMALL_CELL_LUNG_CANCER 0.00999736518829697 3.19934301273861e-10 0.000268817204301075 0.000268817204301075 -7.49482475169555 84 78 1776 CASP9,MAX,E2F1,CHUK,LAMA1,RARB,PIAS3,FN1,BIRC3,ITGA3,ITGA2B,PTK2,COL4A1,COL4A2,PTGS2,NOS2,COL4A4,RXRB,RXRG,IKBKB,RXRA,RB1,SKP2,AKT1,AKT2,PIAS2,ITGAV,LAMC2,ITGB1,AKT3,LAMB2,LAMB3,LAMC1,LAMA4,LAMA5,LAMB1,NFKB1,NFKBIA,MYC,PIK3R5,PIAS1,LAMB4,RELA,APAF1,CDKN1B,LAMA3,LAMA2,TRAF6,TRAF5,TRAF3,TRAF2,FHIT,TRAF1,ITGA6,CCND1,PTEN,ITGA2,PIK3R3,BCL2,BCL2L1,BIRC2,CDK2,PIAS4,CDK4,LAMC3,TP53,E2F3,E2F2,PIK3CA,PIK3CB,CCNE2,CYCS,CDK6,PIK3CD,PIK3CG,CCNE1,PIK3R1,PIK3R2
+KEGG_ERBB_SIGNALING_PATHWAY 0.0249924954199057 3.29826777667463e-07 0.000268817204301075 0.000268817204301075 -4.87952370935859 87 83 1538 JUN,SOS2,RAF1,PRKCB,BTC,SHC1,PRKCA,NRG1,PAK2,MTOR,PAK4,MAP2K4,EIF4EBP1,BAD,PRKCG,NRG3,MAPK9,ERBB4,MAPK10,PTK2,ERBB2,ERBB3,MAP2K2,TGFA,BRAF,MAP2K1,MAP2K7,ABL1,NRG2,AKT1,ABL2,AKT2,SHC4,RPS6KB1,RPS6KB2,AKT3,NRAS,GRB2,AREG,STAT5B,MAPK3,STAT5A,PAK6,SOS1,MYC,MAPK1,NCK1,PIK3R5,NRG4,HRAS,MAPK8,EGFR,GSK3B,CBLB,KRAS,CBL,SHC3,CDKN1B,CDKN1A,EGF,EREG,NCK2,SRC,PIK3R3,CAMK2A,CAMK2B,CAMK2D,CAMK2G,PAK1,CBLC,CRK,PIK3CA,PIK3CB,CRKL,PIK3CD,GAB1,PLCG1,PLCG2,SHC2,HBEGF,PIK3CG,PIK3R1,PIK3R2
+KEGG_NON_SMALL_CELL_LUNG_CANCER 0.0737158155269624 1.64014912829025e-06 0.000268817204301075 0.000268817204301075 -4.65267733708338 54 53 1243 CASP9,SOS2,E2F1,PRKCB,RAF1,PRKCA,RARB,BAD,PRKCG,ERBB2,MAP2K2,TGFA,BRAF,MAP2K1,RXRB,PDPK1,RXRG,RB1,RXRA,RASSF1,AKT1,AKT2,NRAS,AKT3,GRB2,MAPK3,SOS1,MAPK1,PIK3R5,HRAS,EGFR,KRAS,CDKN2A,EGF,RASSF5,FHIT,STK4,CCND1,PIK3R3,FOXO3,CDK4,TP53,E2F3,E2F2,PIK3CA,PIK3CB,CDK6,PIK3CD,PLCG1,PLCG2,PIK3CG,PIK3R1,PIK3R2
+KEGG_T_CELL_RECEPTOR_SIGNALING_PATHWAY 0.0692719529964876 6.1202532251059e-06 0.000268817204301075 0.000268817204301075 -4.05378804052584 108 102 1373 JUN,ZAP70,MALT1,CD28,PDPK1,PPP3CC,PPP3R1,PAK4,ICOS,VAV1,IKBKB,MAP3K8,MAP3K7,AKT1,AKT2,NRAS,AKT3,VAV2,CHP2,NFAT5,NFKB1,NFKBIB,NFKBIA,PAK6,NFKBIE,NCK1,CTLA4,CSF2,PIK3R5,CD4,NFATC4,MAPK14,MAPK12,NFATC3,RELA,KRAS,CD8A,CD8B,CD247,NCK2,MAP3K14,CD3D,CD3E,PAK1,CD3G,CBLC,LCP2,PLCG1,NFATC2,NFATC1,LCK,CDC42,RASGRP1,SOS2,CHUK,RAF1,TNF,CARD11,PAK2,RHOA,PTPN6,PDCD1,MAPK9,MAPK11,MAP2K2,PRKCQ,MAPK13,MAP2K1,MAP2K7,GRAP2,GRB2,MAPK3,IL10,PTPRC,SOS1,MAPK1,HRAS,TEC,GSK3B,CBLB,CBL,ITK,LAT,IFNG,IL2,PIK3R3,CDK4,PPP3CB,DLG1,PPP3CA,PIK3CA,PIK3CB,PIK3CD,BCL10,IL4,FYN,IL5,FOS,PIK3CG,VAV3,PIK3R1,PIK3R2
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.KEGG.Diffs.vs1.txt | awk '{ if (($3 < 1e-5) && ($2 > 1e-3)) { print $0 } }' | perl -lane 'my @vals1 = split(/,/, $F[9]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1
+4       PIK3R5,PIK3R3,PIK3R2,PIK3R1,PIK3CG,PIK3CD,PIK3CB,PIK3CA,AKT3,AKT2,AKT1
+3       SOS2,SOS1,RAF1,PLCG1,NRAS,MAPK3,MAPK1,MAP2K2,MAP2K1,KRAS,HRAS,GRB2,CDK4
+2       TP53,TGFA,RXRG,RXRB,RXRA,RELA,RB1,RARB,PTK2,PRKCG,PRKCB,PRKCA,PLCG2,PDPK1,PAK6,PAK4,PAK2,PAK1,NFKBIA,NFKB1,NCK2,NCK1,MYC,MAPK9,MAP2K7,JUN,IKBKB,GSK3B,FHIT,ERBB2,EGFR,EGF,E2F3,E2F2,E2F1,CHUK,CDKN1B,CDK6,CCND1,CBLC,CBLB,CBL,CASP9,BRAF,BAD
+
+PIK3R1 (http://www.informatics.jax.org/marker/MGI:97583 & https://pubmed.ncbi.nlm.nih.gov/29178053/ & https://rarediseases.org/rare-diseases/agammaglobulinemia/ & https://pubmed.ncbi.nlm.nih.gov/29178053/ & https://rarediseases.org/rare-diseases/short-syndrome/ & https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3710754/)
+
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.l
+ocalPCs.PhenoComps.DotPlots.Info.KEGG.Diffs.vs1.txt | awk '{ if (($3 > 1e-4) && ($2 < 1e-4)) { print $0 } }' | sort -rg -k 6,6
+KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION 2.83686527602356e-08 0.00168904386034008 0.000268817204301075 0.000268817204301075 4.77480221583336 267 234 2279 CCL26,TNFSF13,HGF,TNFSF12,TNFRSF8,TNFSF10,CCL2,TNFSF8,TNFSF9,CCL3,TNFSF14,IL21R,C
+CL5,CCL4,CCL13,IL17RB,CCL11,CCL8,CCL7,TNFRSF17,TNFSF11,CTF1,FLT1,CCL14,FLT3,CCL15,FLT3LG,FLT4,IL22,CD27,CCL18,CCL17,CCL20,CCL19,CCL21,CCL23,CCL22,TPO,CCL16,CSF2,CSF1R,TNFRSF13C,CSF1,PRLR,PRL,TNFRSF14,IFNE,CCL24,CSF2RB,TGFB2,TGFB1,CX3CL1,I
+L23R,XCL1,CXCL5,CXCL11,CXCL6,CCR2,CCL25,CSF3,TGFBR2,TGFBR1,MET,TGFB3,CSF3R,IL17B,CXCL12,CCR10,OSMR,XCR1,IL20,INHBE,PLEKHO2,MPL,INHBB,INHBC,INHBA,KITLG,TNFRSF19,CXCR4,IL1R2,KIT,CD70,TNFRSF11B,LEPR,CXCR6,RELT,LEP,IL19,LTA,IL17A,IL18,TNFRSF9
+,OSM,GDF5,IL15RA,IL15,CXCL13,LTB,TNFRSF25,LTBR,IL22RA1,CD40,GHR,IL18RAP,IL17RA,GH1,LIF,GH2,LIFR,IL18R1,TNFSF4,TNFRSF4,CX3CR1,PDGFRB,CXCL14,IL1A,EDAR,IL24,CNTFR,TNFSF13B,PDGFC,VEGFA,VEGFC,VEGFB,CCR9,NGFR,IL22RA2,PDGFA,ACVRL1,PDGFB,ACVR2B,P
+DGFRA,ACVR2A,ACVR1B,ACVR1,TNFRSF13B,IL25,TNFSF15,EPO,CXCL1,TNF,CXCR5,IFNA5,IFNA4,IFNA2,IFNA1,CXCR2,CXCR1,IL9,CCL28,IL7R,IL12RB1,IL12B,IL13,IL12RB2,IL11RA,KDR,TNFRSF1B,IFNA17,TNFRSF1A,IFNA21,TNFRSF18,IFNA6,CCR3,TNFRSF12A,IFNA7,CCR4,IFNA8,I
+FNA10,CCR6,IFNA13,CCR7,IFNA14,CCR8,IFNA16,IL26,CXCL16,IL10,IL10RA,IL10RB,EPOR,IL11,IL3,EGFR,IL2RB,CCR1,XCL2,IFNGR2,EGF,CCL1,TNFRSF10A,IFNG,IFNGR1,TNFRSF10D,IFNB1,TNFRSF11A,TNFRSF10B,IFNAR1,TNFRSF10C,IFNAR2,IL1RAP,IL1B,AMHR2,IL1R1,IL2RA,IL
+21,TNFSF18,IL2,IL20RA,BMPR2,BMPR1A,IL6R,BMPR1B,IL6ST,IFNK,IL7,PF4,CXCL2,CXCL3,BMP2,PF4V1,BMP7,TNFRSF21,FAS,FASLG,IFNW1,PPBP,TSLP,IL4,IL4R,IL5,IL5RA,IL6
+KEGG_LONG_TERM_DEPRESSION 5.55341153405386e-05 0.00264481495968605 0.000268817204301075 0.000268817204301075 1.67783543476476 70 66 1741 GRM5,PLCB2,RYR1,PLCB1,RAF1,PRKCB,PRKCA,PLCB3,PLCB4,IGF1,CRHR1,GRM1,IGF1R,PLA2G3,GRID2,PRKCG,JMJD7-PLA
+2G4B,CACNA1A,PLA2G6,PLA2G2E,PLA2G10,MAP2K2,PLA2G2A,BRAF,PLA2G4A,ITPR3,PLA2G5,PLA2G12B,MAP2K1,NOS1,GRIA2,GRIA1,PLA2G4B,PLA2G2F,NRAS,MAPK3,GUCY1B3,GUCY1A3,PRKG1,PRKG2,MAPK1,HRAS,ITPR1,ITPR2,GNA12,GNA13,GNA11,KRAS,GNAI1,GNAI2,GUCY1A2,PPP2CB,
+PPP2CA,PPP2R1A,PPP2R1B,PLA2G4E,GNAQ,GNAS,PPP1R17,GNAI3,GNAO1,GNAZ,PLA2G2C,PLA2G2D,PLA2G12A,LYN
+KEGG_PHOSPHATIDYLINOSITOL_SIGNALING_SYSTEM 4.49698144593391e-05 0.000385110424672153 0.000268817204301075 0.000268817204301075 0.932664179113426 76 75 1681 PLCB2,CALM2,INPP1,PLCB1,PLCD1,PRKCB,PRKCA,PLCB3,CALM1,PLCB4,DGKZ,INPP5A,DGKE,INPP5B,DGKD,INPP4A,PRKCG,INPPL1,DGKH,INPP5D,SYNJ2,PIP4K2B,ITPR3,PLCD3,PIKFYVE,IMPA1,IMPA2,PIP5K1A,PIP5K1B,INPP5J,CDS1,INPP5K,SYNJ1,PLCD4,ITPKA,PIK3R5,ITPKB,ITPK1,CDIPT,ITPR1,ITPR2,DGKQ,CDS2,INPP4B,DGKB,DGKG,DGKA,DGKI,PLCE1,CALML5,PIP5K1C,PIK3C3,PIK3C2B,PIK3C2G,PIP4K2A,PIK3C2A,PTEN,PIK3R3,PIP4K2C,IPPK,CALML3,PIK3CA,PIK3CB,PIK3CD,PLCG1,PLCG2,PLCZ1,PI4KB,CALM3,INPP5E,PIK3CG,PIK3R1,PIK3R2,CALML6,PI4KA
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.KEGG.Diffs.vs1.txt | awk '{ if (($3 > 1e-4) && ($2 < 1e-4)) { print $0 } }' | perl -lane 'my @vals1 = split(/,/, $F[9]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1
+2       PRKCG,PRKCB,PRKCA,PLCB4,PLCB3,PLCB2,PLCB1,ITPR3,ITPR2,ITPR1
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.KEGG.Diffs.vs1.txt | awk '{ if (($3 > 1e-4) && ($2 < 1e-4)) { print $0 } }' | sort -rg -k 6,6 | grep PRKCA
+KEGG_LONG_TERM_DEPRESSION 5.55341153405386e-05 0.00264481495968605 0.000268817204301075 0.000268817204301075 1.67783543476476 70 66 1741 GRM5,PLCB2,RYR1,PLCB1,RAF1,PRKCB,PRKCA,PLCB3,PLCB4,IGF1,CRHR1,GRM1,IGF1R,PLA2G3,GRID2,PRKCG,JMJD7-PLA2G4B,CACNA1A,PLA2G6,PLA2G2E,PLA2G10,MAP2K2,PLA2G2A,BRAF,PLA2G4A,ITPR3,PLA2G5,PLA2G12B,MAP2K1,NOS1,GRIA2,GRIA1,PLA2G4B,PLA2G2F,NRAS,MAPK3,GUCY1B3,GUCY1A3,PRKG1,PRKG2,MAPK1,HRAS,ITPR1,ITPR2,GNA12,GNA13,GNA11,KRAS,GNAI1,GNAI2,GUCY1A2,PPP2CB,PPP2CA,PPP2R1A,PPP2R1B,PLA2G4E,GNAQ,GNAS,PPP1R17,GNAI3,GNAO1,GNAZ,PLA2G2C,PLA2G2D,PLA2G12A,LYN
+KEGG_PHOSPHATIDYLINOSITOL_SIGNALING_SYSTEM 4.49698144593391e-05 0.000385110424672153 0.000268817204301075 0.000268817204301075 0.932664179113426 76 75 1681 PLCB2,CALM2,INPP1,PLCB1,PLCD1,PRKCB,PRKCA,PLCB3,CALM1,PLCB4,DGKZ,INPP5A,DGKE,INPP5B,DGKD,INPP4A,PRKCG,INPPL1,DGKH,INPP5D,SYNJ2,PIP4K2B,ITPR3,PLCD3,PIKFYVE,IMPA1,IMPA2,PIP5K1A,PIP5K1B,INPP5J,CDS1,INPP5K,SYNJ1,PLCD4,ITPKA,PIK3R5,ITPKB,ITPK1,CDIPT,ITPR1,ITPR2,DGKQ,CDS2,INPP4B,DGKB,DGKG,DGKA,DGKI,PLCE1,CALML5,PIP5K1C,PIK3C3,PIK3C2B,PIK3C2G,PIP4K2A,PIK3C2A,PTEN,PIK3R3,PIP4K2C,IPPK,CALML3,PIK3CA,PIK3CB,PIK3CD,PLCG1,PLCG2,PLCZ1,PI4KB,CALM3,INPP5E,PIK3CG,PIK3R1,PIK3R2,CALML6,PI4KA
+
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.REACTOME.Diffs.vs1.txt | awk '{ if (($3 > 1e-4) && ($2 < 1e-4)) { print $0 } }' | sort -rg -k 6,6
+REACTOME_TRANSPORT_OF_INORGANIC_CATIONS_ANIONS_AND_AMINO_ACIDS_OLIGOPEPTIDES 6.63724273319843e-08 0.003398689723632 0.000268817204301075 7.41839762611276e-05 4.70932381768808 94 86 1511 SLC34A2,SLC12A7,SLC26A1,SLC38A3,SLC7A9,SLC26A9,SLC26A7,SLC16A10,SLC15A4,SLC24A4,SLC43A2,SLC32A1,SLC34A3,SLC25A10,SLC36A2,SLC5A8,SLC26A3,SLC26A2,SLC36A1,SLC9A8,SLC7A8,SLC7A11,SLC17A8,SLC24A2,SLC17A5,SLC9A9,SLC6A19,SLC6A18,SLC9A4,SLC15A3,SLC26A4,SLC38A2,SLC6A20,SLC38A4,SLC6A15,SLC7A10,SLC17A7,SLC17A6,SLC24A3,SLC12A5,SLC4A5,SLC26A6,SLC1A1,SLC1A2,SLC1A3,SLC4A3,SLC1A4,SLC1A5,SLC1A6,SLC1A7,SLC3A1,SLC3A2,SLC4A1,SLC4A2,SLC5A5,SLC6A6,SLC6A12,SLC7A1,SLC7A2,SLC8A2,SLC8A1,SLC8A3,SLC9A1,SLC9A2,SLC9A3,SLC9A5,SLC12A1,SLC12A2,SLC12A4,SLC15A1,SLC15A2,SLC17A1,SLC34A1,SLC20A1,SLC20A2,SLC7A5,SLC38A1,SLC4A9,SLC43A1,SLC4A4,SLC7A7,SLC7A6,SLC24A1,SLC4A7,SLC4A8,SLC12A6
+REACTOME_L1CAM_INTERACTIONS 7.39550068074024e-07 0.000243824986388086 0.000268817204301075 7.41839762611276e-05 2.51811062726417 86 73 1679 RANBP9,STIP1,AP2M1,AP2S1,CLTA,CLTC,CNTN1,CSNK2A1,CSNK2A2,CSNK2B,NCAN,AP2A1,AP2A2,AP2B1,DLG1,DNM1,DNM2,DPYSL2,EGFR,ALCAM,FGFR1,CNTN6,LAMA1,KIF4B,ANK1,ANK3,ITGA1,ITGA2,ITGA2B,ITGA9,ITGAV,ITGB1,ITGB3,KCNQ2,KCNQ3,LAMB1,LAMC1,NCAM1,NRCAM,PAK1,SPTBN5,SCN3B,MAPK1,MAPK3,MAP2K1,MAP2K2,SPTBN4,RAC1,RDX,RPS6KA1,RPS6KA2,SCN1B,SCN2A,SCN2B,SCN4A,SCN5A,SCN7A,SCN8A,SDCBP,SH3GL2,SPTA1,SPTB,SPTBN1,SPTBN2,SRC,CNTN2,EZR,CNTNAP1,NUMB,NRP2,NRP1,RPS6KA4,RPS6KA5
+REACTOME_NUCLEAR_SIGNALING_BY_ERBB4 8.92057454140449e-05 0.00100334359780896 0.000268817204301075 7.41839762611276e-05 1.05105685725903 38 37 1071 YAP1,CSH1,CSN2,NRG4,HBEGF,ERBB4,EREG,ESR1,TAB2,NCSTN,SH2B1,GFAP,GH1,GH2,GHR,NRG1,JAK2,APH1A,WWOX,PGR,PRL,PRLR,PSEN1,PSEN2,S100B,CXCL12,SKP1,STAT5A,STAT5B,BTC,ADAM17,APH1B,CUL1,BTRC,NRG2,NCOR1,RBX1
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/Subfiles/ukb_v3.African.HeightBMI.AllPaths.GjDrop_wCov_GK.ColCrct.localPCs.PhenoComps.DotPlots.Info.REACTOME.Diffs.vs1.txt | awk '{ if (($3 > 1e-4) && ($2 < 1e-4)) { print $0 } }' | perl -lane 'my @vals1 = split(/,/, $F[9]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 2) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1 | wc
+      0       0       0
+
+
+
+
 
 
 
@@ -20230,53 +20311,91 @@ normalize.*.BMI.glm.linear | grep -w ADD | awk '{ print $1 ":" $2 "\t" $9 }' | s
 >         for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | grep -E 'African|Ran4000|Caribbean|Indian' | head -n 4 | tail -n 4`; do
 >                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 >                 ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
->
->                 echo $pheno1 $ancestry1 $ancestry2
->
->                 cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt | head -n 5000 | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));"
->
+> 
+>                 echo $i $ancestry1 $ancestry2
+> 
+>                 cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt | head -n 5000 | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));"
+> 
 >         done
 > done
-African African
-> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
-[1] 1
->
->
-British British.Ran4000
-> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
-[1] 1
->
->
-Caribbean Caribbean
-> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
-[1] 1
->
->
-Indian Indian
-> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
-[1] 1
->
->
-African African
-> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
-[1] 1
->
->
-British British.Ran4000
-> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
-[1] 1
->
->
-Caribbean Caribbean
-> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
-[1] 1
->
->
-Indian Indian
-> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(cor(Data1[,7], Data1[,8]));
-[1] 1
->
->
+Height African African
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));
+[1]  1.0000000 -0.8586016
+> 
+> 
+Height British British.Ran4000
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));
+[1]  1.0000000 -0.8775665
+> 
+> 
+Height Caribbean Caribbean
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));
+[1]  1.0000000 -0.8594706
+> 
+> 
+Height Indian Indian
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));
+[1]  1.00000 -0.86371
+> 
+> 
+BMI African African
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));
+[1]  1.0000000 -0.8635404
+> 
+> 
+BMI British British.Ran4000
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));
+[1]  1.0000000 -0.8586488
+> 
+> 
+BMI Caribbean Caribbean
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));
+[1]  1.0000000 -0.8591651
+> 
+> 
+BMI Indian Indian
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));
+[1]  1.0000000 -0.8743606
+> 
+> 
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+>         for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | grep -E 'African|Ran4000|Caribbean|Indian' | head -n 4 | tail -n 4`; do
+>                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+>                 ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+> 
+>                 echo $i $ancestry1 $ancestry2
+> 
+> #               cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt | head -n 5000 | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(c(cor(Data1[,7], Data1[,8]), cor(Data1[,6], Data1[,7])));"
+>                 cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | wc    
+>                 cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt.summary | wc   
+> 
+>         done
+> done
+Height African African
+ 374466 2246796 10965719
+ 374467 2995736 34076501
+Height British British.Ran4000
+ 600006 3600036 17578726
+ 600007 4800056 54600641
+Height Caribbean Caribbean
+ 410017 2460102 12007918
+ 410018 3280144 37311642
+Height Indian Indian
+ 505854 3035124 14817991
+ 505855 4046840 46032809
+BMI African African
+ 374466 2246796 10965719
+ 374467 2995736 34076501
+BMI British British.Ran4000
+ 600006 3600036 17578726
+ 600007 4800056 54600641
+BMI Caribbean Caribbean
+ 410017 2460102 12007918
+ 410018 3280144 37311642
+BMI Indian Indian
+ 505854 3035124 14817991
+ 505855 4046840 46032809
+
 
 
 
