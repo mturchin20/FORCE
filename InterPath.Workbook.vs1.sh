@@ -12987,11 +12987,6 @@ join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathawyGeneCounts
 
-zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | grep ^REACTOME | grep PSMD14
-zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | grep ^KEGG | grep PSMD14
-zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | grep ^REACTOME | grep PSMD14
-zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | grep ^REACTOME | grep -vw NA | perl -lane 'my @vals1 = split(/,/, $F[4]); print join("\n", @vals1);' | sort | uniq -c | sort -gr -k 1,1 | grep UBA52
-
 (InterPath) [  mturchin@login003  ~/Data2/GIANT]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 8) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1
 22      UBA52,RPS27A
 15      SOS1,PIK3R1,PIK3CA,CDK1
@@ -13034,6 +13029,12 @@ done
 
 
 #Supplementary Table: MAPIT-R Top Pathway Gene Count Hypergeometric Tests
+
+zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | grep ^REACTOME | grep -vw NA | grep PSMD14
+zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | grep ^REACTOME | grep -vw NA | perl -lane 'my @vals1 = split(/,/, $F[4]); print join("\n", @vals1);' | sort | uniq -c | sort -gr -k 1,1 | grep UBA52
+
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz | grep ^REACTOME | grep -wv NA | grep UBA52 | wc
+    106    1590  864362
 
 (InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | wc
      29     174   21367
@@ -13137,6 +13138,18 @@ done
       9 PSMD7
       9 PSMD6
       9 PSMD5
+
+> phyperGo <- function(a,b,c,d) { x <- a; k <- b; m <- c; n <- d - c; return(phyper(x-1, k=k, m=m, n=n, lower.tail=FALSE)); }
+> phyperGo(22,65,106,658)
+[1] 0.0001536891
+> phyperGo(15,65,48,658)
+[1] 1.455843e-05
+> phyperGo(14,65,75,658)
+[1] 0.00956483
+> phyperGo(13,65,34,658)
+[1] 4.732019e-06
+> phyperGo(12,65,44,658)
+[1] 0.0005303724
 
 ```
 k <- 65
