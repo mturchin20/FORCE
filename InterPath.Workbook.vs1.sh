@@ -11336,7 +11336,7 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); \
 		points(xVals2[order(xVals2, decreasing=TRUE)], Data2[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[1], cex=1.5); \
                 points(xVals3[order(xVals3, decreasing=TRUE)], Data3[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
                 points(xVals4[order(xVals4, decreasing=TRUE)], Data4[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=1.5); \
-		par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Indian\"), pch=c(16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[9]), xpd=TRUE, inset=c(.019,.15), bg=\"transparent\", cex=1.5, y.intersp=2); dev.off(); }; \
+		par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Indian\"), pch=c(16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[9]), xpd=TRUE, inset=c(.035,.15), bg=\"transparent\", cex=1.5, y.intersp=2); dev.off(); }; \
 "
 
 #	.../users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/ukb_chrAll_v3.AfrBrit4kCaribIndn.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.HeightBMI.epi.qt.Results.ProportionPlots.vs1.png\",... 
@@ -11372,6 +11372,10 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturch
 
 #From MacBook Pro
 scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK/*PLINK.*png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK/. 
+
+paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.SortUniqC.qt | awk '{ print $2 "\t" $1 }' | sed 's/:/ /g' | head -n 10) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.SortUniqC.qt | awk '{ print $2 "\t" $1 }' | sed 's/:/ /g' | head -n 10) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.SortUniqC.qt | awk '{ print $2 "\t" $1 }' | sed 's/:/ /g' | head -n 10) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.SortUniqC.qt | awk '{ print $2 "\t" $1 }' | sed 's/:/ /g' | head -n 10)
+
+
 
 
 
