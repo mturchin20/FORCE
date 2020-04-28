@@ -11296,44 +11296,27 @@ done
 Height African African
 > Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
 [1] 1.02505e-11
-> 
-> 
 Height British British.Ran4000
 > Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
 [1] 4.941645e-12
-> 
-> 
 Height Caribbean Caribbean
 > Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
 [1] 5.998706e-12
-> 
-> 
 Height Indian Indian
 > Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
 [1] 4.508151e-12
-> 
-> 
 BMI African African
 > Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
 [1] 5.788269e-12
-> 
-> 
 BMI British British.Ran4000
 > Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
 [1] 3.988768e-12
-> 
-> 
 BMI Caribbean Caribbean
 > Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
 [1] 1.316338e-11
-> 
-> 
 BMI Indian Indian
 > Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
 [1] 3.493451e-12
-> 
-> 
-
 
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK/ukb_v3.All4kPops.HeightBMI.localPCs.PLINK.Proportions.Plots.vs1.png\", height=2000, width=4500, res=300); par(oma=c(1,1,1,10), mar=c(5,6,4,2), mfrow=c(1,2)); \
         for (k in c(\"Height\", \"BMI\")[1:2]) { \
@@ -11369,11 +11352,9 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturch
                 Data2 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.qt.summary\", sep=\"\"), header=F)); \
                 Data3 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.qt.summary\", sep=\"\"), header=F)); \
                 Data4 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.qt.summary\", sep=\"\"), header=F)); \
+		Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); Data2 <- cbind(Data2, pchisq(Data2[,6], df=1, lower.tail=FALSE)); Data3 <- cbind(Data3, pchisq(Data3[,6], df=1, lower.tail=FALSE)); Data4 <- cbind(Data4, pchisq(Data4[,6], df=1, lower.tail=FALSE));	
+		Data1 <- Data1[!is.na(Data1[,9]),]; Data2 <- Data2[!is.na(Data2[,9]),]; Data3 <- Data3[!is.na(Data3[,9]),]; Data4 <- Data4[!is.na(Data4[,9]),]; \
 		Data1 <- Data1[order(Data1[,1], decreasing=TRUE),]; Data2 <- Data2[order(Data2[,1], decreasing=TRUE),]; Data3 <- Data3[order(Data3[,1], decreasing=TRUE),]; Data4 <- Data4[order(Data4[,1], decreasing=TRUE),]; \ 
-		Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE));	
-		Data2 <- cbind(Data2, pchisq(Data2[,6], df=1, lower.tail=FALSE));	
-		Data3 <- cbind(Data3, pchisq(Data3[,6], df=1, lower.tail=FALSE));	
-		Data4 <- cbind(Data4, pchisq(Data4[,6], df=1, lower.tail=FALSE));	
 		Data1 <- cbind(Data1, (Data1[,1] / 374466) * 100); Data2 <- cbind(Data2, (Data2[,1] / 600006) * 100); Data3 <- cbind(Data3, (Data3[,1] / 410017) * 100); Data4 <- cbind(Data4, (Data4[,1] / 505854) * 100); \
 		Data1 <- Data1[1:50,]; Data2 <- Data2[1:50,]; Data3 <- Data3[1:50,]; Data4 <- Data4[1:50,]; \ 
                 print(head(Data1)); print(head(Data2)); print(head(Data3)); print(head(Data4)); \
