@@ -11359,7 +11359,7 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturch
 		Data1 <- Data1[1:50,]; Data2 <- Data2[1:50,]; Data3 <- Data3[1:50,]; Data4 <- Data4[1:50,]; \ 
                 xVals1 <- seq(1, nrow(Data1), by=1); xVals2 <- seq(1, nrow(Data2), by=1); xVals3 <- seq(1, nrow(Data3), by=1); xVals4 <- seq(1, nrow(Data4), by=1); \
                 xlimMax <- max(c(xVals1, xVals2, xVals3)); ylimMax <- max(c(-log10(Data1[,9]), -log10(Data2[,9]), -log10(Data3[,9]), -log10(Data4[,9]))); \
-                plot(xVals1[order(xVals1, decreasing=TRUE)], -log10(Data1[,9]), main=paste(k, sep=\"\"), xlab=\"Top 50 SNPs\", ylab=\"Proportion of Marginally\nSignificant Interactions\", xlim=c(1,xlimMax), ylim=c(9,12), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+                plot(xVals1[order(xVals1, decreasing=TRUE)], -log10(Data1[,9]), xaxt=\"n\", main=paste(k, sep=\"\"), xlab=\"Top 50 SNPs\", ylab=\"Proportion of Marginally\nSignificant Interactions\", xlim=c(1,xlimMax), ylim=c(9,12), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
 		points(xVals2[order(xVals2, decreasing=TRUE)], -log10(Data2[,9]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[1], cex=1.5); \
                 points(xVals3[order(xVals3, decreasing=TRUE)], -log10(Data3[,9]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
                 points(xVals4[order(xVals4, decreasing=TRUE)], -log10(Data4[,9]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=1.5); \
@@ -11367,6 +11367,8 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturch
 	}; par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Indian\"), pch=c(16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[9]), xpd=TRUE, inset=c(.019,.15), bg=\"transparent\", cex=1.5, y.intersp=2); dev.off(); \
 "
 
+#From MacBook Pro
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK/*PLINK.*png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK/. 
 
 
 
