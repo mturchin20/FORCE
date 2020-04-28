@@ -11270,6 +11270,71 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscrip
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK
 
+for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | grep -E 'African|Ran4000|Caribbean|Indian' | head -n 4 | tail -n 4`; do
+	        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+	        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+	
+	        echo $i $ancestry1 $ancestry2
+
+		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt.summary | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));"
+
+	done
+done
+
+[  mturchin@node1312  ~]$for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
+>         for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | grep -E 'African|Ran4000|Caribbean|Indian' | head -n 4 | tail -n 4`; do
+>                 ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+>                 ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+> 
+>                 echo $i $ancestry1 $ancestry2
+> 
+>                 cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt.summary | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));"
+> 
+>         done
+> done
+Height African African
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
+[1] 1.02505e-11
+> 
+> 
+Height British British.Ran4000
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
+[1] 4.941645e-12
+> 
+> 
+Height Caribbean Caribbean
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
+[1] 5.998706e-12
+> 
+> 
+Height Indian Indian
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
+[1] 4.508151e-12
+> 
+> 
+BMI African African
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
+[1] 5.788269e-12
+> 
+> 
+BMI British British.Ran4000
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
+[1] 3.988768e-12
+> 
+> 
+BMI Caribbean Caribbean
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
+[1] 1.316338e-11
+> 
+> 
+BMI Indian Indian
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
+[1] 3.493451e-12
+> 
+> 
+
+
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK/ukb_v3.All4kPops.HeightBMI.localPCs.PLINK.Proportions.Plots.vs1.png\", height=2000, width=4500, res=300); par(oma=c(1,1,1,10), mar=c(5,6,4,2), mfrow=c(1,2)); \
         for (k in c(\"Height\", \"BMI\")[1:2]) { \
                 Data1 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
