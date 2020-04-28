@@ -13695,6 +13695,19 @@ phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
 [1] 0.000401377
 ```
 
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }'  | grep PSMC | awk '{ print $1 "\t" $4 "\t" $5 "\t" $6 }' | R -q -e "library(\"xtable\"); Data1 <- read.table(file('stdin'), header=F); print(xtable(Data1, digits=c(0,0,0,0,-3)), include.rownames=FALSE);"
+
+[  mturchin@node1312  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep -vw NA | perl -lane 'if ($F[$#F-1] <= 1000) { print join("\t", @F); }'  | grep PSMC | awk '{ print $1 }'
+REACTOME_M_G1_TRANSITION
+REACTOME_CELL_CYCLE_CHECKPOINTS
+REACTOME_HOST_INTERACTIONS_OF_HIV_FACTORS
+REACTOME_DOWNSTREAM_SIGNALING_EVENTS_OF_B_CELL_RECEPTOR_BCR
+REACTOME_REGULATION_OF_APOPTOSIS
+REACTOME_MITOTIC_G1_G1_S_PHASES
+REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS
+REACTOME_ASSEMBLY_OF_THE_PRE_REPLICATIVE_COMPLEX
+REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION
+
 
 
 
