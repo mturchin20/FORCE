@@ -11462,6 +11462,35 @@ R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\
 #scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/MAPIT/ukb_v3.*.vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/MAPIT/.
 
 
+[  mturchin@node1312  ~]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.Height.DaviesApprox.Results.wChrBP.txt.pre.gz | head -n 10
+10:73377070_A   220474  220474 -0.937377395402425 -989.89169728304 -2 2 1
+20:33589926_C   356907  356907 -0.459649593871983 -0.960304949650624 -2 2 1
+21:40883668_G   366088  366088 -0.000323943350469848 -0.000345375187368192 -2 2 1
+3:130361855_T   73481   73481 0.949940374725539 0.503172098069176 -2 2 1
+15:98255395_C   300922  300922 0.320483590832352 0.280570811954424 0.000000862413252811223 0.000000431206626405611 0
+21:33179371_A   364779  364779 0.384602194199124 0.31847984551577 0.00000113054440920024 0.00000056527220460012 0
+7:107441154_C   169001  169001 -0.249219936454942 -0.316533762254514 0.00000232778929665223 0.999998836105352 0
+22:50883961_G   374354  374354 -0.293698495011542 -0.414993864281934 0.0000051053949894353 0.999997447302505 0
+20:10633313_T   354438  354438 -0.422556003149762 -0.751812237127787 0.00000583061356795866 0.999997084693216 0
+7:28263825_C    160422  160422 -0.24806241631444 -0.318016670451573 0.00000600957008201064 0.999996995214959 0
+
+
+
+paste 
+<(zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.Height.DaviesApprox.Results.wChrBP.txt.pre.gz | awk '{ if (($6 != "NA") && ($6 > 0)) { print $0 } }' | sed 's/_/ /g' | awk '{ print $1 "\t" $7 }' | head -n 10)
+<(zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.Height.DaviesApprox.Results.wChrBP.txt.pre.gz | awk '{ if (($6 != "NA") && ($6 > 0)) { print $0 } }' | sed 's/_/ /g' | awk '{ print $1 "\t" $7 }' | head -n 10)
+<(zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.Height.DaviesApprox.Results.wChrBP.txt.pre.gz | awk '{ if (($6 != "NA") && ($6 > 0)) { print $0 } }' | sed 's/_/ /g' | awk '{ print $1 "\t" $7 }' | head -n 10)
+<(zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.Height.DaviesApprox.Results.wChrBP.txt.pre.gz | awk '{ if (($6 != "NA") && ($6 > 0)) { print $0 } }' | sed 's/_/ /g' | awk '{ print $1 "\t" $7 }' | head -n 10)
+
+
+
+
+paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.SortUniqC.qt | awk '{ print $2 "\t" $1 }' | head -n 10) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.SortUniqC.qt | awk '{ print $2 "\t" $1 }' | head -n 10) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.SortUniqC.qt | awk '{ print $2 "\t" $1 }' | head -n 10) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.SortUniqC.qt | awk '{ print $2 "\t" $1 }' | head -n 10) | R -q -e "library(\"xtable\"); Data1 <- read.table(file('stdin'), header=F); Data1[,2] <- Data1[,2] / 374466 * 100; Data1[,4] <- Data1[,4] / 600006 * 100; Data1[,6] <- Data1[,6] / 410017 * 100; Data1[,8] <- Data1[,8] / 505854 * 100; print(xtable(Data1, digits=c(0,0,3,0,3,0,3,0,3)), include.rownames=FALSE);"
+paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.BMI.epi.SortUniqC.qt | awk '{ print $2 "\t" $1 }' | head -n 10) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.BMI.epi.SortUniqC.qt | awk '{ print $2 "\t" $1 }' | head -n 10) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.BMI.epi.SortUniqC.qt | awk '{ print $2 "\t" $1 }' | head -n 10) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.BMI.epi.SortUniqC.qt | awk '{ print $2 "\t" $1 }' | head -n 10) | R -q -e "library(\"xtable\"); Data1 <- read.table(file('stdin'), header=F); Data1[,2] <- Data1[,2] / 374466 * 100; Data1[,4] <- Data1[,4] / 600006 * 100; Data1[,6] <- Data1[,6] / 410017 * 100; Data1[,8] <- Data1[,8] / 505854 * 100; print(xtable(Data1, digits=c(0,0,3,0,3,0,3,0,3)), include.rownames=FALSE);"
+
+
+
+
 
 
 
