@@ -13288,6 +13288,10 @@ BMI
 [  mturchin@node1312  ~]$R -q -e "29 + 47 + 2 + 4 + 1 + 9 + 7 + 7 + 8 + 4 + 4 + 3 + 5"
 > 29 + 47 + 2 + 4 + 1 + 9 + 7 + 7 + 8 + 4 + 4 + 3 + 5
 [1] 130
+[  mturchin@node1312  ~]$R -q -e "29 + 2 + 1 + 9 + 7 + 4 + 3; 47 + 4 + 0 + 7 + 8 + 4 + 0 + 5"
+> 29 + 2 + 1 + 9 + 7 + 4 + 3; 47 + 4 + 0 + 7 + 8 + 4 + 0 + 5
+[1] 55
+[1] 75
 
 REACTOME
 African;African;Afr;472840
@@ -13336,8 +13340,12 @@ BMI
 [1] 115
 > 
 > 
-
-
+[  mturchin@node1312  ~]$R -q -e "24 + 0 + 0 + 7 + 2 + 2 + 0 + 0; 65 + 4 + 0 + 6 + 3 + 1 + 1"
+> 24 + 0 + 0 + 7 + 2 + 2 + 0 + 0; 65 + 4 + 0 + 6 + 3 + 1 + 1
+[1] 35
+[1] 80
+> 
+> 
 
 join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | awk '{ print $1 }' | sort) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.Caribbean.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | awk '{ print $1 }' | sort)
 join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.Caribbean.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.txt | awk '{ print $1 }' | sort -k 1,1) | perl -lane 'if ($F[$#F-1] <= 50000) { print join("\t", @F); }' | perl -lane 'my @vals1 = split(/,/, $F[1]); print join("\n", @vals1);' | sort | uniq -c | sort -rg -k 1,1 | awk '{ if ($1 >= 3) { print $0 } } ' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[0]}) { push(@{$hash1{$F[0]}}, $F[1]); } else { $hash1{$F[0]} = [($F[1])]; } if (eof()) { foreach $val1 (keys %hash1) { print $val1, "\t", join(",", @{$hash1{$val1}}); } };' | sort -rg -k 1,1
