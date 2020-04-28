@@ -11484,6 +11484,10 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 
 
 
+
+
+
+
 #Main Figure: PLINK vs MAPIT result plots
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINKvsMAPIT
@@ -11513,15 +11517,15 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); \ 
 	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { \ 
-		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINKvsMAPIT/ukb_v3.AllPops.HeightBMI.PLINKvsMAPIT.vs1.png\", height=9250, width=2125, res=300); par(oma=c(1,8,4,1), mar=c(5,5,4,2), mgp=c(3,2,0), mfrow=c(4,1)); \
+		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINKvsMAPIT/ukb_v3.AllPops.HeightBMI.PLINKvsMAPIT.vs1.png\", height=9250, width=4500, res=300); par(oma=c(1,8,4,1), mar=c(7,5,4,2), mfrow=c(4,2)); \
 		for (j in UKBioBankPops[c(1,2,3,5)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
-                        for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:1]) { \
+                        for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
 				Data1 <- as.data.frame(fread(cmd=paste(\"cat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt | sed 's/:/_/g' | awk '{ print \$2 \\\"\t\\\" \$1 }' | sort -k 1,1\", sep=\"\"), header=F)); colnames(Data1) <- c(\"ChrBP\", \"Val1\"); \
 	    Data2 <- as.data.frame(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.\", k, \".DaviesApprox.Results.wChrBP.txt.pre.gz | sed 's/_/\t/g' | sed 's/:/_/g' | awk '{ print \$1 \\\"\t\\\" \$7 }' | sort -k 1,1\", sep=\"\"), header=F)); colnames(Data2) <- c(\"ChrBP\", \"Val2\"); \
                         	Data3 <- merge(Data1, Data2, by=\"ChrBP\"); \ 
 				print(cor(Data3[,2], -log10(Data3[,3]))); \
-				plot(Data3[,2], -log10(Data3[,3]), xlab=\"Proportion of Marginally Significant\nPLINK Tests per SNP\", ylab=\"MAPIT -log10(p-Value)\", main=\"\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); abline(lm(-log10(Data3[,3]) ~ Data3[,2]), col=\"RED\"); legend1 <- legend(\"bottomright\", c(paste(\"Corr: \", signif(cor(Data3[,2], -log10(Data3[,3])), digits=3), sep=\"\")), bty=\"n\", plot=TRUE, cex=2); \
-				mtext(\"Proportion of Marginally Significant\nPLINK Tests per SNP\", side=1, line=0, outer=TRUE, cex=2); \ 
+				plot(Data3[,2], -log10(Data3[,3]), xlab=\"\", ylab=\"MAPIT -log10(p-Value)\", main=\"\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); abline(lm(-log10(Data3[,3]) ~ Data3[,2]), col=\"RED\"); legend1 <- legend(\"bottomright\", c(paste(\"Corr: \", signif(cor(Data3[,2], -log10(Data3[,3])), digits=3), sep=\"\")), bty=\"n\", plot=TRUE, cex=2); \
+				title(xlab=\"Proportion of Marginally Significant\nPLINK Tests per SNP\", line=5, outer=FALSE, cex.lab=2); \ 
 				usr <- par(\"usr\"); rect(legend1\$text\$x[1]-diff(usr[1:2])/50,legend1\$rect\$top-legend1\$rect\$h,legend1\$rect\$left+legend1\$rect\$w,legend1\$rect\$top, cex=2); \
 			}; \
                 }; mtext(\"Height\", side=3, outer=TRUE, at=.265, cex=3); mtext(\"BMI\", side=3, outer=TRUE, at=.77, cex=3); \
@@ -11529,36 +11533,10 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
         }; \
 "
 
-
-
-
-
-R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); \ 
-	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { \ 
-		png(\"/Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PLINKvsMAPIT/ukb_v3.AllPops.HeightBMI.PLINKvsMAPIT.vs1.png\", height=4250, width=4000, res=300); par(oma=c(1,1,4,1), mar=c(5,5,4,2), mfrow=c(4,2)); \
-		for (j in UKBioBankPops[c(1,2,3,5)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
-                        for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
-				Data1 <- as.data.frame(fread(cmd=paste(\"cat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.\", k, \".epi.SortUniqC.qt | sed 's/:/_/g' | awk '{ print \$2 \\\"\t\\\" \$1 }' | sort -k 1,1\", sep=\"\"), header=F)); colnames(Data1) <- c(\"ChrBP\", \"Val1\"); \
-	    Data2 <- as.data.frame(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v2.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.Results.\", k, \".DaviesApprox.Results.wChrBP.txt.pre.gz | sed 's/_/\t/g' | sed 's/:/_/g' | awk '{ print \$1 \\\"\t\\\" \$7 }' | sort -k 1,1\", sep=\"\"), header=F)); colnames(Data2) <- c(\"ChrBP\", \"Val2\"); \
-                        	Data3 <- merge(Data1, Data2, by=\"ChrBP\"); \ 
-				print(cor(Data3[,2], -log10(Data3[,3]))); \
-				plot(Data3[,2], -log10(Data3[,3]), xlab=\"Proportion of Marginally Significant\nPLINK Tests per SNP\", ylab=\"-log10(MAPIT p-Value)\", main=paste(ancestry2, \" \", k, sep=\"\"), cex=2, cex.main=2, cex.axis=2, cex.lab=2); abline(lm(-log10(Data3[,3]) ~ Data3[,2]), col=\"RED\"); legend1 <- legend(\"bottomright\", c(paste(\"Corr: \", signif(cor(Data3[,2], -log10(Data3[,3])), digits=3), sep=\"\")), bty=\"n\", plot=TRUE, cex=1.5); \
-                                usr <- par(\"usr\"); rect(legend1\$text\$x[1]-diff(usr[1:2])/50,legend1\$rect\$top-legend1\$rect\$h,legend1\$rect\$left+legend1\$rect\$w,legend1\$rect\$top, cex=1.5); \
-			}; \
-                }; mtext(\"PLINK vs. MAPIT\", line=1, outer=TRUE, cex=2); dev.off(); \
-        }; \
-"
-
 #On MacBook Pro
-
-
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINKvsMAPIT
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINKvsMAPIT/*PLINKvsMAPIT.*png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINKvsMAPIT/.
 
-/Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PLINKvsMAPIT/*PLINKvsMAPIT.*png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PLINKvsMAPIT/.
-
-
-/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINKvsMAPIT/ukb_v3.African.BMI.PLINKvsMAPIT.vs1.png
 
 
 
