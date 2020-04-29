@@ -13383,7 +13383,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 				pValCutoff="pValBonf"; #pValBonf=`echo ".05 / $NumPaths" | bc -l`; 
 				echo $l $ancestry1 $ancestry2 $i $k $pValBonf
 
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/Analyses/HyperEnrich/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneList.And.Restricted.pVal.Comps.txt.gz | perl -lane 'sub log10 {my $n = shift; return log($n)/log(10);} print join("\t", @F), "\t", abs(log10($F[1]) - log10($F[2]));' | sort -g -k 4,4 | head -n 20 
+				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/Analyses/HyperEnrich/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneList.And.Restricted.pVal.Comps.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1 <- cbind(Data1, -log10(Data1[,3]) - -log10(Data1[,2])); write.table(Data1, quote=FALSE, row.names=FALSE, col.names=FALSE);" | grep -v ^\> | sort -rg -k 4,4 | grep -v PSM | head -n 10 | R -q -e "library(\"xtable\"); Data1 <- read.table(file('stdin'), header=F); print(xtable(Data1, digits=c(0,0,-3,-3,-3)), include.rownames=FALSE);"
 
 			done;
 		done;
