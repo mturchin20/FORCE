@@ -13362,23 +13362,33 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/HyperEnrichPlots/ukb_v3.African.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.HyperEnrichPlots.RestrictComps.vs1.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
                 for (j in UKBioBankPops[1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 			print(j); \
-			
 			Data1b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/BMI/Analyses/HyperEnrich/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.GeneList.And.Restricted.pVal.Comps.txt.gz\", sep=\"\"), header=F); \
 			Data2b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/BMI/Analyses/HyperEnrich/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.GeneList.And.Restricted.pVal.Comps.txt.gz\", sep=\"\"), header=F); \
-
-			plot(-log10(Data1b[,2]), -log10(Data1b[,3]), main=\"\", xlab=\"No Restriction -log10(p-Values)\", ylab=\"Restricted -log10(p-Values)\", xlim=c(0,10), ylim=c(0,10), type=\"b\", pch=16, col=\"PURPLE\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(-log10(Data1b[,2]), -log10(Data1b[,3]), main=\"\", xlab=\"No Restriction -log10(p-Values)\", ylab=\"Restricted -log10(p-Values)\", xlim=c(0,10), ylim=c(0,10), pch=16, col=\"PURPLE\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			abline(0,1, lwd=3, col=\"BLACK\"); \
-			plot(-log10(Data2b[,2]), -log10(Data2b[,3]), main=\"\", xlab=\"No Restriction -log10(p-Values)\", ylab=\"Restricted -log10(p-Values)\", xlim=c(0,10), ylim=c(0,10), type=\"b\", pch=16, col=\"PURPLE\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-			abline(0,1, lwd=3, col=\"BLACK\"); \
-
-			plot(-log10(xVals1a[order(xVals1a, decreasing=TRUE)]), -log10(Data1a[order(Data1a[,6], decreasing=TRUE),6]), main=\"\", xlab=\"log10(Expected p-Values)\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,xlimMax1), ylim=c(0,ylimMax1), type=\"b\", pch=16, col=\"BROWN\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-			abline(0,1, lwd=3, col=\"BLACK\"); \
-			plot(-log10(xVals2a[order(xVals2a, decreasing=TRUE)]), -log10(Data2a[order(Data2a[,6], decreasing=TRUE),6]), main=\"\", xlab=\"log10(Expected p-Values)\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,xlimMax1), ylim=c(0,ylimMax1), type=\"b\", pch=16, col=\"BROWN\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(-log10(Data2b[,2]), -log10(Data2b[,3]), main=\"\", xlab=\"No Restriction -log10(p-Values)\", ylab=\"Restricted -log10(p-Values)\", xlim=c(0,10), ylim=c(0,10), pch=16, col=\"PURPLE\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			abline(0,1, lwd=3, col=\"BLACK\"); \
 		}; mtext(\"KEGG\", side=3, line=-3, outer=TRUE, at=.2735, cex=3); mtext(\"REACTOME\", side=3, line=-3, outer=TRUE, at=.785, cex=3); \
 	dev.off(); }; print(warnings()); \
 "
 
+#On MacBook Pro
+#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/HyperEnrichPlots/ukb_v3.*.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/HyperEnrichPlots/. 
+
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
+		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
+				pValCutoff="pValBonf"; #pValBonf=`echo ".05 / $NumPaths" | bc -l`; 
+				echo $l $ancestry1 $ancestry2 $i $k $pValBonf
+
+				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/Analyses/HyperEnrich/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneList.And.Restricted.pVal.Comps.txt.gz | perl -lane 'sub log10 {my $n = shift; return log($n)/log(10);} print join("\t", @F), "\t", abs(log10($F[1]) - log10($F[2]));' | sort -g -k 4,4 | head -n 20 
+
+			done;
+		done;
+	done; 
+done 
 
 
 
