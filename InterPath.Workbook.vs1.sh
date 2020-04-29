@@ -13197,7 +13197,7 @@ REACTOME_NUCLEAR_SIGNALING_BY_ERBB4 8.92057454140449e-05 0.00100334359780896 0.0
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/HyperEnrichPlots 
 
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2 | head -n 1`; do
-	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 2 | head -n 1`; do
+	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
 		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
@@ -13227,56 +13227,29 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 				pValBonf=`echo ".05 / $NumPaths" | bc -l`; pValCutoff="pValBonf";
 				echo $l $ancestry1 $ancestry2 $i $k $pValBonf
 
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneList.Stats.top50.txt.gz | R -q -e "phyperGo <- function(k1,n1,K1,N1) { x <- k1; k <- n1; m <- K1; n <- N1 - K1; return(phyper(x-1, k=k, m=m, n=n, lower.tail=FALSE)); }; Data1 <- read.table(file('stdin'), header=F); Results1 <- c(); for (i in 1:nrow(Data1)) { Results1 <- c(Results1, phyperGo(Data1[i,2], Data1[i,3], Data1[i,4], Data1[i,5])); }; Data1 <- cbind(Data1, Results1); write.table(Data1, quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v ^\> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneList.Stats.top50.pVal.txt.gz 
+				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneList.Stats.txt.gz | R -q -e "phyperGo <- function(k1,n1,K1,N1) { x <- k1; k <- n1; m <- K1; n <- N1 - K1; return(phyper(x-1, k=k, m=m, n=n, lower.tail=FALSE)); }; Data1 <- read.table(file('stdin'), header=F); Results1 <- c(); for (i in 1:nrow(Data1)) { Results1 <- c(Results1, phyperGo(Data1[i,2], Data1[i,3], Data1[i,4], Data1[i,5])); }; Data1 <- cbind(Data1, Results1); write.table(Data1, quote=FALSE, col.names=FALSE, row.names=FALSE);" | grep -v ^\> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneList.Stats.pVal.txt.gz 
 
 			done;
 		done;
 	done; 
 done 
 
-R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
+R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
 	for (i in DataTypes[1]) { \
 		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/HyperEnrichPlots/ukb_v3.African.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.HyperEnrichPlots.vs1.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
                 for (j in UKBioBankPops[1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 			print(j); \
-			Data1a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.GeneList.Stats.top50.pVal.txt.gz\", sep=\"\"), header=F); \
+			Data1a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/Height/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.GeneList.Stats.pVal.txt.gz\", sep=\"\"), header=F); \
 			Data1a <- Data1a[!is.na(Data1a[,6]),]; \
-			xVals1 <- seq(1/nrow(Data1a), 1, by=1/nrow(Data1a)); \	
+			xVals1a <- seq(1/nrow(Data1a), 1, by=1/nrow(Data1a)); \	
 			xlimMax <- max(c(-log10(xVals1a))); ylimMax <- max(c(-log10(Data1a[,6]))); \
-			plot(-log10(xVals1[order(xVals1, decreasing=TRUE)]), -log10(Data1a[order(Data1a[,6], decreasing=TRUE),4]), main=\"\", xlab=\"log10(Expected pValues)\", ylab=\"-log10(Observed pValues)\", xlim=c(0,xlimMax), ylim=c(0,ylimMax), type=\"b\", pch=16, col=\"BROWN\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(-log10(xVals1a[order(xVals1a, decreasing=TRUE)]), -log10(Data1a[order(Data1a[,6], decreasing=TRUE),6]), main=\"\", xlab=\"log10(Expected p-Values)\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,xlimMax), ylim=c(0,ylimMax), type=\"b\", pch=16, col=\"BROWN\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			abline(0,1, lwd=3, col=\"BLACK\"); \
-			
-				numPaths1 <- max(c(nrow(Data1), nrow(Data2), nrow(Data3), nrow(Data4), nrow(Data5), nrow(Data6), nrow(Data7), nrow(Data8))); pValBonf1 <- .05 / numPaths1; print(pValBonf1); \
-                                Data1 <- Data1[!is.na(Data1[,3]),]; Data2 <- Data2[!is.na(Data2[,3]),]; Data3 <- Data3[!is.na(Data3[,3]),]; Data4 <- Data4[!is.na(Data4[,3]),]; Data5 <- Data5[!is.na(Data5[,3]),]; Data6 <- Data6[!is.na(Data6[,3]),]; Data7 <- Data7[!is.na(Data7[,3]),]; Data8 <- Data8[!is.na(Data8[,3]),]; \
-				Data1[Data1[,4] == 0,4] <- 1e-11; Data2[Data2[,4] == 0,4] <- 1e-11; Data3[Data3[,4] == 0,4] <- 1e-11; Data4[Data4[,4] == 0,4] <- 1e-11; Data5[Data5[,4] == 0,4] <- 1e-11; Data6[Data6[,4] == 0,4] <- 1e-11; Data7[Data7[,4] == 0,4] <- 1e-11; Data8[Data8[,4] == 0,4] <- 1e-11; \ 
-                                xVals1 <- seq(1/nrow(Data1), 1, by=1/nrow(Data1)); xVals2 <- seq(1/nrow(Data2), 1, by=1/nrow(Data2)); xVals3 <- seq(1/nrow(Data3), 1, by=1/nrow(Data3)); xVals4 <- seq(1/nrow(Data4), 1, by=1/nrow(Data4)); xVals5 <- seq(1/nrow(Data5), 1, by=1/nrow(Data5)); xVals6 <- seq(1/nrow(Data6), 1, by=1/nrow(Data6)); xVals7 <- seq(1/nrow(Data7), 1, by=1/nrow(Data7)); xVals8 <- seq(1/nrow(Data8), 1, by=1/nrow(Data8)); \
-                                xlimMax <- max(c(-log10(xVals1), -log10(xVals2), -log10(xVals3), -log10(xVals4), -log10(xVals5), -log10(xVals6), -log10(xVals7), -log10(xVals8))); ylimMax <- max(c(-log10(Data1[,4]), -log10(Data2[,4]), -log10(Data3[,4]), -log10(Data4[,4]), -log10(Data5[,4]), -log10(Data6[,4]), -log10(Data7[,4]), -log10(Data8[,4]))); \
-                                plot(-log10(xVals1[order(xVals1, decreasing=TRUE)]), -log10(Data1[order(Data1[,4], decreasing=TRUE),4]), main=k, xlab=\"-log10(Expected pValues)\", ylab=\"-log10(Observed pValues)\", xlim=c(0,max(-log10(xVals4))), ylim=c(0,11.5), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-                                points(-log10(xVals2[order(xVals2, decreasing=TRUE)]), -log10(Data2[order(Data2[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[1], cex=1.5); \
-                                points(-log10(xVals3[order(xVals3, decreasing=TRUE)]), -log10(Data3[order(Data3[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[2], cex=1.5); \
-                                points(-log10(xVals4[order(xVals4, decreasing=TRUE)]), -log10(Data4[order(Data4[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
-                                points(-log10(xVals5[order(xVals5, decreasing=TRUE)]), -log10(Data5[order(Data5[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Set3\")[8], cex=1.5); \
-                                points(-log10(xVals6[order(xVals6, decreasing=TRUE)]), -log10(Data6[order(Data6[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=1.5); \
-                                points(-log10(xVals7[order(xVals7, decreasing=TRUE)]), -log10(Data7[order(Data7[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(11, \"RdYlBu\")[11], cex=1.5); \
-                                points(-log10(xVals8[order(xVals8, decreasing=TRUE)]), -log10(Data8[order(Data8[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=1.5); \
-                                abline(0,1, lwd=1, col=\"BLACK\"); abline(h=-log10(pValBonf1), lty=3, lwd=3, col=\"RED\"); \
-                        }; \
-
-			Data1a <- Data1a[!is.na(Data1a[,3]),]; Data1b <- Data1b[!is.na(Data1b[,3]),]; Data2a <- Data2a[!is.na(Data2a[,3]),]; Data2b <- Data2b[!is.na(Data2b[,3]),]; \
-			Data1a[Data1a[,4] == 0,4] <- 1e-11; Data1b[Data1b[,4] == 0,4] <- 1e-11; Data2a[Data2a[,4] == 0,4] <- 1e-11; Data2b[Data2b[,4] == 0,4] <- 1e-11; \ 
-			Data1a.Thresh <- .05 / nrow(Data1a); Data1b.Thresh <- .05 / nrow(Data1b); Data2a.Thresh <- .05 / nrow(Data2a); Data2b.Thresh <- .05 / nrow(Data2b); \ 
-			Data1a <- Data1a[,c(1,4)]; colnames(Data1a) <- c(\"Pathway\", \"pValue\"); Data1b <- Data1b[,c(1,4)]; colnames(Data1b) <- c(\"Pathway\", \"pValue\"); Data2a <- Data2a[,c(1,4)]; colnames(Data2a) <- c(\"Pathway\", \"pValue\"); Data2b <- Data2b[,c(1,4)]; colnames(Data2b) <- c(\"Pathway\", \"pValue\"); \
-			Data1c <- merge(Data1a, Data1b, by=\"Pathway\"); Data2c <- merge(Data2a, Data2b, by=\"Pathway\"); \
-			print(head(Data1c)); \	
-			print(cor(-log10(Data1c[,2]),-log10(Data1c[,3]))); print(cor(-log10(Data2c[,2]),-log10(Data2c[,3]))); \
-			plot(-log10(Data1c[,2]),-log10(Data1c[,3]), main=\"\", xlab=\"Height -log10(p-Values)\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
-			abline(h=-log10(Data1b.Thresh), lwd=3, lty=3, col=\"RED\"); abline(v=-log10(Data1a.Thresh), lwd=3, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
-			draw.ellipse(1.5,7.5,1,3, lwd=3, lty=2, border=\"BLUE\"); \
-			plot(-log10(Data2c[,2]),-log10(Data2c[,3]), main=\"\", xlab=\"Height -log10(p-Values)\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
-			abline(h=-log10(Data2b.Thresh), lwd=3, lty=3, col=\"RED\"); abline(v=-log10(Data2a.Thresh), lwd=3, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
 		}; mtext(\"KEGG\", side=3, line=-3, outer=TRUE, at=.2735, cex=3); mtext(\"REACTOME\", side=3, line=-3, outer=TRUE, at=.785, cex=3); \
 	dev.off(); }; print(warnings()); \
 "
+                                
+			points(-log10(xVals2[order(xVals2, decreasing=TRUE)]), -log10(Data2[order(Data2[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[1], cex=1.5); \
 			
 			Data1b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValBonf/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.GeneList.Stats.top50.pVal.txt.gz\", sep=\"\"), header=F); \
 			Data2a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/Height/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.GeneList.Stats.top50.pVal.txt.gz\", sep=\"\"), header=F); \
@@ -13287,46 +13260,11 @@ R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"A
 #scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/HyperEnrichPlots/ukb_v3.*.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/HyperEnrichPlots/. 
 
 
-> phyperGo <- function(a,b,c,d) { x <- a; k <- b; m <- c; n <- d - c; return(phyper(x-1, k=k, m=m, n=n, lower.tail=FALSE)); }
-> phyperGo(22,65,106,658)
-[1] 0.0001536891
-> phyperGo(15,65,48,658)
-[1] 1.455843e-05
-> phyperGo(14,65,75,658)
-[1] 0.00956483
-> phyperGo(13,65,34,658)
-[1] 4.732019e-06
-> phyperGo(12,65,44,658)
-[1] 0.0005303724
 
-```
-k <- 65
-m <- 44
-N <- 658
-n <- N - m
-n
-> n
-[1] 614
-x <- 12
-phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
-> phyper(q=x -1, m=m, n=n, k=k, lower.tail=FALSE)
-[1] 0.0005303724
-phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
-> phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
-[1] 0.0001191678
 
-k <- 26
-m <- 34
-N <- 577
-n <- N - m
-n
-> n
-[1] 543
-x <- 9
-phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
-> phyper(q=x-1, m=m, n=n, k=k, lower.tail=FALSE)
-[1] 4.46362e-06
-phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
+
+
+
 
 
 
