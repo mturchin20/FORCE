@@ -11352,20 +11352,21 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); \
                 Data4 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
                 Data5 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
                 Data6 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
-		Data1 <- Data1[order(Data1[,1], decreasing=TRUE),]; Data2 <- Data2[order(Data2[,1], decreasing=TRUE),]; Data3 <- Data3[order(Data3[,1], decreasing=TRUE),]; Data4 <- Data4[order(Data4[,1], decreasing=TRUE),]; \ 
+		Data1 <- Data1[order(Data1[,1], decreasing=TRUE),]; Data2 <- Data2[order(Data2[,1], decreasing=TRUE),]; Data3 <- Data3[order(Data3[,1], decreasing=TRUE),]; Data4 <- Data4[order(Data4[,1], decreasing=TRUE),]; Data5 <- Data5[order(Data5[,1], decreasing=TRUE),]; Data6 <- Data6[order(Data6[,1], decreasing=TRUE),]; \ 
 		
-		Data1 <- cbind(Data1, (Data1[,1] / 374466) * 100); Data2 <- cbind(Data2, (Data2[,1] / 600006) * 100); Data3 <- cbind(Data3, (Data3[,1] / 410017) * 100); Data4 <- cbind(Data4, (Data4[,1] / 505854) * 100); \
-		
-		Data1 <- Data1[1:50,]; Data2 <- Data2[1:50,]; Data3 <- Data3[1:50,]; Data4 <- Data4[1:50,]; \ 
-                print(head(Data1)); print(head(Data2)); print(head(Data3)); print(head(Data4)); \
-                
-		xVals1 <- seq(1, nrow(Data1), by=1); xVals2 <- seq(1, nrow(Data2), by=1); xVals3 <- seq(1, nrow(Data3), by=1); xVals4 <- seq(1, nrow(Data4), by=1); \
-                xlimMax <- max(c(xVals1, xVals2, xVals3, xVals4)); ylimMax <- max(c(Data1[,3], Data2[,3], Data3[,3], Data4[,3])); \
+		Data1 <- cbind(Data1, (Data1[,1] / 374466) * 100); Data2 <- cbind(Data2, (Data2[,1] / 600006) * 100); Data3 <- cbind(Data3, (Data3[,1] / 410017) * 100); Data4 <- cbind(Data4, (Data4[,1] / 345221) * 100); Data5 <- cbind(Data5, (Data5[,1] / 505854) * 100); Data6 <- cbind(Data6, (Data6[,1] / 516806) * 100); \	
+	
+		Data1 <- Data1[1:50,]; Data2 <- Data2[1:50,]; Data3 <- Data3[1:50,]; Data4 <- Data4[1:50,]; Data5 <- Data5[1:50,]; Data6 <- Data6[1:50,]; \ 
+                print(head(Data1)); print(head(Data2)); print(head(Data3)); print(head(Data4)); print(head(Data5)); print(head(Data6)); \
+	       xVals1 <- seq(1, nrow(Data1), by=1); xVals2 <- seq(1, nrow(Data2), by=1); xVals3 <- seq(1, nrow(Data3), by=1); xVals4 <- seq(1, nrow(Data4), by=1); xVals5 <- seq(1, nrow(Data5), by=1); xVals6 <- seq(1, nrow(Data6), by=1); \
+                xlimMax <- max(c(xVals1, xVals2, xVals3, xVals4, xVals5, xVals6)); ylimMax <- max(c(Data1[,3], Data2[,3], Data3[,3], Data4[,3], Data5[,3], Data6[,3])); \
                 plot(xVals1[order(xVals1, decreasing=TRUE)], Data1[,3], main=paste(k, sep=\"\"), xaxt=\"n\", xlab=\"Top 50 SNPs\", ylab=\"Proportion of Marginally\nSignificant Interactions\", xlim=c(1,xlimMax), ylim=c(.1,.45), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
 		axis(1, at=c(1,10,20,30,40,50), labels=c(1,10,20,30,40,50), line=0, lwd=1, lwd.ticks=1, cex=1.5, cex.axis=1.5, cex.lab=1.5); \
 		points(xVals2[order(xVals2, decreasing=TRUE)], Data2[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[1], cex=1.5); \
                 points(xVals3[order(xVals3, decreasing=TRUE)], Data3[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
                 points(xVals4[order(xVals4, decreasing=TRUE)], Data4[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=1.5); \
+                points(xVals5[order(xVals5, decreasing=TRUE)], Data5[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=1.5); \
+                points(xVals6[order(xVals6, decreasing=TRUE)], Data6[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=1.5); \
 		par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Indian\"), pch=c(16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[9]), xpd=TRUE, inset=c(.035,.15), bg=\"transparent\", cex=1.5, y.intersp=2); dev.off(); }; \
 "
 
