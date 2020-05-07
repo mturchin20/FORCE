@@ -6042,6 +6042,11 @@ cat /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/
 cat /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.SortUniqC.qt
 cat /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.BMI.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.BMI.epi.SortUniqC.qt
 
+cat /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.SortUniqC.qt
+cat /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.BMI.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.BMI.epi.SortUniqC.qt
+cat /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.epi.SortUniqC.qt
+cat /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.BMI.epi.qt | awk '{ print $2 "\n" $4 }' | sort | uniq -c | sort -rg -k 1,1 | grep ":" > /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.BMI.epi.SortUniqC.qt
+
 cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.log | grep variants
 cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.BMI.log | grep variants
 cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.Height.log | grep variants
@@ -11431,7 +11436,7 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscrip
 
 R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
         for (i in DataTypes[1]) { \
-                png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/MAPIT/ukb_v3.All4kPops.HeightBMI.MAPIT.Plots.vs4.png\", sep=\"\"), height=2000, width=4500, res=300); par(oma=c(1,1,1,10), mar=c(5,5,4,2), mfrow=c(1,2)); \
+                png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/MAPIT/ukb_v3.All4kPops.HeightBMI.MAPIT.Plots.vs4.png\", sep=\"\"), height=2000, width=4500, res=300); par(oma=c(1,1,1,12), mar=c(5,5,4,2), mfrow=c(1,2)); \
 		for (k in c(\"Height\", \"BMI\")[1:2]) { print(c(i,k)); \
 			Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.\", k, \".DaviesApprox.Results.txt.pre.gz\", sep=\"\"), header=F); \
 			Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.\", k, \".DaviesApprox.Results.txt.pre.gz\", sep=\"\"), header=F); \
@@ -11451,27 +11456,9 @@ R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\
 			points(-log10(xVals6[order(xVals6, decreasing=TRUE)]), -log10(Data6[order(Data6[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=2); \
 			abline(0,1, lwd=2, col=\"BLACK\"); \
 			mtext(\"-log10(Expected p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-		}; par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(16,16,16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.0325,.134), bg=\"transparent\", cex=1.5, y.intersp=2); \
+		}; par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(16,16,16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.0325,.150), bg=\"transparent\", cex=1.5, y.intersp=2); \
 	dev.off(); }; \
 "
-
-barplot(Data1.KEGG, ylab=\"Number of Significant Pathways\", ylim=c(0,60), col=Data1.colors, beside=TRUE, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-barplot(Data1.REACTOME, ylab=\"Number of Significant Pathways\", ylim=c(0,60), col=Data1.colors, beside=TRUE, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-mtext(\"UKBioBank MAPIT-R Results\", side=3, outer=TRUE, at=.5, cex=3); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African (n=3111)\", \"Brit.Ran4k (n=3848)\", \"Brit.Ran10k (n=9603)\", \"Caribbean (n=3833)\", \"Chinese (n=1448)\", \"Indian (n=5077)\", \"Irish (n=11575)\", \"Pakistani (n=1581)\"), pch=c(15,15,15,15,15,15,15,15), col=c(
-brewer.pal(12, \"Paired\")[5], 
-
-brewer.pal(12, \"Paired\")[1], 
-brewer.pal(12, \"Paired\")[2], 
-
-brewer.pal(12, \"Paired\")[3], 
-brewer.pal(12, \"Set3\")[8], 
-brewer.pal(12, \"Paired\")[9], 
-
-brewer.pal(11, \"RdYlBu\")[11], 
-
-brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.29), bg=\"transparent\", cex=1.5, y.intersp=2); \
-dev.off();"
-
 
 #R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
 #		for (j in UKBPops[1]) { \
