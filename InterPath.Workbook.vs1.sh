@@ -11446,14 +11446,32 @@ R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\
 			plot(-log10(xVals1[order(xVals1, decreasing=TRUE)]), -log10(Data1[order(Data1[,4], decreasing=TRUE),4]), main=paste(k, sep=\"\"), xaxt=\"n\", xlab=\"\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,xlimMax), ylim=c(0,8), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			points(-log10(xVals2[order(xVals2, decreasing=TRUE)]), -log10(Data2[order(Data2[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[1], cex=2); \
 			points(-log10(xVals3[order(xVals3, decreasing=TRUE)]), -log10(Data3[order(Data3[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=2); \
-			points(-log10(xVals4[order(xVals4, decreasing=TRUE)]), -log10(Data4[order(Data4[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=2); \
-			points(-log10(xVals5[order(xVals5, decreasing=TRUE)]), -log10(Data5[order(Data5[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[4], cex=2); \
-			points(-log10(xVals6[order(xVals6, decreasing=TRUE)]), -log10(Data6[order(Data6[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=2); \
+			points(-log10(xVals4[order(xVals4, decreasing=TRUE)]), -log10(Data4[order(Data4[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Set3\")[8], cex=2); \
+			points(-log10(xVals5[order(xVals5, decreasing=TRUE)]), -log10(Data5[order(Data5[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=2); \
+			points(-log10(xVals6[order(xVals6, decreasing=TRUE)]), -log10(Data6[order(Data6[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=2); \
 			abline(0,1, lwd=2, col=\"BLACK\"); \
 			mtext(\"-log10(Expected p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-		}; par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Indian\"), pch=c(16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[9]), xpd=TRUE, inset=c(.0325,.134), bg=\"transparent\", cex=1.5, y.intersp=2); \
+		}; par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(16,16,16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.0325,.134), bg=\"transparent\", cex=1.5, y.intersp=2); \
 	dev.off(); }; \
 "
+
+barplot(Data1.KEGG, ylab=\"Number of Significant Pathways\", ylim=c(0,60), col=Data1.colors, beside=TRUE, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+barplot(Data1.REACTOME, ylab=\"Number of Significant Pathways\", ylim=c(0,60), col=Data1.colors, beside=TRUE, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+mtext(\"UKBioBank MAPIT-R Results\", side=3, outer=TRUE, at=.5, cex=3); par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African (n=3111)\", \"Brit.Ran4k (n=3848)\", \"Brit.Ran10k (n=9603)\", \"Caribbean (n=3833)\", \"Chinese (n=1448)\", \"Indian (n=5077)\", \"Irish (n=11575)\", \"Pakistani (n=1581)\"), pch=c(15,15,15,15,15,15,15,15), col=c(
+brewer.pal(12, \"Paired\")[5], 
+
+brewer.pal(12, \"Paired\")[1], 
+brewer.pal(12, \"Paired\")[2], 
+
+brewer.pal(12, \"Paired\")[3], 
+brewer.pal(12, \"Set3\")[8], 
+brewer.pal(12, \"Paired\")[9], 
+
+brewer.pal(11, \"RdYlBu\")[11], 
+
+brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.29), bg=\"transparent\", cex=1.5, y.intersp=2); \
+dev.off();"
+
 
 #R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
 #		for (j in UKBPops[1]) { \
