@@ -11369,18 +11369,6 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); \
 	}; par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(16,16,16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.0325,.150), bg=\"transparent\", cex=1.5, y.intersp=2); \
 	dev.off(); \
 "
-			
-			points(-log10(xVals4[order(xVals4, decreasing=TRUE)]), -log10(Data4[order(Data4[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Set3\")[8], cex=2); \
-			points(-log10(xVals5[order(xVals5, decreasing=TRUE)]), -log10(Data5[order(Data5[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=2); \
-			points(-log10(xVals6[order(xVals6, decreasing=TRUE)]), -log10(Data6[order(Data6[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=2); \
-			abline(0,1, lwd=2, col=\"BLACK\"); \
-			mtext(\"-log10(Expected p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-		}; par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(16,16,16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.0325,.150), bg=\"transparent\", cex=1.5, y.intersp=2); \
-	dev.off(); }; \
-
-#345221 variants and 1448 people pass filters and QC.
-#Height Pakistani Pakistani
-#516806 variants loaded from .bim file.
 
 #	.../users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/ukb_chrAll_v3.AfrBrit4kCaribIndn.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.HeightBMI.epi.qt.Results.ProportionPlots.vs1.png\",... 
 #		Data1 <- cbind(Data1, Data1[,1] / 374466); Data2 <- cbind(Data2, Data2[,1] / 600006); Data3 <- cbind(Data3, Data3[,1] / 410017); Data4 <- cbind(Data4, Data4[,1] / 505854); \
@@ -11485,7 +11473,7 @@ R -q -e "library(\"RColorBrewer\"); UKBPops <- c(NA, \"Pruned\", \"PrunedStrict\
 			Data1 <- Data1[as.numeric(as.character(Data1[,4])) > 0,]; Data2 <- Data2[as.numeric(as.character(Data2[,4])) > 0,]; Data3 <- Data3[as.numeric(as.character(Data3[,4])) > 0,]; Data4 <- Data4[as.numeric(as.character(Data4[,4])) > 0,]; Data5 <- Data5[as.numeric(as.character(Data5[,4])) > 0,]; Data6 <- Data6[as.numeric(as.character(Data6[,4])) > 0,]; \
 			xVals1 <- seq(1/nrow(Data1), 1, by=1/nrow(Data1)); xVals2 <- seq(1/nrow(Data2), 1, by=1/nrow(Data2)); xVals3 <- seq(1/nrow(Data3), 1, by=1/nrow(Data3)); xVals4 <- seq(1/nrow(Data4), 1, by=1/nrow(Data4)); xVals5 <- seq(1/nrow(Data5), 1, by=1/nrow(Data5)); xVals6 <- seq(1/nrow(Data6), 1, by=1/nrow(Data6)); \
 			xlimMax <- max(c(-log10(xVals1), -log10(xVals2), -log10(xVals3), -log10(xVals4), -log10(xVals5), -log10(xVals6))); ylimMax <- max(c(-log10(Data1[,4]), -log10(Data2[,4]), -log10(Data3[,4]), -log10(Data4[,4]), -log10(Data5[,4]), -log10(Data6[,4]))); \
-			plot(-log10(xVals1[order(xVals1, decreasing=TRUE)]), -log10(Data1[order(Data1[,4], decreasing=TRUE),4]), main=paste(k, sep=\"\"), xaxt=\"n\", xlab=\"\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,xlimMax), ylim=c(0,8), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(-log10(xVals1[order(xVals1, decreasing=TRUE)]), -log10(Data1[order(Data1[,4], decreasing=TRUE),4]), main=paste(k, sep=\"\"), xaxt=\"n\", xlab=\"\", ylab=\"-log10(Observed p-Values)\", xlim=c(0,xlimMax), ylim=c(0,8), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=2, cex.main=2.5, cex.axis=2, cex.lab=2); \
 			points(-log10(xVals2[order(xVals2, decreasing=TRUE)]), -log10(Data2[order(Data2[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[1], cex=2); \
 			points(-log10(xVals3[order(xVals3, decreasing=TRUE)]), -log10(Data3[order(Data3[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=2); \
 			points(-log10(xVals4[order(xVals4, decreasing=TRUE)]), -log10(Data4[order(Data4[,4], decreasing=TRUE),4]), type=\"b\", pch=16, col=brewer.pal(12, \"Set3\")[8], cex=2); \
