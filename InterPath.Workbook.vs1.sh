@@ -11380,25 +11380,35 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); \
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK
 scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK/*PLINK.*png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK/. 
 
-R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK/ukb_v3.AllPops.HeightBMI.localPCs.PLINK.BestSNPs.Plots.vs1.png\", height=2000, width=4250, res=300); par(oma=c(1,1,1,10), mar=c(5,5,4,2), mfrow=c(1,2)); \
+R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK/ukb_v3.AllPops.HeightBMI.localPCs.PLINK.BestSNPs.Plots.vs2.png\", height=2000, width=4250, res=300); par(oma=c(1,1,1,10), mar=c(5,5,4,2), mfrow=c(1,2)); \
         for (k in c(\"Height\", \"BMI\")[1:2]) { \
                 Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.qt.summary\", sep=\"\"), header=T); \
                 Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.qt.summary\", sep=\"\"), header=T); \
                 Data3 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.qt.summary\", sep=\"\"), header=T); \
-                Data4 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.qt.summary\", sep=\"\"), header=T); \
-		Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); Data2 <- cbind(Data2, pchisq(Data2[,6], df=1, lower.tail=FALSE)); Data3 <- cbind(Data3, pchisq(Data3[,6], df=1, lower.tail=FALSE)); Data4 <- cbind(Data4, pchisq(Data4[,6], df=1, lower.tail=FALSE)); \	
-		Data1 <- Data1[!is.na(Data1[,9]),]; Data2 <- Data2[!is.na(Data2[,9]),]; Data3 <- Data3[!is.na(Data3[,9]),]; Data4 <- Data4[!is.na(Data4[,9]),]; \
-		Data1 <- Data1[order(-log10(Data1[,9]), decreasing=TRUE),]; Data2 <- Data2[order(-log10(Data2[,9]), decreasing=TRUE),]; Data3 <- Data3[order(-log10(Data3[,9]), decreasing=TRUE),]; Data4 <- Data4[order(-log10(Data4[,9]), decreasing=TRUE),]; \ 
-                print(head(Data1)); print(head(Data2)); print(head(Data3)); print(head(Data4)); \
-		Data1 <- Data1[1:50,]; Data2 <- Data2[1:50,]; Data3 <- Data3[1:50,]; Data4 <- Data4[1:50,]; \ 
-                xVals1 <- seq(1, nrow(Data1), by=1); xVals2 <- seq(1, nrow(Data2), by=1); xVals3 <- seq(1, nrow(Data3), by=1); xVals4 <- seq(1, nrow(Data4), by=1); \
-                xlimMax <- max(c(xVals1, xVals2, xVals3)); ylimMax <- max(c(-log10(Data1[,9]), -log10(Data2[,9]), -log10(Data3[,9]), -log10(Data4[,9]))); \
-                plot(xVals1[order(xVals1, decreasing=TRUE)], -log10(Data1[,9]), xaxt=\"n\", main=paste(k, sep=\"\"), xlab=\"Top 50 SNPs\", ylab=\"Max PLINK Epistasis -log10(p-Value)\", xlim=c(1,xlimMax), ylim=c(9,12), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-		points(xVals2[order(xVals2, decreasing=TRUE)], -log10(Data2[,9]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[1], cex=1.5); \
-                points(xVals3[order(xVals3, decreasing=TRUE)], -log10(Data3[,9]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
-                points(xVals4[order(xVals4, decreasing=TRUE)], -log10(Data4[,9]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=1.5); \
-		axis(1, at=c(1,10,20,30,40,50), labels=c(1,10,20,30,40,50), line=0, lwd=1, lwd.ticks=1, cex=1.5, cex.axis=1.5, cex.lab=1.5); \
+                Data4 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.qt.summary\", sep=\"\"), header=T); \
+                Data5 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.qt.summary\", sep=\"\"), header=T); \
+                Data6 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.qt.summary\", sep=\"\"), header=T); \
+		Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); Data2 <- cbind(Data2, pchisq(Data2[,6], df=1, lower.tail=FALSE)); Data3 <- cbind(Data3, pchisq(Data3[,6], df=1, lower.tail=FALSE)); Data4 <- cbind(Data4, pchisq(Data4[,6], df=1, lower.tail=FALSE)); Data5 <- cbind(Data5, pchisq(Data5[,6], df=1, lower.tail=FALSE)); Data6 <- cbind(Data6, pchisq(Data6[,6], df=1, lower.tail=FALSE)); \	
+		Data1 <- Data1[!is.na(Data1[,9]),]; Data2 <- Data2[!is.na(Data2[,9]),]; Data3 <- Data3[!is.na(Data3[,9]),]; Data4 <- Data4[!is.na(Data4[,9]),]; Data5 <- Data5[!is.na(Data5[,9]),]; Data6 <- Data6[!is.na(Data6[,9]),]; \
+		Data1 <- Data1[order(-log10(Data1[,9]), decreasing=TRUE),]; Data2 <- Data2[order(-log10(Data2[,9]), decreasing=TRUE),]; Data3 <- Data3[order(-log10(Data3[,9]), decreasing=TRUE),]; Data4 <- Data4[order(-log10(Data4[,9]), decreasing=TRUE),]; Data5 <- Data5[order(-log10(Data5[,9]), decreasing=TRUE),]; Data6 <- Data6[order(-log10(Data6[,9]), decreasing=TRUE),]; \ 
+                print(head(Data1)); print(head(Data2)); print(head(Data3)); print(head(Data4)); print(head(Data5)); print(head(Data6)); \
+		Data1 <- Data1[1:50,]; Data2 <- Data2[1:50,]; Data3 <- Data3[1:50,]; Data4 <- Data4[1:50,]; Data5 <- Data5[1:50,]; Data6 <- Data6[1:50,]; \ 
+               xVals1 <- seq(1, nrow(Data1), by=1); xVals2 <- seq(1, nrow(Data2), by=1); xVals3 <- seq(1, nrow(Data3), by=1); xVals4 <- seq(1, nrow(Data4), by=1); xVals5 <- seq(1, nrow(Data5), by=1); xVals6 <- seq(1, nrow(Data6), by=1); \
+                xlimMax <- max(c(xVals1, xVals2, xVals3, xVals4, xVals5, xVals6)); ylimMax <- max(c(-log10(Data1[,9]), -log10(Data2[,9]), -log10(Data3[,9]), -log10(Data4[,9]), -log10(Data5[,9]), -log10(Data6[,9]))); \
+                plot(xVals1[order(xVals1, decreasing=TRUE)], -log10(Data1[,9]), xaxt=\"n\", main=paste(k, sep=\"\"), xlab=\"Top 50 SNPs\", ylab=\"Max PLINK Epistasis -log10(p-Value)\", xlim=c(1,xlimMax), ylim=c(9,12), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=2, cex.main=2.5, cex.axis=2, cex.lab=2); \
+		points(xVals2[order(xVals2, decreasing=TRUE)], -log10(Data2[,9]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[1], cex=2); \
+                points(xVals3[order(xVals3, decreasing=TRUE)], -log10(Data3[,9]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=2); \
+                points(xVals4[order(xVals4, decreasing=TRUE)], -log10(Data4[,9]), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=2); \
+		axis(1, at=c(1,10,20,30,40,50), labels=c(1,10,20,30,40,50), line=0, lwd=1, lwd.ticks=1, mgp=c(3,1.5,0), cex=2, cex.axis=2, cex.lab=2); mtext(\"Top 50 SNPs\", side=1, line=3.5, cex=2); \
 	}; par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Indian\"), pch=c(16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[9]), xpd=TRUE, inset=c(.019,.15), bg=\"transparent\", cex=1.5, y.intersp=2); dev.off(); \
+"
+                
+		points(xVals3[order(xVals3, decreasing=TRUE)], Data3[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[3], cex=2); \
+                points(xVals4[order(xVals4, decreasing=TRUE)], Data4[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Set3\")[8], cex=2); \
+                points(xVals5[order(xVals5, decreasing=TRUE)], Data5[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=2); \
+                points(xVals6[order(xVals6, decreasing=TRUE)], Data6[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[7], cex=2); \
+	}; par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(16,16,16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.0325,.150), bg=\"transparent\", cex=1.5, y.intersp=2); \
+	dev.off(); \
 "
 
 #From MacBook Pro
