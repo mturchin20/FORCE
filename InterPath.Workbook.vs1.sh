@@ -11273,17 +11273,24 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscrip
 #600006 variants loaded from .bim file.
 #410017 variants loaded from .bim file.
 #505854 variants loaded from .bim file.
+#Height Chinese Chinese
+#345221 variants loaded from .bim file.
+#345221 variants and 1448 people pass filters and QC.
+#Height Pakistani Pakistani
+#516806 variants loaded from .bim file.
+#516806 variants and 1581 people pass filters and QC.
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK
 
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | grep -E 'African|Ran4000|Caribbean|Indian' | head -n 4 | tail -n 4`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | grep -vE 'African|Ran4000|Caribbean|Indian' | grep -E 'Chinese|Pakistani' | head -n 2 | tail -n 2`; do
 	        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 	        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	
 	        echo $i $ancestry1 $ancestry2
 
-		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt.summary | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));"
+		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.log | grep variants 
+#		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.${i}.epi.qt.summary | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));"
 
 	done
 done
@@ -11323,19 +11330,36 @@ BMI Caribbean Caribbean
 BMI Indian Indian
 > Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
 [1] 3.493451e-12
+Height Chinese Chinese
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
+[1] 1.8344e-11
+Height Pakistani Pakistani
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
+[1] 5.0693e-12
+BMI Chinese Chinese
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
+[1] 1.219307e-11
+BMI Pakistani Pakistani
+> Data1 <- read.table(file('stdin'), header=T); Data1 <- cbind(Data1, pchisq(Data1[,6], df=1, lower.tail=FALSE)); print(min(Data1[!is.na(Data1[,9]),9]));
+[1] 2.649663e-11
 
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); \ 
+	png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK/ukb_v3.AllPops.HeightBMI.localPCs.PLINK.Proportions.Plots.vs2.png\", sep=\"\"), height=2000, width=4500, res=300); par(oma=c(1,1,1,12), mar=c(5,6,4,2), mfrow=c(1,2)); \
         for (k in c(\"Height\", \"BMI\")[1:2]) { \
-		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINK/ukb_v3.AllPops.\", k, \".localPCs.PLINK.Proportions.Plots.vs1.png\", sep=\"\"), height=2000, width=2500, res=300); par(oma=c(1,1,1,10), mar=c(5,6,4,2), mfrow=c(1,1)); \
                 Data1 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
                 Data2 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
                 Data3 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
-                Data4 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
+                Data4 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
+                Data5 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
+                Data6 <- as.data.frame(fread(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt\", sep=\"\"), header=F)); \
 		Data1 <- Data1[order(Data1[,1], decreasing=TRUE),]; Data2 <- Data2[order(Data2[,1], decreasing=TRUE),]; Data3 <- Data3[order(Data3[,1], decreasing=TRUE),]; Data4 <- Data4[order(Data4[,1], decreasing=TRUE),]; \ 
+		
 		Data1 <- cbind(Data1, (Data1[,1] / 374466) * 100); Data2 <- cbind(Data2, (Data2[,1] / 600006) * 100); Data3 <- cbind(Data3, (Data3[,1] / 410017) * 100); Data4 <- cbind(Data4, (Data4[,1] / 505854) * 100); \
+		
 		Data1 <- Data1[1:50,]; Data2 <- Data2[1:50,]; Data3 <- Data3[1:50,]; Data4 <- Data4[1:50,]; \ 
                 print(head(Data1)); print(head(Data2)); print(head(Data3)); print(head(Data4)); \
-                xVals1 <- seq(1, nrow(Data1), by=1); xVals2 <- seq(1, nrow(Data2), by=1); xVals3 <- seq(1, nrow(Data3), by=1); xVals4 <- seq(1, nrow(Data4), by=1); \
+                
+		xVals1 <- seq(1, nrow(Data1), by=1); xVals2 <- seq(1, nrow(Data2), by=1); xVals3 <- seq(1, nrow(Data3), by=1); xVals4 <- seq(1, nrow(Data4), by=1); \
                 xlimMax <- max(c(xVals1, xVals2, xVals3, xVals4)); ylimMax <- max(c(Data1[,3], Data2[,3], Data3[,3], Data4[,3])); \
                 plot(xVals1[order(xVals1, decreasing=TRUE)], Data1[,3], main=paste(k, sep=\"\"), xaxt=\"n\", xlab=\"Top 50 SNPs\", ylab=\"Proportion of Marginally\nSignificant Interactions\", xlim=c(1,xlimMax), ylim=c(.1,.45), type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
 		axis(1, at=c(1,10,20,30,40,50), labels=c(1,10,20,30,40,50), line=0, lwd=1, lwd.ticks=1, cex=1.5, cex.axis=1.5, cex.lab=1.5); \
@@ -11344,6 +11368,10 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); \
                 points(xVals4[order(xVals4, decreasing=TRUE)], Data4[,3], type=\"b\", pch=16, col=brewer.pal(12, \"Paired\")[9], cex=1.5); \
 		par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Indian\"), pch=c(16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[9]), xpd=TRUE, inset=c(.035,.15), bg=\"transparent\", cex=1.5, y.intersp=2); dev.off(); }; \
 "
+
+#345221 variants and 1448 people pass filters and QC.
+#Height Pakistani Pakistani
+#516806 variants loaded from .bim file.
 
 #	.../users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/ukb_chrAll_v3.AfrBrit4kCaribIndn.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.HeightBMI.epi.qt.Results.ProportionPlots.vs1.png\",... 
 #		Data1 <- cbind(Data1, Data1[,1] / 374466); Data2 <- cbind(Data2, Data2[,1] / 600006); Data3 <- cbind(Data3, Data3[,1] / 410017); Data4 <- cbind(Data4, Data4[,1] / 505854); \
