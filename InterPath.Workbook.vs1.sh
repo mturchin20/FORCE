@@ -11709,6 +11709,17 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscrip
 #ose.100geno.MAPIT.localPCs.Results.$Pheno1.DaviesApprox.PVE.tx
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.$Pheno1.perm1.DaviesApprox.Results.wChrBP.txt.pre.gz
 
+#374466 variants loaded from .bim file.
+#600006 variants loaded from .bim file.
+#410017 variants loaded from .bim file.
+#505854 variants loaded from .bim file.
+#Height Chinese Chinese
+#345221 variants loaded from .bim file.
+#345221 variants and 1448 people pass filters and QC.
+#Height Pakistani Pakistani
+#516806 variants loaded from .bim file.
+#516806 variants and 1581 people pass filters and QC.
+
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); \ 
 	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { \ 
 		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINKvsMAPIT/ukb_v3.African.HeightBMI.PLINKvsMAPIT.vs2.png\", height=2200, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(7,5,4,2), mfrow=c(1,2)); \
@@ -11716,10 +11727,11 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
                         for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
 				Data1 <- as.data.frame(fread(cmd=paste(\"cat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt | sed 's/:/_/g' | awk '{ print \$2 \\\"\t\\\" \$1 }' | sort -k 1,1\", sep=\"\"), header=F)); colnames(Data1) <- c(\"ChrBP\", \"Val1\"); \
 	    Data2 <- as.data.frame(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.\", k, \".DaviesApprox.Results.wChrBP.txt.pre.gz | sed 's/_/\t/g' | sed 's/:/_/g' | awk '{ print \$1 \\\"\t\\\" \$7 }' | sort -k 1,1\", sep=\"\"), header=F)); colnames(Data2) <- c(\"ChrBP\", \"Val2\"); \
-                        	Data3 <- merge(Data1, Data2, by=\"ChrBP\"); \ 
+				Data1[,2] <- Data1[,2] / 374466 * 100; \
+				Data3 <- merge(Data1, Data2, by=\"ChrBP\"); \ 
 				print(cor(Data3[,2], -log10(Data3[,3]))); \
 				plot(Data3[,2], -log10(Data3[,3]), xaxt=\"n\", xlab=\"\", ylab=\"MAPIT -log10(p-Value)\", main=paste(k, sep=\"\"), cex=2, cex.main=2.5, cex.axis=2, cex.lab=2); abline(lm(-log10(Data3[,3]) ~ Data3[,2]), col=\"RED\"); legend1 <- legend(\"bottomright\", c(paste(\"Corr: \", signif(cor(Data3[,2], -log10(Data3[,3])), digits=3), sep=\"\")), bty=\"n\", plot=TRUE, cex=1.5); \
-				mtext(\"Proportion of Marginally Significant\nPLINK Tests per SNP\", side=1, line=5.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+				mtext(\"Proportion of Marginally Significant\nPLINK Tests per SNP (in %)\", side=1, line=5.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 				usr <- par(\"usr\"); rect(legend1\$text\$x[1]-diff(usr[1:2])/50,legend1\$rect\$top-legend1\$rect\$h,legend1\$rect\$left+legend1\$rect\$w,legend1\$rect\$top, cex=1.5); \
 			}; \
                 }; dev.off(); \
@@ -11728,41 +11740,43 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 
 #				...main=paste(ancestry2, \" \", k, sep=\"\")...
 
-R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); \ 
+R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); AncSNPs <- c(374466,600006.410017,345221,505854,516806); \ 
 	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { \ 
 		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINKvsMAPIT/ukb_v3.AllPops.HeightBMI.PLINKvsMAPIT.vs2.pt1.png\", height=6600, width=4500, res=300); par(oma=c(1,8,4,1), mar=c(7,5,4,2), mfrow=c(3,2)); \
-		for (j in UKBioBankPops[c(1,2,3)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+		for (j in UKBioBankPops[c(1,2,3)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; ancCount1 <- 1; \
                         for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
 				Data1 <- as.data.frame(fread(cmd=paste(\"cat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt | sed 's/:/_/g' | awk '{ print \$2 \\\"\t\\\" \$1 }' | sort -k 1,1\", sep=\"\"), header=F)); colnames(Data1) <- c(\"ChrBP\", \"Val1\"); \
 	    Data2 <- as.data.frame(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.\", k, \".DaviesApprox.Results.wChrBP.txt.pre.gz | sed 's/_/\t/g' | sed 's/:/_/g' | awk '{ print \$1 \\\"\t\\\" \$7 }' | sort -k 1,1\", sep=\"\"), header=F)); colnames(Data2) <- c(\"ChrBP\", \"Val2\"); \
-                        	Data3 <- merge(Data1, Data2, by=\"ChrBP\"); \ 
+                        	Data1[,2] <- Data1[,2] / AncSNPs[ancCount1] * 100; \
+				Data3 <- merge(Data1, Data2, by=\"ChrBP\"); \ 
 				print(cor(Data3[,2], -log10(Data3[,3]))); \
 				plot(Data3[,2], -log10(Data3[,3]), xaxt=\"n\", xlab=\"\", ylab=\"MAPIT -log10(p-Value)\", main=\"\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); abline(lm(-log10(Data3[,3]) ~ Data3[,2]), col=\"RED\"); legend1 <- legend(\"bottomright\", c(paste(\"Corr: \", signif(cor(Data3[,2], -log10(Data3[,3])), digits=3), sep=\"\")), bty=\"n\", plot=TRUE, cex=2); \
-				title(xlab=\"Proportion of Marginally Significant\nPLINK Tests per SNP\", line=5.5, cex.lab=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+				title(xlab=\"Proportion of Marginally Significant\nPLINK Tests per SNP (in %)\", line=5.5, cex.lab=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 				usr <- par(\"usr\"); rect(legend1\$text\$x[1]-diff(usr[1:2])/50,legend1\$rect\$top-legend1\$rect\$h,legend1\$rect\$left+legend1\$rect\$w,legend1\$rect\$top, cex=2); \
-			}; \
-                }; mtext(\"Height\", side=3, outer=TRUE, line=-1, at=.265, cex=3); mtext(\"BMI\", side=3, outer=TRUE, line=-1, at=.77, cex=3); \
+			}; ancCount1 <- ancCount1 + 1; \
+		}; mtext(\"Height\", side=3, outer=TRUE, line=-1, at=.265, cex=3); mtext(\"BMI\", side=3, outer=TRUE, line=-1, at=.77, cex=3); \
 		mtext(\"African\", side=2, outer=TRUE, line=1, at=.8445, cex=3); mtext(\"Brit.Ran4k\", side=2, outer=TRUE, line=1, at=.509, cex=3); mtext(\"Caribbean\", side=2, outer=TRUE, line=1, at=.176, cex=3); dev.off(); \
         }; \
 "
 
 #		mtext(\"African\", side=2, outer=TRUE, line=1, at=.8775, cex=3); mtext(\"Brit.Ran4k\", side=2, outer=TRUE, line=1, at=.6275, cex=3); mtext(\"Caribbean\", side=2, outer=TRUE, line=1, at=.3775, cex=3); mtext(\"Indian\", side=2, outer=TRUE, line=1, at=.1275, cex=3); dev.off(); \
 
-R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); \ 
+R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); AncSNPs <- c(374466,600006.410017,345221,505854,516806); \ 
 	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { \ 
-		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINKvsMAPIT/ukb_v3.AllPops.HeightBMI.PLINKvsMAPIT.vs2.pt2.png\", height=6750, width=4500, res=300); par(oma=c(1,8,4,1), mar=c(7,5,4,2), mfrow=c(3,2)); \
-		for (j in UKBioBankPops[c(4,5,6)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINKvsMAPIT/ukb_v3.AllPops.HeightBMI.PLINKvsMAPIT.vs2.pt2.png\", height=6600, width=4500, res=300); par(oma=c(1,8,4,1), mar=c(7,5,4,2), mfrow=c(3,2)); \
+		for (j in UKBioBankPops[c(4,5,6)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; ancCount1 <- 4; \
                         for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
 				Data1 <- as.data.frame(fread(cmd=paste(\"cat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt | sed 's/:/_/g' | awk '{ print \$2 \\\"\t\\\" \$1 }' | sort -k 1,1\", sep=\"\"), header=F)); colnames(Data1) <- c(\"ChrBP\", \"Val1\"); \
 	    Data2 <- as.data.frame(fread(cmd=paste(\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/MAPIT/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MAPIT.localPCs.Results.\", k, \".DaviesApprox.Results.wChrBP.txt.pre.gz | sed 's/_/\t/g' | sed 's/:/_/g' | awk '{ print \$1 \\\"\t\\\" \$7 }' | sort -k 1,1\", sep=\"\"), header=F)); colnames(Data2) <- c(\"ChrBP\", \"Val2\"); \
+                        	Data1[,2] <- Data1[,2] / AncSNPs[ancCount1] * 100; \
                         	Data3 <- merge(Data1, Data2, by=\"ChrBP\"); \ 
 				print(cor(Data3[,2], -log10(Data3[,3]))); \
 				plot(Data3[,2], -log10(Data3[,3]), xaxt=\"n\", xlab=\"\", ylab=\"MAPIT -log10(p-Value)\", main=\"\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); abline(lm(-log10(Data3[,3]) ~ Data3[,2]), col=\"RED\"); legend1 <- legend(\"bottomright\", c(paste(\"Corr: \", signif(cor(Data3[,2], -log10(Data3[,3])), digits=3), sep=\"\")), bty=\"n\", plot=TRUE, cex=2); \
-				title(xlab=\"Proportion of Marginally Significant\nPLINK Tests per SNP\", line=5.5, cex.lab=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+				title(xlab=\"Proportion of Marginally Significant\nPLINK Tests per SNP (in %)\", line=5.5, cex.lab=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 				usr <- par(\"usr\"); rect(legend1\$text\$x[1]-diff(usr[1:2])/50,legend1\$rect\$top-legend1\$rect\$h,legend1\$rect\$left+legend1\$rect\$w,legend1\$rect\$top, cex=2); \
-			}; \
+			}; ancCount1 <- ancCount1 + 1; \
                 }; mtext(\"Height\", side=3, outer=TRUE, at=.265, cex=3); mtext(\"BMI\", side=3, outer=TRUE, at=.77, cex=3); \
-		mtext(\"African\", side=2, outer=TRUE, line=1, at=.8775, cex=3); mtext(\"Brit.Ran4k\", side=2, outer=TRUE, line=1, at=.6275, cex=3); mtext(\"Caribbean\", side=2, outer=TRUE, line=1, at=.3775, cex=3); mtext(\"Indian\", side=2, outer=TRUE, line=1, at=.1275, cex=3); dev.off(); \
+		mtext(\"Chinese\", side=2, outer=TRUE, line=1, at=.8445, cex=3); mtext(\"Indian\", side=2, outer=TRUE, line=1, at=.509, cex=3); mtext(\"Pakistani\", side=2, outer=TRUE, line=1, at=.176, cex=3); dev.off(); \
         }; \
 "
 
