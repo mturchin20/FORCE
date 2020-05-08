@@ -11711,7 +11711,7 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscrip
 
 R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\", \"GjDrop_wCov_GK_perm1\"); \ 
 	neg.is.na <- Negate(is.na); for (i in DataTypes[1]) { \ 
-		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINKvsMAPIT/ukb_v3.African.HeightBMI.PLINKvsMAPIT.vs3.png\", height=2000, width=4100, res=300); par(oma=c(3,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
+		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PLINKvsMAPIT/ukb_v3.African.HeightBMI.PLINKvsMAPIT.vs2.png\", height=2200, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(7,5,4,2), mfrow=c(1,2)); \
 		for (j in UKBioBankPops[1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
                         for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
 				Data1 <- as.data.frame(fread(cmd=paste(\"cat /users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.localPCs.\", k, \".epi.SortUniqC.qt | sed 's/:/_/g' | awk '{ print \$2 \\\"\t\\\" \$1 }' | sort -k 1,1\", sep=\"\"), header=F)); colnames(Data1) <- c(\"ChrBP\", \"Val1\"); \
@@ -11719,7 +11719,7 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
                         	Data3 <- merge(Data1, Data2, by=\"ChrBP\"); \ 
 				print(cor(Data3[,2], -log10(Data3[,3]))); \
 				plot(Data3[,2], -log10(Data3[,3]), xaxt=\"n\", xlab=\"\", ylab=\"MAPIT -log10(p-Value)\", main=paste(k, sep=\"\"), cex=2, cex.main=2.5, cex.axis=2, cex.lab=2); abline(lm(-log10(Data3[,3]) ~ Data3[,2]), col=\"RED\"); legend1 <- legend(\"bottomright\", c(paste(\"Corr: \", signif(cor(Data3[,2], -log10(Data3[,3])), digits=3), sep=\"\")), bty=\"n\", plot=TRUE, cex=1.5); \
-				mtext(\"Proportion of Marginally Significant\nPLINK Tests per SNP\", side=1, line=0, outer=TRUE, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+				mtext(\"Proportion of Marginally Significant\nPLINK Tests per SNP\", side=1, line=5.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 				usr <- par(\"usr\"); rect(legend1\$text\$x[1]-diff(usr[1:2])/50,legend1\$rect\$top-legend1\$rect\$h,legend1\$rect\$left+legend1\$rect\$w,legend1\$rect\$top, cex=1.5); \
 			}; \
                 }; dev.off(); \
