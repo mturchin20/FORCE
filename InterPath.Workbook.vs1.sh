@@ -13173,7 +13173,8 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 			legend1 <- legend(\"bottomright\", c(paste(\"Corr: \", signif(cor(-log10(Data1c[,2]), -log10(Data1c[,3])), digits=3), sep=\"\")), bty=\"n\", plot=TRUE, cex=2); \
 			usr <- par(\"usr\"); rect(legend1\$text\$x[1]-diff(usr[1:2])/50,legend1\$rect\$top-legend1\$rect\$h,legend1\$rect\$left+legend1\$rect\$w,legend1\$rect\$top, cex=2); \
 			abline(h=-log10(Data1b.Thresh), lwd=3, lty=3, col=\"RED\"); abline(v=-log10(Data1a.Thresh), lwd=3, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
-			plot(-log10(Data2c[,2]),-log10(Data2c[,3]), main=\"\", xlab=\"Height -log10(p-Values)\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(-log10(Data2c[,2]),-log10(Data2c[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
+			mtext(\"Height -log10(p-Values)\", side=1, line=3.5, cex=1.35); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			legend1 <- legend(\"bottomright\", c(paste(\"Corr: \", signif(cor(-log10(Data1c[,2]), -log10(Data1c[,3])), digits=3), sep=\"\")), bty=\"n\", plot=TRUE, cex=2); \
 			usr <- par(\"usr\"); rect(legend1\$text\$x[1]-diff(usr[1:2])/50,legend1\$rect\$top-legend1\$rect\$h,legend1\$rect\$left+legend1\$rect\$w,legend1\$rect\$top, cex=2); \
 			abline(h=-log10(Data2b.Thresh), lwd=3, lty=3, col=\"RED\"); abline(v=-log10(Data2a.Thresh), lwd=3, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
