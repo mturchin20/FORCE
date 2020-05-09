@@ -12368,6 +12368,51 @@ done;
 
 
 
+#Main Figure: Fst heatplots
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/FstHeatplots
+
+R -q -e "library(\"ggplot2\"); library(\"reshape\"); \
+	png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/FstHeatplots/ukb_chrAll_v3.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.heatplots.vs2.png\", height=2000, width=2000, res=300); \
+		Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		Data4 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \ 
+		Data5 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		Data6 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		Data7 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		Data8 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
+		colnames(Data2)[1] <- \"British.Ran4k\"; colnames(Data3)[1] <- \"British.Ran10k\"; DataAll <- cbind(Data1, Data2, Data3, Data4, Data5, Data6, Data7, Data8); DataAll[upper.tri(DataAll, diag=FALSE)] <- NA; DataAll <- cbind(c(\"African\", \"British.Ran4k\", \"British.Ran10k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\"), DataAll); \ 
+		print(head(DataAll)); \
+		DataAll.melted <- melt(DataAll); colnames(DataAll.melted)[1] <- \"ind.1\"; colnames(DataAll.melted)[2] <- \"ind.2\"; DataAll.melted[,3] <- signif(DataAll.melted[,3], digits=3); \
+		print(head(DataAll.melted)); \	
+		DataAll.melted\$ind.1 <- factor(DataAll.melted\$ind.1, levels=rev(c(\"African\", \"British.Ran4k\", \"British.Ran10k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\"))); DataAll.melted\$ind.2 <- factor(DataAll.melted\$ind.2, levels=rev(c(\"African\", \"British.Ran4k\", \"British.Ran10k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\"))); \
+		ggplot(DataAll.melted, aes(ind.1, ind.2, fill=value)) + geom_tile(colour=\"white\") + scale_fill_gradient(low = \"lightgoldenrodyellow\", high=\"red\", name=\"Fst\", na.value=\"white\") + geom_text(aes(ind.1, ind.2, label = value), color = \"black\", size=3.5) + theme_minimal() + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), plot.margin=unit(c(5,5,5,5),\"points\"), panel.grid.major = element_blank(), panel.border = element_blank(), panel.background = element_blank(), axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1, size=10), axis.text.y = element_text(size=10), legend.position=c(.75,.15), legend.direction=\"horizontal\", legend.title=element_text(size=10), legend.text=element_text(size=8)) + guides(fill = guide_colorbar(barwidth = 11, barheight = 2.5, title.position = \"top\", title.hjust = 0.5)); \ 
+	dev.off(); print(warnings()); \
+"
+
+#On MacBook Pro
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/FstHeatplots
+
+#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.AllPops.*fst.heatplots.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/FullDataset/.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -13188,7 +13233,7 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 
 R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
 	for (i in DataTypes[1]) { \
-		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.African.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.PhenoComps.vs2.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.African.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.PhenoComps.vs3.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
                 for (j in UKBioBankPops[1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 			print(j); \
 			Data1a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/Height/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.KEGG.Results.txt.pre.gz\", sep=\"\"), header=F); \	
@@ -13202,10 +13247,12 @@ R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"A
 			Data1c <- merge(Data1a, Data1b, by=\"Pathway\"); Data2c <- merge(Data2a, Data2b, by=\"Pathway\"); \
 			print(head(Data1c)); \	
 			print(cor(-log10(Data1c[,2]),-log10(Data1c[,3]))); print(cor(-log10(Data2c[,2]),-log10(Data2c[,3]))); \
-			plot(-log10(Data1c[,2]),-log10(Data1c[,3]), main=\"\", xlab=\"Height -log10(p-Values)\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(-log10(Data1c[,2]),-log10(Data1c[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
+			mtext(\"Height -log10(p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			abline(h=-log10(Data1b.Thresh), lwd=3, lty=3, col=\"RED\"); abline(v=-log10(Data1a.Thresh), lwd=3, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
 			draw.ellipse(1.5,7.5,1,3, lwd=3, lty=2, border=\"BLUE\"); \
-			plot(-log10(Data2c[,2]),-log10(Data2c[,3]), main=\"\", xlab=\"Height -log10(p-Values)\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(-log10(Data2c[,2]),-log10(Data2c[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
+			mtext(\"Height -log10(p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			abline(h=-log10(Data2b.Thresh), lwd=3, lty=3, col=\"RED\"); abline(v=-log10(Data2a.Thresh), lwd=3, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
 		}; mtext(\"KEGG\", side=3, line=-3, outer=TRUE, at=.2735, cex=3); mtext(\"REACTOME\", side=3, line=-3, outer=TRUE, at=.785, cex=3); \
 	dev.off(); }; print(warnings()); \
