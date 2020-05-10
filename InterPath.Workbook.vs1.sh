@@ -12371,8 +12371,6 @@ done;
 #Main Figure: Fst heatplots
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/FstHeatplots
-		
-		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompHeatplots/ukb_v3.AllPops.HeightBMI.\", i, \".\", l, \".\", m, \".ColCrct.localPCs.PopComp.Heatplots.vs3.png\", sep=\"\"), height=4250, width=7500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \ 
 
 R -q -e "library(\"ggplot2\"); library(\"reshape\"); \
 	png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/FstHeatplots/ukb_chrAll_v3.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.heatplots.vs2.png\", height=2000, width=2000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \
@@ -12382,13 +12380,14 @@ R -q -e "library(\"ggplot2\"); library(\"reshape\"); \
 		DataAll.melted <- melt(DataAll); colnames(DataAll.melted)[1] <- \"ind.1\"; colnames(DataAll.melted)[2] <- \"ind.2\"; DataAll.melted[,3] <- signif(DataAll.melted[,3], digits=3); \
 		print(head(DataAll.melted)); \	
 		DataAll.melted\$ind.1 <- factor(DataAll.melted\$ind.1, levels=rev(c(\"African\", \"British.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"))); DataAll.melted\$ind.2 <- factor(DataAll.melted\$ind.2, levels=rev(c(\"African\", \"British.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"))); \
-		ggplot(DataAll.melted, aes(ind.1, ind.2, fill=round(value, digits=3))) + geom_tile(colour=\"white\") + scale_fill_gradient(low = \"lightgoldenrodyellow\", high=\"red\", name=\"Fst\", na.value=\"white\") + geom_text(aes(ind.1, ind.2, label = round(value, digits=3)), color = \"black\", size=5) + theme_minimal() + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), plot.margin=unit(c(5,5,5,5),\"points\"), panel.grid.major = element_blank(), panel.border = element_blank(), panel.background = element_blank(), axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1, size=20), axis.text.y = element_text(size=20), legend.position=c(.775,.15), legend.direction=\"horizontal\", legend.title=element_text(size=20), legend.text=element_text(size=16, digits=3)) + guides(fill = guide_colorbar(barwidth = 12, barheight = 3, title.position = \"top\", title.hjust = 0.5)); \ 
+		ggplot(DataAll.melted, aes(ind.1, ind.2, fill=value)) + geom_tile(colour=\"white\") + scale_fill_gradient(low = \"lightgoldenrodyellow\", high=\"red\", name=\"Fst\", na.value=\"white\") + geom_text(aes(ind.1, ind.2, label = round(value, digits=3)), color = \"black\", size=5) + theme_minimal() + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), plot.margin=unit(c(5,5,5,5),\"points\"), panel.grid.major = element_blank(), panel.border = element_blank(), panel.background = element_blank(), axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1, size=20), axis.text.y = element_text(size=20), legend.position=c(.775,.175), legend.direction=\"horizontal\", legend.title=element_text(size=20), legend.text=element_text(angle = 45, size=16, vjust=.75)) + guides(fill = guide_colorbar(barwidth = 12, barheight = 3, title.position = \"top\", title.hjust = 0.5)); \ 
 	dev.off(); print(warnings()); \
 "
 
 #		Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.British.Ran10000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
 #		Data7 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.txt\", header=T); \
 #		colnames(Data2)[1] <- \"British.Ran4k\"; colnames(Data3)[1] <- \"British.Ran10k\"; DataAll <- cbind(Data1, Data2, Data3, Data4, Data5, Data6, Data7, Data8); DataAll[upper.tri(DataAll, diag=FALSE)] <- NA; DataAll <- cbind(c(\"African\", \"British.Ran4k\", \"British.Ran10k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\"), DataAll); \ 
+#		DataAll <- round(DataAll, digits=3); \
 
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/FstHeatplots
