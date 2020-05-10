@@ -12420,41 +12420,41 @@ R -q -e "library(\"ggplot2\"); library(\"reshape\"); \
 
 
 
-#Main Figure: EigenVal Plot
+#Main Figure: Eigenval Plot
 
-mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/EigenValPlots
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/EigenvalPlots
 
 R -q -e "library(\"RColorBrewer\"); \
+        png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/EigenvalPlots/ukb_chrAll_v3.AllPops.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.plot.vs2.png\", height=2050, width=2400, res=300); par(oma=c(1,1,1,10), mar=c(5,5,4,2)); \
         Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", header=F); \
         Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", header=F); \
-        Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/ukb_chrAll_v3.British.Ran10000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", header=F); \
         Data4 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/ukb_chrAll_v3.Caribbean.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", header=F); \
         Data5 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/ukb_chrAll_v3.Chinese.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", header=F); \
         Data6 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/ukb_chrAll_v3.Indian.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", header=F); \
-        Data7 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/ukb_chrAll_v3.Irish.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", header=F); \
         Data8 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/ukb_chrAll_v3.Pakistani.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", header=F); \
-        png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/EigenValPlots/ukb_chrAll_v3.AllPops.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.plot.vs1.png\", height=2000, width=2250, res=300); par(oma=c(1,1,2,10), mar=c(5,5,4,2)); \
-        plot(c(1:10), Data1[1:10,], main=\"UK BioBank Population Subsets:\nTop 10 Local PCs\", xlab=\"PC\", ylab=\"PVE\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
-        points(c(1:10), Data2[1:10,], pch=16, col=brewer.pal(12, \"Paired\")[1], cex=1.5); \
-        points(c(1:10), Data3[1:10,], pch=16, col=brewer.pal(12, \"Paired\")[2], cex=1.5); \
-        points(c(1:10), Data4[1:10,], pch=16, col=brewer.pal(12, \"Paired\")[3], cex=1.5); \
-        points(c(1:10), Data5[1:10,], pch=16, col=brewer.pal(12, \"Set3\")[8], cex=1.5); \
-        points(c(1:10), Data6[1:10,], pch=16, col=brewer.pal(12, \"Paired\")[9], cex=1.5); \
-        points(c(1:10), Data7[1:10,], pch=16, col=brewer.pal(11, \"RdYlBu\")[11], cex=1.5); \
-        points(c(1:10), Data8[1:10,], pch=16, col=brewer.pal(12, \"Paired\")[7], cex=1.5); \
-        par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Brit.Ran10k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\"), pch=c(16,16,16,16,16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.035,.1175), bg=\"transparent\", cex=1.5, y.intersp=2); \
+        plot(c(1:10), Data1[1:10,], main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"PVE\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	axis(1, at=c(1,3,5,7,9), labels=c(1,3,5,7,9), line=0, lwd=1, lwd.ticks=1, mgp=c(3,1.5,0), cex=2, cex.axis=2, cex.lab=2); mtext(\"Top Local PCs\", side=1, line=3.5, cex=2); \
+	points(c(1:10), Data2[1:10,], pch=16, col=brewer.pal(12, \"Paired\")[1], cex=2); \
+        points(c(1:10), Data4[1:10,], pch=16, col=brewer.pal(12, \"Paired\")[3], cex=2); \
+        points(c(1:10), Data5[1:10,], pch=16, col=brewer.pal(12, \"Set3\")[8], cex=2); \
+        points(c(1:10), Data6[1:10,], pch=16, col=brewer.pal(12, \"Paired\")[9], cex=2); \
+        points(c(1:10), Data8[1:10,], pch=16, col=brewer.pal(12, \"Paired\")[7], cex=2); \
+        par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(16,16,16,16,16,16), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.035,.1465), bg=\"transparent\", cex=1.5, y.intersp=2); \
         dev.off(); \
 "
 
 #       Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.values.txt\", header=F); \
 #       png(\"/users/mturchin/data/ukbiobank_jun17/mturchin/ukb_chrAll_v3.AllPops.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.values.plot.vs1.png\", height=2000, width=2250, res=300); par(oma=c(1,1,2,10), mar=c(5,5,4,2)); \
 #       plot(c(1:10), Data1[1:10,], main=\"UK BioBank Population Subsets:\nTop 10 Local PC Eigenvalues\", xlab=\"PC\", ylab=\"Eigenvalue\", pch=16, col=brewer.pal(12, \"Paired\")[5], cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+#	Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/mturchin20/ukb_chrAll_v3.British.Ran10000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", header=F); \
+#	Data7 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/ukb_chrAll_v3.Irish.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", header=F); \
+#	points(c(1:10), Data3[1:10,], pch=16, col=brewer.pal(12, \"Paired\")[2], cex=1.5); \
+#	points(c(1:10), Data7[1:10,], pch=16, col=brewer.pal(11, \"RdYlBu\")[11], cex=1.5); \
 
 #On MacBook Pro
-#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/EigenValPlots
-#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/EigenValPlots/ukb_chrAll_v3.AllPops.*fst.heatplots.vs*png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/EigenValPlots/.
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/EigenvalPlots
+#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/EigenvalPlots/ukb_chrAll_v3.AllPops.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.*.plot.vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/EigenvalPlots/.
 
-#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/mturchin/ukb_chrAll_v3.AllPops.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.*.plot.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/.
 
 
 
@@ -12517,7 +12517,7 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 
 R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
 	for (i in DataTypes[1]) { \
-		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/IBSPlots/ukb_v3.African.Height.AllPaths.ColCrct.localPCs.pValsVsIBS.plots.vs2.png\", height=2250, width=2250, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
+		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/IBSPlots/ukb_v3.African.Height.AllPaths.ColCrct.localPCs.pValsVsIBS.plots.vs3.png\", height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
                 for (j in UKBioBankPops[c(1)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 			print(j); \
 			Data1a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.KEGG.Height.pValAll.txt.gz\", sep=\"\"), header=F); \
@@ -12527,8 +12527,10 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 			Data1a <- Data1a[!is.na(Data1a[,13]),]; Data1b <- Data1b[!is.na(Data1b[,13]),]; Data2a <- Data2a[!is.na(Data2a[,13]),]; Data2b <- Data2b[!is.na(Data2b[,13]),]; \
 			Data1a[Data1a[,13] == 0,13] <- 1e-11; Data1b[Data1b[,13] == 0,13] <- 1e-11; Data2a[Data2a[,13] == 0,13] <- 1e-11; Data2b[Data2b[,13] == 0,13] <- 1e-11; \ 
 			RegrLine1 <- lm(-log10(Data1a[,13]) ~ Data1a[,2]); RegrLine2 <- lm(-log10(Data1b[,13]) ~ Data1b[,2]); RegrLine3 <- lm(-log10(Data2a[,13]) ~ Data2a[,2]); RegrLine4 <- lm(-log10(Data2b[,13]) ~ Data2b[,2]); \
-			plot(Data1a[,2], -log10(Data1a[,13]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,11.25), cex=2, cex.main=2, cex.axis=2, cex.lab=2); abline(RegrLine1, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine1)\$coefficients[2,1], 4), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine1)\$coefficients[2,4], 4), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
-			mtext(\"Mean Pariwise IBS per Pathway\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(Data1a[,2], -log10(Data1a[,13]), main=\"Height\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,11.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine1, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine1)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine1)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			mtext(\"Mean Pairwise IBS per Pathway\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(Data1b[,2], -log10(Data1b[,13]), main=\"BMI\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,11.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine2, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine2)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine2)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			mtext(\"Mean Pairwise IBS per Pathway\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 		}; \ 
 	dev.off(); }; print(warnings()); \
 "
