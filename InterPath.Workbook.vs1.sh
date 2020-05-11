@@ -13060,8 +13060,12 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscrip
 
 #Supplementary Figure: UKB Subsets PCA Plot
 
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.txt | grep -vE 'Ran10000|Irish' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.noRan10kIrish.txt
+
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PCAPlots
 
+R -q -e "library(\"RColorBrewer\"); Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.noRan10kIrish.txt\", header=T); \
+	Data1 <- cbind(Data1, rep(\"gray\", nrow(Data1))); Data1 <- cbind(Data1, rep(19, nrow(Data1))); Data1[,ncol(Data1)-1] <- factor(Data1[,ncol(Data1)-1], levels=c(colors(), brewer.pal(12, \"Paired\"), brewer.pal(8, \"Set2\"), brewer.pal(12, \"Set3\"), brewer.pal(9, \"RdPu\"))); Data1[Data1[ncol(Data1)-2] == \"African\", ncol(Data1)-1] <- brewer.pal(9, \"RdPu\")[5]; Data1[Data1[ncol(Data1)-2] == \"British.Ran4000\", ncol(Data1)-1] <- brewer.pal(12, \"Paired\")[1]; Data1[Data1[ncol(Data1)-2] == \"Caribbean\", ncol(Data1)-1] <- brewer.pal(12, \"Paired\")[3]; Data1[Data1[ncol(Data1)-2] == \"Chinese\", ncol(Data1)-1] <- brewer.pal(12, \"Paired\")[7]; Data1[Data1[ncol(Data1)-2] == \"Indian\", ncol(Data1)-1] <- brewer.pal(12, \"Set3\")[8]; Data1[Data1[ncol(Data1)-2] == \"Irish\", ncol(Data1)-1] <- brewer.pal(12, \"Paired\")[9]; Data1[Data1[ncol(Data1)-2] == \"Pakistani\", ncol(Data1)-1] <- brewer.pal(8, \"Set2\")[6]; \
 
 
 
@@ -21361,6 +21365,29 @@ BMI Caribbean Caribbean
 BMI Indian Indian
  505854 3035124 14817991
  505855 4046840 46032809
+#20200510
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.txt | perl -lane 'print $F[$#F];' | sort | uniq -c
+   3111 African
+   9603 British.Ran10000
+   3848 British.Ran4000
+   3833 Caribbean
+   1448 Chinese
+   5077 Indian
+  11575 Irish
+      1 POP
+   1581 Pakistani
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.txt | grep -vE 'Ran10000|Irish' | perl -lane 'print $F[$#F];' | sort | uniq -c
+   3111 African
+   3848 British.Ran4000
+   3833 Caribbean
+   1448 Chinese
+   5077 Indian
+      1 POP
+   1581 Pakistani
+[  mturchin@node1127  ~]$cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.txt | wc
+  40077  921771 17096423
+[  mturchin@node1127  ~]$cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.noRan10kIrish.txt | wc
+  18899  434677 8043187
 
 
 
