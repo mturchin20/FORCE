@@ -2655,18 +2655,10 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 #20200319 NOTE -- below done to provide Greg with copy that has the Z covar matrix additions
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.wCovs.cpp
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.wCovs.cpp /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/.
+#20200517 NOTE -- creating new version based off of this 'clean' version to have as the MAPITR.cpp base
+#cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.wCovs.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/MAPITR.cpp
 
 #tar/zip Genes vs2 (+), get plink going (+), get mapit going (..), do African version without assessment center as covariate (all 4 phenos, exonicplus20kb), do a version where PCs are corrected via regressing out and not in the projection matrix thingie, (was there other tar/zip things that were needed? Irish/Ran10000 possibly -- yes, there were multiple things to tar/zip/rm actually) (+)
-
-9885160              63      batch  mturchin ccmb-condo 2020-01-21T14:19:44 2020-01-25T13:52:27 3-23:32:43          1  COMPLETED      0:0                                      Indian Indian
-9885160.bat+      batch                      ccmb-condo 2020-01-21T14:19:44 2020-01-25T13:52:27 3-23:32:43          1  COMPLETED      0:0
-9885162              63      batch  mturchin ccmb-condo 2020-01-21T14:19:44 2020-01-25T14:58:19 4-00:38:35          1  COMPLETED      0:0                                      Indian Indian
-9885162.bat+      batch                      ccmb-condo 2020-01-21T14:19:44 2020-01-25T14:58:19 4-00:38:35          1  COMPLETED      0:0
-
-9 BMI Irish Irish ExonicPlus20kb
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/InterPath/BMI/ExonicPlus20kb/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_GK_perm9.ColCrct.localPCs.Paths561.Est.txt': No such file or directory
-10 Height Irish Irish ExonicPlus20kb
-  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v3.Irish.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_GK_perm10.ColCrct.localPCs.Paths1121.Est.txt': No such file or directory
 
 #		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 9 | tail -n 4 | head -n 4`; do
 module load R/3.4.3_mkl gcc; sleep 7200; for i in `cat <(echo "Height;1254 BMI;58923 Waist;49281 Hip;37485 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
