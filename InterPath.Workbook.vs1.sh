@@ -2656,7 +2656,8 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.wCovs.cpp
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.wCovs.cpp /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/.
 #20200517 NOTE -- creating new version based off of this 'clean' version to have as the MAPITR.cpp base
-#cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.wCovs.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/MAPITR.cpp
+##cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.wCovs.cpp /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/MAPITR.cpp
+#cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.wCovs.cpp /users/mturchin/LabMisc/RamachandranLab/MAPITR/src/MAPITR.cpp
 
 #tar/zip Genes vs2 (+), get plink going (+), get mapit going (..), do African version without assessment center as covariate (all 4 phenos, exonicplus20kb), do a version where PCs are corrected via regressing out and not in the projection matrix thingie, (was there other tar/zip things that were needed? Irish/Ran10000 possibly -- yes, there were multiple things to tar/zip/rm actually) (+)
 
