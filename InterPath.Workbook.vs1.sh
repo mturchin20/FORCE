@@ -1986,6 +1986,20 @@ done
 
 done
 
+#Intergenic Regions (MAPITR)
+#20200518
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -21498,6 +21512,29 @@ British;British.Ran4000;Brit4k;138503
 250000
    4791 FALSE
     956 TRUE
+(InterPath) [  mturchin@login003  ~/Software/magma/NCBI38]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | grep intergenic | awk '{ print $2 }' | sort | uniq | sed 's/:/ /g' | awk '{ print $1 }' | sort | uniq -c
+  21186 1
+  14170 10
+  13778 11
+  13408 12
+  11693 13
+  10300 14
+   8314 15
+   9806 16
+   7152 17
+   9876 18
+   5444 19
+  24867 2
+   7594 20
+   4681 21
+   3917 22
+  18754 3
+  21566 4
+  19308 5
+  21693 6
+  15492 7
+  16070 8
+  13608 9
 
 
 
