@@ -1040,7 +1040,7 @@ done
 #20190603 NOTE -- I've noticed now that I kept the output files without 'AdjBMI' even though the input file was the correct 'BMIAdj' file; as further proof, the output files contain the headers for WaistAdjBMI and HipAdjBMI, so this wouldn't the case if the input files of 'AdjBMI' weren't used. I think I originally did this to lower overall filesize space....though maybe would have just created the new ones separated anyways now in retrospect, but whatever
 #From https://stackoverflow.com/questions/5774813/short-formula-call-for-many-variables-when-building-a-model
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -E 'African|Ran4000'`; do
-	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 9 | tail -n 5`; do
+	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 12 | tail -n 3`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
 #		NumPaths=92
@@ -1074,7 +1074,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 done;		
 #					...Data2.sd[which(Data2.sd==0)] <- 1;...
 sleep 14400; sacct; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -E 'African|Ran4000'`; do
-	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 9 | tail -n 5`; do
+	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 12 | tail -n 3`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		echo $ancestry1 $ancestry2 $ancestry3 $k
 
@@ -1675,8 +1675,8 @@ done
 #ls -lrt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/slurmTemp/*error | awk '{ if ($5 == 61) { print $0 } }'
 #Afr & Brit4k: 100gb
 module load R/3.4.3_mkl; for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | head -n 1`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -E 'African|Ran4000' | head -n 2 | tail -n 1`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 9 | tail -n 3`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -E 'African|Ran4000' | head -n 2 | tail -n 2`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 12 | tail -n 3`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
 #			NumPaths=2
@@ -1706,7 +1706,7 @@ module load R/3.4.3_mkl; for i in `cat <(echo "Height BMI Waist Hip" | perl -lan
 	done;
 done;	
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -E 'African|Ran4000' | head -n 2`; do
-	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 9 | tail -n 5`; do
+	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 12 | tail -n 3`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		echo $i $ancestry1 $ancestry2 $ancestry3 $k
 
@@ -1798,8 +1798,8 @@ done;
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-	for WindowSize in `cat <(echo "12500 25000 500000" |  perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do 
-#	for WindowSize in `cat <(echo "50000 125000 250000" |  perl -lane 'print join("\n", @F);')`; do 
+#	for WindowSize in `cat <(echo "12500 25000 500000" |  perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do 
+	for WindowSize in `cat <(echo "50000 125000 250000" |  perl -lane 'print join("\n", @F);')`; do 
 		SECONDS=0; echo $ancestry1 $ancestry2 $WindowSize
 
 		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); WindowSize <- $WindowSize; chrs <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22); Data1.deserts <- c(); for (i in chrs) { \
@@ -1832,8 +1832,8 @@ done;
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 2`; do
 	echo $j; ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-#	for WindowSize in `cat <(echo "25000 50000 125000 250000 500000" |  perl -lane 'print join("\n", @F);')`; do 
-	for WindowSize in `cat <(echo "12500 25000 500000" |  perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do 
+#	for WindowSize in `cat <(echo "12500 25000 500000" |  perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do 
+	for WindowSize in `cat <(echo "50000 125000 250000" |  perl -lane 'print join("\n", @F);')`; do 
 		echo $WindowSize
 
 		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.GeneDeserts.Window$WindowSize.txt | perl -lane 'print $F[$#F];' | sort | uniq -c 
@@ -1844,7 +1844,8 @@ done;
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 #	for WindowSize in `cat <(echo "12500 25000 50000 125000 250000 500000" |  perl -lane 'print join("\n", @F);') | head -n 6 | tail -n 4`; do 
-	for WindowSize in `cat <(echo "12500 25000 500000" |  perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do 
+#	for WindowSize in `cat <(echo "12500 25000 500000" |  perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do 
+	for WindowSize in `cat <(echo "25000 125000 500000" |  perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do 
 		SECONDS=0; echo $ancestry1 $ancestry2 $WindowSize
 
 		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | sed 's/:/ /g' | sed 's/,/ /g' | perl -lane 'print join("\t", @F[0..3]), "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.GeneDeserts.Window$WindowSize.txt\", header=F); Data3 <- c(); DesertCount <- 1; for (i in 1:nrow(Data2)) { \
@@ -1863,7 +1864,7 @@ done;
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 2`; do
 	echo $j; ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 #	for WindowSize in `cat <(echo "12500 25000 50000 125000 250000 500000" |  perl -lane 'print join("\n", @F);')`; do 
-	for WindowSize in `cat <(echo "12500 25000 500000" |  perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do 
+	for WindowSize in `cat <(echo "25000 125000 500000" |  perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do 
 		echo $WindowSize
 
 		ln -s /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.GeneDeserts.Window$WindowSize.noDups.txt /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.GD${WindowSize}.noDups.txt
@@ -21467,6 +21468,36 @@ British;British.Ran4000;Brit4k;138503
 500000
    2570 FALSE
     300 TRUE
+[  mturchin@node1326  ~]$for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 2`; do
+>         echo $j; ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+> #       for WindowSize in `cat <(echo "12500 25000 500000" |  perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 3`; do
+>         for WindowSize in `cat <(echo "50000 125000 250000" |  perl -lane 'print join("\n", @F);')`; do
+>                 echo $WindowSize
+> 
+>                 cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.GeneDeserts.Window$WindowSize.txt | perl -lane 'print $F[$#F];' | sort | uniq -c
+> 
+>         done;
+> done;
+African;African;Afr;472840
+50000
+  18237 FALSE
+  10538 TRUE
+125000
+   8598 FALSE
+   2906 TRUE
+250000
+   4758 FALSE
+    989 TRUE
+British;British.Ran4000;Brit4k;138503
+50000
+  18723 FALSE
+  10055 TRUE
+125000
+   8701 FALSE
+   2803 TRUE
+250000
+   4791 FALSE
+    956 TRUE
 
 
 
