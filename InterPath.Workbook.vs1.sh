@@ -10004,6 +10004,33 @@ echo -e "library(\"RColorBrewer\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", 
 #On MacBook Pro               
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/ukb_v3.AllPops*MatrixStats*plots.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/.
 
+#PC1 SNP Loading Misc
+#20200521
+
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 8 | head -n 1`; do
+	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+	ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+	
+	echo $ancestry1 $ancestry2
+
+	/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.ExonicPlus20kb.noDups.txt
+
+
+	
+	zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.partAll.flashpca.loads.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F, row.names=1); quantVals1 <- quantile(Data1[,1], c(.025,.05,.95,.975)); \
+		Data1 <- cbind(Data1, sapply(Data1[,1], function(x) { val1 <- 0; if ((x < quantVals1[1]) || (x > quantVals1[4])) { val1 <- 1; }; return(val1); })); \
+		Data1 <- cbind(Data1, sapply(Data1[,1], function(x) { val1 <- 0; if ((x < quantVals1[2]) || (x > quantVals1[3])) { val1 <- 1; }; return(val1); })); \
+		write.table(Data1, file=\"\", quote=F, col.names=F, row.names=T); " | \
+	sed 's/X//g' | sed 's/\./:/' | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.partAll.flashpca.loads.wQuantFlags.txt.gz
+done
+
+
+
+
+
+
+
+
 
 
 
