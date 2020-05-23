@@ -10058,12 +10058,12 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 				pValBonf=1; pValCutoff="pValAll";
 				echo $l $i $ancestry1 $ancestry2 $k $pValBonf
 
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); cor(-log10(Data1[,6]), Data1[,10]); cor(-log10(Data1[,6]), Data1[,11]); cor(-log10(Data1[,6]), Data1[,12]); cor(-log10(Data1[,6]), Data1[,13]); Lengths <- c(0,100,250,500,750,1000,1500,2000,2500); \
+			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,6] == 0,6] <- 1e-11; print(c(nrow(Data1), cor(-log10(Data1[,6]), Data1[,10]), cor(-log10(Data1[,6]), Data1[,11]), cor(-log10(Data1[,6]), Data1[,12]), cor(-log10(Data1[,6]), Data1[,13]))); Lengths <- c(0,100,250,500,750,1000,1500,2000,2500,3500); \
 					for (i in 1:(length(Lengths)-1)) { \
 						print(i); \
 						Begin1 <- Lengths[i]; End1 <- Lengths[i+1]; \
 						Data1.sub <- Data1[Data1[,9] >= Begin1 & Data1[,9] < End1,]; \
-						print(c(cor(-log10(Data1.sub[,6]), Data1.sub[,10]), cor(-log10(Data1.sub[,6]), Data1.sub[,11]), cor(-log10(Data1.sub[,6]), Data1.sub[,12]), cor(-log10(Data1.sub[,6]), Data1.sub[,13]))); \
+						print(c(nrow(Data1.sub), cor(-log10(Data1.sub[,6]), Data1.sub[,10]), cor(-log10(Data1.sub[,6]), Data1.sub[,11]), cor(-log10(Data1.sub[,6]), Data1.sub[,12]), cor(-log10(Data1.sub[,6]), Data1.sub[,13]))); \
 					}; \
 				"
 		
