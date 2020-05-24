@@ -10007,7 +10007,7 @@ echo -e "library(\"RColorBrewer\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", 
 #PC1 SNP Loading Misc
 #20200521
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 8 | head -n 1`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 8 | grep -v -E 'Ran10000|Irish' | grep -v African`; do
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
@@ -10058,21 +10058,23 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 				pValBonf=1; pValCutoff="pValAll";
 				echo $l $i $ancestry1 $ancestry2 $k $pValBonf
 
-			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,6] == 0,6] <- 1e-11; print(c(nrow(Data1), cor(-log10(Data1[,6]), Data1[,10]), cor(-log10(Data1[,6]), Data1[,11]), cor(-log10(Data1[,6]), Data1[,12]), cor(-log10(Data1[,6]), Data1[,13]))); Lengths <- c(0,100,250,500,750,1000,1500,2000,2500,3500); Lengths <- c(0,250,500,1000,2000,3500); \
-					for (i in 1:(length(Lengths)-1)) { \
+					zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,6] == 0,6] <- 1e-11; print(c(nrow(Data1), cor(-log10(Data1[,6]), Data1[,10]), cor(-log10(Data1[,6]), Data1[,11]), cor(-log10(Data1[,6]), Data1[,12]), cor(-log10(Data1[,6]), Data1[,13]))); Lengths <- c(0,250,500,1000,2000,3500); pValCutoffs <- c(1e-7,1e-6,1e-5,1e-4,1e-3); \
+					for (i in 1:(length(pValCutoffs))) { \
 						print(i); \
 						Begin1 <- Lengths[i]; End1 <- Lengths[i+1]; \
 						Data1.sub <- Data1[Data1[,9] >= Begin1 & Data1[,9] < End1,]; \
-						print(c(nrow(Data1.sub), cor(-log10(Data1.sub[,6]), Data1.sub[,10]), cor(-log10(Data1.sub[,6]), Data1.sub[,11]), cor(-log10(Data1.sub[,6]), Data1.sub[,12]), cor(-log10(Data1.sub[,6]), Data1.sub[,13]))); \
+						print(c(nrow(Data1.sub), cor(-log10(Data1.sub[,6]), Data1.sub[,10]), cor(-log10(Data1.sub[,6]), Data1.sub[,11]), cor(-log10(Data1.sub[,6]), Data1.sub[,12]), cor(-log10(Data1.sub[,6]), Data1.sub[,13]))); print(cbind(-log10(Data1.sub[,6]), Data1.sub[,11])); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13])));  \
 					}; \
 				"
-		
 
 			done;
 		done;
 	done;
 done;
 
+# Lengths <- c(0,100,250,500,750,1000,1500,2000,2500,3500); Lengths <- c(0,250,500,1000,2000,2500,3500); Lengths <- c(0,250,500,1000,2000,3500);
+#						Data1.sub <- Data1[Data1[,9] >= Begin1 & Data1[,9] < End1,]; \
+#						Data1.sub <- Data1[Data1[,6] < pValCutoffs[i],]; \
 
                  	
 
