@@ -10052,7 +10052,7 @@ done;
 
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
-		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran1000|Irish' | head -n 4 | tail -n 1`; do
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 				pValBonf=1; pValCutoff="pValAll";
@@ -10063,7 +10063,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 							print(i); \
 							Begin1 <- Lengths[i]; End1 <- Lengths[i+1]; \
 							Data1.sub <- Data1[Data1[,9] >= Begin1 & Data1[,9] < End1,]; \
-							print(c(nrow(Data1.sub), cor(-log10(Data1.sub[,6]), Data1.sub[,10]), cor(-log10(Data1.sub[,6]), Data1.sub[,11]), cor(-log10(Data1.sub[,6]), Data1.sub[,12]), cor(-log10(Data1.sub[,6]), Data1.sub[,13]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13])));  \
+							print(c(nrow(Data1.sub), cor(-log10(Data1.sub[,6]), Data1.sub[,10]), cor(-log10(Data1.sub[,6]), Data1.sub[,11]), cor(-log10(Data1.sub[,6]), Data1.sub[,12]), cor(-log10(Data1.sub[,6]), Data1.sub[,13]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))); \
 						}; \
 					"
 
