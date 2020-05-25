@@ -10007,7 +10007,7 @@ echo -e "library(\"RColorBrewer\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", 
 #PC1 SNP Loading Misc
 #20200521
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 8 | grep -v -E 'Ran10000|Irish' | grep -v African`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 8 | grep -v -E 'Ran10000|Irish'`; do
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
@@ -10022,7 +10022,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+1 )); do
 			Flag1=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.v3.ImptHRC.dose.100geno.Regions.c2.${k}.noDups.txt | awk -v PathNum2=$PathNum '{ if (NR == PathNum2) { print $4 } }'`
 			if [ $Flag1 == "TRUE" ] ; then	
-				join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.SNPIDs | awk '{ print $1 ":" $2 }' | sort) <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.partAll.flashpca.loads.wQuantFlags.txt.gz | perl -lane 'print $F[0], "\t", $F[$#F-1], "\t", $F[$#F];' | sed 's/_/ /' | awk '{ print $1 "\t" $3 "\t" $4 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); returnVals1 <- c(nrow(Data1), sum(Data1[,2]), sum(Data1[,2])/nrow(Data1), sum(Data1[,3]), sum(Data1[,3])/nrow(Data1)); write.table(matrix(returnVals1, nrow=1), quote=FALSE, col.names=F, row.names=F);" | grep -v ^\> | paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | awk -v PathNum2=$PathNum '{ if (NR == PathNum2) { print $0 } }' | perl -lane 'my @vals1 = split(/,/, $F[2]); print join("\t", @F), "\t", scalar(@vals1);') - >> /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.wQuantFlagCounts.TRUE.txt
+				join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways${PathNum}.noDups.SNPIDs | awk '{ print $1 ":" $2 }' | sort) <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.partAll.flashpca.loads.wQuantFlags.txt.gz | perl -lane 'print $F[0], "\t", $F[$#F-3], "\t", $F[$#F-2], "\t", $F[$#F-1], "\t", $F[$#F];' | sed 's/_/ /' | awk '{ print $1 "\t" $3 "\t" $4  "\t" $5 "\t" $6 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); returnVals1 <- c(nrow(Data1), sum(Data1[,2]), sum(Data1[,2])/nrow(Data1), sum(Data1[,3]), sum(Data1[,3])/nrow(Data1), sum(Data1[,4]), sum(Data1[,4])/nrow(Data1), sum(Data1[,5]), sum(Data1[,5])/nrow(Data1)); write.table(matrix(returnVals1, nrow=1), quote=FALSE, col.names=F, row.names=F);" | grep -v ^\> | paste <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | awk -v PathNum2=$PathNum '{ if (NR == PathNum2) { print $0 } }' | perl -lane 'my @vals1 = split(/,/, $F[2]); print join("\t", @F), "\t", scalar(@vals1);') - >> /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.wQuantFlagCounts.TRUE.txt
 			fi
 		done
 		gzip -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.wQuantFlagCounts.TRUE.txt
@@ -10059,13 +10059,13 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 				echo $l $i $ancestry1 $ancestry2 $k $pValBonf
 
 					zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,6] == 0,6] <- 1e-11; print(c(nrow(Data1), cor(-log10(Data1[,6]), Data1[,10]), cor(-log10(Data1[,6]), Data1[,11]), cor(-log10(Data1[,6]), Data1[,12]), cor(-log10(Data1[,6]), Data1[,13]))); Lengths <- c(0,250,500,1000,2000,3500); pValCutoffs <- c(1e-7,1e-6,1e-5,1e-4,1e-3); \
-					for (i in 1:(length(pValCutoffs))) { \
-						print(i); \
-						Begin1 <- Lengths[i]; End1 <- Lengths[i+1]; \
-						Data1.sub <- Data1[Data1[,9] >= Begin1 & Data1[,9] < End1,]; \
-						print(c(nrow(Data1.sub), cor(-log10(Data1.sub[,6]), Data1.sub[,10]), cor(-log10(Data1.sub[,6]), Data1.sub[,11]), cor(-log10(Data1.sub[,6]), Data1.sub[,12]), cor(-log10(Data1.sub[,6]), Data1.sub[,13]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13])));  \
-					}; \
-				"
+						for (i in 1:(length(pValCutoffs))) { \
+							print(i); \
+							Begin1 <- Lengths[i]; End1 <- Lengths[i+1]; \
+							Data1.sub <- Data1[Data1[,9] >= Begin1 & Data1[,9] < End1,]; \
+							print(c(nrow(Data1.sub), cor(-log10(Data1.sub[,6]), Data1.sub[,10]), cor(-log10(Data1.sub[,6]), Data1.sub[,11]), cor(-log10(Data1.sub[,6]), Data1.sub[,12]), cor(-log10(Data1.sub[,6]), Data1.sub[,13]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13])));  \
+						}; \
+					"
 
 			done;
 		done;
@@ -10073,9 +10073,9 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 done;
 
 # Lengths <- c(0,100,250,500,750,1000,1500,2000,2500,3500); Lengths <- c(0,250,500,1000,2000,2500,3500); Lengths <- c(0,250,500,1000,2000,3500);
-#						Data1.sub <- Data1[Data1[,9] >= Begin1 & Data1[,9] < End1,]; \
-#						Data1.sub <- Data1[Data1[,6] < pValCutoffs[i],]; \
-#						...print(cbind(-log10(Data1.sub[,6]), Data1.sub[,11]));...
+#							Data1.sub <- Data1[Data1[,9] >= Begin1 & Data1[,9] < End1,]; \
+#							Data1.sub <- Data1[Data1[,6] < pValCutoffs[i],]; \
+#							...print(cbind(-log10(Data1.sub[,6]), Data1.sub[,11]));...
                  	
 
 
