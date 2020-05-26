@@ -10073,11 +10073,13 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 							Begin1 <- Lengths[i]; End1 <- Lengths[i+1]; \
 							Data1.sub <- Data1[Data1[,9] >= Begin1 & Data1[,9] < End1,]; \
 							if (nrow(Data1.sub) > 0) { \
-								Results1 <- rbind(Results1, c(signif(cor(-log10(Data1.sub[,6]), Data1.sub[,11]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))$coefficients[2,4], 4))); 
-				plot(Data1[,4], -log10(Data1[,8]), main=\"\", xlab=\"SNPs per Pathway\", ylab=\"-log10 p-Values\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); abline(RegrLine1, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"RegrLine\", paste(\"Beta: \", signif(summary(RegrLine1)\$coefficients[2,1], 4), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine1)\$coefficients[2,4], 4), sep=\"\"), \"----\", paste(\"Corr: \", signif(cor(Data1[,4], -log10(Data1[,8])), 4), sep=\"\")), lwd=c(2,NA,NA,NA,NA), lty=c(2,NA,NA,NA,NA), col=c(\"RED\",NA,NA,NA,NA), bg=\"transparent\", cex=1.5); \ 
-								print(c(nrow(Data1.sub), cor(-log10(Data1.sub[,6]), Data1.sub[,10]), cor(-log10(Data1.sub[,6]), Data1.sub[,11]), cor(-log10(Data1.sub[,6]), Data1.sub[,12]), cor(-log10(Data1.sub[,6]), Data1.sub[,13]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))); \
+								Results1 <- rbind(Results1, c(nrow(Data1.sub), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,11]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))$coefficients[2,4], 4),
+								signif(cor(-log10(Data1.sub[,6]), Data1.sub[,13]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))$coefficients[2,4], 4),
+								signif(cor(-log10(Data1.sub[,6]), Data1.sub[,15]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))$coefficients[2,4], 4),
+								signif(cor(-log10(Data1.sub[,6]), Data1.sub[,17]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))$coefficients[2,4], 4)
+)); 
 							} else { \
-
+								Results1 <- rbind(Results1, c(0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA));	
 							};
 						}; \
 					"
@@ -10087,11 +10089,14 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 	done;
 done;
 
+				plot(Data1[,4], -log10(Data1[,8]), main=\"\", xlab=\"SNPs per Pathway\", ylab=\"-log10 p-Values\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); abline(RegrLine1, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"RegrLine\", paste(\"Beta: \", signif(summary(RegrLine1)\$coefficients[2,1], 4), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine1)\$coefficients[2,4], 4), sep=\"\"), \"----\", paste(\"Corr: \", signif(cor(Data1[,4], -log10(Data1[,8])), 4), sep=\"\")), lwd=c(2,NA,NA,NA,NA), lty=c(2,NA,NA,NA,NA), col=c(\"RED\",NA,NA,NA,NA), bg=\"transparent\", cex=1.5); \ 
+
 #					...print(c(nrow(Data1), cor(-log10(Data1[,6]), Data1[,10]), cor(-log10(Data1[,6]), Data1[,11]), cor(-log10(Data1[,6]), Data1[,12]), cor(-log10(Data1[,6]), Data1[,13])));...
 #					...Lengths <- c(0,100,250,500,750,1000,1500,2000,2500,3500); Lengths <- c(0,250,500,1000,2000,2500,3500); Lengths <- c(0,250,500,1000,2000,3500);...
 #							Data1.sub <- Data1[Data1[,9] >= Begin1 & Data1[,9] < End1,]; \
 #							Data1.sub <- Data1[Data1[,6] < pValCutoffs[i],]; \
 #							...print(cbind(-log10(Data1.sub[,6]), Data1.sub[,11]));...
+#								print(c(nrow(Data1.sub), cor(-log10(Data1.sub[,6]), Data1.sub[,10]), cor(-log10(Data1.sub[,6]), Data1.sub[,11]), cor(-log10(Data1.sub[,6]), Data1.sub[,12]), cor(-log10(Data1.sub[,6]), Data1.sub[,13]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))); \
                  	
 
 
