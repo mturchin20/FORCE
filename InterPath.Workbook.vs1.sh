@@ -2922,14 +2922,14 @@ done
 
 #Vs2 Results Collection
 for (( permNum=1; permNum <= 10; permNum=permNum+1 )); do
-for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 2`; do
+for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 1 | tail -n 1`; do
 	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
   for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 13 | tail -n 1`; do
 			SECONDS=0;
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
-#			NumPaths=20
+#			NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
+			NumPaths=80
 
 			echo $permNum $i $ancestry1 $ancestry2 $k
 			for (( PathNum=1; PathNum <= $NumPaths; PathNum=PathNum+80 )); do
@@ -2939,13 +2939,13 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 				InterPath.output.Eigenvalues <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Paths${PathNum}.Eigenvalues.txt\", header=F); \
 				InterPath.output.PVE <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Paths${PathNum}.PVE.txt\", header=F); \
 				Results1 <- c(); Counter1 <- 1; for (i in $PathNum:($PathNum+79)) { \
-					if (i <= $NumPaths) { if (neg.is.na(InterPath.output.Est[Counter1,1])) { \ 
+					if (i <= $NumPaths) { if (neg.is.na(InterPath.output.Est[Counter1,1])) { write(paste(i, \" yay: \", InterPath.output.Est[Counter1,1], sep=\"\"), stderr()); \ 
 						Lambda <- sort(InterPath.output.Eigenvalues[,Counter1], decreasing=TRUE); \
 						Davies.Output <- davies(InterPath.output.Est[Counter1,1], lambda=Lambda, acc=1e-8); \
 						pVal <- 2*min(1-Davies.Output\$Qq, Davies.Output\$Qq); \
 						Results1 <- rbind(Results1, c(as.character(Pathways[i,1]), InterPath.output.Est[Counter1,1], InterPath.output.PVE[Counter1,1], pVal, Davies.Output\$Qq, Davies.Output\$ifault)); \ 
 						Counter1 = Counter1 + 1; \
-					} else { Results1 <- rbind(Results1, c(as.character(Pathways[i,1]), rep(NA, 5))); }; \
+					} else { Results1 <- rbind(Results1, c(as.character(Pathways[i,1]), rep(NA, 5)));  write(paste(i, \" nay: \", InterPath.output.Est[Counter1,1], sep=\"\"), stderr()); }; \
 				};}; write.table(Results1, file=\"\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
 			done | grep -v \> | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz
 			duration=$SECONDS; echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
