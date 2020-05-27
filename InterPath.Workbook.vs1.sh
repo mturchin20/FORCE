@@ -10093,10 +10093,10 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 				pValBonf=1; pValCutoff="pValAll";
 				echo $l $i $ancestry1 $ancestry2 $k $pValBonf
 
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,6] == 0,6] <- 1e-11; Lengths <- c(0,250,500,1000,2000,3500); pValCutoffs <- c(1e-12,1e-7,1e-6,1e-5,1e-4,1e-3,1); pValCutoffs <- c(1e-12,1e-5,1e-4,1e-3,1); Results1 <- c(); \
+				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,6] == 0,6] <- 1e-11; Lengths <- c(0,250,500,1000,2000,3500); pValCutoffs <- c(1e-12,1e-7,1e-6,1e-5,1e-4,1e-3,1); Results1 <- c(); \
 					for (i in 1:(length(pValCutoffs)-1)) { \
 						Begin1 <- Lengths[i]; End1 <- Lengths[i+1]; \
-						Data1.sub <- Data1[Data1[,6] > pValCutoffs[i] & Data1[,6] < pValCutoffs[i+1],]; \
+						Data1.sub <- Data1[Data1[,6] < pValCutoffs[i+1],]; \
 						if (nrow(Data1.sub) > 1) { \
 							Results1 <- rbind(Results1, c(nrow(Data1.sub), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,11]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))\$coefficients[2,4], 4), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,13]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))\$coefficients[2,4], 4), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,15]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))\$coefficients[2,4], 4), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,17]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))\$coefficients[2,4], 4))); \ 
 						} else { \
@@ -10111,7 +10111,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 	done;
 done;
 
-#						Data1.sub <- Data1[Data1[,6] < pValCutoffs[i+1],]; \
+#						Data1.sub <- Data1[Data1[,6] > pValCutoffs[i] & Data1[,6] < pValCutoffs[i+1],]; \
 #						if (nrow(Data1.sub) > 1) { \
 #							Results1 <- rbind(Results1, c(nrow(Data1.sub), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,11]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))\$coefficients[2,4], 4), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,13]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))\$coefficients[2,4], 4), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,15]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))\$coefficients[2,4], 4), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,17]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))\$coefficients[2,4], 4))); \ 
 #						} else { \
@@ -10184,9 +10184,7 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 			Data2a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
 			Data2b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
 			Data1a[Data1a[,6] == 0,6] <- 1e-11; Data1b[Data1b[,6] == 0,6] <- 1e-11; Data2a[Data2a[,6] == 0,6] <- 1e-11; Data2b[Data2b[,6] == 0,6] <- 1e-11; \ 
-			
-			Data1a <- Data1a[Data1a[,9] >= 2000 & Data1a[,9] < 3500,]; Data1b <- Data1b[Data1b[,9] >= 2000 & Data1b[,9] < 3500,]; Data2a <- Data2a[Data2a[,9] >= 2000 & Data2a[,9] < 3500,]; Data2b <- Data2b[Data2b[,9] >= 2000 & Data2b[,9] < 3500,]; RegrLine1 <- lm(-log10(Data1a[,6]) ~ Data1a[,15]); RegrLine2 <- lm(-log10(Data1b[,6]) ~ Data1b[,15]); RegrLine3 <- lm(-log10(Data2a[,6]) ~ Data2a[,15]); RegrLine4 <- lm(-log10(Data2b[,6]) ~ Data2b[,15]); \
-			
+			Data1a <- Data1a[Data1a[,6] < 1e-5,]; Data1b <- Data1b[Data1b[,6] < 1e-5,]; Data2a <- Data2a[Data2a[,6] < 1e-5,]; Data2b <- Data2b[Data2b[,6] < 1e-5,];	RegrLine1 <- lm(-log10(Data1a[,6]) ~ Data1a[,15]); RegrLine2 <- lm(-log10(Data1b[,6]) ~ Data1b[,15]); RegrLine3 <- lm(-log10(Data2a[,6]) ~ Data2a[,15]); RegrLine4 <- lm(-log10(Data2b[,6]) ~ Data2b[,15]); \
 			plot(Data1a[,15], -log10(Data1a[,6]), main=\"Height\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,11.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine3, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine3)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine3)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
 			mtext(\"Proportion of Local PC1 Loaded SNPs\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			plot(Data1b[,15], -log10(Data1b[,6]), main=\"BMI\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,11.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine4, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine4)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine4)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
@@ -11522,15 +11520,26 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 
 done
 
-cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep PSM | perl 'print $F[0], "_Orig", "\t", join("\t", @F[1..$#F]);'
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops
+
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep PSM | perl 'print $F[0], "_Orig", "\t", join("\t", @F[1..$#F]);' > 
 
 
 for i in `cat <(echo "_Orig _PSMA _PSMB _PSMC _PSMD _PSME _PSMF _PSMG" | perl -lane 'print join("\n", @F);')`; do
+
+	zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep $i > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops${i}.txt
 
 	join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep PSM | awk '{ print $1 }' | sort) <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | sort -k 1,1) | perl -slane 'my @newList; foreach my $gene1 (@F[2..$#F]) { if ($gene1 !~ m/$psm1/) { push(@newList, $gene1); } } print $F[0], "_Drop", $psm1, "\t", $F[1], "\t", join("\t", @newList);' -- -psm1=$i >> /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.PSMdropouts.gmt
 
 done
 
+for i in `cat <(echo "_Orig _PSMA _PSMB _PSMC _PSMD _PSME _PSMF _PSMG" | perl -lane 'print join("\n", @F);')`; do
+
+	zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep $i 
+
+	join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep PSM | awk '{ print $1 }' | sort) <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | sort -k 1,1) | perl -slane 'my @newList; foreach my $gene1 (@F[2..$#F]) { if ($gene1 !~ m/$psm1/) { push(@newList, $gene1); } } print $F[0], "_Drop", $psm1, "\t", $F[1], "\t", join("\t", @newList);' -- -psm1=$i >> /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.PSMdropouts.gmt
+
+done
 
 
 
