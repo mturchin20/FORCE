@@ -10078,7 +10078,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 						}; \
 					}; \
 					write.table(Results1, file=\"\", quote=FALSE, row.name=FALSE, col.names=FALSE); \
-				" | grep -v ^\> > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.pvals.txt
+				" | grep -v ^\> > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.lengths.txt
 
 			done;
 		done;
@@ -10129,19 +10129,19 @@ done;
 #								print(c(nrow(Data1.sub), cor(-log10(Data1.sub[,6]), Data1.sub[,10]), cor(-log10(Data1.sub[,6]), Data1.sub[,11]), cor(-log10(Data1.sub[,6]), Data1.sub[,12]), cor(-log10(Data1.sub[,6]), Data1.sub[,13]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))); print(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))); \
                  	
 #		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran1000|Irish'`; do
-for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do
-	for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+	for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
 		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 			pValBonf=1; pValCutoff="pValAll";
 			echo $l $i $ancestry1 $ancestry2 $k $pValBonf
 
-			R -q -e "library(\"xtable\"); Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.pvals.txt\", header=F); \	
-				Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.British.Ran4000.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.pvals.txt\", header=F); \
-				Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.Caribbean.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.pvals.txt\", header=F); \
-				Data4 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.Chinese.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.pvals.txt\", header=F); \
-				Data5 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.Indian.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.pvals.txt\", header=F); \	
-				Data6 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.Pakistani.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.pvals.txt\", header=F); \
-				Data1 <- rbind(c(\"African\", rep(\"NA\", ncol(Data1)-1)), Data1); Data2 <- rbind(c(\"British.Ran4000\", rep(\"NA\", ncol(Data2)-1)), Data2); Data3 <- rbind(c(\"Caribbean\", rep(\"NA\", ncol(Data3)-1)), Data3); Data4 <- rbind(c(\"Chinese\", rep(\"NA\", ncol(Data4)-1)), Data4); Data5 <- rbind(c(\"Indian\", rep(\"NA\", ncol(Data5)-1)), Data5); Data6 <- rbind(c(\"Pakistani\", rep(\"NA\", ncol(Data6)-1)), Data6); \
+			R -q -e "library(\"xtable\"); Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.lengths.txt\", header=F); \	
+				Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.British.Ran4000.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.lengths.txt\", header=F); \
+				Data3 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.Caribbean.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.lengths.txt\", header=F); \
+				Data4 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.Chinese.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.lengths.txt\", header=F); \
+				Data5 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.Indian.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.lengths.txt\", header=F); \	
+				Data6 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.Pakistani.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.lengths.txt\", header=F); \
+				Data1 <- rbind(c(\"African\", rep(NA, ncol(Data1)-1)), Data1); Data2 <- rbind(c(\"British.Ran4000\", rep(NA, ncol(Data2)-1)), Data2); Data3 <- rbind(c(\"Caribbean\", rep(NA, ncol(Data3)-1)), Data3); Data4 <- rbind(c(\"Chinese\", rep(NA, ncol(Data4)-1)), Data4); Data5 <- rbind(c(\"Indian\", rep(NA, ncol(Data5)-1)), Data5); Data6 <- rbind(c(\"Pakistani\", rep(NA, ncol(Data6)-1)), Data6); \
 				DataAll <- rbind(Data1, Data2, Data3, Data4, Data5, Data6); \
 				print(xtable(DataAll, include.rownames=FALSE)); \
 			"
@@ -10149,6 +10149,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 	done;
 done;
 
+#				...Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.stats.pvals.txt\", header=F); \	
 #				print(head(Data1)); print(head(Data6)); \
 
 
