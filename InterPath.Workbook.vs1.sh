@@ -11565,7 +11565,12 @@ cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveM
 cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | R -q -e "library(\"pheatmap\"); library(\"grid\"); library(\"gridExtra\"); Data1 <- read.table(file('stdin'), header=F); \
 PSMG_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21])); \
 PSMA_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,5]); PSMB_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,8]); PSMC_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,11]); PSMD_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,14]); PSME_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,17]); PSMF_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,20]); \ 
-PSMA_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,5])) / (Data1[,3] - Data1[,6]); PSMB_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,8])) / (Data1[,3] - Data1[,9]); PSMC_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,11])) / (Data1[,3] - Data1[,12]); PSMD_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,14])) / (Data1[,3] - Data1[,15]); PSME_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,17])) / (Data1[,3] - Data1[,18]); PSMF_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,20])) / (Data1[,3] - Data1[,21]); \ 
+PSMA_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,5])) / ((Data1[,3] - Data1[,6]) / Data1[,3]); 
+PSMB_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,8])) / ((Data1[,3] - Data1[,9]) / Data1[,3]);
+PSMC_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,11])) / ((Data1[,3] - Data1[,12]); 
+PSMD_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,14])) / ((Data1[,3] - Data1[,15]); 
+PSME_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,17])) / ((Data1[,3] - Data1[,18]); 
+PSMF_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,20])) / ((Data1[,3] - Data1[,21]); \ 
 Results.Full.pValDiff.raw <- cbind(PSMA_pValDiff_raw, PSMB_pValDiff_raw, PSMC_pValDiff_raw, PSMD_pValDiff_raw, PSME_pValDiff_raw, PSMF_pValDiff_raw); \
 Results.Full.pValDiff.scaled <- cbind(PSMA_pValDiff_scaled, PSMB_pValDiff_scaled, PSMC_pValDiff_scaled, PSMD_pValDiff_scaled, PSME_pValDiff_scaled, PSMF_pValDiff_scaled); \
 rownames(Results.Full.pValDiff.scaled) <- Data1[,1]; \
@@ -11576,6 +11581,8 @@ plot2 <- pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, c
 grid.arrange(grobs=list(plot1[[4]],plot2[[4]]), layout_matrix=rbind(c(1,2,2),c(1,2,2))); \
 dev.off(); \
 "
+
+#PSMA_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,5])) / (Data1[,3] - Data1[,6]); PSMB_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,8])) / (Data1[,3] - Data1[,9]); PSMC_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,11])) / (Data1[,3] - Data1[,12]); PSMD_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,14])) / (Data1[,3] - Data1[,15]); PSME_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,17])) / (Data1[,3] - Data1[,18]); PSMF_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,20])) / (Data1[,3] - Data1[,21]); \ 
 
 grid.newpage(); pushViewport(viewport(layout = grid.layout(1, 2, height=unit(c(1), \"null\"), width=unit(c(1,3), \"null\")))); \
 print(plot1[[4]], vp=viewport(layout.pos.row=1, layout.pos.col=1)); print(plot2[[4]], vp=viewport(layout.pos.row=1, layout.pos.col=2)); \
