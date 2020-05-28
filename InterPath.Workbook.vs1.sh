@@ -11522,7 +11522,8 @@ done
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops
 
-cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep PSM | perl -lane 'print $F[0], "_Orig", "\t", join("\t", @F[1..$#F]);' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_Orig.txt
+##cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep PSM | perl -lane 'print $F[0], "_Orig", "\t", join("\t", @F[1..$#F]);' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_Orig.txt
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep PSM | perl -lane 'print $F[0], "_DropNone", "\t", join("\t", @F[1..$#F]);' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_DropNone.txt
 
 for i in `cat <(echo "_DropPSMA _DropPSMB _DropPSMC _DropPSMD _DropPSME _DropPSMF _DropPSMG" | perl -lane 'print join("\n", @F);')`; do
 
@@ -11530,7 +11531,7 @@ for i in `cat <(echo "_DropPSMA _DropPSMB _DropPSMC _DropPSMD _DropPSME _DropPSM
 
 done
 
-paste <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_Orig.txt | awk '{ print $1 "\t" $6 "\t" $5 }' | sort -k 1,1) \
+paste <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_DropNone.txt | awk '{ print $1 "\t" $6 "\t" $5 }' | sort -k 1,1) \
 <(join <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_DropPSMA.txt | awk '{ print $1 "\t" $4 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdrops.noDups.txt | perl -lane 'my @vals1 = split(",", $F[2]); print $F[0], "\t", scalar(@vals1);' | sort -k 1,1)) \ 
 <(join <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_DropPSMB.txt | awk '{ print $1 "\t" $4 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdrops.noDups.txt | perl -lane 'my @vals1 = split(",", $F[2]); print $F[0], "\t", scalar(@vals1);' | sort -k 1,1)) \ 
 <(join <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_DropPSMC.txt | awk '{ print $1 "\t" $4 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdrops.noDups.txt | perl -lane 'my @vals1 = split(",", $F[2]); print $F[0], "\t", scalar(@vals1);' | sort -k 1,1)) \ 
@@ -11539,15 +11540,58 @@ paste <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2A
 <(join <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_DropPSMF.txt | awk '{ print $1 "\t" $4 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdrops.noDups.txt | perl -lane 'my @vals1 = split(",", $F[2]); print $F[0], "\t", scalar(@vals1);' | sort -k 1,1)) \ 
 <(join <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_DropPSMG.txt | awk '{ print $1 "\t" $4 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdrops.noDups.txt | perl -lane 'my @vals1 = split(",", $F[2]); print $F[0], "\t", scalar(@vals1);' | sort -k 1,1)) > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt 
 
-cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | awk '{ print $1 "\t" $4 "\t" $7 "\t" $10 "\t" $13 "\t" $16 "\t" $19 "\t" $22 }' |  
+cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | awk '{ print $1 "\t" $4 "\t" $7 "\t" $10 "\t" $13 "\t" $16 "\t" $19 "\t" $22 }' | perl -ane 'foreach my $val1 (@F) { my @vals2 = split(/_/, $val1); print join("_", @vals2[0..$#vals2-1]), "\t"; } print "\n";' | perl -lane 'foreach my $val1 (@F) { print $val1; };' | uniq -c
+
+```
+[  mturchin@node1164  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | awk '{ print $1 "\t" $4 "\t" $7 "\t" $10 "\t" $13 "\t" $16 "\t" $19 "\t" $22 }' | perl -ane 'foreach my $val1 (@F) { my @vals2 = split(/_/, $val1); print join("_", @vals2[0..$#vals2-1]), "\t"; } print "\n";' | perl -lane 'foreach my $val1 (@F) { print $val1; };' | uniq -c
+      8 REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS
+      8 REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION
+      8 REACTOME_ASSEMBLY_OF_THE_PRE_REPLICATIVE_COMPLEX
+      8 REACTOME_CELL_CYCLE_CHECKPOINTS
+      8 REACTOME_CELL_CYCLE
+      8 REACTOME_CELL_CYCLE_MITOTIC
+      8 REACTOME_CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM
+      8 REACTOME_DOWNSTREAM_SIGNALING_EVENTS_OF_B_CELL_RECEPTOR_BCR
+      8 REACTOME_HIV_INFECTION
+      8 REACTOME_HOST_INTERACTIONS_OF_HIV_FACTORS
+      8 REACTOME_MITOTIC_G1_G1_S_PHASES
+      8 REACTOME_M_G1_TRANSITION
+      8 REACTOME_REGULATION_OF_APOPTOSIS
+```
+
+cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | perl -lane 'print $F[2] - $F[5], "\t", $F[2] - $F[8], "\t", $F[2] - $F[11], "\t", $F[2] - $F[14], "\t", $F[2] - $F[17], "\t", $F[2] - $F[20], "\t", $F[2] - $F[23];'
+
+cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | grep -v REACTOME_CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | R -q -e "library(\"ggplot2\"); library(\"reshape\"); Data1 <- read.table(file('stdin'), header=F);  
+
+
+[  mturchin@node1164  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt  
+REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropNone    1.86077653210326e-05    465     REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSMA 1.25884771069451e-05 448   REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSMB 0.000162242542744995 391 REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSMC 3.30132793746607e-05 445   REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSMD 9.02709162711179e-05 403   REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSME 0.0002382893683337 450   REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSMF 1.8468138497596e-05 449    REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSMG 1.86077653210326e-05 465
+REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropNone 3.95555057099983e-05    850     REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSMA 3.22868285047573e-05 833        REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSMB 0.000208184348311047 776      REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSMC 9.16238803823077e-05 830        REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSMD 0.00011999612721314 788 REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSME 0.000105998729554413 835      REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSMF 6.41101871936556e-05 834        REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSMG 3.95555057099983e-05 850
+
+
+R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); library(\"cowplot\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
+        for (m in DataTypes1[1]) { for (i in DataTypes2[1]) { for (l in Paths[2:3]) { \
+                png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompHeatplots/ukb_v3.AllPops.HeightBMI.\", i, \".\", l, \".\", m, \".ColCrct.localPCs.PopComp.Heatplots.vs3.png\", sep=\"\"), height=4250, width=7500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \
+                plotPoints1 <- c(); ListCounter1 <- 1; for (j in Strats[4]) { \
+                        for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
+                                Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+                                Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.British.Ran4000.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+                                Data4 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.Caribbean.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+                                Data5 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.Chinese.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+                                Data6 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.Indian.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+                                Data8 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.Pakistani.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
+                                Paths1 <- list(\"African\" = as.character(Data1[,1]), \"British.Ran4k\" = as.character(Data2[,1]), \"Caribbean\" = as.character(Data4[,1]), \"Chinese\" = as.character(Data5[,1]), \"Indian\" = as.character(Data6[,1]), \"Pakistani\" = as.character(Data8[,1])); \
+                                Paths1.Overlap <- crossprod(table(stack(Paths1))); Paths1.Overlap[lower.tri(Paths1.Overlap, diag=FALSE)] <- NA; Paths1.Overlap.Melted <- melt(Paths1.Overlap); colnames(Paths1.Overlap.Melted)[1] <- \"ind.1\"; colnames(Paths1.Overlap.Melted)[2] <- \"ind.2\"; Paths1.Overlap.Melted\$ind.1 <- factor(Paths1.Overlap.Melted\$ind.1, levels=c(\"African\", \"British.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\")); Paths1.Overlap.Melted\$ind.2 <- factor(Paths1.Overlap.Melted\$ind.2, levels=c(\"African\", \"British.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\")); \
+                                print(Paths1.Overlap); \
+                                ggplot1 <- ggplot(Paths1.Overlap.Melted, aes(ind.1, ind.2, fill=value)) + geom_tile(colour=\"white\") + scale_fill_gradient(low = \"lightgoldenrodyellow\", high=\"red\", name=\"Pathways\", na.value=\"white\") + geom_text(aes(ind.1, ind.2, label = value), color = \"black\", size=14) + theme_minimal() + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), plot.margin=unit(c(5,5,5,5),\"points\"), panel.grid.major = element_blank(), panel.border = element_blank(), panel.background = element_blank(), axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1, size=40), axis.text.y = element_text(size=40), legend.position=c(.775,.15), legend.direction=\"horizontal\", legend.title=element_text(size=27), legend.text=element_text(size=23)) + guides(fill = guide_colorbar(barwidth = 22, barheight = 4.5, title.position = \"top\", title.hjust = 0.5)); plotPoints1[[ListCounter1]] <- ggplot1; ListCounter1 <- ListCounter1 + 1; \
 
 
 
-cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdrops.noDups.txt | perl -lane 'my @vals1 = split(",", $F[2]); print $F[0], "\t", scalar(@vals1);'
 
 
 
-for i in `cat <(echo "_Orig _DropPSMA _DropPSMB _DropPSMC _DropPSMD _DropPSME _DropPSMF _DropPSMG" | perl -lane 'print join("\n", @F);')`; do
+
+for i in `cat <(echo "_DropNone _DropPSMA _DropPSMB _DropPSMC _DropPSMD _DropPSME _DropPSMF _DropPSMG" | perl -lane 'print join("\n", @F);')`; do
 	
 
 	zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep $i 
@@ -21826,6 +21870,54 @@ British;British.Ran4000;Brit4k;138503
   15492 7
   16070 8
   13608 9
+#20200527
+[  mturchin@node1164  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | awk '{ print $1 "\t" $4 "\t" $7 "\t" $10 "\t" $13 "\t" $16 "\t" $19 "\t" $22 }' | perl -ane 'foreach my $val1 (@F) { my @vals2 = split(/_/, $val1); print join("_", @vals2[0..$#vals2-1]), "\t"; } print "\n";' | perl -lane 'foreach my $val1 (@F) { print $val1; };' | uniq -c
+      8 REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS
+      8 REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION
+      8 REACTOME_ASSEMBLY_OF_THE_PRE_REPLICATIVE_COMPLEX
+      8 REACTOME_CELL_CYCLE_CHECKPOINTS
+      1 REACTOME_CELL_CYCLE_MITOTIC
+      8 REACTOME_CELL_CYCLE
+      7 REACTOME_CELL_CYCLE_MITOTIC
+      8 REACTOME_CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM
+      8 REACTOME_DOWNSTREAM_SIGNALING_EVENTS_OF_B_CELL_RECEPTOR_BCR
+      8 REACTOME_HIV_INFECTION
+      8 REACTOME_HOST_INTERACTIONS_OF_HIV_FACTORS
+      8 REACTOME_MITOTIC_G1_G1_S_PHASES
+      8 REACTOME_M_G1_TRANSITION
+      8 REACTOME_REGULATION_OF_APOPTOSIS
+[  mturchin@node1164  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | awk '{ print $1 "\t" $4 "\t" $7 "\t" $10 "\t" $13 "\t" $16 "\t" $19 "\t" $22 }' | perl -ane 'foreach my $val1 (@F) { my @vals2 = split(/_/, $val1); print join("_", @vals2[0..$#vals2-1]), "\t"; } print "\n";' | perl -lane 'foreach my $val1 (@F) { print $val1; };' | uniq -c
+      8 REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS
+      8 REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION
+      8 REACTOME_ASSEMBLY_OF_THE_PRE_REPLICATIVE_COMPLEX
+      8 REACTOME_CELL_CYCLE_CHECKPOINTS
+      8 REACTOME_CELL_CYCLE
+      8 REACTOME_CELL_CYCLE_MITOTIC
+      8 REACTOME_CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM
+      8 REACTOME_DOWNSTREAM_SIGNALING_EVENTS_OF_B_CELL_RECEPTOR_BCR
+      8 REACTOME_HIV_INFECTION
+      8 REACTOME_HOST_INTERACTIONS_OF_HIV_FACTORS
+      8 REACTOME_MITOTIC_G1_G1_S_PHASES
+      8 REACTOME_M_G1_TRANSITION
+      8 REACTOME_REGULATION_OF_APOPTOSIS
+[  mturchin@node1164  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | perl -lane 'print $F[2] - $F[5], "\t", $F[2] - $F[8], "\t", $F[2] - $F[11], "\t", $F[2] - $F[14], "\t", $F[2] - $F[17], "\t", $F[2] - $F[20], "\t", $F[2] - $F[23];'
+17      74      20      62      15      16      0
+17      74      20      62      15      16      0
+17      74      20      62      15      16      0
+17      74      20      62      15      16      0
+17      74      20      62      15      16      0
+17      74      20      62      15      16      0
+0       6       0       0 0     0       0
+17      74      20      62      15      16      0
+17      73      20      62      15      16      0
+17      74      20      62      15      16      0
+14      74      20      62      3       16      0
+17      74      20      62      15      16      0
+17      74      20      62      15      16      0
+[  mturchin@node1164  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | wc   
+     13     312    7266
+[  mturchin@node1164  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | grep -v REACTOME_CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | wc
+     12     288    6760
 
 
 
