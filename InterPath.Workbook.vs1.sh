@@ -11562,6 +11562,7 @@ cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveM
 cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | perl -lane 'print $F[2] - $F[5], "\t", $F[2] - $F[8], "\t", $F[2] - $F[11], "\t", $F[2] - $F[14], "\t", $F[2] - $F[17], "\t", $F[2] - $F[20], "\t", $F[2] - $F[23];'
 
 #On R/3.4.3_mkl
+#From: https://www.rdocumentation.org/packages/pheatmap/versions/1.0.12/topics/pheatmap, https://towardsdatascience.com/pheatmap-draws-pretty-heatmaps-483dab9a3cc, https://stackoverflow.com/questions/57729914/how-can-you-show-the-rownames-in-pheatmap-on-the-left-side-of-the-graph, https://stackoverflow.com/questions/39590849/using-a-pheatmap-in-arrangegrob, https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html
 cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | R -q -e "library(\"pheatmap\"); library(\"grid\"); library(\"gridExtra\"); Data1 <- read.table(file('stdin'), header=F); \
 PSMG_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21])); \
 PSMA_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,5]); PSMB_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,8]); PSMC_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,11]); PSMD_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,14]); PSME_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,17]); PSMF_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,20]); \ 
@@ -11575,45 +11576,22 @@ PSMF_pValDiff_scaled2 <- (-log10(Data1[,2]) - -log10(Data1[,20])) / ((Data1[,3] 
 Results.Full.pValDiff.raw <- cbind(PSMA_pValDiff_raw, PSMB_pValDiff_raw, PSMC_pValDiff_raw, PSMD_pValDiff_raw, PSME_pValDiff_raw, PSMF_pValDiff_raw); \
 Results.Full.pValDiff.scaled <- cbind(PSMA_pValDiff_scaled, PSMB_pValDiff_scaled, PSMC_pValDiff_scaled, PSMD_pValDiff_scaled, PSME_pValDiff_scaled, PSMF_pValDiff_scaled); \
 Results.Full.pValDiff.scaled2 <- cbind(PSMA_pValDiff_scaled2, PSMB_pValDiff_scaled2, PSMC_pValDiff_scaled2, PSMD_pValDiff_scaled2, PSME_pValDiff_scaled2, PSMF_pValDiff_scaled2); \
-rownames(Results.Full.pValDiff.scaled2) <- Data1[,1]; \
+rownames(Results.Full.pValDiff.scaled) <- Data1[,1]; \
 colnames(Results.Full.pValDiff.raw) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled2) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
 png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.BMI.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.vs1.png\", height=2000, width=8000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
 plot1 <- pheatmap(as.matrix(Results.Full.pValDiff.raw), cluster_cols=FALSE, cluster_rows=FALSE, main=\"raw\"); \
 plot2 <- pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"scaled\"); \
 plot3 <- pheatmap(as.matrix(Results.Full.pValDiff.scaled2), cluster_cols=FALSE, cluster_rows=FALSE, main=\"scaled2\"); \
-grid.arrange(grobs=list(plot1[[4]],plot2[[4]],plot3[[4]]), layout_matrix=rbind(c(1,2,3,3),c(1,2,3,3))); \
+grid.arrange(grobs=list(plot1[[4]],plot3[[4]],plot2[[4]]), layout_matrix=rbind(c(1,2,3,3),c(1,2,3,3))); \
 dev.off(); \
 "
 
 #PSMA_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,5])) / (Data1[,3] - Data1[,6]); PSMB_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,8])) / (Data1[,3] - Data1[,9]); PSMC_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,11])) / (Data1[,3] - Data1[,12]); PSMD_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,14])) / (Data1[,3] - Data1[,15]); PSME_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,17])) / (Data1[,3] - Data1[,18]); PSMF_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,20])) / (Data1[,3] - Data1[,21]); \ 
-
-grid.newpage(); pushViewport(viewport(layout = grid.layout(1, 2, height=unit(c(1), \"null\"), width=unit(c(1,3), \"null\")))); \
-print(plot1[[4]], vp=viewport(layout.pos.row=1, layout.pos.col=1)); print(plot2[[4]], vp=viewport(layout.pos.row=1, layout.pos.col=2)); \
-
-R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes1 <- c(\"pValBonf\", \"pVal001\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
-		}; print(length(plotPoints1)); grid.newpage(); pushViewport(viewport(layout = grid.layout(8, 5, height=unit(c(1,5,5,5,5,5,5,5), \"null\"), width=unit(c(1,5,5,5,5), \"null\")))); \ 
-		grid.text(\"Height\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=3)); grid.text(\"WaistAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=4)); grid.text(\"HipAdjBMI\", gp=gpar(cex=4), just=c(.3,.5), vp=viewport(layout.pos.row=1, layout.pos.col=5)); \
-		for (i2 in 1:length(UKBioBankPops)) { ancestry2 = strsplit(UKBioBankPops[i2], \";\")[[1]][2]; ancestry3 = gsub(\"000\$\", \"k\", ancestry2); grid.text(ancestry3, gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+1, layout.pos.col=1)); for (j2 in 1:4) { print(plotPoints1[[(4*i2)-4+j2]], vp=viewport(layout.pos.row=i2+1, layout.pos.col=j2+1)); };}; dev.off(); }; \
-
-g <- grid.arrange(arrangeGrob(grobs= plot_list,ncol=2))
-
-hm=pheatmap(hmdat)
-qp=qplot(1,1)
-lm=rbind(c(1,2,2),
-         c(1,2,2))
-grid.arrange(grobs = list(qp,hm[[4]]), layout_matrix = lm)
-
-#rownames(Results.Full.pValDiff.raw) <- Data1[,1]; 
-
-[  mturchin@node1164  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt  
-REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropNone    1.86077653210326e-05    465     REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSMA 1.25884771069451e-05 448   REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSMB 0.000162242542744995 391 REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSMC 3.30132793746607e-05 445   REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSMD 9.02709162711179e-05 403   REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSME 0.0002382893683337 450   REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSMF 1.8468138497596e-05 449    REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSMG 1.86077653210326e-05 465
-REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropNone 3.95555057099983e-05    850     REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSMA 3.22868285047573e-05 833        REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSMB 0.000208184348311047 776      REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSMC 9.16238803823077e-05 830        REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSMD 0.00011999612721314 788 REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSME 0.000105998729554413 835      REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSMF 6.41101871936556e-05 834        REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSMG 3.95555057099983e-05 850
+#rownames(Results.Full.pValDiff.scaled2) <- Data1[,1]; \
 
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3*vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/.
-/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PEGASUS/ukb_chrAll_v3*vs1.png 
-/Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PEGASUS/. 
 
 
 
