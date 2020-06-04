@@ -9792,16 +9792,11 @@ vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_c
 
 #20200604
 
-for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep Chinese`; do
 	ancestry1a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	echo $ancestry1a $ancestry2a
-	for j2 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep $ancestry2a`; do
-		ancestry1b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2b=`echo $j2 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`	
-
-		plink --bfile /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap --keep /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b.PLINK.FIDIIDs --within /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b.within --fst --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.$ancestry2b
-				
-
-vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.vcf.gz --weir-fst-pop /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.African.FIDIIDs --weir-fst-pop /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.British.Ran4000.FIDIIDs --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.Fst.African_BritRan4k
+		
+	vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.vcf.gz --keep /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.FIDIIDs --het --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a 
 
 	done;
 done;
@@ -11585,34 +11580,28 @@ cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveM
 #From: https://www.rdocumentation.org/packages/pheatmap/versions/1.0.12/topics/pheatmap, https://towardsdatascience.com/pheatmap-draws-pretty-heatmaps-483dab9a3cc, https://stackoverflow.com/questions/57729914/how-can-you-show-the-rownames-in-pheatmap-on-the-left-side-of-the-graph, https://stackoverflow.com/questions/39590849/using-a-pheatmap-in-arrangegrob, https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html
 cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | R -q -e "library(\"pheatmap\"); library(\"grid\"); library(\"gridExtra\"); Data1 <- read.table(file('stdin'), header=F); \
 Data1[Data1[,2] == 0,2] <- 1e-11; Data1[Data1[,5] == 0,5] <- 1e-11; Data1[Data1[,8] == 0,8] <- 1e-11; Data1[Data1[,11] == 0,11] <- 1e-11; Data1[Data1[,14] == 0,14] <- 1e-11; Data1[Data1[,17] == 0,17] <- 1e-11; Data1[Data1[,20] == 0,20] <- 1e-11; \ 
-PSMG_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21])); \
+PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21])); \
 PSMA_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,5]); PSMB_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,8]); PSMC_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,11]); PSMD_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,14]); PSME_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,17]); PSMF_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,20]); \ 
-PSMA_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,5])) / (Data1[,3] - Data1[,6]); PSMB_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,8])) / (Data1[,3] - Data1[,9]); PSMC_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,11])) / (Data1[,3] - Data1[,12]); PSMD_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,14])) / (Data1[,3] - Data1[,15]); PSME_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,17])) / (Data1[,3] - Data1[,18]); PSMF_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,20])) / (Data1[,3] - Data1[,21]); \ 
-PSMA_pValDiff_scaled2 <- (-log10(Data1[,2]) - -log10(Data1[,5])) / ((Data1[,3] - Data1[,6]) * (1/Data1[,3])); \ 
-PSMB_pValDiff_scaled2 <- (-log10(Data1[,2]) - -log10(Data1[,8])) / ((Data1[,3] - Data1[,9]) * (1/Data1[,3])); \
-PSMC_pValDiff_scaled2 <- (-log10(Data1[,2]) - -log10(Data1[,11])) / ((Data1[,3] - Data1[,12]) * (1/Data1[,3])); \ 
-PSMD_pValDiff_scaled2 <- (-log10(Data1[,2]) - -log10(Data1[,14])) / ((Data1[,3] - Data1[,15]) * (1/Data1[,3])); \
-PSME_pValDiff_scaled2 <- (-log10(Data1[,2]) - -log10(Data1[,17])) / ((Data1[,3] - Data1[,18]) * (1/Data1[,3])); \
-PSMF_pValDiff_scaled2 <- (-log10(Data1[,2]) - -log10(Data1[,20])) / ((Data1[,3] - Data1[,21]) * (1/Data1[,3])); \ 
-Results.Full.pValDiff.raw <- cbind(PSMA_pValDiff_raw, PSMB_pValDiff_raw, PSMC_pValDiff_raw, PSMD_pValDiff_raw, PSME_pValDiff_raw, PSMF_pValDiff_raw); \
-Results.Full.pValDiff.scaled <- cbind(PSMA_pValDiff_scaled, PSMB_pValDiff_scaled, PSMC_pValDiff_scaled, PSMD_pValDiff_scaled, PSME_pValDiff_scaled, PSMF_pValDiff_scaled); \
-Results.Full.pValDiff.scaled2 <- cbind(PSMA_pValDiff_scaled2, PSMB_pValDiff_scaled2, PSMC_pValDiff_scaled2, PSMD_pValDiff_scaled2, PSME_pValDiff_scaled2, PSMF_pValDiff_scaled2); \
+PSMA_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / (Data1[,3] - Data1[,6]); PSMB_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / (Data1[,3] - Data1[,9]); PSMC_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / (Data1[,3] - Data1[,12]); PSMD_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / (Data1[,3] - Data1[,15]); PSME_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / (Data1[,3] - Data1[,18]); PSMF_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / (Data1[,3] - Data1[,21]); \ 
+PSMA_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / ((Data1[,3] - Data1[,6]) * (1/Data1[,3])); PSMB_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / ((Data1[,3] - Data1[,9]) * (1/Data1[,3])); PSMC_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / ((Data1[,3] - Data1[,12]) * (1/Data1[,3])); PSMD_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / ((Data1[,3] - Data1[,15]) * (1/Data1[,3])); PSME_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / ((Data1[,3] - Data1[,18]) * (1/Data1[,3])); PSMF_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / ((Data1[,3] - Data1[,21]) * (1/Data1[,3])); \ 
+Results.Full.pValDiff.raw <- cbind(PSMA_pValDiff_raw, PSMB_pValDiff_raw, PSMC_pValDiff_raw, PSMD_pValDiff_raw, PSME_pValDiff_raw, PSMF_pValDiff_raw); Results.Full.pValDiff.scaled <- cbind(PSMA_pValDiff_scaled, PSMB_pValDiff_scaled, PSMC_pValDiff_scaled, PSMD_pValDiff_scaled, PSME_pValDiff_scaled, PSMF_pValDiff_scaled); Results.Full.pValDiff.scaled2 <- cbind(PSMA_pValDiff_scaled2, PSMB_pValDiff_scaled2, PSMC_pValDiff_scaled2, PSMD_pValDiff_scaled2, PSME_pValDiff_scaled2, PSMF_pValDiff_scaled2); \
 rownames(Results.Full.pValDiff.scaled) <- Data1[,1]; \
 colnames(Results.Full.pValDiff.raw) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled2) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
-png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.BMI.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.vs1.png\", height=2000, width=8000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
-plot1 <- pheatmap(as.matrix(Results.Full.pValDiff.raw), cluster_cols=FALSE, cluster_rows=FALSE, main=\"raw\"); \
-plot2 <- pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"scaled\"); \
-plot3 <- pheatmap(as.matrix(Results.Full.pValDiff.scaled2), cluster_cols=FALSE, cluster_rows=FALSE, main=\"scaled2\"); \
-grid.arrange(grobs=list(plot1[[4]],plot3[[4]],plot2[[4]]), layout_matrix=rbind(c(1,2,3,3),c(1,2,3,3))); \
+png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.BMI.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.vs2.png\", height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
+pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"scaled\"); \
 dev.off(); \
 "
 
 #PSMA_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,5])) / (Data1[,3] - Data1[,6]); PSMB_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,8])) / (Data1[,3] - Data1[,9]); PSMC_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,11])) / (Data1[,3] - Data1[,12]); PSMD_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,14])) / (Data1[,3] - Data1[,15]); PSME_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,17])) / (Data1[,3] - Data1[,18]); PSMF_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,20])) / (Data1[,3] - Data1[,21]); \ 
 #rownames(Results.Full.pValDiff.scaled2) <- Data1[,1]; \
+#plot1 <- pheatmap(as.matrix(Results.Full.pValDiff.raw), cluster_cols=FALSE, cluster_rows=FALSE, main=\"raw\"); \
+#plot2 <- pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"scaled\"); \
+#plot3 <- pheatmap(as.matrix(Results.Full.pValDiff.scaled2), cluster_cols=FALSE, cluster_rows=FALSE, main=\"scaled2\"); \
+#grid.arrange(grobs=list(plot1[[4]],plot3[[4]],plot2[[4]]), layout_matrix=rbind(c(1,2,3,3),c(1,2,3,3))); \
 
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops
-#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3*vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/.
+#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3*vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/.
 
 
 
