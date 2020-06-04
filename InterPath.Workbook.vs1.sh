@@ -11578,7 +11578,8 @@ cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveM
 
 #On R/3.4.3_mkl
 #From: https://www.rdocumentation.org/packages/pheatmap/versions/1.0.12/topics/pheatmap, https://towardsdatascience.com/pheatmap-draws-pretty-heatmaps-483dab9a3cc, https://stackoverflow.com/questions/57729914/how-can-you-show-the-rownames-in-pheatmap-on-the-left-side-of-the-graph, https://stackoverflow.com/questions/39590849/using-a-pheatmap-in-arrangegrob, https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html
-cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | R -q -e "library(\"pheatmap\"); library(\"grid\"); library(\"gridExtra\"); Data1 <- read.table(file('stdin'), header=F); \
+cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | R -q -e "library(\"pheatmap\"); library(\"grid\"); library(\"gridExtra\"); library(\"RColorBrewer\"); Data1 <- read.table(file('stdin'), header=F); \
+colors1 = seq(.07,-.03,length=100); my_palette1 <- colorRampPalette(brewer.pal(11, \"RdYlBu\")[2:10])(n = 99); \
 Data1[Data1[,2] == 0,2] <- 1e-11; Data1[Data1[,5] == 0,5] <- 1e-11; Data1[Data1[,8] == 0,8] <- 1e-11; Data1[Data1[,11] == 0,11] <- 1e-11; Data1[Data1[,14] == 0,14] <- 1e-11; Data1[Data1[,17] == 0,17] <- 1e-11; Data1[Data1[,20] == 0,20] <- 1e-11; \ 
 PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21])); \
 PSMA_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,5]); PSMB_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,8]); PSMC_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,11]); PSMD_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,14]); PSME_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,17]); PSMF_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,20]); \ 
@@ -11588,7 +11589,7 @@ Results.Full.pValDiff.raw <- cbind(PSMA_pValDiff_raw, PSMB_pValDiff_raw, PSMC_pV
 rownames(Results.Full.pValDiff.scaled) <- Data1[,1]; \
 colnames(Results.Full.pValDiff.raw) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled2) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
 png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.BMI.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.vs2.png\", height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
-pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"scaled\"); \
+pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"scaled\", color=my_palette1); \
 dev.off(); \
 "
 
@@ -11598,6 +11599,7 @@ dev.off(); \
 #plot2 <- pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"scaled\"); \
 #plot3 <- pheatmap(as.matrix(Results.Full.pValDiff.scaled2), cluster_cols=FALSE, cluster_rows=FALSE, main=\"scaled2\"); \
 #grid.arrange(grobs=list(plot1[[4]],plot3[[4]],plot2[[4]]), layout_matrix=rbind(c(1,2,3,3),c(1,2,3,3))); \
+#colors1 = c(seq(-5,-1,length=1000),seq(-.999999,.999999,length=1000),seq(1, 5,length=1000)); my_palette1 <- colorRampPalette(c(\"red\", \"yellow\", \"blue\"))(n = 2999); \
 
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops
