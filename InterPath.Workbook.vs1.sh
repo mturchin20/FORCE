@@ -9798,17 +9798,15 @@ for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') |
 		
 	vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.vcf.gz --keep /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.FIDIIDs --het --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a 
 
-	done;
 done;
 
-for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep Chinese`; do
+for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
 	ancestry1a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	echo $ancestry1a $ancestry2a
 	
-	cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.FIDIIDs | awk '{ print $1 "\t" $1 }' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.PLINK.FIDIIDs	
+	cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.FIDIIDs | sed 's/_/ /g' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.PLINK.FIDIIDs	
 	plink --bfile /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap --keep /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.PLINK.FIDIIDs --het --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.PLINK 
 
-	done;
 done;
 
 
