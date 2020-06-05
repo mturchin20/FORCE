@@ -9809,6 +9809,14 @@ for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') |
 
 done;
 
+for j1 in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
+	ancestry1a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2a=`echo $j1 | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+	echo $ancestry1a $ancestry2a
+
+	cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); mean(Data1[,5]);"
+	cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.$ancestry2a.PLINK.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); mean(Data1[,6]);" 
+
+done;
 
 
 
@@ -11599,9 +11607,13 @@ Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp 
 for (i in 1:length(Pathway.Names.New)) { Pathway.Names.New[i] <- paste(Pathway.Names.New[i], \"\n(SNPs = \", as.character(Data1[i,3]), \")\", sep=\"\"); }; \
 print(head(Pathway.Names.New)); \
 rownames(Results.Full.pValDiff.scaled) <- Pathway.Names.New; \
+Gene.Names.New <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
+Gene.Names.New.SNPs <- c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff); \
+for (i in 1:length(Gene.Names.New)) { Gene.Names.New[i] <- paste(Gene.Names.New[i], \"\n(SNPs = \", as.character(Gene.Names.New.SNPs[i]), \")\", sep=\"\"); }; \
 colnames(Results.Full.pValDiff.raw) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled2) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
+colnames(Results.Full.pValDiff.scaled) <- Gene.Names.New; \
 png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.BMI.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.vs2.png\", height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
-pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"scaled\", color=my_palette1); \
+pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"\", color=my_palette1); \
 dev.off(); \
 "
 
