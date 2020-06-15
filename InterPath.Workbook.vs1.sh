@@ -10263,6 +10263,21 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 
 
 
+#RFMix/Local Ancestry Work Misc
+#20200614
+
+#From: https://github.com/slowkoni/rfmix
+#20200614 NOTE -- I used the below commands, but I installed it outside of this screen with a 'base' form of $PATH; I think the miniconda-linked $PATH (which is baked in to this screen session it appears) was causing problems with the installation 
+cd /users/mturchin/Software
+git clone https://github.com/slowkoni/rfmix
+cd /users/mturchin/Software/rfmix
+autoreconf --force --install 
+./configure --prefix=/users/mturchin/local
+make
+
+
+
+
 
 
 
