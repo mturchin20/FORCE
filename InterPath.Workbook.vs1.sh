@@ -10291,6 +10291,35 @@ mv
 ls -lrt /users/mturchin/data/1000G/mturchin20
 zcat /users/mturchin/data/1000G/subsets/CEU/CEU.chr1.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.recode.vcf.gz | head -n 300 | perl -lane 'print join("\t", @F[0..19]);'	
 
+for i in `echo "CEU GBR YRI ESN CHB JPT ACB ASW MXL PEL ITU PJL TSI IBS FIN"`; do
+#for i in `echo "TSI IBS FIN"`; do #20180419 NOTE -- as of this date, TSi/IBS only being included here for hirschhorn polygenic height re-up work, not anything to do with the collection of 1kG pops used for ukb PCAs/analysis (just fyi)
+
+        if [ ! -d /users/mturchin/data/1000G/subsets/$i ]; then
+                mkdir /users/mturchin/data/1000G/subsets/$i
+        fi
+        if [ ! -d /users/mturchin/data/1000G/subsets/$i/mturchin20 ]; then
+                mkdir /users/mturchin/data/1000G/subsets/$i/mturchin20
+        fi
+
+        for j in `echo {1..22}`; do
+                sbatch -t 72:00:00 --mem 8g -o /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3.genotypes.slurm.output -e /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3.genotypes.slurm.error --comment "$i $j" <(echo -e '#!/bin/sh'; \
+                echo -e "\n echo $i $j; vcftools --gzvcf /users/mturchin/data/1000G/ALL.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz --keep /users/mturchin/data/1000G/subsets/integrated_call_samples_v3.20130502.ALL.panel.$i.IIDs --recode --recode-INFO-all --out /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes"; \
+                echo -e "\ngzip -f /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.recode.vcf"; \
+                echo -e "\nvcftools --gzvcf /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.recode.vcf.gz --min-alleles 2 --max-alleles 2 --remove-indels --plink --out /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs"; \
+                echo -e "\nplink --file /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs --make-bed --out /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs"; \
+                echo -e "\nrm /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.ped /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.map"; \
+##              echo -e "\nplink --bfile /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs --extract /users/mturchin/data/ukbiobank_jun17/mturchin/ukb_chrAll_v2.All.QCed.pruned.QCed.bim.noX.rsIDs --make-bed --out /users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.ukb";) ##20180524 NOTE -- deprecated, don't use these versions of 1000G files, use ukb-subset specific 1000G files, eg `*.ukb.${ancestry2}.*` type files
+        done
+
+#       j="X"; sbatch -t 72:00:00 --mem 8g -o /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3.genotypes.slurm.output -e /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3.genotypes.slurm.error --comment "$i $j" <(echo -e '#!/bin/sh'; echo -e "\necho $i $j"; echo -e "\nvcftools --gzvcf /users/mturchin/data/1000G/ALL.chr${j}.phase3_shapeit2_mvncall_integrated_v1b.20130502.genotypes.vcf.gz --keep /users/mturchin/data/1000G/subsets/integrated_call_samples_v3.20130502.ALL.panel.$i.IIDs --recode --recode-INFO-all --out /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v1b.20130502.genotypes"; echo -e "\ngzip -f /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v1b.20130502.genotypes.recode.vcf"; echo -e "\nvcftools --gzvcf /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v1b.20130502.genotypes.recode.vcf.gz --min-alleles 2 --max-alleles 2 --remove-indels --plink --out /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v1b.20130502.genotypes.SNPs"; echo -e "\nplink --file /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v1b.20130502.genotypes.SNPs --make-bed --out /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v1b.20130502.genotypes.SNPs"; echo -e "\nrm /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v1b.20130502.genotypes.SNPs.ped /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v1b.20130502.genotypes.SNPs.map";)
+#       j="Y"; sbatch -t 72:00:00 --mem 8g -o /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3.genotypes.slurm.output -e /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3.genotypes.slurm.error --comment "$i $j" <(echo -e '#!/bin/sh'; echo -e "\necho $i $j"; echo -e "\nvcftools --gzvcf /users/mturchin/data/1000G/ALL.chr${j}.phase3_integrated_v2a.20130502.genotypes.vcf.gz --keep /users/mturchin/data/1000G/subsets/integrated_call_samples_v3.20130502.ALL.panel.$i.IIDs --recode --recode-INFO-all --out /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_integrated_v2a.20130502.genotypes"; echo -e "\ngzip -f /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_integrated_v2a.20130502.genotypes.recode.vcf"; echo -e "\nvcftools --gzvcf /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_integrated_v2a.20130502.genotypes.recode.vcf.gz --min-alleles 2 --max-alleles 2 --remove-indels --plink --out /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_integrated_v2a.20130502.genotypes.SNPs"; echo -e "\nplink --file /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_integrated_v2a.20130502.genotypes.SNPs --make-bed --out /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_integrated_v2a.20130502.genotypes.SNPs"; echo -e "\nrm /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_integrated_v2a.20130502.genotypes.SNPs.ped /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_integrated_v2a.20130502.genotypes.SNPs.map";)
+
+done
+
+
+
+
+
 
 
 
