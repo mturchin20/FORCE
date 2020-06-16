@@ -10266,7 +10266,7 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 #RFMix/Local Ancestry Work Misc
 #20200614
 
-#From: https://github.com/slowkoni/rfmix, https://github.com/slowkoni/rfmix/blob/master/MANUAL.md, https://www.biostars.org/p/349776/, https://www.biostars.org/p/72663/, https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.html, https://www.biostars.org/p/170418/, https://github.com/joepickrell/1000-genomes-genetic-maps 
+#From: https://github.com/slowkoni/rfmix, https://github.com/slowkoni/rfmix/blob/master/MANUAL.md, https://www.biostars.org/p/349776/, https://www.biostars.org/p/72663/, https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.html, https://www.biostars.org/p/170418/, https://github.com/joepickrell/1000-genomes-genetic-maps, https://www.internationalgenome.org/faq/are-1000-genomes-variant-calls-phased/ 
 #20200614 NOTE -- I used the below commands, but I installed it outside of this screen with a 'base' form of $PATH; I think the miniconda-linked $PATH (which is baked in to this screen session it appears) was causing problems with the installation 
 cd /users/mturchin/Software
 git clone https://github.com/slowkoni/rfmix
@@ -10282,9 +10282,14 @@ cd  /users/mturchin/data/mturchin/Data/1000G/IMPUTE
 wget https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.tgz
 tar xvfz /users/mturchin/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3.tgz
 
+mkdir /users/mturchin/data/mturchin/Data/1000G/OMNI
+cd /users/mturchin/data/mturchin/Data/1000G/OMNI
+git clone https://github.com/joepickrell/1000-genomes-genetic-maps
+mv 
 
 
-	
+ls -lrt /users/mturchin/data/1000G/mturchin20
+zcat /users/mturchin/data/1000G/subsets/CEU/CEU.chr1.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.recode.vcf.gz | head -n 300 | perl -lane 'print join("\t", @F[0..19]);'	
 
 
 
