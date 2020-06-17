@@ -10266,7 +10266,7 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 #RFMix/Local Ancestry Work Misc
 #20200614
 
-#From: https://github.com/slowkoni/rfmix, https://github.com/slowkoni/rfmix/blob/master/MANUAL.md, https://www.biostars.org/p/349776/, https://www.biostars.org/p/72663/, https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.html, https://www.biostars.org/p/170418/, https://github.com/joepickrell/1000-genomes-genetic-maps, https://www.internationalgenome.org/faq/are-1000-genomes-variant-calls-phased/, https://github.com/slowkoni/rfmix/issues/15, https://github.com/armartin/ancestry_pipeline 
+#From: https://github.com/slowkoni/rfmix, https://github.com/slowkoni/rfmix/blob/master/MANUAL.md, https://www.biostars.org/p/349776/, https://www.biostars.org/p/72663/, https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.html, https://www.biostars.org/p/170418/, https://github.com/joepickrell/1000-genomes-genetic-maps, https://www.internationalgenome.org/faq/are-1000-genomes-variant-calls-phased/, https://github.com/slowkoni/rfmix/issues/15, https://github.com/armartin/ancestry_pipeline, http://samtools.github.io/bcftools/bcftools.html 
 #20200614 NOTE -- I used the below commands, but I installed it outside of this screen with a 'base' form of $PATH; I think the miniconda-linked $PATH (which is baked in to this screen session it appears) was causing problems with the installation 
 cd /users/mturchin/Software
 git clone https://github.com/slowkoni/rfmix
@@ -10350,6 +10350,26 @@ for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'pri
 
 done
 
+for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+	echo $i
+
+	bcftools concat -f /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt -O b -o /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf 
+
+done
+
+bcftools merge /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+/users/mturchin/data/1000G/subsets/GBR/GBR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+/users/mturchin/data/1000G/subsets/TSI/TSI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+/users/mturchin/data/1000G/subsets/IBS/IBS.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+/users/mturchin/data/1000G/subsets/FIN/FIN.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+/users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+/users/mturchin/data/1000G/subsets/LWK/LWK.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+/users/mturchin/data/1000G/subsets/GWD/GWD.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+/users/mturchin/data/1000G/subsets/MSL/MSL.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+/users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+
+bcftools merge /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+/users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
 
 
         for j in `echo {1..22}`; do
