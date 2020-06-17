@@ -10342,53 +10342,42 @@ gunzip /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additi
 
 ##zcat /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort | uniq | wc
 
-for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'print join("\n", @F);')`; d
+for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'print join("\n", @F);')`; do
 
-        for j in `echo {22..22}`; do
+        for j in `echo {1..21}`; do
                 sbatch -t 72:00:00 --mem 8g -o /users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chr${j}.phase3.genotypes.slurm.output -e /users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chr${j}.phase3.genotypes.slurm.error --comment "$i $j" <(echo -e '#!/bin/sh'; \
-                echo -e "\nvcftools --gzvcf /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.recode.vcf.gz --snps /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs --recode-bcf --recode-INFO-all --out /users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf";)
+                echo -e "\nvcftools --gzvcf /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.recode.vcf.gz --snps /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs --recode-bcf --recode-INFO-all --out /users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs";)
 	done
 done
 
-  
-/users/mturchin/data/1000G/ALL.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz --keep /users/mturchin/data/1000G/subsets/integrated_call_samples_v3.20130502.ALL.panel.$i.IIDs --recode --recode-INFO-all --out /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes"; \
-
-		sbatch -t 24:00:00 --mem 8g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/slurm/ukb_chr${i}_v3.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/slurm/ukb_chr${i}_v3.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.error --comment "$ancestry1 $ancestry2 $i" <(echo -e '#!/bin/sh'; echo -e "\nvcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.vcf.gz --snps /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.SNPIDs --recode-bcf --recode-INFO-all --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno";) 
-	done
-
-done
-
-for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'print join("\n", @F);') | head -n 1`; do
-
-for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'print join("\n", @F);')`; do
 	echo $i
 
 	rm -f /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.MergeList.bcftools.txt
-        for j in `echo {1..22}`; do
-		echo "/users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.recode.vcf.gz" >> /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.MergeList.bcftools.txt	
+        rm -f /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+        rm -f /users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+	for j in `echo {1..22}`; do
+		echo "/users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf" >> /users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt	
 	done
 
 done
 
-for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'print join("\n", @F);') | grep -v CEU`; do
 	echo $i
 
-	bcftools concat -f /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.MergeList.bcftools.txt -O b -o /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.recode.bcf 
-
-done
-
-for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'print join("\n", @F);') | head -n 1`; do
-	echo $i
-
-	bcftools 
-
-	bcftools concat -f /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.MergeList.bcftools.txt -O b -o /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.recode.bcf 
+	bcftools concat -f /users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt -O b -o /users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf 
 
 done
 
 bcftools merge /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/GBR/GBR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/TSI/TSI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/IBS/IBS.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/FIN/FIN.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/LWK/LWK.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/GWD/GWD.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/MSL/MSL.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf > /users/mturchin/data/1000G/mturchin20/subsets/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf
 
 bcftools merge /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf > /users/mturchin/data/1000G/mturchin20/subsets/1EUR1AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf
+
+
+
+
+
+
 
 
         for j in `echo {1..22}`; do
