@@ -10281,6 +10281,18 @@ mkdir /users/mturchin/data/mturchin/Data/1000G/IMPUTE
 cd  /users/mturchin/data/mturchin/Data/1000G/IMPUTE
 wget https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.tgz
 tar xvfz /users/mturchin/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3.tgz
+mkdir /users/mturchin/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3/RFMix
+
+for i in `echo {1..22}`; do
+	echo $i
+
+	cat /users/mturchin/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3/genetic_map_chr${i}_combined_b37.txt | grep -v Genetic_Map | awk -v i2=$i '{ print i2 "\t" $1 "\t" $3 }' | gzip > /users/mturchin/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3/RFMix/genetic_map_chr${i}_combined_b37.RFMix.edits.txt.gz
+
+done
+
+zcat /users/mturchin/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3/RFMix/genetic_map_chr*_combined_b37.RFMix.edits.txt.gz > /users/mturchin/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3/RFMix/genetic_map_chrAll_combined_b37.RFMix.edits.txt
+
+awk -v pValBonf=$pValBonf '{ if ($10 < pValBonf) { print $0 } }' | wc
 
 mkdir /users/mturchin/data/mturchin/Data/1000G/OMNI
 cd /users/mturchin/data/mturchin/Data/1000G/OMNI
@@ -10340,7 +10352,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 
 done
 
-bcftools concat
+bcftools index /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf
 
 for i in `echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN"`; do 
 	echo $i
