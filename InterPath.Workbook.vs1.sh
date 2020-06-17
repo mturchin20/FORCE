@@ -10292,8 +10292,6 @@ done
 
 zcat /users/mturchin/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3/RFMix/genetic_map_chr*_combined_b37.RFMix.edits.txt.gz > /users/mturchin/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3/RFMix/genetic_map_chrAll_combined_b37.RFMix.edits.txt
 
-awk -v pValBonf=$pValBonf '{ if ($10 < pValBonf) { print $0 } }' | wc
-
 mkdir /users/mturchin/data/mturchin/Data/1000G/OMNI
 cd /users/mturchin/data/mturchin/Data/1000G/OMNI
 git clone https://github.com/joepickrell/1000-genomes-genetic-maps
@@ -10406,18 +10404,38 @@ for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'pri
 
 done
 
-bcftools merge /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/GBR/GBR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/TSI/TSI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/IBS/IBS.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/FIN/FIN.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/LWK/LWK.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/GWD/GWD.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/MSL/MSL.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf > /users/mturchin/data/1000G/mturchin20/subsets/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf
+bcftools merge 
+/users/mturchin/data/1000G/subsets/CEU/mturchin20/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf 
+/users/mturchin/data/1000G/subsets/GBR/mturchin20/GBR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf 
+/users/mturchin/data/1000G/subsets/TSI/mturchin20/TSI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf 
+/users/mturchin/data/1000G/subsets/IBS/mturchin20/IBS.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf 
+/users/mturchin/data/1000G/subsets/FIN/mturchin20/FIN.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf 
+/users/mturchin/data/1000G/subsets/YRI/mturchin20/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf 
+/users/mturchin/data/1000G/subsets/LWK/mturchin20/LWK.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf 
+/users/mturchin/data/1000G/subsets/GWD/mturchin20/GWD.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf 
+/users/mturchin/data/1000G/subsets/MSL/mturchin20/MSL.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf 
+/users/mturchin/data/1000G/subsets/ESN/mturchin20/ESN.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf 
+> /users/mturchin/data/1000G/mturchin20/subsets/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf
 
-bcftools merge /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf > /users/mturchin/data/1000G/mturchin20/subsets/1EUR1AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf
+bcftools merge /users/mturchin/data/1000G/subsets/CEU/mturchin20/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/YRI/mturchin20/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf > /users/mturchin/data/1000G/mturchin20/subsets/1EUR1AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf
 
 bcftools index /users/mturchin/data/1000G/mturchin20/subsets/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf
 bcftools index /users/mturchin/data/1000G/mturchin20/subsets/1EUR1AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf
 
 
 
+map file
+/users/mturchin/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3/RFMix/genetic_map_chrAll_combined_b37.RFMix.edits.txt
 
 
 
+
+
+
+
+
+
+sbatch -t UNLIMITED --mem 50g -n 16 -o /users/mturchin/data/ukbiobank_jun17/subsets/British/British/mturchin20/admixture/admix.201804.1kG_FINTSI.ukb_Brit.1kG_CEUGBR.vs1.16.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/British/British/mturchin20/admixture/admix.201804.1kG_FINTSI.ukb_Brit.1kG_CEUGBR.vs1.16.slurm.error --comment "admix British British FINTSI" <(echo -e '#!/bin/sh'; echo -e "\n/users/mturchin/Software/admixture_linux-1.3.0/admixture -s 394234 -j16 --supervised /users/mturchin/data/ukbiobank_jun17/subsets/British/British/mturchin20/ukb_chrAll_v2.British.QCed.pruned.QCed.dropRltvs.noX.1kG.FINCEUGBRTSI.mltiThrd.16.bed 2";)
 
 
 
