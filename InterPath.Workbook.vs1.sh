@@ -10334,9 +10334,21 @@ join - <(zcat /users/mturchin/data/1000G/subsets/GWD/GWD.chrAll.phase3_shapeit2_
 join - <(zcat /users/mturchin/data/1000G/subsets/MSL/MSL.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) | \
 join - <(zcat /users/mturchin/data/1000G/subsets/ESN/ESN.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz 
 
+##zcat /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/GBR/GBR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/TSI/TSI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/IBS/IBS.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/FIN/FIN.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/LWK/LWK.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/GWD/GWD.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/MSL/MSL.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/ESN/ESN.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort | uniq | wc
+
 join <(zcat /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) <(zcat /users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/1EUR1AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz
 
+##zcat /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort | uniq | wc
 
+for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'print join("\n", @F);') | head -n 1`; do
+	echo $i
+
+	rm -f /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
+        for j in `echo {1..22}`; do
+		echo "/users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.recode.vcf.gz" >> /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt	
+	done
+
+done
 
 
 
@@ -22135,6 +22147,73 @@ British;British.Ran4000;Brit4k;138503
 4517734 7
 4417368 8
 3414848 9
+[  mturchin@node1328  ~]$join <(zcat /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) <(zcat /users/mturchin/data/1000G/subsets/GBR/GBR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) | \
+> join - <(zcat /users/mturchin/data/1000G/subsets/TSI/TSI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) | \
+> join - <(zcat /users/mturchin/data/1000G/subsets/IBS/IBS.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) | \
+> join - <(zcat /users/mturchin/data/1000G/subsets/FIN/FIN.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) | \
+> join - <(zcat /users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) | \
+> join - <(zcat /users/mturchin/data/1000G/subsets/LWK/LWK.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) | \
+> join - <(zcat /users/mturchin/data/1000G/subsets/GWD/GWD.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) | \
+> join - <(zcat /users/mturchin/data/1000G/subsets/MSL/MSL.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) | \
+> join - <(zcat /users/mturchin/data/1000G/subsets/ESN/ESN.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz
+[  mturchin@node1328  ~]$
+[  mturchin@node1328  ~]$zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | wc
+77818154 77818154 917025829
+(InterPath) [  mturchin@login003  ~]$zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | head -n 10
+12:10035257
+12:10049468
+12:10076749
+12:10100437
+12:10104939
+12:10105748
+12:10106118
+12:10120371
+12:10157378
+12:10161208
+(InterPath) [  mturchin@login003  ~]$zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | tail -n 10
+ss1388116449
+ss1388116450
+ss1388116451
+ss1388116452
+ss1388116455
+ss1388116456
+ss1388116459
+ss1388116466
+ss1388116467
+ss1388116538
+(InterPath) [  mturchin@login003  ~]$zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | grep -v ^rs | grep -v ^ss | wc
+    244     244    2770
+(InterPath) [  mturchin@login003  ~]$zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | grep -v ^rs | grep -v ^ss | tail -n 10
+12:6975104
+12:6977123
+12:6979356
+12:6984901
+12:6988931
+12:6996380
+12:6998243
+12:8400000
+17:1144632
+8:89329148
+(InterPath) [  mturchin@login003  ~]$zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | grep -v ^rs | grep -v ^ss | head -n 10
+12:10035257
+12:10049468
+12:10076749
+12:10100437
+12:10104939
+12:10105748
+12:10106118
+12:10120371
+12:10157378
+12:10161208
+[  mturchin@node1328  ~]$zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | wc
+77818154 77818154 917025829
+[  mturchin@node1328  ~]$zcat /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/GBR/GBR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/TSI/TSI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/IBS/IBS.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/FIN/FIN.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/LWK/LWK.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/GWD/GWD.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/MSL/MSL.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/ESN/ESN.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort | uniq | wc
+77818154 77818154 917025829
+[  mturchin@node1302  ~/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3]$join <(zcat /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) <(zcat /users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort) | gzip > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/1EUR1AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz
+[  mturchin@node1302  ~/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3]$zcat /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz /users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | sort | uniq | wc
+77818154 77818154 917025829
+[  mturchin@node1302  ~/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3]$zcat /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.bim.SNPIDs.gz | wc
+77818154 77818154 917025829
 
 
 
