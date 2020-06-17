@@ -10317,6 +10317,31 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 	done
 done
 
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+		
+	echo $pheno1 $ancestry1 $ancestry2
+
+	rm -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.bcftools.txt
+	for i in `echo {1..22}`; do
+		echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf" >> /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.bcftools.txt
+	done
+
+done
+
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+		
+	echo $pheno1 $ancestry1 $ancestry2
+
+	bcftools concat -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.bcftools.txt -O b -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf 
+
+done
+
+bcftools concat
+
 for i in `echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN"`; do 
 	echo $i
 
@@ -10353,14 +10378,14 @@ done
 for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'print join("\n", @F);')`; do
 	echo $i
 
-	rm -f /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.MergeList.bcftools.txt
-        rm -f /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
         rm -f /users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
 	for j in `echo {1..22}`; do
 		echo "/users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf" >> /users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt	
 	done
 
 done
+#	rm -f /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.MergeList.bcftools.txt
+#	rm -f /users/mturchin/data/1000G/subsets/$i/$i.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.MergeList.bcftools.txt
 
 for i in `cat <(echo "CEU GBR TSI IBS FIN YRI LWK GWD MSL ESN" | perl -lane 'print join("\n", @F);') | grep -v CEU`; do
 	echo $i
@@ -10373,6 +10398,8 @@ bcftools merge /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2
 
 bcftools merge /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf /users/mturchin/data/1000G/subsets/YRI/YRI.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf > /users/mturchin/data/1000G/mturchin20/subsets/1EUR1AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf
 
+bcftools index /users/mturchin/data/1000G/mturchin20/subsets/5EUR5AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf
+bcftools index /users/mturchin/data/1000G/mturchin20/subsets/1EUR1AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf
 
 
 
@@ -10380,49 +10407,8 @@ bcftools merge /users/mturchin/data/1000G/subsets/CEU/CEU.chrAll.phase3_shapeit2
 
 
 
-        for j in `echo {1..22}`; do
-                sbatch -t 72:00:00 --mem 8g -o /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3.genotypes.slurm.output -e /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3.genotypes.slurm.error --comment "$i $j" <(echo -e '#!/bin/sh'; \
-                echo -e "\nvcftools --gzvcf /users/mturchin/data/1000G/ALL.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz --keep /users/mturchin/data/1000G/subsets/integrated_call_samples_v3.20130502.ALL.panel.$i.IIDs --recode --recode-INFO-all --out /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes"; \
-                echo -e "\ngzip -f /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.recode.vcf"; \
-                echo -e "\nvcftools --gzvcf /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.recode.vcf.gz --min-alleles 2 --max-alleles 2 --remove-indels --plink --out /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs"; \
-                echo -e "\nplink --file /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs --make-bed --out /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs"; \
-                echo -e "\nrm /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.ped /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.map"; \
-##              echo -e "\nplink --bfile /users/mturchin/data/1000G/subsets/$i/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs --extract /users/mturchin/data/ukbiobank_jun17/mturchin/ukb_chrAll_v2.All.QCed.pruned.QCed.bim.noX.rsIDs --make-bed --out /users/mturchin/data/1000G/subsets/$i/mturchin20/$i.chr${j}.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.ukb";) ##20180524 NOTE -- deprecated, don't use these versions of 1000G files, use ukb-subset specific 1000G files, eg `*.ukb.${ancestry2}.*` type files
-        done
 
-done
 
-		mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/slurm
-	fi
-
-	for i in {1..22}; do
-		echo $i
-        	sbatch -t 24:00:00 --mem 20g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/slurm/ukb_chr${i}_v3.2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/slurm/ukb_chr${i}_v3.2.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.QCed.error --comment "$ancestry1 $ancestry2 $i" <(echo -e '#!/bin/sh'; echo -e "\nplink --vcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.vcf.gz --extract /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.bim.ImptHRC.info.r2gt3.noDups.PLINK.ChrBPs --mac 1 --geno 0 --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp";)
-	done 
-	sleep 1
-done 
-
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8`; do
-        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
-        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-
-        echo $ancestry1 $ancestry2 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imput^ation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.Vs2.txt
-
-	for chr in {2..22}; do
-                echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.fam" 
-        done > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.Vs2.txt
-
-done
-
-sleep 3600; sacct; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
-        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
-        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-
-        echo $ancestry1 $ancestry2 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.Vs2.txt
-	
-	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr1_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp --merge-list /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.Vs2.txt --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno
-
-done
 
 
 
