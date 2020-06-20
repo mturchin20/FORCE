@@ -10263,7 +10263,7 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 
 
 
-#RFMix/Local Ancestry Work Misc
+#RFMix/Local Ancestry + Admixture/Global Ancestry Work Misc
 #20200614
 
 #From: https://github.com/slowkoni/rfmix, https://github.com/slowkoni/rfmix/blob/master/MANUAL.md, https://www.biostars.org/p/349776/, https://www.biostars.org/p/72663/, https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.html, https://www.biostars.org/p/170418/, https://github.com/joepickrell/1000-genomes-genetic-maps, https://www.internationalgenome.org/faq/are-1000-genomes-variant-calls-phased/, https://github.com/slowkoni/rfmix/issues/15, https://github.com/armartin/ancestry_pipeline, http://samtools.github.io/bcftools/bcftools.html, https://www.biostars.org/p/316451/ 
@@ -10475,6 +10475,61 @@ for j in `echo {1..21}`; do
 	echo -e "\n/users/mturchin/Software/rfmix/rfmix -f /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf -r /users/mturchin/data/1000G/mturchin20/subsets/1EUR1AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf -m /users/mturchin/data/1000G/mturchin20/subsets/1EUR1AFR.chrAll.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.SNPs.recode.bcf.IIDs.wAnc -g /users/mturchin/data/mturchin/Data/1000G/IMPUTE/1000GP_Phase3/RFMix/genetic_map_chrAll_combined_b37.RFMix.edits.txt -o /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr${j}_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.1EUR1AFR.EM.2 --chromosome=${j} -e 2";)
 done
 
+for j in `echo {1..22}`; do
+	echo $j
+
+	if [ $j == 1 ]; then
+		rm -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.tsv.gz
+		rm -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.EM.2.fb.tsv.gz
+		rm -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.1EUR1AFR.fb.tsv.gz
+		rm -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.1EUR1AFR.EM.2.fb.tsv.gz
+		cat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr1_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.tsv | head -n 2 | tail -n 1 > /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr1_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.tsv.header
+		cat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr1_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.EM.2.fb.tsv | head -n 2 | tail -n 1 > /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr1_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.EM.2.fb.tsv.header
+		cat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr1_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.1EUR1AFR.fb.tsv | head -n 2 | tail -n 1 > /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr1_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.1EUR1AFR.fb.tsv.header
+		cat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr1_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.1EUR1AFR.EM.2.fb.tsv | head -n 2 | tail -n 1 > /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr1_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.1EUR1AFR.EM.2.fb.tsv.header
+	fi
+
+	cat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr${j}_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.tsv | grep -v reference | grep -v genetic_position >> /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.tsv
+	cat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr${j}_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.EM.2.fb.tsv | grep -v reference | grep -v genetic_position >> /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.EM.2.fb.tsv
+	cat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr${j}_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.1EUR1AFR.fb.tsv | grep -v reference | grep -v genetic_position >> /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.1EUR1AFR.fb.tsv
+	cat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr${j}_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.1EUR1AFR.EM.2.fb.tsv | grep -v reference | grep -v genetic_position >> /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.1EUR1AFR.EM.2.fb.tsv
+	
+	if [ $j == 22 ]; then
+		gzip -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.tsv 
+		gzip -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.EM.2.fb.tsv 
+		gzip -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.1EUR1AFR.fb.tsv 
+		gzip -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.1EUR1AFR.EM.2.fb.tsv 
+	done
+
+done
+
+
+[  mturchin@node1126  ~]$cat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chr21_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.EM.2.fb.tsv | perl -lane 'print join("\t", @F[0..19]);' | head -n 10
+#reference_panel_population:    AFR     EUR
+chromosome      physical_position       genetic_position        genetic_marker_index    4093945_4093945:::hap1:::AFR    4093945_4093945:::hap1:::EUR    4093945_4093945:::hap2:::AFR    4093945_4093945:::hap2:::EUR    4251877_4251877:::hap1:::AFR  4251877_4251877:::hap1:::EUR    4251877_4251877:::hap2:::AFR    4251877_4251877:::hap2:::EUR    4730989_4730989:::hap1:::AFR    4730989_4730989:::hap1:::EUR    4730989_4730989:::hap2:::AFR    4730989_4730989:::hap2:::EUR    1413494_1413494:::hap1:::AFR  1413494_1413494:::hap1:::EUR    1413494_1413494:::hap2:::AFR    1413494_1413494:::hap2:::EUR
+21      14595742        0.87425 0       1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000
+21      14693381        0.88843 5       1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000
+21      14756794        0.90793 10      1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000
+21      14778196        0.91068 15      1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000
+21      14911701        0.99651 20      1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000
+21      14973865        1.00866 25      1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000
+21      15212272        1.31497 30      1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000
+21      15290259        1.45806 35      1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000 1.00000 0.00000
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Admixture
+
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/Admix
 mkdir /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix
 
@@ -10570,8 +10625,8 @@ ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mt
 ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.fam /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.fam
 ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.pop /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.pop
 
-/users/mturchin/Software/admixture_linux-1.3.0/admixture -s 8973234 -j16 --supervised /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.5EUR5AFR.merged.bed 2
-/users/mturchin/Software/admixture_linux-1.3.0/admixture -s 8973234 -j16 --supervised /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.bed 2
+cd /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/; /users/mturchin/Software/admixture_linux-1.3.0/admixture -s 8973234 -j16 --supervised /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.5EUR5AFR.merged.bed 2
+cd /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/; /users/mturchin/Software/admixture_linux-1.3.0/admixture -s 8973234 -j16 --supervised /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.bed 2
 
 plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.5EUR5AFR.merged --indep-pairwise 1000 50 .1 --out /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.5EUR5AFR.merged.pruning 
 plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.5EUR5AFR.merged --extract /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.5EUR5AFR.merged.pruning.prune.in --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.5EUR5AFR.merged.pruned
@@ -10587,8 +10642,8 @@ ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mt
 ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.pruned.fam /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.pruned.fam
 ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.pop /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.pruned.pop
 
-/users/mturchin/Software/admixture_linux-1.3.0/admixture -s 8973234 -j16 --supervised /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.5EUR5AFR.merged.pruned.bed 2
-/users/mturchin/Software/admixture_linux-1.3.0/admixture -s 8973234 -j16 --supervised /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.pruned.bed 2
+cd /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/; /users/mturchin/Software/admixture_linux-1.3.0/admixture -s 8973234 -j16 --supervised /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.5EUR5AFR.merged.pruned.bed 2
+cd /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/; /users/mturchin/Software/admixture_linux-1.3.0/admixture -s 8973234 -j16 --supervised /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Admix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.pruned.bed 2
 
 
 
@@ -10598,6 +10653,15 @@ ln -s /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mt
 
 
 sbatch -t UNLIMITED --mem 50g -n 16 -o /users/mturchin/data/ukbiobank_jun17/subsets/British/British/mturchin20/admixture/admix.201804.1kG_FINTSI.ukb_Brit.1kG_CEUGBR.vs1.16.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/British/British/mturchin20/admixture/admix.201804.1kG_FINTSI.ukb_Brit.1kG_CEUGBR.vs1.16.slurm.error --comment "admix British British FINTSI" <(echo -e '#!/bin/sh'; echo -e "\n/users/mturchin/Software/admixture_linux-1.3.0/admixture -s 394234 -j16 --supervised /users/mturchin/data/ukbiobank_jun17/subsets/British/British/mturchin20/ukb_chrAll_v2.British.QCed.pruned.QCed.dropRltvs.noX.1kG.FINCEUGBRTSI.mltiThrd.16.bed 2";)
+
+
+
+
+
+
+
+
+
 
 
 
