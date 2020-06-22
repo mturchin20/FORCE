@@ -10581,8 +10581,19 @@ ln -s /users/mturchin/data/1000G/mturchin20/subsets/1EUR1AFR.chrAll.phase3_shape
 ```
 [  mturchin@node1130  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged-merge.missnp
 22:31969249
+[  mturchin@node1312  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.5EUR5AFR.merged-merge.missnp
+11:92938611
+14:73079291
+17:34165601
+17:8784900
+1:33333450
+22:27822670
+22:31969249
+6:109286366
+6:155635281
 ```
-cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.5EUR5AFR.ChrBPs | grep -v "22:31969249" > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.5EUR5AFR.ChrBPs.temp1
+##cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.5EUR5AFR.ChrBPs | grep -v "22:31969249" > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.5EUR5AFR.ChrBPs.temp1
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.5EUR5AFR.ChrBPs | grep -v -f /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.5EUR5AFR.merged-merge.missnp > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.5EUR5AFR.ChrBPs.temp1
 mv /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.5EUR5AFR.ChrBPs.temp1 /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.5EUR5AFR.ChrBPs
 cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.1EUR1AFR.ChrBPs | grep -v "22:31969249" > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.1EUR1AFR.ChrBPs.temp1
 mv /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.1EUR1AFR.ChrBPs.temp1 /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.1EUR1AFR.ChrBPs
@@ -22513,6 +22524,11 @@ ESN
 #CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  HG02922 HG02923 HG02938 HG02941 HG02943 HG02944 HG02946 HG02947 HG02952 HG02953 HG02968
 (InterPath) [  mturchin@login003  ~]$paste /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.fam /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.1EUR1AFR.merged.pre.pop | awk '{ if ($1 == $7) { print "1" } else { print "0" } }' | sort | uniq -c
    3318 1
+[  mturchin@node1312  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.5EUR5AFR.ChrBPs | grep -v -f /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.5EUR5AFR.merged-merge.missnp > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.5EUR5AFR.ChrBPs.temp1
+[  mturchin@node1312  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.5EUR5AFR.ChrBPs | wc
+ 372445  372445 4333949
+[  mturchin@node1312  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.forAdmix.map.Overlap.5EUR5AFR.ChrBPs.temp1 | wc
+ 372436  372436 4333843
 
 
 
