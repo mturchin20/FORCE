@@ -7733,10 +7733,22 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); UKBioBankPops <- c(
 #20200630
 
 # /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs
+# /users/mturchin/data/mturchin/Data/Loh2017/body_HEIGHTz.sumstats.lt5eNeg9.bmass.GrdyClmp.txt.gz
+#(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/Temp1/InterPath_temp1]$zcat /users/mturchin/data/mturchin/Data/Loh2017/body_HEIGHTz.sumstats.lt5eNeg9.gz | wc
+# 259769 3117228 21262091
+#(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/Temp1/InterPath_temp1]$zcat /users/mturchin/data/mturchin/Data/Loh2017/body_HEIGHTz.sumstats.gz | awk '{ if ($10 < 5e-9) { print $0 } }' | wc
+# 259769 3117228 21262091
+# zcat /users/mturchin/data/mturchin/Data/Loh2017/body_Heightz.sumstats.gz | awk '{ if ($10 < 5e-9) { print $0 } }' | gzip > /users/mturchin/data/mturchin/Data/Loh2017/body_Heightz.sumstats.lt5eNeg9.gz
+# zcat /users/mturchin/data/mturchin/Data/Loh2017/body_BMIz.sumstats.gz | awk '{ if ($10 < 5e-9) { print $0 } }' | gzip > /users/mturchin/data/mturchin/Data/Loh2017/body_BMIz.sumstats.lt5eNeg9.gz
 
+ln -s /users/mturchin/data/mturchin/Data/Loh2017/body_HEIGHTz.sumstats.gz /users/mturchin/data/mturchin/Data/Loh2017/body_Heightz.sumstats.gz
+#ln -s /users/mturchin/data/mturchin/Data/Loh2017/body_BMIz.sumstats.gz /users/mturchin/data/mturchin/Data/Loh2017/body_BMIz.sumstats.gz
 
-ln -s /users/mturchin/data/mturchin/Data/Loh2017/body_HEIGHTz.sumstats.gz /users/mturchin/data/mturchin/Data/Loh2017/body_Height.sumstats.gz
-ln -s /users/mturchin/data/mturchin/Data/Loh2017/body_BMIz.sumstats.gz /users/mturchin/data/mturchin/Data/Loh2017/body_BMI.sumstats.gz
+#mkdir /users/mturchin/Software/fetchChromSizes/
+#cd /users/mturchin/Software/fetchChromSizes/
+#wget https://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
+#bash fetchChromSizes hg19 > hg19.chrom.sizes
+#bash fetchChromSizes hg18 > hg18.chrom.sizes
 
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 1 | tail -n 1`; do
 	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2 | tail -n 1`; do
@@ -7744,9 +7756,20 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 	        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	
 	        echo $i $ancestry1 $ancestry2 $ancestry3
+
+		zcat /users/mturchin/data/mturchin/Data/Loh2017/body_${i}z.sumstats.lt5eNeg9.gz | awk '{ print "chr" $2 "\t" $3 "\t" $3 "\t" $10 }' > /users/mturchin/data/mturchin/Data/Loh2017/body_${i}z.sumstats.lt5eNeg9.bed
+		zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep ADD | awk '{ print "chr" $1 "\t" $3 "\t" $3 "\t" $9 }' | grep -v chrCHR > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.bed
+
+		bedtools slop -i /users/mturchin/data/mturchin/Data/Loh2017/body_${i}z.sumstats.lt5eNeg9.bed -g /users/mturchin/Software/fetchChromSizes/hg19.chrom.sizes -b 5000 > /users/mturchin/data/mturchin/Data/Loh2017/body_${i}z.sumstats.lt5eNeg9.5kbPadding.bed
+		intersectBed -wb -a /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.bed -b /users/mturchin/data/mturchin/Data/Loh2017/body_${i}z.sumstats.lt5eNeg9.5kbPadding.bed > 	
 	
-		join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep ADD | awk '{ print $2 "\t" $0 }' | sort -k 1,1) <(zcat /users/mturchin/data/mturchin/Data/Loh2017/body_HEIGHTz.sumstats.gz | awk '{ print $2 ":" $3 "\t" $10 }' | sort -k 1,1) | perl -lane '$F[$#F-1] = $F[$#F]; print join("\t", @F[1..$#F-1]);' | cat <(echo -e "CHR\tSNP\tBP\tA1\tTEST\tNMISS\tBETA\tSTAT\tP") - > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.Loh2017.assoc.linear
-		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.Loh2017.assoc.linear | awk '{ print $2 }' | grep -v SNP > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.Loh2017.assoc.linear.SNPIDs
+		intersectBed -wb -a /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.bed -b /users/mturchin/data/mturchin/Data/Loh2017/body_${i}z.sumstats.lt5eNeg9.5kbPadding.bed | wc
+		intersectBed -wb -a /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.bed -b /users/mturchin/data/mturchin/Data/Loh2017/body_${i}z.sumstats.lt5eNeg9.5kbPadding.bed | awk '{ print $1 ":" $2 }' | sort | uniq | wc
+		
+		
+
+#		join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep ADD | awk '{ print $2 "\t" $0 }' | sort -k 1,1) <(zcat /users/mturchin/data/mturchin/Data/Loh2017/body_${i}z.sumstats.gz | awk '{ print $2 ":" $3 "\t" $10 }' | sort -k 1,1) | perl -lane '$F[$#F-1] = $F[$#F]; print join("\t", @F[1..$#F-1]);' | cat <(echo -e "CHR\tSNP\tBP\tA1\tTEST\tNMISS\tBETA\tSTAT\tP") - > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.Loh2017.assoc.linear
+#		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.Loh2017.assoc.linear | awk '{ print $2 }' | grep -v SNP > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.Loh2017.assoc.linear.SNPIDs
 
 	done
 done
@@ -22753,6 +22776,12 @@ ESN
 10:100021983 10 10:100021983 100021983 A ADD 3841 -0.007006 -0.2198 0.826 2.2E-02
 (InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/Temp1/InterPath_temp1]$join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.gz | grep ADD | awk '{ print $2 "\t" $0 }' | sort -k 1,1) <(zcat /users/mturchin/data/mturchin/Data/Loh2017/body_HEIGHTz.sumstats.gz | awk '{ print $2 ":" $3 "\t" $10 }' | sort -k 1,1) | wc
  595944 6555384 45662507
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/Temp1/InterPath_temp1]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.bed | wc
+ 600006 2400024 18517512
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/Temp1/InterPath_temp1]$intersectBed -wb -a /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.bed -b /users/mturchin/data/mturchin/Data/Loh2017/body_${i}z.sumstats.lt5eNeg9.5kbPadding.bed | wc
+ 595974 4767792 37298645
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/Temp1/InterPath_temp1]$intersectBed -wb -a /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.bed -b /users/mturchin/data/mturchin/Data/Loh2017/body_${i}z.sumstats.lt5eNeg9.5kbPadding.bed | awk '{ print $1 ":" $2 }' | sort | uniq | wc
+  74516   74516 1090307
 
 
 
