@@ -7776,8 +7776,15 @@ done
 #		 plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --extract /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.Loh2017.assoc.linear.SNPIDs --clump /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.Loh2017.assoc.linear --clump-p1 5e-9 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.Loh2017.assoc.linear
 
 mdkir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles
-		
-for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);'`; do
+
+cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.fam | awk '{ print $1 "\t" $2 }' > /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FIDIIDs
+cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FIDIIDs | sort -R --random-source=<(echo -e "4274947\nPLACEHOLDER") | head -n 5000 > /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.British.Ran5000.FIDIIDs 
+cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FIDIIDs | sort -R --random-source=<(echo -e "7135674\nPLACEHOLDER") | head -n 10000 > /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.British.Ran10000.FIDIIDs 
+cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FIDIIDs | sort -R --random-source=<(echo -e "9476521\nPLACEHOLDER") | head -n 20000 > /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.British.Ran20000.FIDIIDs 
+cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FIDIIDs | sort -R --random-source=<(echo -e "2763456\nPLACEHOLDER") | head -n 50000 > /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.British.Ran50000.FIDIIDs 
+cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.FIDIIDs | sort -R --random-source=<(echo -e "6547234\nPLACEHOLDER") | head -n 100000 > /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.British.Ran100000.FIDIIDs 
+	
+for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);' | head -n 1`; do
 	ancestry1="British"	
 	ancestry2="British.${i}"
 
@@ -7787,16 +7794,21 @@ for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -
 		mkdir /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/slurm	
 	fi
 
-	for i in {1..22}; do
+	for i in {22..22}; do
 
-		sbatch -t 72:00:00 --mem 2g -o /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/slurm/ 
-		plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr${i}_v2.British.Ran20000.QCed.reqDrop.QCed.dropRltvs.PCAdrop --pheno /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.txt --pheno-name
-
-		plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/
-
+		sbatch -t 72:00:00 --mem 2g -o /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/slurm/ukb_chr${i}_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/slurm/ukb_chr${i}_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.slurm.error --comment "LnRgr Height $ancestry2 $i" <(echo -e '#!/bin/sh'; \
+		echo -e "\nplink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr${i}_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop --pheno /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.txt --pheno-name Height --keep /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.FIDIIDs --linear --covar ukb_chrAll_v2.British.Ran200000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt --covar-name PC1,PC2,PC3,PC4,PC5,PC6,PC7,PC8,PC9,PC10 --out /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chr${i}_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans") 
 
 	done
 done
+
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Covars.British.FIDIIDs | sort -R --random-source=<(echo -e "893615385\nPLACEHOLDER") | head -n 10000 > /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Covars.British.Ran10000.FIDIIDs
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Covars.British.FIDIIDs | sort -R --random-source=<(echo -e "26594724\nPLACEHOLDER") | head -n 100000 > /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Covars.British.Ran100000.FIDIIDs
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Covars.British.FIDIIDs | sort -R --random-source=<(echo -e "58251749606\nPLACEHOLDER") | head -n 200000 > /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Covars.British.Ran200000.FIDIIDs
+
+
+
+
 
 
 
