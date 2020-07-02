@@ -7811,7 +7811,7 @@ for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -
 
 done
 
-for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);'`; do
+for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);' | head -n 1`; do
 	ancestry1="British"	
 	ancestry2="British.${i}"
 
@@ -7824,46 +7824,35 @@ rm -f /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mtu
 
 plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop --merge-list /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.MergeList.vs1.txt --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop
 
-/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr6_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.bed
-	
-	for chr in {2..22}; do
-                echo "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bed /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.bim /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr${chr}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp.fam" 
-        done > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.Vs2.txt
-
-	
-	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chr1_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.plinkTemp --merge-list /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.MergeList.Vs2.txt --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno
-
-for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);'`; do
+for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);' | head -n 1`; do
 	ancestry1="British"	
 	ancestry2="British.${i}"
 
-	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr${i}_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop --keep /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.FIDIIDs --clump /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear --out  
+	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop --keep /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.FIDIIDs --clump /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear --out /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear 
 
-plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --extract /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.intersect.Loh2017.10kbPadding.sort.uniq.SNPIDs --clump /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.Loh2017.10kbPadding.intersect
+done
+
+for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);' | head -n 1`; do
+	ancestry1="British"	
+	ancestry2="British.${i}"
+
+	
+
+	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop --keep /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.FIDIIDs --clump /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear --out /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear 
 
 done
 
 
+/users/mturchin/data/mturchin/Data/Loh2017/body_Heightz.sumstats.gz
 
 
 
 
 
 
-for pheno1 in `echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);'`; do
-        for j in `cat <(echo $UKBioBankPops | perl -lane 'print join("\n", @F);')`; do
-                ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
-                ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
-                for i in {1..22}; do
-                        echo $pheno1 $ancestry1 $ancestry2 $i
 
-                        sbatch -t 72:00:00 --mem 2g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/$pheno1/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${pheno1}.Trans.linear.PCs.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/$pheno1/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${pheno1}.Trans.linear.PCs.slurm.error --comment "LnRgr $pheno1 $ancestry1 $ancestry2 $i" <(echo -e '#!/bin/sh'; echo -e "\nplink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop --pheno /users/mturchin/data/ukbiobank_jun17/mturchin/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.txt --pheno-name $pheno1 --linear --covar /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.txt --covar-name PC1,PC2,PC3,PC4,PC5,PC6,PC7,PC8,PC9,PC10 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/$pheno1/ukb_chr${i}_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${pheno1}.Trans")
 
-                done
-                sleep 2
-        done
-done
 
 
 
