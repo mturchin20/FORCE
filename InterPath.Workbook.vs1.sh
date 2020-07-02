@@ -7824,7 +7824,7 @@ rm -f /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mtu
 
 plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop --merge-list /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.MergeList.vs1.txt --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop
 
-for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);' | tail -n 1`; do
+for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);'`; do
 	ancestry1="British"; ancestry2="British.${i}"
 	echo $ancestry2
 
@@ -7836,9 +7836,7 @@ for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -
 	ancestry1="British"; ancestry2="British.${i}"
 	echo $ancestry2
 
-	
-
-	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop --keep /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.FIDIIDs --clump /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear --out /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear 
+	join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear | awk '{ print 1 ":" $3 "\t" $9 }' | sort -k 1,1) <(zcat /users/mturchin/data/mturchin/Data/Loh2017/body_Heightz.sumstats.gz | awk '{ print $2 ":" $3 "\t" $10 }' | sort -k 1,1) | head -n 10
 
 done
 
