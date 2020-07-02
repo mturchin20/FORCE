@@ -7832,11 +7832,11 @@ for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -
 
 done
 
-for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);' | head -n 1`; do
+for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);' | tail -n 1`; do
 	ancestry1="British"; ancestry2="British.${i}"
 	echo $ancestry2
 
-	join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear | awk '{ print 1 ":" $3 "\t" $9 }' | sort -k 1,1) <(zcat /users/mturchin/data/mturchin/Data/Loh2017/body_Heightz.sumstats.gz | awk '{ print $2 ":" $3 "\t" $10 }' | sort -k 1,1) | head -n 10
+	join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear | awk '{ print $1 ":" $3 "\t" $9 }' | sort -k 1,1) <(zcat /users/mturchin/data/mturchin/Data/Loh2017/body_Heightz.sumstats.gz | awk '{ print $2 ":" $3 "\t" $10 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); pVal.Min <- min(Data1[Data1[,3]>0,3]); print(pVal.Min); Data1[Data1[,3]==0,3] <- pVal.Min; print(dim(Data1)); print(quantile(-log10(Data1[,2]))); print(quantile(-log10(Data1[,3]))); print(cor(-log10(Data1[,2]), -log10(Data1[,3])));"
 
 done
 
