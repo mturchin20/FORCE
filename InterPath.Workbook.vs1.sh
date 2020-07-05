@@ -6408,6 +6408,45 @@ R -q -e "library(\"data.table\"); library(\"RColorBrewer\"); png(\"/users/mturch
 #From MacBook Pro
 scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/ukb_chrAll_v3.AfrBrit*.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.HeightBMI.epi.qt.Results.*vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/.
 
+#20200704: Pairwise epistasis followup analyses 
+
+
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
+        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+        echo $pheno1 $ancestry1 $ancestry2 $ancestry3
+
+	if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/Followup ]; then
+		mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/Followup
+	fi
+##	if [ ! -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.top10resids.forPLINK.txt ]; then
+##		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.top10resids.txt | perl -lane 'my $val1 = $F[0] . "_" . $F[1]; $F[0] = $val1; $F[1] = $val1; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.wCovars.yIntrcptFix.BMIage.wAC.top10resids.forPLINK.txt
+##	fi
+
+##	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | wc
+##	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --epistasis --pheno /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.BMIAdj.top10resids.forPLINK.txt --mpheno 1 --allow-no-sex --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Height.3
+
+
+done
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -7824,7 +7863,7 @@ rm -f /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mtu
 
 plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop --merge-list /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.MergeList.vs1.txt --make-bed --out /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop
 
-for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);'`; do
+for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);' | grep Ran50000`; do
 	ancestry1="British"; ancestry2="British.${i}"
 	echo $ancestry2
 
@@ -7832,7 +7871,7 @@ for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -
 
 done
 
-for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);' | tail -n 1`; do
+for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);'`; do
 	ancestry1="British"; ancestry2="British.${i}"
 	echo $ancestry2
 
@@ -7840,8 +7879,22 @@ for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -
 
 done
 
+echo -e "Subsample\tGWAS_SNPs\tLoh2017_Corr"; for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);'`; do
+	ancestry1="British"; ancestry2="British.${i}"
+#	echo $ancestry2
 
-/users/mturchin/data/mturchin/Data/Loh2017/body_Heightz.sumstats.gz
+	NumSig=0
+	if [ -e /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear.clumped ]; then NumSig=`cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear.clumped | grep rs | wc | awk '{ print $1 }'`; fi
+	Cor=`join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear | awk '{ print $1 ":" $3 "\t" $9 }' | sort -k 1,1) <(zcat /users/mturchin/data/mturchin/Data/Loh2017/body_Heightz.sumstats.gz | awk '{ print $2 ":" $3 "\t" $10 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); pVal.Min <- min(Data1[Data1[,3]>0,3]); Data1[Data1[,3]==0,3] <- pVal.Min; print(cor(-log10(Data1[,2]), -log10(Data1[,3])));" | grep -v ^\> | awk '{ print $2 }'`
+
+	if [ $i == "Ran200000" ]; then
+		ancestry2="British.Ran150000";
+	fi
+
+	echo $ancestry2 $NumSig $Cor
+
+done | column -t
+
 
 
 
@@ -22845,6 +22898,84 @@ ESN
  595974 4767792 37298645
 (InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/Temp1/InterPath_temp1]$intersectBed -wb -a /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GWAS/PLINK/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.${i}.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.localPCs.assoc.linear.bed -b /users/mturchin/data/mturchin/Data/Loh2017/body_${i}z.sumstats.lt5eNeg9.5kbPadding.bed | awk '{ print $1 ":" $2 }' | sort | uniq | wc
   74516   74516 1090307
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/Temp1/InterPath_temp1]$for i in `echo "Ran5000 Ran10000 Ran20000 Ran50000 Ran100000 Ran200000" | perl -lane 'print join("\n", @F);'`; do
+>         ancestry1="British"; ancestry2="British.${i}"
+>         echo $ancestry2
+>
+>         join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.ass
+oc.linear | awk '{ print $1 ":" $3 "\t" $9 }' | sort -k 1,1) <(zcat /users/mturchin/data/mturchin/Data/Loh2017/body_Heightz.sumstats.gz | awk '{ print $2 ":" $3 "\t" $10 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), head
+er=F); pVal.Min <- min(Data1[Data1[,3]>0,3]); print(pVal.Min); Data1[Data1[,3]==0,3] <- pVal.Min; print(dim(Data1)); print(quantile(-log10(Data1[,2]))); print(quantile(-log10(Data1[,3]))); print(cor(-log10(Data1[,2]), -log10(Data1[,3])));
+"
+>
+> done
+British.Ran5000
+> Data1 <- read.table(file('stdin'), header=F); pVal.Min <- min(Data1[Data1[,3]>0,3]); print(pVal.Min); Data1[Data1[,3]==0,3] <- pVal.Min; print(dim(Data1)); print(quantile(-log10(Data1[,2]))); print(quantile(-log10(Data1[,3]))); print(co
+r(-log10(Data1[,2]), -log10(Data1[,3])));
+[1] 3.7e-294
+[1] 565547      3
+       0%       25%       50%       75%      100%
+0.0000000 0.1267957 0.3068889 0.6163641 5.9396800
+         0%         25%         50%         75%        100%
+  0.0000000   0.2006595   0.5376020   1.2596373 293.4317983
+[1] 0.1085192
+>
+>
+British.Ran10000
+> Data1 <- read.table(file('stdin'), header=F); pVal.Min <- min(Data1[Data1[,3]>0,3]); print(pVal.Min); Data1[Data1[,3]==0,3] <- pVal.Min; print(dim(Data1)); print(quantile(-log10(Data1[,2]))); print(quantile(-log10(Data1[,3]))); print(co
+r(-log10(Data1[,2]), -log10(Data1[,3])));
+[1] 3.7e-294
+[1] 565547      3
+        0%        25%        50%        75%       100%
+ 0.0000000  0.1294790  0.3135425  0.6302277 11.9943906 
+         0%         25%         50%         75%        100% 
+  0.0000000   0.2006595   0.5376020   1.2596373 293.4317983 
+[1] 0.20328
+> 
+> 
+British.Ran20000
+> Data1 <- read.table(file('stdin'), header=F); pVal.Min <- min(Data1[Data1[,3]>0,3]); print(pVal.Min); Data1[Data1[,3]==0,3] <- pVal.Min; print(dim(Data1)); print(quantile(-log10(Data1[,2]))); print(quantile(-log10(Data1[,3]))); print(cor(-log10(Data1[,2]), -log10(Data1[,3])));
+[1] 3.7e-294
+[1] 565547      3
+        0%        25%        50%        75%       100%
+ 0.0000000  0.1342448  0.3243133  0.6561977 20.7363639
+         0%         25%         50%         75%        100%
+  0.0000000   0.2006595   0.5376020   1.2596373 293.4317983
+[1] 0.3776486
+>
+>
+British.Ran50000
+> Data1 <- read.table(file('stdin'), header=F); pVal.Min <- min(Data1[Data1[,3]>0,3]); print(pVal.Min); Data1[Data1[,3]==0,3] <- pVal.Min; print(dim(Data1)); print(quantile(-log10(Data1[,2]))); print(quantile(-log10(Data1[,3]))); print(cor(-log10(Data1[,2]), -log10(Data1[,3])));
+[1] 3.7e-294
+[1] 565547      3
+        0%        25%        50%        75%       100%
+ 0.0000000  0.1415230  0.3462088  0.7110804 53.4780778
+         0%         25%         50%         75%        100%
+  0.0000000   0.2006595   0.5376020   1.2596373 293.4317983
+[1] 0.6144685
+>
+>
+British.Ran100000
+> Data1 <- read.table(file('stdin'), header=F); pVal.Min <- min(Data1[Data1[,3]>0,3]); print(pVal.Min); Data1[Data1[,3]==0,3] <- pVal.Min; print(dim(Data1)); print(quantile(-log10(Data1[,2]))); print(quantile(-log10(Data1[,3]))); print(cor(-log10(Data1[,2]), -log10(Data1[,3])));
+[1] 3.7e-294
+[1] 565547      3
+        0%        25%        50%        75%       100%
+ 0.0000000  0.1523657  0.3784083  0.7929045 94.7700623
+         0%         25%         50%         75%        100%
+  0.0000000   0.2006595   0.5376020   1.2596373 293.4317983
+[1] 0.7825619
+>
+>
+British.Ran200000
+> Data1 <- read.table(file('stdin'), header=F); pVal.Min <- min(Data1[Data1[,3]>0,3]); print(pVal.Min); Data1[Data1[,3]==0,3] <- pVal.Min; print(dim(Data1)); print(quantile(-log10(Data1[,2]))); print(quantile(-log10(Data1[,3]))); print(cor(-log10(Data1[,2]), -log10(Data1[,3])));
+[1] 3.7e-294
+[1] 565547      3
+         0%         25%         50%         75%        100%
+  0.0000000   0.1646265   0.4108326   0.8830604 152.5062632
+         0%         25%         50%         75%        100%
+  0.0000000   0.2006595   0.5376020   1.2596373 293.4317983
+[1] 0.8429599
+>
+>
 
 
 
