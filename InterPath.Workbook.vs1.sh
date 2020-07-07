@@ -6568,9 +6568,44 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 done;
 
 
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`; echo $pheno1 $ancestry1 $ancestry2 $ancestry3;
+	for m in `cat <(echo "PSMA PSMB PSMC PSMD PSME PSMF PSMG" | perl -lane 'print join("\n", @F);') | head -n 1`; do
 
+##	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.txt | grep $m | grep -v "-" | awk '{ print $2 }' | sed 's/,/\n/g' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/Followup/subfiles/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Proteasome.$m.MatrixPositions.txt
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | grep -E 'exonic|intronic|UTR|upstream|downstream' | sort -k 1,1 | perl -lane 'my @info1 = split(/,/, $F[2]); if ($info1[0] =~ m/intergenic/) { my @dists1 = split(/=/, $info1[1]); if ($dists1[1] <= 20000) { print join("\t", @F); } } else { print join("\t", @F); }' | grep $m | grep -v "-" | awk '{ print $2 }' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/Followup/subfiles/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Proteasome.$m.set
 
-rm -f /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.PSMdropouts.gmt; for i in `cat <(echo "PSMA PSMB PSMC PSMD PSME PSMF PSMG" | perl -lane 'print join("\n", @F);')`; do
+	done
+done
+
+```
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/Temp1/InterPath_temp1]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | grep -E 'exonic|intronic|UTR|upstream|downstream' | sort -k 1,1 | perl -lane 'my @info1 = split(/,/, $F[2]); if ($info1[0] =~ m/intergenic/) { my @dists1 = split(/=/, $info1[1]); if ($dists1[1] <= 20000) { print join("\t", @F); } } else { print join("\t", @F); }' | grep PSMA
+PSMA1   11:14534378     intronic,NA,NA  232602
+PSMA1   11:14567538     intronic,NA,NA  232603
+PSMA1   11:14573552     intronic,NA,NA  232604
+PSMA1   11:14581762     intronic,NA,NA  232605
+PSMA1   11:14616038     intronic,NA,NA  232606
+PSMA1   11:14623318     intronic,NA,NA  232607
+PSMA2   7:42962342      intronic,NA,NA  162574
+PSMA3   14:58727738     exonic,NA,synonymous_SNV        283063
+PSMA3-AS1       14:58759762     ncRNA_intronic,NA,NA    283064
+PSMA4   15:78833223     intronic,NA,NA  297495
+PSMA4   15:78833362     intronic,NA,NA  297496
+PSMA4   15:78841220     exonic,NA,synonymous_SNV        297497
+PSMA4   15:78843411     intergenic_upstream,dist=1807,NA        297498
+PSMA6   14:35759510     intronic,NA,NA  280482
+PSMA7   20:60712511     intronic,NA,NA  361575
+PSMA8   18:23778056     intergenic_upstream,dist=4737,NA        332649
+PSMA8   18:23778322     intergenic_upstream,dist=5003,NA        332650
+PSMA8   18:23778626     intergenic_upstream,dist=5307,NA        332651
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/Temp1/InterPath_temp1]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.txt | grep $m | grep -v "-" | awk '{ print $2 }'                                                  232602,232603,232604,232605,232606,232607
+162574
+283063
+297495,297496,297497,297498
+280482
+361575
+332649,332650,332651
+```
 
 	join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep PSM | awk '{ print $1 }' | sort) <(cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | sort -k 1,1) | perl -slane 'my @newList; foreach my $gene1 (@F[2..$#F]) { if ($gene1 !~ m/$psm1/) { push(@newList, $gene1); } } print $F[0], "_Drop", $psm1, "\t", $F[1], "\t", join("\t", @newList);' -- -psm1=$i >> /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.PSMdropouts.gmt
 
@@ -23180,6 +23215,32 @@ British.Ran200000
 [1] 25159
 > 
 > 
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/Temp1/InterPath_temp1]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | grep -E 'exonic|intronic|UTR|upstream|downstream' | sort -k 1,1 | perl -lane 'my @info1 = split(/,/, $F[2]); if ($info1[0] =~ m/intergenic/) { my @dists1 = split(/=/, $info1[1]); if ($dists1[1] <= 20000) { print join("\t", @F); } } else { print join("\t", @F); }' | grep PSMA
+PSMA1   11:14534378     intronic,NA,NA  232602
+PSMA1   11:14567538     intronic,NA,NA  232603
+PSMA1   11:14573552     intronic,NA,NA  232604
+PSMA1   11:14581762     intronic,NA,NA  232605
+PSMA1   11:14616038     intronic,NA,NA  232606
+PSMA1   11:14623318     intronic,NA,NA  232607
+PSMA2   7:42962342      intronic,NA,NA  162574
+PSMA3   14:58727738     exonic,NA,synonymous_SNV        283063
+PSMA3-AS1       14:58759762     ncRNA_intronic,NA,NA    283064
+PSMA4   15:78833223     intronic,NA,NA  297495
+PSMA4   15:78833362     intronic,NA,NA  297496
+PSMA4   15:78841220     exonic,NA,synonymous_SNV        297497
+PSMA4   15:78843411     intergenic_upstream,dist=1807,NA        297498
+PSMA6   14:35759510     intronic,NA,NA  280482
+PSMA7   20:60712511     intronic,NA,NA  361575
+PSMA8   18:23778056     intergenic_upstream,dist=4737,NA        332649
+PSMA8   18:23778322     intergenic_upstream,dist=5003,NA        332650
+PSMA8   18:23778626     intergenic_upstream,dist=5307,NA        332651
+(InterPath) [  mturchin@login003  ~/LabMisc/RamachandranLab/Temp1/InterPath_temp1]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.txt | grep $m | grep -v "-" | awk '{ print $2 }'                                                  232602,232603,232604,232605,232606,232607
+162574
+283063
+297495,297496,297497,297498
+280482
+361575
+332649,332650,332651
 
 
 
