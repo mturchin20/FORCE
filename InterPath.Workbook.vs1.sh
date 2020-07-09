@@ -6677,9 +6677,6 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 	done;
 done;
 
-
-
-
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/Epistasis
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/Epistasis/Followup
 
@@ -6691,8 +6688,8 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 			echo $ancestry2 >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/Epistasis/Followup/ukb_chrAll_v3.All.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.pValBonf.PathwaysAll.set.epi.summary
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000 Genes" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				pValBonf=1; pValCutoff="pValBonf";
-#				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | wc | awk '{ print $1 }'`
-				NumPaths=2
+				NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | wc | awk '{ print $1 }'`
+#				NumPaths=2
 				echo $l $i $ancestry1 $ancestry2 $k $pValBonf
 
 				FirstPath=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | head -n 1 | awk '{ print $1 }'`; 
@@ -6709,7 +6706,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 						EpiBonfPassLwr2=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/Followup/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.Pathways${PathNum2}.set.epi.qt | awk -v EpiBonfPvalLwr22=$EpiBonfPvalLwr2 '{ if ($7 < EpiBonfPvalLwr22) { print $0 } }' | wc | awk '{ print $1 }'`
 						EpiBonfPvalLwr3=`echo ".05 / $EpiBonfTests * 100" | bc -l | perl -ane 'printf "%.3e", $F[0];'`;
 						EpiBonfPassLwr3=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/PLINK/Epistasis/Followup/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.Pathways${PathNum2}.set.epi.qt | awk -v EpiBonfPvalLwr32=$EpiBonfPvalLwr3 '{ if ($7 < EpiBonfPvalLwr32) { print $0 } }' | wc | awk '{ print $1 }'`
-						echo $PathNum2Name $PathNum2 $PathNum2SNPs $PathNum2pVal $EpiBonfTests $EpiBonfPval $EpiBonfPass $EpiBonfPvalLwr2 $EpiBonfPassLwr2 $EpiBonfPvalLwr3 $EpiBonfPassLwr3 >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/Epistasis/Followup/ukb_chrAll_v3.All.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.PathwaysAll.set.epi.summary
+						echo $PathNum2Name $PathNum2 $PathNum2pVal $PathNum2SNPs $EpiBonfTests $EpiBonfPval $EpiBonfPass $EpiBonfPvalLwr2 $EpiBonfPassLwr2 $EpiBonfPvalLwr3 $EpiBonfPassLwr3 >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/Epistasis/Followup/ukb_chrAll_v3.All.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.PathwaysAll.set.epi.summary
 					done;
 				fi
 			done;
