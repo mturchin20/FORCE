@@ -23935,6 +23935,11 @@ REACTOME_CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM    http://www.broadinstitute.org/gs
 22:51193629
 22:51217954
 22:51224208
+#20200713
+[  mturchin@node1107  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | awk '{ print $1 }' | sed 's/_/ /g' | perl -lane 'print join("_", @F[0..$#F-1]);' | wc
+   1341    1341   43373
+[  mturchin@node1107  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | awk '{ print $1 }' | sed 's/_/ /g' | perl -lane 'print join("_", @F[0..$#F-1]);' | sort | uniq | wc
+     13      13     480
 
 
 
