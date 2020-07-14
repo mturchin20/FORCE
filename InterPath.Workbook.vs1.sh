@@ -13136,8 +13136,10 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
 		for p in `zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | awk '{ print $1 }' | sed 's/_/ /g' | perl -lane 'print join("_", @F[0..$#F-1]);' | sort | uniq | head -n 1`; do
-			OrigPval1=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep $p | awk '{ print $4 }'`
+			OrigPval1=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep $p | awk '{ pVal = $4; if ( pVal = 0 ) { pVal = 1e-10; } print pVal }'`
+			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep $p | sed 's/_/ /g' | perl -lane 'print $F[$#F-5], "\t", $F[$#F-2];' | awk '{ print $1 "\t" $4 }' | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(head(Data1)); Data1[Data1[,2] == 0,2] <- 1e-10; pValDiffs <- -log10($OrigPval1) - log10(Data1[,2]); Data1 <- cbind(Data1, pValDiffs); NewVals <- apply(Data1[,c(1,3)], 1, function(x) { return(paste(x, collapse=\",\"))}; print(NewVals);"
 
+		done;
 	done;
 done; 
 
@@ -23941,6 +23943,24 @@ REACTOME_CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM    http://www.broadinstitute.org/gs
    1341    1341   43373
 [  mturchin@node1107  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | awk '{ print $1 }' | sed 's/_/ /g' | perl -lane 'print join("_", @F[0..$#F-1]);' | sort | uniq | wc
      13      13     480
+> vals1 <- matrix(c(1,2,3,4,5,6,7,8,9,10), ncol=2)
+> vals1
+     [,1] [,2]
+[1,]    1    6
+[2,]    2    7
+[3,]    3    8
+[4,]    4    9
+[5,]    5   10
+> vals1[vals1[,2] == 7,2] <- 23
+> vals1
+     [,1] [,2]
+[1,]    1    6
+[2,]    2   23
+[3,]    3    8
+[4,]    4    9
+[5,]    5   10
+> apply(vals1, 1, function(x) { return(paste(x, collapse=","))})
+[1] "1,6"  "2,23" "3,8"  "4,9"  "5,10"
 
 
 
