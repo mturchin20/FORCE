@@ -13124,10 +13124,13 @@ cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveM
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`; echo $pheno1 $ancestry1 $ancestry2 $ancestry3;
 
+	cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.gmt | perl -slane 'if ($. == 1) { $input_file = "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1b/$ancestry2b/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2b.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.Intronic.txt"; %hash1; open( my $input_fh, "<", $input_file ) || die "Cannot open $input_file: $!"; while(my @row = split(/\s+/, <$input_fh>)) { chomp @row; $hash1{$row[0]} = \$row[1]; } close($input_fh); } my @info1; foreach my $entry1 (@F[2..$#F]) { if ($hash1{$entry1}) { push(@info1, ${$hash1{$entry1}}); } } print $F[0], "\t", $F[1], "\t", join(",", @info1);' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 | perl -lane 'if ($#F == 2) { print join("\t", @F); }' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.Intronic.txt; 
 
 
 	cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.PSMdropouts.Complement.gmt | perl -slane 'if ($. == 1) { $input_file = "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1b/$ancestry2b/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2b.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.txt"; %hash1; open( my $input_fh, "<", $input_file ) || die "Cannot open $input_file: $!"; while(my @row = split(/\s+/, <$input_fh>)) { chomp @row; $hash1{$row[0]} = \$row[1]; } close($input_fh); } my @info1; foreach my $entry1 (@F[2..$#F]) { if ($hash1{$entry1}) { push(@info1, ${$hash1{$entry1}}); } } print $F[0], "\t", $F[1], "\t", join(",", @info1);' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 | perl -lane 'if ($#F == 2) { print join("\t", @F); }' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdropsComps.txt 
 	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdropsComps.txt | perl -lane 'my @pos1 = split(/,/, $F[2]); my @pos2; my %hash1; my $dupFlag1 = 0; foreach my $snp (@pos1) { if ($hash1{$snp}) { $dupFlag1 = 1; } else { push(@pos2, $snp); $hash1{$snp} = 1; } } $F[2] = join(",", @pos2); print join("\t", @F), "\t", $dupFlag1;' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdropsComps.noDups.txt
+
+
 
 done
 
@@ -13135,9 +13138,32 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
+		zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | perl -slane 'if ($. == 1) { $input_file = "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1b/$ancestry2b/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2b.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.txt"; %hash1; open( my $input_fh, "<", $input_file ) || die "Cannot open $input_file: $!"; while(my @row = split(/\s+/, <$input_fh>)) { chomp @row; my @vals1 = split(/,/, $row[1]); $hash1{$row[0]} = scalar(@vals1);} close($input_fh); } my @vals2 = split(/_/, $F[0]); my $gene1 = "NA"; if ($vals2[$#vals2] =~ m/Drop_(.*)/) { $gene1 = $1; }; print join("\t", @F), "\t", $hash1{$gene1};'  
+
+		| gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.wSNPcounts.gz
+
 		for p in `zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | awk '{ print $1 }' | sed 's/_/ /g' | perl -lane 'print join("_", @F[0..$#F-1]);' | sort | uniq | head -n 1`; do
-			OrigPval1=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep $p | awk '{ pVal = $4; if ( pVal = 0 ) { pVal = 1e-10; } print pVal }'`
-			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep $p | sed 's/_/ /g' | perl -lane 'print $F[$#F-5], "\t", $F[$#F-2];' | awk '{ print $1 "\t" $4 }' | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(head(Data1)); Data1[Data1[,2] == 0,2] <- 1e-10; pValDiffs <- -log10($OrigPval1) - log10(Data1[,2]); Data1 <- cbind(Data1, pValDiffs); NewVals <- apply(Data1[,c(1,3)], 1, function(x) { return(paste(x, collapse=\",\"))}; print(NewVals);"
+			OrigPval1=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep $p | awk '{ pVal = $4; if ( pVal == 0 ) { pVal = 1e-10; } print pVal }'`
+			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep $p | sed 's/_/ /g' | perl -lane 'print $F[$#F-5], "\t", $F[$#F-2];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(head(Data1)); Data1[Data1[,2] == 0,2] <- 1e-10; pValDiffs <- -log10($OrigPval1) - -log10(Data1[,2]); Data1 <- cbind(Data1, pValDiffs); Data1 <- Data1[order(Data1[,3], decreasing=TRUE),]; NewVals <- apply(Data1[,c(1,3)], 1, function(x) { return(paste(x, collapse=\",\"))}); print(NewVals);"
+
+		done;
+	done;
+done; 
+
+
+
+
+
+for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 1`; do
+		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+		for p in `zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | awk '{ print $1 }' | sed 's/_/ /g' | perl -lane 'print join("_", @F[0..$#F-1]);' | sort | uniq | head -n 1`; do
+			OrigPval1=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep $p | awk '{ pVal = $4; if ( pVal == 0 ) { pVal = 1e-10; } print pVal }'`
+			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.wSNPcounts.gz | grep $p | sed 's/_/ /g' | perl -lane 'print $F[$#F-6], "\t", $F[$#F-3], "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); print(head(Data1)); Data1[Data1[,2] == 0,2] <- 1e-10; pValDiffs <- -log10($OrigPval1) - -log10(Data1[,2]); Data1 <- cbind(Data1, pValDiffs); pValDiffs.SNPadj <- Data1[,4] / Data1[,3]; 
+
+
+Data1 <- Data1[order(Data1[,4], decreasing=TRUE),]; NewVals <- apply(Data1[,c(1,4)], 1, function(x) { return(paste(x, collapse=\",\"))}); print(NewVals);"
 
 		done;
 	done;
@@ -23961,6 +23987,27 @@ REACTOME_CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM    http://www.broadinstitute.org/gs
 [5,]    5   10
 > apply(vals1, 1, function(x) { return(paste(x, collapse=","))})
 [1] "1,6"  "2,23" "3,8"  "4,9"  "5,10"
+> Data1 <- read.table(file('stdin'), header=F); print(head(Data1)); Data1[Data1[,2] == 0,2] <- 1e-10; pValDiffs <- -log10(1.86077653210326e-05) - -log10(Data1[,2]); Data1 <- cbind(Data1, pValDiffs); NewVals <- apply(Data1[,c(1,3)], 1, function(x) { return(paste(x, collapse=","))}); print(NewVals);
+          V1           V2
+1  DropBCL10 1.649984e-05
+2   DropBTRC 2.055905e-05
+3 DropCARD11 2.430401e-05
+4   DropCHUK 2.286207e-05
+5   DropCUL1 2.440165e-05
+6 DropFBXW11 2.221971e-05
+ [1] "DropBCL10,-0.052214611"     "DropBTRC, 0.043308778"     
+ [3] "DropCARD11, 0.115983729"    "DropCHUK, 0.089421425"     
+ [5] "DropCUL1, 0.117725057"      "DropFBXW11, 0.077044086"   
+ [7] "DropIKBKB,-0.027345210"     "DropLOC646626,-0.150115793"
+ [9] "DropMALT1, 0.279183524"     "DropMAP3K7,-0.019973690"   
+[11] "DropNFKBIA,-0.085737084"    "DropNFKBIB,-0.063449217"   
+[13] "DropNFKBIE, 0.054770488"    "DropPRKCB, 0.313176046"    
+[15] "DropREL,-0.043250368"       "DropRELA,-0.083425928"     
+[17] "DropRPS27, 0.016512433"     "DropRPS27A, 0.016512433"   
+[19] "DropSKP1, 0.006182589"      "DropSMC3, 0.004341078"     
+[21] "DropUBA52, 0.009165148"    
+> 
+> 
 
 
 
