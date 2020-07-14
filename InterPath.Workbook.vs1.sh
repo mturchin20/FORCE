@@ -2923,8 +2923,8 @@ done
 #Vs2 Results Collection
 for (( permNum=1; permNum <= 10; permNum=permNum+1 )); do
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 2`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes PSMdrops PSMdropsComps" | perl -lane 'print join("\n", @F);') | head -n 13 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes PSMdrops PSMdropsComps" | perl -lane 'print join("\n", @F);') | head -n 14 | tail -n 1`; do
 			SECONDS=0;
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -13115,6 +13115,42 @@ cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveM
 ```
 
 cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | perl -lane 'print $F[2] - $F[5], "\t", $F[2] - $F[8], "\t", $F[2] - $F[11], "\t", $F[2] - $F[14], "\t", $F[2] - $F[17], "\t", $F[2] - $F[20], "\t", $F[2] - $F[23];'
+
+
+
+
+
+
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African`; do
+	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`; echo $pheno1 $ancestry1 $ancestry2 $ancestry3;
+
+
+/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz
+
+
+	cat /users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.symbols.PSMdropouts.Complement.gmt | perl -slane 'if ($. == 1) { $input_file = "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1b/$ancestry2b/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2b.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.txt"; %hash1; open( my $input_fh, "<", $input_file ) || die "Cannot open $input_file: $!"; while(my @row = split(/\s+/, <$input_fh>)) { chomp @row; $hash1{$row[0]} = \$row[1]; } close($input_fh); } my @info1; foreach my $entry1 (@F[2..$#F]) { if ($hash1{$entry1}) { push(@info1, ${$hash1{$entry1}}); } } print $F[0], "\t", $F[1], "\t", join(",", @info1);' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 | perl -lane 'if ($#F == 2) { print join("\t", @F); }' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdropsComps.txt 
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdropsComps.txt | perl -lane 'my @pos1 = split(/,/, $F[2]); my @pos2; my %hash1; my $dupFlag1 = 0; foreach my $snp (@pos1) { if ($hash1{$snp}) { $dupFlag1 = 1; } else { push(@pos2, $snp); $hash1{$snp} = 1; } } $F[2] = join(",", @pos2); print join("\t", @F), "\t", $dupFlag1;' > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdropsComps.noDups.txt
+
+done
+
+for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 1`; do
+		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+
+		> /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz
+	done;
+done; 
+
+
+
+
+
+
+
+
+
+
+
 
 #On R/3.4.3_mkl
 #From: https://www.rdocumentation.org/packages/pheatmap/versions/1.0.12/topics/pheatmap, https://towardsdatascience.com/pheatmap-draws-pretty-heatmaps-483dab9a3cc, https://stackoverflow.com/questions/57729914/how-can-you-show-the-rownames-in-pheatmap-on-the-left-side-of-the-graph, https://stackoverflow.com/questions/39590849/using-a-pheatmap-in-arrangegrob, https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html, https://stackoverflow.com/questions/15505607/diagonal-labels-orientation-on-x-axis-in-heatmaps,https://slowkow.com/notes/pheatmap-tutorial/, https://rstudio-pubs-static.s3.amazonaws.com/408658_512da947714740b99253228f084a08a9.html 
