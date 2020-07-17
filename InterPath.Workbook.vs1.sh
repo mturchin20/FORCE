@@ -13116,32 +13116,38 @@ cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveM
 
 cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | perl -lane 'print $F[2] - $F[5], "\t", $F[2] - $F[8], "\t", $F[2] - $F[11], "\t", $F[2] - $F[14], "\t", $F[2] - $F[17], "\t", $F[2] - $F[20], "\t", $F[2] - $F[23];'
 
-
+#PSMdropsComps
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+		echo $ancestry2 $i
 
 		zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | perl -slane 'if ($. == 1) { $input_file = "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1b/$ancestry2b/mturchin20/Analyses/InterPath/ukb_chrAll_v3.$ancestry2b.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.txt"; %hash1; open( my $input_fh, "<", $input_file ) || die "Cannot open $input_file: $!"; while(my @row = split(/\s+/, <$input_fh>)) { chomp @row; my @vals1 = split(/,/, $row[1]); $hash1{$row[0]} = scalar(@vals1); } close($input_fh); } my @vals2 = split(/_/, $F[0]); my $gene1 = "NA"; if ($vals2[$#vals2] =~ m/Drop(.*)/) { $gene1 = $1; }; print join("\t", @F), "\t", $hash1{$gene1};' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 | perl -slane 'if ($. == 1) { $input_file = "/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1b/$ancestry2b/mturchin20/Analyses/InterPath/$i2/ukb_chrAll_v3.$ancestry2b.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.$i2.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.txt.pre.gz"; %hash1; open( my $input_fh, "zcat $input_file |") || die "Cannot open $input_file: $!"; while(my @row = split(/\s+/, <$input_fh>)) { chomp @row; $hash1{$row[0]} = $row[9]; } close($input_fh); } my @vals2 = split(/_/, $F[0]); my $pathway1 = join("_", @vals2[0..$#vals2-1]); print join("\t", @F), "\t", $hash1{$pathway1};' -- -ancestry1b=$ancestry1 -ancestry2b=$ancestry2 -i2=$i | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.wCounts.gz
 
 	done;
 done; 
 
+#20200716 NOTE: CDC23 seems to be causing a problem with retrieving the number of SNPs, so dropping that gene for now in the analysis output; that's what the '$#F == $cols' business is about, the lines with CDC23 are missing one column and then mess everything up
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+		echo $ancestry2 $i
 
 		rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.summary.txt
-		for p in `zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | awk '{ print $1 }' | sed 's/_/ /g' | perl -lane 'print join("_", @F[0..$#F-1]);' | sort | uniq | head -n 4 | tail -n 1`; do
+		for p in `zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | awk '{ print $1 }' | sed 's/_/ /g' | perl -lane 'print join("_", @F[0..$#F-1]);' | sort | uniq`; do
+			echo $p
+			
 			OrigPval1=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep -w $p | awk '{ pVal = $4; if ( pVal == 0 ) { pVal = 1e-10; } print pVal }'`
-			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.wCounts.gz | grep $p"_Drop" | sed 's/_/ /g' | sed 's/Drop//g' | perl -lane 'print $F[$#F-7], "\t", $F[$#F-4], "\t", $F[$#F-1], "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,2] == 0,2] <- 1e-10; pValDiffs <- -log10($OrigPval1) - -log10(Data1[,2]); Data1 <- cbind(Data1, pValDiffs); pValDiffs.SNPadj <- Data1[,5] / Data1[,3]; Data1 <- cbind(Data1, pValDiffs.SNPadj); Data1 <- Data1[order(Data1[,5], decreasing=TRUE),]; NewVals1 <- apply(Data1[,c(1,5,3)], 1, function(x) { return(paste(x, collapse=\",\"))}); Data1 <- Data1[order(Data1[,6], decreasing=TRUE),]; NewVals2 <- apply(Data1[,c(1,6,3)], 1, function(x) { return(paste(x, collapse=\",\"))}); NewVals1.Cllps <- paste(NewVals1, collapse=\";\"); NewVals2.Cllps <- paste(NewVals2, collapse=\";\"); write.table(matrix(c(\"$p\", -log10($OrigPval1), Data1[1,4], gsub(\"[[:space:]]\", \"\", NewVals1.Cllps), gsub(\"[[:space:]]\", \"\", NewVals2.Cllps), quantile(Data1[,6])), nrow=1), quote=FALSE, row.names=FALSE, col.names=FALSE);" | grep -v ^\> >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.summary.txt 
+			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.wCounts.gz | grep $p"_Drop" | sed 's/_/ /g' | sed 's/Drop//g' | perl -lane 'if ($F[$#F-6] !~ /[A-Z]/) { print $F[$#F-7], "\t", $F[$#F-4], "\t", $F[$#F-1], "\t", $F[$#F]; }' | R -q -e "Data1 <- read.table(file('stdin'), header=F); if (nrow(Data1[Data1[,2] == 0,]) > 0) { Data1[Data1[,2] == 0,2] <- 1e-10; }; pValDiffs <- -log10($OrigPval1) - -log10(Data1[,2]); Data1 <- cbind(Data1, pValDiffs); pValDiffs.SNPadj <- Data1[,5] / Data1[,3]; Data1 <- cbind(Data1, pValDiffs.SNPadj); Data1 <- Data1[order(Data1[,5], decreasing=TRUE),]; NewVals1 <- apply(Data1[,c(1,5,3)], 1, function(x) { return(paste(x, collapse=\",\"))}); Data1 <- Data1[order(Data1[,6], decreasing=TRUE),]; NewVals2 <- apply(Data1[,c(1,6,3)], 1, function(x) { return(paste(x, collapse=\",\"))}); NewVals1.Cllps <- paste(NewVals1, collapse=\";\"); NewVals2.Cllps <- paste(NewVals2, collapse=\";\"); write.table(matrix(c(\"$p\", -log10($OrigPval1), Data1[1,4], gsub(\"[[:space:]]\", \"\", NewVals1.Cllps), gsub(\"[[:space:]]\", \"\", NewVals2.Cllps), quantile(Data1[,6], na.rm=TRUE)), nrow=1), quote=FALSE, row.names=FALSE, col.names=FALSE);" | grep -v ^\> >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.summary.txt 
 		done;
 	done;
 done; 
 
 #			...write.table(c(\"$p\", Data1[,2], Data1[,3], Data1[,4], NewVals1, NewVals2))...
+#			...$F[$#F-6] =~ m/\d\.\d\d/...
 
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		echo $ancestry2 $i
 
@@ -13150,7 +13156,7 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 			echo $p
 
 			OrigPval1=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep -w $p | awk '{ pVal = $4; if ( pVal == 0 ) { pVal = 1e-10; } print pVal }'`
-			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.wCounts.gz | grep $p"_Drop" | sed 's/_/ /g' | sed 's/Drop//g' | perl -lane 'print $F[$#F-7], "\t", $F[$#F-4], "\t", $F[$#F-1], "\t", $F[$#F];' | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,2] == 0,2] <- 1e-10; pValDiffs <- -log10($OrigPval1) - -log10(Data1[,2]); Data1 <- cbind(Data1, pValDiffs); pValDiffs.SNPadj <- Data1[,5] / Data1[,3]; Data1 <- cbind(Data1, pValDiffs.SNPadj); Data1 <- Data1[order(Data1[,5], decreasing=FALSE),]; NewVals1 <- apply(Data1[,c(1,5,3)], 1, function(x) { return(paste(x, collapse=\",\"))}); Data1 <- Data1[order(Data1[,6], decreasing=FALSE),]; NewVals2 <- apply(Data1[,c(1,6,3)], 1, function(x) { return(paste(x, collapse=\",\"))}); NewVals1.Cllps <- paste(NewVals1, collapse=\";\"); NewVals2.Cllps <- paste(NewVals2, collapse=\";\"); NewVals1.Cllps.Shrt.Start <- NA; NewVals1.Cllps.Shrt.End <- NA; NewVals2.Cllps.Shrt.Start <- NA; NewVals2.Cllps.Shrt.End <- NA; if (length(NewVals1) > 10) { NewVals1.Cllps.Shrt.Start <- paste(NewVals1[1:5], collapse=\";\"); NewVals1.Cllps.Shrt.End <- paste(NewVals1[(length(NewVals1)-4):length(NewVals1)], collapse=\";\"); } else { NewVals1.Cllps.Shrt.Start <- paste(NewVals1[1:2], collapse=\";\"); NewVals1.Cllps.Shrt.End <- paste(NewVals1[(length(NewVals1)-1):length(NewVals1)], collapse=\";\"); }; if (length(NewVals2) > 10) { NewVals2.Cllps.Shrt.Start <- paste(NewVals2[1:5], collapse=\";\"); NewVals2.Cllps.Shrt.End <- paste(NewVals2[(length(NewVals2)-4):length(NewVals2)], collapse=\";\"); } else { NewVals2.Cllps.Shrt.Start <- paste(NewVals2[1:2], collapse=\";\"); NewVals2.Cllps.Shrt.End <- paste(NewVals2[(length(NewVals2)-1):length(NewVals2)], collapse=\";\"); }; write.table(matrix(c(\"$p\", -log10($OrigPval1), Data1[1,4], gsub(\"[[:space:]]\", \"\", NewVals1.Cllps.Shrt.Start), gsub(\"[[:space:]]\", \"\", NewVals1.Cllps.Shrt.End), gsub(\"[[:space:]]\", \"\", NewVals2.Cllps.Shrt.Start), gsub(\"[[:space:]]\", \"\", NewVals2.Cllps.Shrt.End), quantile(Data1[,6])), nrow=1), quote=FALSE, row.names=FALSE, col.names=FALSE);" | grep -v ^\> >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.summary.small.txt 
+			zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.wCounts.gz | grep $p"_Drop" | sed 's/_/ /g' | sed 's/Drop//g' | perl -lane 'if ($F[$#F-6] !~ /[A-Z]/) { print $F[$#F-7], "\t", $F[$#F-4], "\t", $F[$#F-1], "\t", $F[$#F]; }' | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,2] == 0,2] <- 1e-10; pValDiffs <- -log10($OrigPval1) - -log10(Data1[,2]); Data1 <- cbind(Data1, pValDiffs); pValDiffs.SNPadj <- Data1[,5] / Data1[,3]; Data1 <- cbind(Data1, pValDiffs.SNPadj); Data1 <- Data1[order(Data1[,5], decreasing=FALSE),]; NewVals1 <- apply(Data1[,c(1,5,3)], 1, function(x) { return(paste(x, collapse=\",\"))}); Data1 <- Data1[order(Data1[,6], decreasing=FALSE),]; NewVals2 <- apply(Data1[,c(1,6,3)], 1, function(x) { return(paste(x, collapse=\",\"))}); NewVals1.Cllps <- paste(NewVals1, collapse=\";\"); NewVals2.Cllps <- paste(NewVals2, collapse=\";\"); NewVals1.Cllps.Shrt.Start <- NA; NewVals1.Cllps.Shrt.End <- NA; NewVals2.Cllps.Shrt.Start <- NA; NewVals2.Cllps.Shrt.End <- NA; if (length(NewVals1) > 10) { NewVals1.Cllps.Shrt.Start <- paste(NewVals1[1:5], collapse=\";\"); NewVals1.Cllps.Shrt.End <- paste(NewVals1[(length(NewVals1)-4):length(NewVals1)], collapse=\";\"); } else { NewVals1.Cllps.Shrt.Start <- paste(NewVals1[1:2], collapse=\";\"); NewVals1.Cllps.Shrt.End <- paste(NewVals1[(length(NewVals1)-1):length(NewVals1)], collapse=\";\"); }; if (length(NewVals2) > 10) { NewVals2.Cllps.Shrt.Start <- paste(NewVals2[1:5], collapse=\";\"); NewVals2.Cllps.Shrt.End <- paste(NewVals2[(length(NewVals2)-4):length(NewVals2)], collapse=\";\"); } else { NewVals2.Cllps.Shrt.Start <- paste(NewVals2[1:2], collapse=\";\"); NewVals2.Cllps.Shrt.End <- paste(NewVals2[(length(NewVals2)-1):length(NewVals2)], collapse=\";\"); }; write.table(matrix(c(\"$p\", -log10($OrigPval1), Data1[1,4], gsub(\"[[:space:]]\", \"\", NewVals1.Cllps.Shrt.Start), gsub(\"[[:space:]]\", \"\", NewVals1.Cllps.Shrt.End), gsub(\"[[:space:]]\", \"\", NewVals2.Cllps.Shrt.Start), gsub(\"[[:space:]]\", \"\", NewVals2.Cllps.Shrt.End), quantile(Data1[,6])), nrow=1), quote=FALSE, row.names=FALSE, col.names=FALSE);" | grep -v ^\> >> /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.summary.small.txt 
 		done;
 	done;
 done; 
@@ -24005,6 +24011,62 @@ ABBUD_LIF_SIGNALING_1_UP        21655,21656,21657,21658,21659,278095,278096,2780
 "5" "MALT1, 0.0348979405, 8;CHUK, 0.0298071416, 3;RPS27, 0.0165124334, 1;RPS27A, 0.0165124334, 1;CUL1, 0.0147156321, 8;NFKBIE, 0.0109540977, 5;SKP1, 0.0061825890, 1;FBXW11, 0.0055031490,14;UBA52, 0.0045825739, 2;PRKCB, 0.0040672214,77;BTRC, 0.0028872519,15;CARD11, 0.0016108851,72;SMC3, 0.0003946434,11;MAP3K7,-0.0013315793,15;NFKBIA,-0.0042868542,20;IKBKB,-0.0068363024, 4;REL,-0.0108125919, 4;BCL10,-0.0130536528, 4;NFKBIB,-0.0158623043, 4;RELA,-0.0417129638, 2;LOC646626,-0.0750578965, 2"
 > 
 > 
+[  mturchin@node1629  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.wCounts.gz | grep $p"_Drop" | sed 's/_/ /g' | sed 's/Drop//g' | head -n 10
+REACTOME REGULATION OF APOPTOSIS APPL1  -0.222426955484408 -0.373033918029765   0.0226284683855766      0.988685765807212       0       527
+REACTOME REGULATION OF APOPTOSIS ARHGAP10       -0.169126446142048      -0.27118166568899       0.091450158940291       0.954274920529855       0       44      527
+REACTOME REGULATION OF APOPTOSIS CASP3  -0.237315565092688 -0.396497769858748   0.0148115752002587      0.992594212399871       0       3       527
+REACTOME REGULATION OF APOPTOSIS CASP9  -0.215648470674733 -0.358887631581227   0.0275227030335623      0.986238648483219       0       6       527
+REACTOME REGULATION OF APOPTOSIS DAPK1  -0.203827900415357 -0.327296361750832   0.0300912427106679      0.984954378644666       0       54      527
+REACTOME REGULATION OF APOPTOSIS DAPK2  -0.172395966920188 -0.284052794165245   0.103454593275728       0.948272703362136       0       20      527
+REACTOME REGULATION OF APOPTOSIS DCC    -0.230371534801106 -0.335686857519419   0.0441950430248856      0.977902478487557       0       145     527
+REACTOME REGULATION OF APOPTOSIS PAK2   -0.208719167266841 -0.341691509507715   0.0361229983680063      0.981938500815997       0       20      527
+REACTOME REGULATION OF APOPTOSIS RPS27  -0.223325244967473 -0.374532346569793   0.0217960375142647      0.989101981242868       0       527
+REACTOME REGULATION OF APOPTOSIS RPS27A -0.223325244967473 -0.374532346569793   0.0217960375142647      0.989101981242868       0       1       527
+[  mturchin@node1629  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.wCounts.gz | grep $p"_Drop" | sed 's/_/ /g' | sed 's/Drop//g' | perl -lane 'if ($F[$#F-5] =~ m/\d\.\d\d/) { print $F[$#F-7], "\t", $F[$#F-4], "\t", $F[$#F-1], "\t", $F[$#F]; }' | head -n 10
+APOPTOSIS       -0.373033918029765      0       527
+ARHGAP10        0.091450158940291       44      527
+CASP3   0.0148115752002587      3       527
+CASP9   0.0275227030335623      6       527
+DAPK1   0.0300912427106679      54      527
+DAPK2   0.103454593275728       20      527
+DCC     0.0441950430248856      145     527
+PAK2    0.0361229983680063      20      527
+APOPTOSIS       -0.374532346569793      0       527
+RPS27A  0.0217960375142647      1       527
+[  mturchin@node1629  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.wCounts.gz | grep $p"_Drop" | sed 's/_/ /g' | sed 's/Drop//g' | perl -lane 'if ($F[$#F-6] =~ m/\d\.\d\d/) { print $F[$#F-7], "\t", $F[$#F-4], "\t", $F[$#F-1], "\t", $F[$#F]; }' | head -n 10
+ARHGAP10        0.091450158940291       44      527
+CASP3   0.0148115752002587      3       527
+CASP9   0.0275227030335623      6       527
+DAPK1   0.0300912427106679      54      527
+DAPK2   0.103454593275728       20      527
+DCC     0.0441950430248856      145     527
+PAK2    0.0361229983680063      20      527
+RPS27A  0.0217960375142647      1       527
+SMC3    0.0487149732041152      10      527
+UBA52   0.0329443234973024      4       527
+[  mturchin@node1629  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.wCounts.gz | grep $p"_Drop" | sed 's/_/ /g' | sed 's/Drop//g' | perl -lane 'if ($F[$#F-7] =~ m/\d\.\d\d/) { print $F[$#F-7], "\t", $F[$#F-4], "\t", $F[$#F-1], "\t", $F[$#F]; }' | head -n 10
+[  mturchin@node1629  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.wCounts.gz | grep $p"_Drop" | sed 's/_/ /g' | sed 's/Drop//g' | perl -lane 'if ($F[$#F-4] !~ m/[A-Z]/) { print $F[$#F-7], "\t", $F[$#F-4], "\t", $F[$#F-1], "\t", $F[$#F]; }' | head -n 10
+APOPTOSIS       -0.373033918029765      0       527
+ARHGAP10        0.091450158940291       44      527
+CASP3   0.0148115752002587      3       527
+CASP9   0.0275227030335623      6       527
+DAPK1   0.0300912427106679      54      527
+DAPK2   0.103454593275728       20      527
+DCC     0.0441950430248856      145     527
+PAK2    0.0361229983680063      20      527
+APOPTOSIS       -0.374532346569793      0       527
+RPS27A  0.0217960375142647      1       527
+[  mturchin@node1629  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdropsComps.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.wCounts.gz | grep $p"_Drop" | sed 's/_/ /g' | sed 's/Drop//g' | perl -lane 'if ($F[$#F-6] !~ m/[A-Z]/) { print $F[$#F-7], "\t", $F[$#F-4], "\t", $F[$#F-1], "\t", $F[$#F]; }' | head -n 10
+ARHGAP10        0.091450158940291       44      527
+CASP3   0.0148115752002587      3       527
+CASP9   0.0275227030335623      6       527
+DAPK1   0.0300912427106679      54      527
+DAPK2   0.103454593275728       20      527
+DCC     0.0441950430248856      145     527
+PAK2    0.0361229983680063      20      527
+RPS27A  0.0217960375142647      1       527
+SMC3    0.0487149732041152      10      527
+UBA52   0.0329443234973024      4       527
 
 
 
