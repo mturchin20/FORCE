@@ -11441,6 +11441,9 @@ done
 
 
 
+
+
+
 zcat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.tsv.gz | perl -lane 'if ($. == 1) { @vals1; push(@F, (0,1,2,3)); for (my $i = 4; $i <= $#F; $i++) { if ($F[$i] =~ m/AFR/) { push(@vals1, $i); } else { $PH = 1; } } } print join("\t", @F[@vals1]);' | gzip > /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.edits.tsv.gz
 
 sbatch -t 24:00:00 --mem 20g -o /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.tsv.edits.slurm.output -e /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.tsv.edits.slurm.error --comment "RFMix 5EUR5AFR.fb.tsv edits" <(echo -e '#!/bin/sh'; echo -e "zcat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.tsv.gz | perl -lane 'if (\$. == 1) { @vals1; push(@F, (0,1,2,3)); for (my \$i = 4; \$i <= \$#F; \$i++) { if (\$F[\$i] =~ m/AFR/) { push(@vals1, \$i); } else { \$PH = 1; } } } print join(\"\t\", @F[@vals1]);' | gzip > /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.edits.tsv.gz";)
@@ -11487,14 +11490,6 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		done
 	done
 done
-
-
-
-
-
-
-
-
 
 
 
