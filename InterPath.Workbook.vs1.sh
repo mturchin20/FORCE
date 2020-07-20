@@ -11506,7 +11506,20 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 				pValBonf=1; pValCutoff="pValAll";
 				echo $l $i $ancestry1 $ancestry2 $k $pValBonf
 
-				join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | awk '{ print $1 "\t" $5 "\t" $6 }' | sort -k 1,1) <(cat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.edits.averages.PathwaysAll.txt | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,3] == 0,3] <- 1e-10; print(summary(lm(-log10(Data1[,3]) ~ Data1[,5])));"
+				rm -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.5EUR5AFR.fb.averages.summary.txt
+				echo $l $i $k >> /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.5EUR5AFR.fb.averages.summary.txt
+				join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | awk '{ print $1 "\t" $5 "\t" $6 }' | sort -k 1,1) <(cat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.recode.bcf.5EUR5AFR.fb.edits.averages.PathwaysAll.txt | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,3] == 0,3] <- 1e-10; Lengths <- c(0,250,500,1000,2000,3500); Results1 <- c(); \
+					for (i in 1:(length(Lengths)-1)) { \
+						Begin1 <- Lengths[i]; End1 <- Lengths[i+1]; \
+						Data1.sub <- Data1[Data1[,2] >= Begin1 & Data1[,2] < End1,]; \ 
+						if (nrow(Data1.sub) > 0) { \
+							Results1 <- rbind(Results1, c(Begin1, End1, nrow(Data1.sub), signif(cor(-log10(Data1.sub[,3]), Data1.sub[,5]), 4), signif(summary(lm(-log10(Data1.sub[,3]) ~ Data1.sub[,5]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,3]) ~ Data1.sub[,5]))\$coefficients[2,4], 4))); \
+						} else { \
+                                                        Results1 <- rbind(Results1, c(Begin1, End1, 0, NA, NA, NA)); \
+						}; \
+					}; \
+					write.table(Results1, file=\"\", quote=FALSE, row.name=FALSE, col.names=FALSE); \
+				" | grep -v ^\> >> /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.5EUR5AFR.fb.averages.summary.txt 
 
 			done;
 		done;
@@ -11514,13 +11527,15 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 done;
 
 
-
 				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.wQuantFlagCounts.TRUE.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,6] == 0,6] <- 1e-11; Lengths <- c(0,250,500,1000,2000,3500); pValCutoffs <- c(1e-7,1e-6,1e-5,1e-4,1e-3); Results1 <- c(); \
 					for (i in 1:(length(Lengths)-1)) { \
 						Begin1 <- Lengths[i]; End1 <- Lengths[i+1]; \
 						Data1.sub <- Data1[Data1[,9] >= Begin1 & Data1[,9] < End1,]; \
 						if (nrow(Data1.sub) > 0) { \
-							Results1 <- rbind(Results1, c(nrow(Data1.sub), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,11]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))\$coefficients[2,4], 4), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,13]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))\$coefficients[2,4], 4), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,15]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))\$coefficients[2,4], 4), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,17]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))\$coefficients[2,4], 4))); \ 
+							Results1 <- rbind(Results1, c(nrow(Data1.sub), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,11]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,11]))\$coefficients[2,4], 4), 
+
+
+signif(cor(-log10(Data1.sub[,6]), Data1.sub[,13]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,13]))\$coefficients[2,4], 4), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,15]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,15]))\$coefficients[2,4], 4), signif(cor(-log10(Data1.sub[,6]), Data1.sub[,17]), 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,6]) ~ Data1.sub[,17]))\$coefficients[2,4], 4))); \ 
 						} else { \
 							Results1 <- rbind(Results1, c(0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA)); \	
 						}; \
@@ -11532,6 +11547,14 @@ done;
 		done;
 	done;
 done;
+
+
+kegg+height kegg+bmi reactome+height reactome+bmi
+all paths
+small
+...
+largest
+
 
 
 
