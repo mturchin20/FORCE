@@ -11817,7 +11817,7 @@ sbatch -t UNLIMITED --mem 50g -n 16 -o /users/mturchin/data/ukbiobank_jun17/subs
 
 
 
-#LD-Based Pruning
+#LD-Based Pruning/Clumping
 
 mkdir /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned
 mkdir /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/subfiles
@@ -11832,10 +11832,12 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
 			mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/subfiles
 		fi
 
-		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | awk '{ print $1 "\t" $2 "\t" $4 "\t" $5 "\tADD\t10000" }' | R -q -e "library(\"digest\"); seed1 <- digest2int($ancestry2); set.seed(seed1); Data1 <- read.table(file('stdin'), header=F); Data1 <- cbind(Data1, signif(rnorm(nrow(Data1),0,1),4)); Data1 <- cbind(Data1, signif(Data1[,ncol(Data1)] + rnorm(nrow(Data1),0,1),4)); Data1 <- cbind(Data1, signif(runif(nrow(Data1)),4)); write.table(Data1, quote=FALSE, row.names=FALSE, col.names=FALSE);" | head -n 10 
+		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | awk '{ print $1 "\t" $2 "\t" $4 "\t" $5 "\tADD\t10000" }' | R -q -e "library(\"digest\"); seed1 <- digest2int(\"$ancestry2\"); set.seed(seed1); Data1 <- read.table(file('stdin'), header=F); Data1 <- cbind(Data1, signif(rnorm(nrow(Data1),0,1),4)); Data1 <- cbind(Data1, signif(Data1[,ncol(Data1)] + rnorm(nrow(Data1),0,1),4)); Data1 <- cbind(Data1, signif(runif(nrow(Data1)),4)); write.table(Data1, quote=FALSE, row.names=FALSE, col.names=FALSE);" | grep -v ^\> | cat <(echo -e "CHR\tSNP\tBP\tA1\tTEST\tNMISS\tBETA\tSTAT\tP") - | perl -lane 'print join("\t", @F);' | head -n 10 
 
 	done
 done
+
+CHR     SNP     BP      A1      TEST    NMISS   BETA    STAT    P
 
 [  mturchin@node1651  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/British.Ran5000/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.British.Ran5000.Height.Trans.assoc.linear | head -n 10
 CHR     SNP     BP      A1      TEST    NMISS   BETA    STAT    P
@@ -24355,6 +24357,23 @@ PAK2    0.0361229983680063      20      527
 RPS27A  0.0217960375142647      1       527
 SMC3    0.0487149732041152      10      527
 UBA52   0.0329443234973024      4       527
+[  mturchin@node1651  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/British.Ran5000/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.British.Ran5000.Height.Trans.assoc.linear | head -n 10                                                                                                                                                                      CHR     SNP     BP      A1      TEST    NMISS   BETA    STAT    P                                                                                                                                                                               10   rs117205301      95844    T        ADD     4983    -0.1048       -2.051      0.04034                                                                                                                                                     10     rs7909677     111955    G        ADD     4992   -0.01441      -0.4102       0.6817                                                                                                                                                     10     rs7093061     122109    T        ADD     4954    0.01874       0.9028       0.3667                                                                                                                                                     10     rs9419541     127924    A        ADD     4991  -0.007742      -0.2914       0.7708                                                                                                                                                     10   rs116874274     131716    T        ADD     4985    0.01764       0.4297       0.6674
+  10    rs76243118     133243    A        ADD     4993    -0.1048       -2.073      0.03819
+  10     rs2379076     143882    T        ADD     4985   -0.01772      -0.8392       0.4014
+  10     rs9419557     148325    G        ADD     4979   -0.02856      -0.4797       0.6314
+  10    rs61840585     148410    C        ADD     4986    0.06562        1.243       0.2138
+[  mturchin@node1651  ~/LabMisc/RamachandranLab/InterPath]$
+[  mturchin@node1651  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | awk '{ print $1 "\t" $2 "\t" $4 "\t" $5 "\tADD\t10000" }' | R -q -e "library(\"digest\"); seed1 <- digest2int(\"$ancestry2\"); set.seed(seed1); Data1 <- read.table(file('stdin'), header=F); Data1 <- cbind(Data1, signif(rnorm(nrow(Data1),0,1),4)); Data1 <- cbind(Data1, signif(Data1[,ncol(Data1)] + rnorm(nrow(Data1),0,1),4)); Data1 <- cbind(Data1, signif(runif(nrow(Data1)),4)); write.table(Data1, quote=FALSE, row.names=FALSE, col.names=FALSE);" | cat <(echo -e "CHR\tSNP\tBP\tA1\tTEST\tNMISS\tBETA\tSTAT\tP") - | perl -lane 'print join("\t", @F);' | head -n 10
+CHR     SNP     BP      A1      TEST    NMISS   BETA    STAT    P
+>       library("digest");      seed1   <-      digest2int("African");  set.seed(seed1);        Data1   <-      read.table(file('stdin'),       header=F);      Data1   <-      cbind(Data1,    signif(rnorm(nrow(Data1),0,1),4));      Data1<-       cbind(Data1,    signif(Data1[,ncol(Data1)]      +       rnorm(nrow(Data1),0,1),4));     Data1   <-      cbind(Data1,    signif(runif(nrow(Data1)),4));  write.table(Data1,      quote=FALSE,    row.names=FALSE,        col.names=FALSE);
+1       1:729632        729632  T       ADD     10000   -0.05992        -1.003  0.009303
+1       1:752721        752721  G       ADD     10000   1.982   1.061   0.665
+1       1:754105        754105  T       ADD     10000   -0.7351 -2.366  0.3647
+1       1:756604        756604  G       ADD     10000   -0.2055 -0.8711 0.9968
+1       1:759036        759036  A       ADD     10000   -1.347  -0.8376 0.007077
+1       1:761147        761147  C       ADD     10000   -0.6093 0.8299  0.9222
+1       1:767096        767096  G       ADD     10000   -0.02637        -1.386  0.5284
+1       1:768448        768448  A       ADD     10000   1.275   2.48    0.7242
 
 
 
