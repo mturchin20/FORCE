@@ -11822,8 +11822,35 @@ sbatch -t UNLIMITED --mem 50g -n 16 -o /users/mturchin/data/ukbiobank_jun17/subs
 mkdir /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned
 mkdir /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/subfiles
 
+module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1 | tail -n 1`; do
+	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+		echo $ancestry1 $ancestry2 $k
+
+		if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/subfiles ]; then
+			mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned
+			mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/subfiles
+		fi
+
+		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | awk '{ print $1 "\t" $2 "\t" $4 "\t" $5 "\tADD\t10000" }' | R -q -e "library(\"digest\"); seed1 <- digest2int($ancestry2); set.seed(seed1); Data1 <- read.table(file('stdin'), header=F); Data1 <- cbind(Data1, signif(rnorm(nrow(Data1),0,1),4)); Data1 <- cbind(Data1, signif(Data1[,ncol(Data1)] + rnorm(nrow(Data1),0,1),4)); Data1 <- cbind(Data1, signif(runif(nrow(Data1)),4)); write.table(Data1, quote=FALSE, row.names=FALSE, col.names=FALSE);" | head -n 10 
+
+	done
+done
+
+[  mturchin@node1651  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/British.Ran5000/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.British.Ran5000.Height.Trans.assoc.linear | head -n 10
+CHR     SNP     BP      A1      TEST    NMISS   BETA    STAT    P
+  10   rs117205301      95844    T        ADD     4983    -0.1048       -2.051      0.04034
+  10     rs7909677     111955    G        ADD     4992   -0.01441      -0.4102       0.6817
+  10     rs7093061     122109    T        ADD     4954    0.01874       0.9028       0.3667
+  10     rs9419541     127924    A        ADD     4991  -0.007742      -0.2914       0.7708
+  10   rs116874274     131716    T        ADD     4985    0.01764       0.4297       0.6674
+  10    rs76243118     133243    A        ADD     4993    -0.1048       -2.073      0.03819
+  10     rs2379076     143882    T        ADD     4985   -0.01772      -0.8392       0.4014
+  10     rs9419557     148325    G        ADD     4979   -0.02856      -0.4797       0.6314
+  10    rs61840585     148410    C        ADD     4986    0.06562        1.243       0.2138
+
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1 | tail -n 1`; do
-	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
+	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		echo $ancestry1 $ancestry2 $k
 
@@ -11831,12 +11858,14 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 			mkdir /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/subfiles/$ancestry2
 		fi
 
-		for (( Perm=1; Perm <= 100; Perm=Perm+1 )); do
-			plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --indep-pairwise 1000 50 .1 --out /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/subfiles/$ancestry2/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.r1.perm${Perm} 
+		for (( Perm=1; Perm <= 1; Perm=Perm+1 )); do
+			plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --indep-pairwise 1000 50 .1 --seed $Perm --out /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/subfiles/$ancestry2/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.r1.perm${Perm} 
 		done
 
 	done
 done
+	
+	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran200000/mturchin20/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop --keep /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/ukb_chr1_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.FIDIIDs --clump /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear --clump-p1 5e-8 --clump-p2 0.0001 --clump-r2 0.1 --clump-kb 500 --out /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/Analyses/GWAS/PLINK/subfiles/$ancestry2/ukb_chrAll_v2.British.Ran200000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.${ancestry2}.Height.Trans.assoc.linear 
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1 | tail -n 1`; do
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
@@ -11844,7 +11873,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		echo $ancestry1 $ancestry2 $k
 
 		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.SNPIDs > /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.r1.permAll.prune.results.txt
-		for (( Perm=1; Perm <= 100; Perm=Perm+1 )); do
+		for (( Perm=1; Perm <= 1; Perm=Perm+1 )); do
 			join -a 1 -1 1 -2 1 -e 0 2.2 <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.SNPIDs | sort) <(cat /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/subfiles/$ancestry2/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.r1.perm${Perm}.prune.in | awk '{ print $0 "\t1" }' | sort -k 1,1) | awk '{ print $2 }' > /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.r1.permAll.prune.results.txt.temp1
 			paste /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.r1.permAll.prune.results.txt /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.r1.permAll.prune.results.txt.temp1 > /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.r1.permAll.prune.results.txt.temp2
 			mv /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.r1.permAll.prune.results.txt.temp2 /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.r1.permAll.prune.results.txt
