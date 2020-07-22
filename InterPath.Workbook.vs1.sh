@@ -11850,19 +11850,16 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		echo $ancestry1 $ancestry2 $k
 
 		rm -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/subfiles/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped.perm*.txt
-		for (( Perm=1; Perm <= 2; Perm=Perm+1 )); do
-			cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped | grep -v NSIG | awk '{ print $3 "\t" $12 }' | sed 's/(1)//g' | R -q -e "library(\"digest\"); seed1 <- digest2int(\"$ancestry2\"); set.seed(seed1); Data1 <- read.table(file('stdin'), header=F); for (i in 1:4) { \
-				SNPs.temp1 <- unlist(as.character(Data1[i,1])); if (as.character(Data1[i,2]) != \"NONE\") { \
-					SNPs.temp1 <- c(SNPs.temp1, unlist(strsplit(as.character(Data1[i,2]), \",\"))); \
-				}; \
-				for (j in 1:2) { \
-					SNP.temp2 <- sample(SNPs.temp1)[1]; \
-					print(SNP.temp2); \
-					write.table(SNP.temp2, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/subfiles/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped.perm\", as.character(j), \".txt\", sep=\"\"), append=TRUE, quote=FALSE, row.names=FALSE, col.names=FALSE); \
-				}; \
-			};" 	
-		done
-
+		cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped | grep -v NSIG | awk '{ print $3 "\t" $12 }' | sed 's/(1)//g' | R -q -e "library(\"digest\"); seed1 <- digest2int(\"$ancestry2\"); set.seed(seed1); Data1 <- read.table(file('stdin'), header=F); for (i in 1:10) { \
+			SNPs.temp1 <- unlist(as.character(Data1[i,1])); if (as.character(Data1[i,2]) != \"NONE\") { \
+				SNPs.temp1 <- c(SNPs.temp1, unlist(strsplit(as.character(Data1[i,2]), \",\"))); \
+			}; \
+			for (j in 1:2) { \
+				SNP.temp2 <- sample(SNPs.temp1)[1]; \
+				print(SNP.temp2); \
+				write.table(SNP.temp2, file=paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/subfiles/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped.perm\", as.character(j), \".txt\", sep=\"\"), append=TRUE, quote=FALSE, row.names=FALSE, col.names=FALSE); \
+			}; \
+		};" 	
 	done
 done
 
