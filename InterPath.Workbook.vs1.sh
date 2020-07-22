@@ -11848,7 +11848,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 #		NumRows=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped | wc | awk '{ print $1 }'`
-		NumRows=2
+		NumRows=20004
 		echo $ancestry1 $ancestry2 $k
 		
 		if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/subfiles/slurm ]; then
@@ -11856,9 +11856,9 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		fi
 
 		rm -f /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/subfiles/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped.row*perm*.txt
-		for (( Row=1; Row <= $NumRows; Row=Row+1000 )); do
+		for (( Row=1; Row <= $NumRows; Row=Row+10000 )); do
 			sbatch -t 72:00:00 --mem 2g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/subfiles/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped.row${Row}.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/subfiles/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped.row${Row}.slurm.error --comment "Clump $ancestry2 $Row" <(echo -e '#!/bin/sh'; 
-			 echo -e "\ncat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped | grep -v NSIG | awk '{ print \$3 \"\\\t\" \$12 }' | sed 's/(1)//g' | R -q -e \"library(\\\"digest\\\"); seed1 <- digest2int(\\\"$ancestry2\\\"); set.seed(seed1); Data1 <- read.table(file('stdin'), header=F); for (i in $Row:($Row+999)) { \
+			 echo -e "\ncat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped | grep -v NSIG | awk '{ print \$3 \"\\\t\" \$12 }' | sed 's/(1)//g' | R -q -e \"library(\\\"digest\\\"); seed1 <- digest2int(\\\"$ancestry2\\\"); set.seed(seed1); Data1 <- read.table(file('stdin'), header=F); for (i in $Row:($Row+9999)) { \
 				write(i,  stderr()); \
 				SNPs.temp1 <- unlist(as.character(Data1[i,1])); if (as.character(Data1[i,2]) != \\\"NONE\\\") { \
 					SNPs.temp1 <- c(SNPs.temp1, unlist(strsplit(as.character(Data1[i,2]), \\\",\\\"))); \
