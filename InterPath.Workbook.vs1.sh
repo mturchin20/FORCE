@@ -11592,7 +11592,7 @@ for n in `cat <(echo "5EUR5AFR 5EUR5AFR.EM.2 1EUR1AFR 1EUR1AFR.EM.2" | perl -lan
 
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix 
-scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.*.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.AllPaths.ArchExplr.pValAll.5EUR5AFR.fb.averages.plots.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/.
+scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.*.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.HeightBMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.AllPaths.ArchExplr.pValAll.5EUR5AFR.fb.averages*plots.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/.
 
 cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.5EUR5AFR.fb.averages.txt | awk '{ if (($2 >= 1000) && ($5 <= .95)) { print $0 } }' | wc
 cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.5EUR5AFR.fb.averages.txt | awk '{ if (($2 >= 1000) && ($5 <= .95)) { print $0 } }'
@@ -11862,7 +11862,7 @@ module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lan
 	done
 done
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1 | tail -n 1`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African`; do
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		NumRows=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped | grep -v NSIG | wc | awk '{ print $1 }'`
