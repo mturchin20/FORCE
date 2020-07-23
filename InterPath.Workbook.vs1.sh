@@ -11955,15 +11955,14 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 						Props <- Data1[,j]/Data1[,3]; Results1.temp <- summary(lm(-log10(Data1[,2]) ~ Props)); Results1.temp.betas <- c(Results1.temp.betas, Results1.temp\$coefficients[2,1]); Results1.temp.pVals <- c(Results1.temp.pVals, Results1.temp\$coefficients[2,4]); \
 				}; \
 				Results1 <- rbind(Results1, c(\"All\", \"All\", nrow(Data1), mean(Results1.temp.betas), sd(Results1.temp.betas), mean(Results1.temp.pVals), sd(Results1.temp.pVals))); \
-				for (i in 1:(length(Lengths)-1)) { \
+				for (i in 1:(length(Lengths)-1)) { Results1.temp.betas <- c(); Results1.temp.pVals <- c(); \
 					Begin1 <- Lengths[i]; End1 <- Lengths[i+1]; \
-					Data1.sub <- Data1[Data1[,2] >= Begin1 & Data1[,2] < End1,]; \ 
+					Data1.sub <- Data1[Data1[,3] >= Begin1 & Data1[,3] < End1,]; \ 
 					if (nrow(Data1.sub) > 0) { \
-						for (j in 4:ncol(Data1)) { \
-							Props <- Data1[,j]/Data1[,3]; Results1.temp <- summary(lm(-log10(Data1[,2]) ~ Props)); Results1.temp.betas <- c(Results1.temp.betas, Results1.temp\$coefficients[2,1]); Results1.temp.pVals <- c(Results1.temp.pVals, Results1.temp\$coefficients[2,4]); \
+						for (j in 4:ncol(Data1.sub)) { \
+							Props <- Data1.sub[,j]/Data1.sub[,3]; Results1.temp <- summary(lm(-log10(Data1.sub[,2]) ~ Props)); Results1.temp.betas <- c(Results1.temp.betas, Results1.temp\$coefficients[2,1]); Results1.temp.pVals <- c(Results1.temp.pVals, Results1.temp\$coefficients[2,4]); \
 						}; \
 					Results1 <- rbind(Results1, c(Begin1, End1, nrow(Data1.sub), mean(Results1.temp.betas), sd(Results1.temp.betas), mean(Results1.temp.pVals), sd(Results1.temp.pVals))); \
-						Results1 <- rbind(Results1, c(Begin1, End1, nrow(Data1.sub), signif(cor(-log10(Data1.sub[,3]), Data1.sub[,5]), 4), signif(summary(lm(-log10(Data1.sub[,3]) ~ Data1.sub[,5]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,3]) ~ Data1.sub[,5]))\$coefficients[2,4], 4))); \
 					} else { \
 						Results1 <- rbind(Results1, c(Begin1, End1, 0, NA, NA, NA, NA)); \
 					}; \
