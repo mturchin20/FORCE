@@ -11952,12 +11952,12 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 				rm -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.clumpedCounts.permAll.results.summary.txt
 				join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped.rowAll.permAll.results.AllPathways.txt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | awk '{ print $1 "\t" $6 }' | sort -k 1,1) | perl -lane 'splice(@F, 1, 0, $F[$#F]); print join("\t", @F[0..$#F-1]);' | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,2] == 0,2] <- 1e-10; Lengths <- c(0,250,500,1000,2000,3500); Results1 <- c(); \
 				for (i in 1:nrow(Data)) { \
-					Results1.temp.betas <- c(); Results1.temp.pVals <- c(); for (j in 4:ncol(Data1)) { Results1.temp.betas <- c(); Results1.temp.pVals <- c(); \
+					Results1.temp.betas <- c(); Results1.temp.pVals <- c(); for (j in 4:ncol(Data1)) { \
 						Results1.temp <- summary(lm(-log10(Data1[i,2]) ~ Data1[i,j]/Data1[i,3])); Results1.temp.betas <- c(Results1.temp.betas, Results1.temp\$coefficients[2,1]); Results1.temp.pVals <- c(Results1.temp.pVals, Results1.temp\$coefficients[2,4]);
 					}; \
-					Results1 <- rbind(Results1, c(Data1[i,1], mean(
+					Results1 <- rbind(Results1, c(Data1[i,1], mean(Results1.temp.betas), sd(Results1.temp.betas), mean(Results1.temp.pVals), sd(Results1.temp.pVals))); \
 				}; \
- 
+				write.table(Results1);" 
 			done;
 		done;
 	done;
