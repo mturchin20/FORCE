@@ -11951,19 +11951,29 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 
 				rm -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.clumpedCounts.permAll.results.summary.txt
 				join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped.rowAll.permAll.results.AllPathways.txt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | awk '{ print $1 "\t" $6 }' | sort -k 1,1) | perl -lane 'splice(@F, 1, 0, $F[$#F]); print join("\t", @F[0..$#F-1]);' | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,2] == 0,2] <- 1e-10; Lengths <- c(0,250,500,1000,2000,3500); Results1 <- c(); Results1.temp.betas <- c(); Results1.temp.pVals <- c(); \
-				for (j in 4:10) { \
+				for (j in 4:ncol(Data1)) { \
 						Props <- Data1[,j]/Data1[,3]; Results1.temp <- summary(lm(-log10(Data1[,2]) ~ Props)); Results1.temp.betas <- c(Results1.temp.betas, Results1.temp\$coefficients[2,1]); Results1.temp.pVals <- c(Results1.temp.pVals, Results1.temp\$coefficients[2,4]); \
 				}; \
-				Results1 <- rbind(Results1, c(\"All\", mean(Results1.temp.betas), sd(Results1.temp.betas), mean(Results1.temp.pVals), sd(Results1.temp.pVals))); \
+				Results1 <- rbind(Results1, c(\"All\", \"All\", nrow(Data1), mean(Results1.temp.betas), sd(Results1.temp.betas), mean(Results1.temp.pVals), sd(Results1.temp.pVals))); \
+				for (i in 1:(length(Lengths)-1)) { \
+					Begin1 <- Lengths[i]; End1 <- Lengths[i+1]; \
+					Data1.sub <- Data1[Data1[,2] >= Begin1 & Data1[,2] < End1,]; \ 
+					if (nrow(Data1.sub) > 0) { \
+						for (j in 4:ncol(Data1)) { \
+							Props <- Data1[,j]/Data1[,3]; Results1.temp <- summary(lm(-log10(Data1[,2]) ~ Props)); Results1.temp.betas <- c(Results1.temp.betas, Results1.temp\$coefficients[2,1]); Results1.temp.pVals <- c(Results1.temp.pVals, Results1.temp\$coefficients[2,4]); \
+						}; \
+					Results1 <- rbind(Results1, c(Begin1, End1, nrow(Data1.sub), mean(Results1.temp.betas), sd(Results1.temp.betas), mean(Results1.temp.pVals), sd(Results1.temp.pVals))); \
+						Results1 <- rbind(Results1, c(Begin1, End1, nrow(Data1.sub), signif(cor(-log10(Data1.sub[,3]), Data1.sub[,5]), 4), signif(summary(lm(-log10(Data1.sub[,3]) ~ Data1.sub[,5]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1.sub[,3]) ~ Data1.sub[,5]))\$coefficients[2,4], 4))); \
+					} else { \
+						Results1 <- rbind(Results1, c(Begin1, End1, 0, NA, NA, NA, NA)); \
+					}; \
+				}; \
 				write.table(Results1, quote=FALSE, row.names=FALSE, col.names=FALSE);" 
 			done;
 		done;
 	done;
 done;
 						
-						Results1 <- rbind(Results1, c(1, Lengths[length(Lengths)], nrow(Data1), signif(cor(-log10(Data1[,3]), Data1[,5]), 4), signif(summary(lm(-log10(Data1[,3]) ~ Data1[,5]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1[,3]) ~ Data1[,5]))\$coefficients[2,4], 4))); \
-
-R -q -e "Data1 <- read.table(file('stdin'), header=F); 
 
 	
 				rm -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.$n.fb.averages.summary.txt
