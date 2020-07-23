@@ -11951,7 +11951,19 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 
 
 				rm -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.clumpedCounts.permAll.results.summary.txt
+				join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/Pruned/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.sim.assoc.linear.clumped.rowAll.permAll.results.AllPathways.txt | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | awk '{ print $1 "\t" $6 }' | sort -k 1,1) | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1[Data1[,ncol(Data1)] == 0,ncol(Data1)] <- 1e-10; Lengths <- c(0,250,500,1000,2000,3500); Results1 <- c(); \
 
+				
+					Results1 <- rbind(Results1, c(1, Lengths[length(Lengths)], nrow(Data1), signif(cor(-log10(Data1[,3]), Data1[,5]), 4), signif(summary(lm(-log10(Data1[,3]) ~ Data1[,5]))\$coefficients[2,1], 4), signif(summary(lm(-log10(Data1[,3]) ~ Data1[,5]))\$coefficients[2,4], 4))); \
+
+
+ 
+			done;
+		done;
+	done;
+done;
+
+R -q -e "Data1 <- read.table(file('stdin'), header=F); 
 
 	
 				rm -f /users/mturchin/data/mturchin/InterPath/Analyses/Rnd2AdditiveMdls/GenDiv/RFMix/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.$n.fb.averages.summary.txt
