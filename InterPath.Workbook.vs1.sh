@@ -16762,6 +16762,30 @@ REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION
 #20200725
 #From: http://www.pitt.edu/~epolinko/IntroPyMOL.pdf, https://fitzkee.chemistry.msstate.edu/sites/default/files/gradbpc/pymol-tutorial.pdf 
 
+select chain I chain H chain L chain 0 chain J chain K
+set_name sele, 
+select chain w chain v chain z chain M chain x chain y
+set_name sele,
+
+select chain 1 chain 2 chain 3 chain 4 chain 5 chain 6 chain 7 chain 8 chain 9 chain AA chain AC
+set_name sele, 
+select chain N chain O chain P chain Q chain R chain S chain T chain U chain V chain W chain Z
+set_name sele, 
+
+color green, chain 1 chain 2 chain 3 chain 4 chain 5 chain 6 chain 7 chain 8 chain 9 chain AA chain AC
+color blue chain 1
+color green chain 1
+
+select chain B chain C chain D chain E chain F chain G chain X
+set_name sele, 
+select chain h chain i chain j chain k chain l chain m chain n
+set_name sele, 
+
+select chain a chain b chain c chain d chain e chain f chain g
+set_name sele, 
+select chain o chain p chain q chain r chain s chain t chain u
+set_name sele, 
+
 #26S: https://www.rcsb.org/fasta/entry/5GJR/display
 PSMC* --
 >5GJR_1|Chains I,w|26S protease regulatory subunit 4|Homo sapiens (9606)
