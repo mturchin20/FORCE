@@ -16760,7 +16760,7 @@ REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION
 
 #PyMOL -- Figure work
 #20200725
-#From: https://www.nature.com/articles/s41590-018-0186-z/figures/1, http://www.pitt.edu/~epolinko/IntroPyMOL.pdf, https://fitzkee.chemistry.msstate.edu/sites/default/files/gradbpc/pymol-tutorial.pdf, http://people.reed.edu/~glasfeld/pretty/align.html 
+#From: https://www.nature.com/articles/s41590-018-0186-z/figures/1, http://www.pitt.edu/~epolinko/IntroPyMOL.pdf, https://fitzkee.chemistry.msstate.edu/sites/default/files/gradbpc/pymol-tutorial.pdf, http://people.reed.edu/~glasfeld/pretty/align.html, https://pymolwiki.org/index.php/Opaque_background, https://pymolwiki.org/index.php/Png, https://pymolwiki.org/index.php/Get_View, https://pymolwiki.org/index.php/Set_View 
 #From: https://thenode.biologists.com/data-visualization-with-flying-colors/research/ (trying to follow Okabe_Ito)
 
 fetch 5GJR
