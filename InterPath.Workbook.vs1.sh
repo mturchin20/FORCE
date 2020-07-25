@@ -16781,15 +16781,23 @@ select chain a chain b chain c chain d chain e chain f chain g
 set_name sele, psmb_1 
 select chain o chain p chain q chain r chain s chain t chain u
 set_name sele, psmb_2
-select chain AB chain Y
-set_name sele, dss1_12
+select chain AB 
+set_name sele, dss1_1
+select chain Y
+set_name sele, dss1_2
 color deepsalmon, psmc_1 psmc_2
 color skyblue, psmd_1 psmd_2
 color limegreen, psma_1 psma_2
 color paleyellow, psmb_1 psmb_2
-color skyblue, dss1_12
+color skyblue, dss1_1
+color skyblue, dss1_2
 
-fetch
+remove psma_2 psmb_2 psmc_2 psmd_2 dss1_2
+
+#select model 5GJR & chain 2
+#select model 5MX5 & chain A
+
+fetch 5MX5
 
 #figuring out those tan sections at the top of PSMD*
 #color green, chain 1 chain 2 chain 3 chain 4 chain 5 chain 6 chain 7 chain 8 chain 9 chain AA chain AC
