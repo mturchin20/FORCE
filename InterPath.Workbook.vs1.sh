@@ -16789,13 +16789,18 @@ set_name sele, psmb_1
 select chain o chain p chain q chain r chain s chain t chain u
 set_name sele, psmb_2
 
+select chain AB chain Y
+set_name sele, dss1_12
+
 color red, psmc_1 psmc_2
 color blue, psmd_1 psmd_2
 color green, psma_1 psma_2
 color yellow, psmb_1 psmb_2
 
-#not covered by the groupings/selection above
-AB, o, 
+color blue, dss1_12
+
+#sections not covered by the groupings/selection above
+AB, Y 
 
 #26S: https://www.rcsb.org/fasta/entry/5GJR/display
 PSMC* --
