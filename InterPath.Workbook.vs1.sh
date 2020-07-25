@@ -16760,7 +16760,7 @@ REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION
 
 #PyMOL -- Figure work
 #20200725
-#From: https://www.nature.com/articles/s41590-018-0186-z/figures/1, http://www.pitt.edu/~epolinko/IntroPyMOL.pdf, https://fitzkee.chemistry.msstate.edu/sites/default/files/gradbpc/pymol-tutorial.pdf 
+#From: https://www.nature.com/articles/s41590-018-0186-z/figures/1, http://www.pitt.edu/~epolinko/IntroPyMOL.pdf, https://fitzkee.chemistry.msstate.edu/sites/default/files/gradbpc/pymol-tutorial.pdf, http://people.reed.edu/~glasfeld/pretty/align.html 
 #From: https://thenode.biologists.com/data-visualization-with-flying-colors/research/ (trying to follow Okabe_Ito)
 
 fetch 5GJR
@@ -16791,23 +16791,22 @@ color limegreen, psma_1 psma_2
 color paleyellow, psmb_1 psmb_2
 color skyblue, dss1_1
 color skyblue, dss1_2
-
-remove psma_2 psmb_2 psmc_2 psmd_2 dss1_2
-
-#select model 5GJR & chain 2
-#select model 5MX5 & chain A
+remove psmc_2 psmd_2 dss1_2
 
 fetch 5MX5
 show surface
 select model 5MX5 & chain B+D+F 
 set_name sele, psme1_1 
-select chain I chain K chain M
+select model 5MX5 & chain I+K+M
 set_name sele, psme1_2 
-select chain A chain C chain E chain G 
+select model 5MX5 & chain A+C+E+G 
 set_name sele, psme2_1 
-select chain H chain J chain L chain N
+select model 5MX5 & chain H+J+L+N
 set_name sele, psme2_2 
+color lightpink, psme1_1 psme1_2 psme2_1 psme2_2  
+remove psme1_2 psme2_2
 
+align 5GJR & psma_2, 5MX5 & psme2_1 & psme2_2
 
 #figuring out those tan sections at the top of PSMD*
 #color green, chain 1 chain 2 chain 3 chain 4 chain 5 chain 6 chain 7 chain 8 chain 9 chain AA chain AC
@@ -16818,6 +16817,10 @@ set_name sele, psme2_2
 
 #sections not covered by the groupings/selection above
 #AB, Y 
+
+#select model 5GJR & chain 2
+#select model 5MX5 & chain A
+##remove psma_2 psmb_2 psmc_2 psmd_2 dss1_2
 
 ##26S: https://www.rcsb.org/fasta/entry/5GJR/display
 #PSMC* --
