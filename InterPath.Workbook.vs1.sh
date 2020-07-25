@@ -16799,7 +16799,8 @@ remove psma_2 psmb_2 psmc_2 psmd_2 dss1_2
 
 fetch 5MX5
 show surface
-
+select chain B,D,F,I,K,M
+select chain A,C,E,G,H,J,L,N
 
 
 #figuring out those tan sections at the top of PSMD*
@@ -16882,14 +16883,14 @@ show surface
 #
 #chains a,b,c,d,e,f,g
 #chains o,p,q,r,s,t,u
-
-#19S: https://www.rcsb.org/fasta/entry/5MX5/display
-
->5MX5_2|Chains B,D,F,I,K,M|Proteasome activator complex subunit 2|Mus musculus (10090)
-MAKPCGVRLSGEARKQVDVFRQNLFQEADDFLCTFLPRKIISLSQLLQEDSLNVADLSSLRAPLDIPIPDPPPKDDEMETDKQEKKEVPKCGYLPGNEKLLALLALVKPEVWTLKEKCILVITWIQHLIPKIEDGNDFGVAIQEKVLERVNAVKTKVEAFQTTISKYFSERGDAVAKASKDTHVMDYRALVHERDEAAYGALRAMVLDLRAFYAELYHIISSNLEKIVNPKGEEKPSMY
->5MX5_1|Chains A,C,E,G,H,J,L,N|Proteasome activator complex subunit 1|Mus musculus (10090)
-MATLRVHPEAQAKVDVFREDLCSKTENLLGSYFPKKISELDAFLKEPALNEANLSNLKAPLDIPVPDPVKEKEKEERKKQQEKEEKEEKKKGDEDDKGPPCGPVNCNEKIVVLLQRLKPEIKDVTEQLNLVTTWLQLQIPRIEDGNNFGVAVQEKVFELMTNLHTKLEGFHTQISKYFSERGDAVAKAAKQPHVGDYRQLVHELDEAEYQEIRLMVMEIRNAYAVLYDIILKNFEKLKKPRGETKGMIY
-
+#
+##19S: https://www.rcsb.org/fasta/entry/5MX5/display
+#
+#>5MX5_2|Chains B,D,F,I,K,M|Proteasome activator complex subunit 2|Mus musculus (10090)
+#>5MX5_1|Chains A,C,E,G,H,J,L,N|Proteasome activator complex subunit 1|Mus musculus (10090)
+#
+#chains B,D,F,I,K,M
+#chains A,C,E,G,H,J,L,N
 
 
 
