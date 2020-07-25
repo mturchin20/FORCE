@@ -16798,6 +16798,7 @@ remove psma_2 psmb_2 psmc_2 psmd_2 dss1_2
 #select model 5MX5 & chain A
 
 fetch 5MX5
+show surface
 
 #figuring out those tan sections at the top of PSMD*
 #color green, chain 1 chain 2 chain 3 chain 4 chain 5 chain 6 chain 7 chain 8 chain 9 chain AA chain AC
