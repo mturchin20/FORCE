@@ -16799,10 +16799,14 @@ remove psma_2 psmb_2 psmc_2 psmd_2 dss1_2
 
 fetch 5MX5
 show surface
-select chain B chain D chain F chain I chain K chain M
-set_name sele, psme_1 
-select chain A chain C chain E chain G chain H chain J chain L chain N
-set_name sele, psme_2 
+select model 5MX5 & chain B+D+F 
+set_name sele, psme1_1 
+select chain I chain K chain M
+set_name sele, psme1_2 
+select chain A chain C chain E chain G 
+set_name sele, psme2_1 
+select chain H chain J chain L chain N
+set_name sele, psme2_2 
 
 
 #figuring out those tan sections at the top of PSMD*
