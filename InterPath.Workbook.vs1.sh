@@ -16775,6 +16775,7 @@ set_name sele,
 color green, chain 1 chain 2 chain 3 chain 4 chain 5 chain 6 chain 7 chain 8 chain 9 chain AA chain AC
 color blue chain 1
 color green chain 1
+1, (not 6), AA, AC
 
 select chain B chain C chain D chain E chain F chain G chain X
 set_name sele, 
