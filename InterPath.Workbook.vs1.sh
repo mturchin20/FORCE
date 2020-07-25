@@ -16761,16 +16761,31 @@ REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION
 #PyMOL -- Figure work
 #20200725
 #From: https://www.nature.com/articles/s41590-018-0186-z/figures/1, http://www.pitt.edu/~epolinko/IntroPyMOL.pdf, https://fitzkee.chemistry.msstate.edu/sites/default/files/gradbpc/pymol-tutorial.pdf 
+#From: https://thenode.biologists.com/data-visualization-with-flying-colors/research/ (trying to follow Okabe_Ito)
 
 select chain I chain H chain L chain 0 chain J chain K
 set_name sele, psmc_1 
 select chain w chain v chain z chain M chain x chain y
 set_name sele, psmc_2
-
 select chain 1 chain 2 chain 3 chain 4 chain 5 chain 6 chain 7 chain 8 chain 9 chain AA chain AC
 set_name sele, psmd_1
 select chain N chain O chain P chain Q chain R chain S chain T chain U chain V chain W chain Z
 set_name sele, psmd_2
+select chain B chain C chain D chain E chain F chain G chain X
+set_name sele, psma_1
+select chain h chain i chain j chain k chain l chain m chain n
+set_name sele, psma_2
+select chain a chain b chain c chain d chain e chain f chain g
+set_name sele, psmb_1 
+select chain o chain p chain q chain r chain s chain t chain u
+set_name sele, psmb_2
+select chain AB chain Y
+set_name sele, dss1_12
+color deepsalmon, psmc_1 psmc_2
+color skyblue, psmd_1 psmd_2
+color limegreen, psma_1 psma_2
+color paleyellow, psmb_1 psmb_2
+color skyblue, dss1_12
 
 #figuring out those tan sections at the top of PSMD*
 #color green, chain 1 chain 2 chain 3 chain 4 chain 5 chain 6 chain 7 chain 8 chain 9 chain AA chain AC
@@ -16779,99 +16794,79 @@ set_name sele, psmd_2
 #etcetc...
 #the tan parts are chains: 1, (not 6), AA, AC
 
-select chain B chain C chain D chain E chain F chain G chain X
-set_name sele, psma_1
-select chain h chain i chain j chain k chain l chain m chain n
-set_name sele, psma_2
-
-select chain a chain b chain c chain d chain e chain f chain g
-set_name sele, psmb_1 
-select chain o chain p chain q chain r chain s chain t chain u
-set_name sele, psmb_2
-
-select chain AB chain Y
-set_name sele, dss1_12
-
-color red, psmc_1 psmc_2
-color blue, psmd_1 psmd_2
-color green, psma_1 psma_2
-color yellow, psmb_1 psmb_2
-
-color blue, dss1_12
-
 #sections not covered by the groupings/selection above
-AB, Y 
+#AB, Y 
 
-#26S: https://www.rcsb.org/fasta/entry/5GJR/display
-PSMC* --
->5GJR_1|Chains I,w|26S protease regulatory subunit 4|Homo sapiens (9606)
-PSMC1
->5GJR_2|Chains H,v|26S protease regulatory subunit 7|Homo sapiens (9606)
-PSMC2
->5GJR_3|Chains L,z|26S protease regulatory subunit 10B|Homo sapiens (9606)
-PSMC6
->5GJR_4|Chains 0,M|26S protease regulatory subunit 6A|Homo sapiens (9606)
-PSMC3
->5GJR_5|Chains J,x|26S protease regulatory subunit 8|Homo sapiens (9606)
-PSMC5
->5GJR_6|Chains K,y|26S protease regulatory subunit 6B|Homo sapiens (9606)
-PSMC4
-
-chains I,H,L,0,J,K
-chains w,v,z,M,x,y
-
-PSMD* -- 
->5GJR_7|Chains 1,N|26S proteasome non-ATPase regulatory subunit 1|Homo sapiens (9606)
-PSMD1
->5GJR_8|Chains 2,O|26S proteasome non-ATPase regulatory subunit 13|Homo sapiens (9606)
-PSMD13
->5GJR_9|Chains 3,P|26S proteasome non-ATPase regulatory subunit 12|Homo sapiens (9606)
-PSMD12
->5GJR_10|Chains 4,Q|26S proteasome non-ATPase regulatory subunit 11|Homo sapiens (9606)
-PSMD11
->5GJR_11|Chains 5,R|26S proteasome non-ATPase regulatory subunit 6|Homo sapiens (9606)
-PSMD6
->5GJR_12|Chains 6,S|26S proteasome non-ATPase regulatory subunit 3|Homo sapiens (9606)
-PSMD3
->5GJR_13|Chains 7,T|26S proteasome non-ATPase regulatory subunit 8|Homo sapiens (9606)
-PSMD8
->5GJR_14|Chains 8,U|26S proteasome non-ATPase regulatory subunit 7|Homo sapiens (9606)
-PSMD7
->5GJR_15|Chains 9,V|26S proteasome non-ATPase regulatory subunit 14|Homo sapiens (9606)
-PSMD14
->5GJR_16|Chains AA,W|26S proteasome non-ATPase regulatory subunit 4|Homo sapiens (9606)
-PSMD4
->5GJR_18|Chains AC,Z|26S proteasome non-ATPase regulatory subunit 2|Homo sapiens (9606)
-PSMD2
-
-chains 1,2,3,4,5,6,7,8,9,AA,AC
-chains N,O,P,Q,R,S,T,U,V,W,Z
-
->5GJR_17|Chains AB,Y|26S proteasome complex subunit DSS1|Homo sapiens (9606)
-
-PSMA* --
->5GJR_19|Chains B,h|Proteasome subunit alpha type-6|Homo sapiens (9606)
->5GJR_20|Chains C,i|Proteasome subunit alpha type-2|Homo sapiens (9606)
->5GJR_21|Chains D,j|Proteasome subunit alpha type-4|Homo sapiens (9606)
->5GJR_22|Chains E,k|Proteasome subunit alpha type-7|Homo sapiens (9606)
->5GJR_23|Chains F,l|Proteasome subunit alpha type-5|Homo sapiens (9606)
->5GJR_24|Chains G,m|Proteasome subunit alpha type-1|Homo sapiens (9606)
->5GJR_25|Chains X,n|Proteasome subunit alpha type-3|Homo sapiens (9606)
-
-chains B,C,D,E,F,G,X
-chains h,i,j,k,l,m,n
-
-PSMB* -- 
->5GJR_26|Chains a,o|Proteasome subunit beta type-6|Homo sapiens (9606)
->5GJR_27|Chains b,p|Proteasome subunit beta type-7|Homo sapiens (9606)
->5GJR_28|Chains c,q|Proteasome subunit beta type-3|Homo sapiens (9606)
->5GJR_29|Chains d,r|Proteasome subunit beta type-2|Homo sapiens (9606)
->5GJR_30|Chains e,s|Proteasome subunit beta type-5|Homo sapiens (9606)
->5GJR_31|Chains f,t|Proteasome subunit beta type-1|Homo sapiens (9606)
->5GJR_32|Chains g,u|Proteasome subunit beta type-4|Homo sapiens (9606)
-
-chains a,b,c,d,e,f,g
-chains o,p,q,r,s,t,u
+##26S: https://www.rcsb.org/fasta/entry/5GJR/display
+#PSMC* --
+#>5GJR_1|Chains I,w|26S protease regulatory subunit 4|Homo sapiens (9606)
+#PSMC1
+#>5GJR_2|Chains H,v|26S protease regulatory subunit 7|Homo sapiens (9606)
+#PSMC2
+#>5GJR_3|Chains L,z|26S protease regulatory subunit 10B|Homo sapiens (9606)
+#PSMC6
+#>5GJR_4|Chains 0,M|26S protease regulatory subunit 6A|Homo sapiens (9606)
+#PSMC3
+#>5GJR_5|Chains J,x|26S protease regulatory subunit 8|Homo sapiens (9606)
+#PSMC5
+#>5GJR_6|Chains K,y|26S protease regulatory subunit 6B|Homo sapiens (9606)
+#PSMC4
+#
+#chains I,H,L,0,J,K
+#chains w,v,z,M,x,y
+#
+#PSMD* -- 
+#>5GJR_7|Chains 1,N|26S proteasome non-ATPase regulatory subunit 1|Homo sapiens (9606)
+#PSMD1
+#>5GJR_8|Chains 2,O|26S proteasome non-ATPase regulatory subunit 13|Homo sapiens (9606)
+#PSMD13
+#>5GJR_9|Chains 3,P|26S proteasome non-ATPase regulatory subunit 12|Homo sapiens (9606)
+#PSMD12
+#>5GJR_10|Chains 4,Q|26S proteasome non-ATPase regulatory subunit 11|Homo sapiens (9606)
+#PSMD11
+#>5GJR_11|Chains 5,R|26S proteasome non-ATPase regulatory subunit 6|Homo sapiens (9606)
+#PSMD6
+#>5GJR_12|Chains 6,S|26S proteasome non-ATPase regulatory subunit 3|Homo sapiens (9606)
+#PSMD3
+#>5GJR_13|Chains 7,T|26S proteasome non-ATPase regulatory subunit 8|Homo sapiens (9606)
+#PSMD8
+#>5GJR_14|Chains 8,U|26S proteasome non-ATPase regulatory subunit 7|Homo sapiens (9606)
+#PSMD7
+#>5GJR_15|Chains 9,V|26S proteasome non-ATPase regulatory subunit 14|Homo sapiens (9606)
+#PSMD14
+#>5GJR_16|Chains AA,W|26S proteasome non-ATPase regulatory subunit 4|Homo sapiens (9606)
+#PSMD4
+#>5GJR_18|Chains AC,Z|26S proteasome non-ATPase regulatory subunit 2|Homo sapiens (9606)
+#PSMD2
+#
+#chains 1,2,3,4,5,6,7,8,9,AA,AC
+#chains N,O,P,Q,R,S,T,U,V,W,Z
+#
+#>5GJR_17|Chains AB,Y|26S proteasome complex subunit DSS1|Homo sapiens (9606)
+#
+#PSMA* --
+#>5GJR_19|Chains B,h|Proteasome subunit alpha type-6|Homo sapiens (9606)
+#>5GJR_20|Chains C,i|Proteasome subunit alpha type-2|Homo sapiens (9606)
+#>5GJR_21|Chains D,j|Proteasome subunit alpha type-4|Homo sapiens (9606)
+#>5GJR_22|Chains E,k|Proteasome subunit alpha type-7|Homo sapiens (9606)
+#>5GJR_23|Chains F,l|Proteasome subunit alpha type-5|Homo sapiens (9606)
+#>5GJR_24|Chains G,m|Proteasome subunit alpha type-1|Homo sapiens (9606)
+#>5GJR_25|Chains X,n|Proteasome subunit alpha type-3|Homo sapiens (9606)
+#
+#chains B,C,D,E,F,G,X
+#chains h,i,j,k,l,m,n
+#
+#PSMB* -- 
+#>5GJR_26|Chains a,o|Proteasome subunit beta type-6|Homo sapiens (9606)
+#>5GJR_27|Chains b,p|Proteasome subunit beta type-7|Homo sapiens (9606)
+#>5GJR_28|Chains c,q|Proteasome subunit beta type-3|Homo sapiens (9606)
+#>5GJR_29|Chains d,r|Proteasome subunit beta type-2|Homo sapiens (9606)
+#>5GJR_30|Chains e,s|Proteasome subunit beta type-5|Homo sapiens (9606)
+#>5GJR_31|Chains f,t|Proteasome subunit beta type-1|Homo sapiens (9606)
+#>5GJR_32|Chains g,u|Proteasome subunit beta type-4|Homo sapiens (9606)
+#
+#chains a,b,c,d,e,f,g
+#chains o,p,q,r,s,t,u
 
 #19S: https://www.rcsb.org/fasta/entry/5MX5/display
 
