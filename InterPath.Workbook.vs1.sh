@@ -16763,10 +16763,12 @@ REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION
 #From: https://www.nature.com/articles/s41590-018-0186-z/figures/1, http://www.pitt.edu/~epolinko/IntroPyMOL.pdf, https://fitzkee.chemistry.msstate.edu/sites/default/files/gradbpc/pymol-tutorial.pdf 
 #From: https://thenode.biologists.com/data-visualization-with-flying-colors/research/ (trying to follow Okabe_Ito)
 
-select chain I chain H chain L chain 0 chain J chain K
-set_name sele, psmc_1 
-select chain w chain v chain z chain M chain x chain y
-set_name sele, psmc_2
+fetch 5GJR
+show surface
+select chain w chain v chain z chain 0 chain x chain y
+set_name sele, psmc_1
+select chain I chain H chain L chain M chain J chain K
+set_name sele, psmc_2 
 select chain 1 chain 2 chain 3 chain 4 chain 5 chain 6 chain 7 chain 8 chain 9 chain AA chain AC
 set_name sele, psmd_1
 select chain N chain O chain P chain Q chain R chain S chain T chain U chain V chain W chain Z
@@ -16786,6 +16788,8 @@ color skyblue, psmd_1 psmd_2
 color limegreen, psma_1 psma_2
 color paleyellow, psmb_1 psmb_2
 color skyblue, dss1_12
+
+fetch
 
 #figuring out those tan sections at the top of PSMD*
 #color green, chain 1 chain 2 chain 3 chain 4 chain 5 chain 6 chain 7 chain 8 chain 9 chain AA chain AC
