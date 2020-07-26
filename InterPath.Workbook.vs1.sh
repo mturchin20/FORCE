@@ -16829,8 +16829,21 @@ select model 5MX5 & chain H+J+L+N
 set_name sele, psme2_2 
 color lightpink, psme1_1 psme1_2 psme2_1 psme2_2  
 remove psme1_2 psme2_2
+set_view (\
 
-align 5GJR & psma_2, 5MX5 & psme2_1 & psme2_2
+
+
+
+set bg_rgb, white
+set opaque_background, off
+set ray_opaque_background, 0
+png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/PyMOL/ProteasomeFigure3.vs1.png, width=1200, height=1200, dpi=300, ray=0
+png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/PyMOL/ProteasomeFigure3.wRay.vs1.png, width=1200, height=1200, dpi=300, ray=1
+#align 5GJR & psma_2, 5MX5 & psme2_1 & psme2_2
+
+
+
+
 
 #figuring out those tan sections at the top of PSMD*
 #color green, chain 1 chain 2 chain 3 chain 4 chain 5 chain 6 chain 7 chain 8 chain 9 chain AA chain AC
@@ -16838,10 +16851,8 @@ align 5GJR & psma_2, 5MX5 & psme2_1 & psme2_2
 #color green chain 1
 #etcetc...
 #the tan parts are chains: 1, (not 6), AA, AC
-
 #sections not covered by the groupings/selection above
 #AB, Y 
-
 #select model 5GJR & chain 2
 #select model 5MX5 & chain A
 ##remove psma_2 psmb_2 psmc_2 psmd_2 dss1_2
