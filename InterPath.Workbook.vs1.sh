@@ -16763,6 +16763,9 @@ REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION
 #From: https://www.nature.com/articles/s41590-018-0186-z/figures/1, http://www.pitt.edu/~epolinko/IntroPyMOL.pdf, https://fitzkee.chemistry.msstate.edu/sites/default/files/gradbpc/pymol-tutorial.pdf, http://people.reed.edu/~glasfeld/pretty/align.html, https://pymolwiki.org/index.php/Opaque_background, https://pymolwiki.org/index.php/Png, https://pymolwiki.org/index.php/Get_View, https://pymolwiki.org/index.php/Set_View 
 #From: https://thenode.biologists.com/data-visualization-with-flying-colors/research/ (trying to follow Okabe_Ito)
 
+#On MacBook pro
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/PyMOL
+
 fetch 5GJR
 show surface
 select chain w chain v chain z chain 0 chain x chain y
@@ -16791,7 +16794,28 @@ color limegreen, psma_1 psma_2
 color paleyellow, psmb_1 psmb_2
 color skyblue, dss1_1
 color skyblue, dss1_2
+set_view (\
+    -0.227813542,    0.973696887,    0.003947258,\
+    -0.973635197,   -0.227844164,    0.011007908,\
+     0.011617483,   -0.001335698,    0.999931872,\
+     0.000000000,    0.000000000, -1451.307861328,\
+   273.878295898,  273.924377441,  281.818634033,\
+  -3430.353027344, 6332.969726562,  -20.000000000 )
+set bg_rgb, white
+set opaque_background, off
+set ray_opaque_background, 0
+png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/PyMOL/ProteasomeFigure1.vs1.png, width=1200, height=1200, dpi=300, ray=0
+png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/PyMOL/ProteasomeFigure1.wRay.vs1.png, width=1200, height=1200, dpi=300, ray=1
 remove psmc_2 psmd_2 dss1_2
+png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/PyMOL/ProteasomeFigure2.vs1.png, width=1200, height=1200, dpi=300, ray=0
+png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/PyMOL/ProteasomeFigure2.wRay.vs1.png, width=1200, height=1200, dpi=300, ray=1
+
+#set bg_rgb, white
+#set opaque_background, off
+#png nana1.png, width=1200, height=1200, dpi=300
+#set ray_opaque_background, 0
+##png /tmp/ex.png, width=1200, height=1200, dpi=300, ray=1
+#png nana2.png, width=1200, height=1200, dpi=300, ray=1
 
 fetch 5MX5
 show surface
@@ -16821,6 +16845,7 @@ align 5GJR & psma_2, 5MX5 & psme2_1 & psme2_2
 #select model 5GJR & chain 2
 #select model 5MX5 & chain A
 ##remove psma_2 psmb_2 psmc_2 psmd_2 dss1_2
+##set opaque_background, off
 
 ##26S: https://www.rcsb.org/fasta/entry/5GJR/display
 #PSMC* --
