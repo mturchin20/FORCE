@@ -16804,7 +16804,7 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 				pValCutoff="pValBonf"; #pValBonf=`echo ".05 / $NumPaths" | bc -l`; 
 				echo $l $ancestry1 $ancestry2 $i $k $pValBonf
 
-				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/Analyses/HyperEnrich/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneList.And.Restricted.pVal.Comps.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1 <- cbind(Data1, -log10(Data1[,3]) - -log10(Data1[,2])); write.table(Data1, quote=FALSE, row.names=FALSE, col.names=FALSE);" | grep -v ^\> | sort -rg -k 4,4 > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathawyGeneCounts/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.pValComps.txt 
+				zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/Analyses/HyperEnrich/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneList.And.Restricted.pVal.Comps.txt.gz | R -q -e "Data1 <- read.table(file('stdin'), header=F); Data1 <- cbind(Data1, -log10(Data1[,3]) - -log10(Data1[,2])); Data1[,1] <- -log10(Data1[,1]); Data1[,2] <- -log10(Data1[,2]); write.table(Data1, quote=FALSE, row.names=FALSE, col.names=FALSE);" | grep -v ^\> | sort -rg -k 4,4 > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathawyGeneCounts/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.pValComps.txt 
 
 			done;
 		done;
@@ -16813,6 +16813,16 @@ done
 
 #20200727 NOTE -- using '/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathawyGeneCounts/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.pValComps.txt' material for Excel sheets
 #vi /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathawyGeneCounts/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.GeneCounts.pValComps.txt 
+
+#On MacBook Pro
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/Suppl
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/Suppl/GeneCountTables
+#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathawyGeneCounts/ukb_chrAll_v3.African.*GeneCounts.pValComps.txt /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/Suppl/GeneCountTables/.
+
+
+
+
 
 
 
