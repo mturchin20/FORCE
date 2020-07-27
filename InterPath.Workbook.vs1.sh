@@ -16536,6 +16536,11 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 	done 
 done 
 
+#20200727 NOTE -- using '
+/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.edits.txt' 
+material for Excel sheets
+#vi  
+/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/ukb_chrAll_v3.*.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.edits.txt 
 
 
 
