@@ -15511,17 +15511,17 @@ cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.
 plink --bfile /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned --keep /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.noRan10kIrish.FIDIIDs --recodeAD --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish
 cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw | perl -lane 'if ($. == 1) { @vals1; for (my $i = 6; $i <= $#F; $i++) { if ($F[$i] =~ m/HET/) { $PH = 1 } else { push(@vals1, $i); } } } print join("\t", @F[@vals1]);' | gzip > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.gz 
 rm /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw
+plink --bfile /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned --recodeAD --out /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned
+cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw | perl -lane 'if ($. == 1) { @vals1; for (my $i = 6; $i <= $#F; $i++) { if ($F[$i] =~ m/HET/) { $PH = 1 } else { push(@vals1, $i); } } } print join("\t", @F[@vals1]);' | gzip > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.gz
+rm /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw
 
-module load R/3.4.3_mkl gcc; R -q -e "library(\"data.table\"); \
-        ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.gz', header=T); print(proc.time() - ptm); \ 
-        ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); \
-        ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * (as.matrix(Data3) %*% t(as.matrix(Data3))); print(proc.time() - ptm); \
-        write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.cov.ColCrct.txt", quote=FALSE, col.name=FALSE, row.name=FALSE); \
-"
+module load R/3.4.3_mkl gcc; 
+R -q -e "library(\"data.table\"); ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.gz', header=T); print(proc.time() - ptm); ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * (as.matrix(Data3) %*% t(as.matrix(Data3))); print(proc.time() - ptm); write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.cov.ColCrct.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);"
+R -q -e "library(\"data.table\"); ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.gz', header=T); print(proc.time() - ptm); ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * (as.matrix(Data3) %*% t(as.matrix(Data3))); print(proc.time() - ptm); write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.cov.ColCrct.txt", quote=FALSE, col.name=FALSE, row.name=FALSE); "
 
 R -q -e "library(\"data.table\"); \
 	Data1 <- as.matrix(fread(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.cov.ColCrct.txt\", header=F)); \
-	Data2 <- read.table(\"
+	Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.values.txt\", header=F); \
 	Data1 <- as.matrix(fread(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.raw.edit.cov.ColCrct.txt\", header=F)); \
 	Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.values.txt\", header=F); \
 	print(Data1[1:5,1:5]); \
@@ -15533,50 +15533,7 @@ R -q -e "library(\"data.table\"); \
 	write.table(Data2.pve, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", quote=FALSE, row.names=FALSE, col.names=FALSE); \
 "
 
-module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 8`; do
-        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
-        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
-        echo $ancestry1 $ancestry2
-
-        R -q -e "library(\"data.table\"); \
-                Data1 <- as.matrix(fread(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.raw.edit.cov.ColCrct.txt\", header=F)); \
-                Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.values.txt\", header=F); \
-                print(Data1[1:5,1:5]); \
-                Data1.diag <- as.numeric(c(diag(Data1))); \
-                print(Data1.diag[1:10]); \
-                Data1.trace <- sum(Data1.diag); \
-                Data2.pve <- Data2[,1] / Data1.trace; \
-                print(Data2.pve[1:5]); \
-                write.table(Data2.pve, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", quote=FALSE, row.names=FALSE, col.names=FALSE); \
-        "
-done
-
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 8`; do
-        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
-        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-
-        echo $ancestry1 $ancestry2
-
-        plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop --recodeAD --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop
-        cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.raw | perl -lane 'if ($. == 1) { @vals1; for (my $i = 6; $i <= $#F; $i++) { if ($F[$i] =~ m/HET/) { $PH = 1 } else { push(@vals1, $i); } } } print join("\t", @F[@vals1]);' | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.raw.edit.gz
-        rm /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.raw
-done
-
-#20200313 NOTE -- I was getting that hangup when using the 'tcrossprod() function I sometimes saw before, and for whatever reason didn't observe it when I directly used the '%*%' approach, so just did that this time instead
-module load R/3.4.3_mkl gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 8`; do
-        ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
-        ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
-
-        echo $ancestry1 $ancestry2
-
-        R -q -e "library(\"data.table\"); \
-        ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.raw.edit.gz', header=T); print(proc.time() - ptm); \ 
-        ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); \
-        ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * (as.matrix(Data3) %*% t(as.matrix(Data3))); print(proc.time() - ptm); \
-        write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.raw.edit.cov.ColCrct.txt\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
-done
-#       ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm); \
 
 
 
