@@ -14469,19 +14469,18 @@ Data1 <- Data1[,c(-3,-7)]; \
 Data1.KEGG <- t(Data1)[,1:2]; Data1.REACTOME <- t(Data1)[,3:4]; \
 Data1.KEGG.Height <- Data1.KEGG[,1]; Data1.KEGG.BMI <- Data1.KEGG[,2]; Data1.REACTOME.Height <- Data1.REACTOME[,1]; Data1.REACTOME.BMI <- Data1.REACTOME[,2]; \
 Data1.colors <- c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]); \
-png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.KEGG.pValBonf.Barplots.plots.vs4.png\", height=2000, width=5000, res=300); par(oma=c(1,1,4,10), mar=c(5,5,4,2), mfrow=c(1,2)); \
+png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.KEGG.pValBonf.Barplots.plots.vs4.png\", height=2000, width=4250, res=300); par(oma=c(1,1,4,10), mar=c(5,5,4,2), mfrow=c(1,2)); \
 bp1 <- barplot(Data1.KEGG.Height, main=\"Height\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,50), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-text(x=bp1, y=Data1.KEGG.Height, label=Data1.KEGG.Height, pos = 3, cex = 0.8, col = \"black\"); \
+text(x=bp1, y=Data1.KEGG.Height, label=Data1.KEGG.Height, pos=3, cex=2, col = \"black\", xpd=TRUE); \
 bp2 <- barplot(Data1.KEGG.BMI, main=\"BMI\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,50), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-text(x=bp2, y=Data1.KEGG.BMI, label=Data1.KEGG.BMI, pos = 3, cex = 0.8, col = \"black\"); \
+text(x=bp2, y=Data1.KEGG.BMI, label=Data1.KEGG.BMI, pos=3, cex=2, col = \"black\", xpd=TRUE); \
 par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.23), bg=\"transparent\", cex=1.5, y.intersp=1.5); \
-dev.off();" 
-\
+dev.off(); \
 png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.REACTOME.pValBonf.Barplots.plots.vs4.png\", height=2000, width=4250, res=300); par(oma=c(1,1,4,10), mar=c(5,5,4,2), mfrow=c(1,2)); \
 bp3 <- barplot(Data1.REACTOME.Height, main=\"Height\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,60), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-text(x=bp3, y=Data1.REACTOME.Height, label=Data1.REACTOME.Height, pos = 3, cex = 0.8, col = \"black\"); \
+text(x=bp3, y=Data1.REACTOME.Height, label=Data1.REACTOME.Height, pos=3, cex=2, col = \"black\", xpd=TRUE); \
 bp4 <- barplot(Data1.REACTOME.BMI, main=\"BMI\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,60), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-text(x=bp4, y=Data1.REACTOME.BMI, label=Data1.REACTOME.BMI, pos = 3, cex = 0.8, col = \"black\"); \
+text(x=bp4, y=Data1.REACTOME.BMI, label=Data1.REACTOME.BMI, pos=3, cex=2, col = \"black\", xpd=TRUE); \
 par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.23), bg=\"transparent\", cex=1.5, y.intersp=1.5); \
 dev.off();"
 
@@ -15521,7 +15520,19 @@ rm /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.Q
 
 module load R/3.4.3_mkl gcc; 
 R -q -e "library(\"data.table\"); ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.gz', header=T); print(proc.time() - ptm); ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * (as.matrix(Data3) %*% t(as.matrix(Data3))); print(proc.time() - ptm); write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.cov.ColCrct.txt\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
-R -q -e "library(\"data.table\"); ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.gz', header=T); print(proc.time() - ptm); ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * (as.matrix(Data3) %*% t(as.matrix(Data3))); print(proc.time() - ptm); write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.cov.ColCrct.txt\", quote=FALSE, col.name=FALSE, row.name=FALSE); "
+R -q -e "library(\"data.table\"); ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.gz', header=T); print(proc.time() - ptm); ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm); write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.cov.ColCrct.txt\", quote=FALSE, col.name=FALSE, row.name=FALSE); "
+
+#sbatch -t 24:00:00 --mem 20g --account=ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.error --comment "$ancestry1 $ancestry2" <(echo -e '#!/bin/sh'; echo -e "\n
+noRan10kIrish
+
+sbatch -t 72:00:00 --mem 50g -o /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.cov.ColCrct.2.slurm.output -e /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.cov.ColCrct.2.slurm.error --comment "FullDataset cov 2" <(echo -e '#!/bin/sh'; echo -e "\n
+	echo -e "\nR -q -e \"library(\\\"data.table\\\"); ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.gz', header=T); print(proc.time() - ptm); ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm); write.table(Data3.cov, \\\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.cov.ColCrct.2.txt\\\", quote=FALSE, col.name=FALSE, row.name=FALSE); \
+\"");
+
+> #                       echo -e "\ngzip -f /users/mturchin/data/dbGaP/mturchin20/MultiEthnicGWAS/PAGE/IPMBioMe/$ancestry1/$ancestry2/Analyses/InterPath/pathways/$k/PAGE_IPMBioMe_chrAll_v1.QCed.QCed.dropRltvs.Loose.$ancestry2.HRCdrops.ATGC.flip.sort.ImptHRC.dose.100geno.noFix.raw.edit.Regions.c2.${k}.Pathways${i}*.txt");
+			echo -e "\nR -q -e \"library(\\\"data.table\\\"); \
+
+#ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * (as.matrix(Data3) %*% t(as.matrix(Data3))); print(proc.time() - ptm);
 
 R -q -e "library(\"data.table\"); \
 	Data1 <- as.matrix(fread(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.cov.ColCrct.txt\", header=F)); \
