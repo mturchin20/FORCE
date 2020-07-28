@@ -14471,17 +14471,17 @@ Data1.KEGG.Height <- Data1.KEGG[,1]; Data1.KEGG.BMI <- Data1.KEGG[,2]; Data1.REA
 Data1.colors <- c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]); \
 png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.KEGG.pValBonf.Barplots.plots.vs4.png\", height=2000, width=5000, res=300); par(oma=c(1,1,4,10), mar=c(5,5,4,2), mfrow=c(1,2)); \
 bp1 <- barplot(Data1.KEGG.Height, main=\"Height\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,50), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-text(x=bp1, y=Data1.KEGG.Height, label=Data1.KEGG.Height, pos = 3, cex = 0.8, col = "black"); \
+text(x=bp1, y=Data1.KEGG.Height, label=Data1.KEGG.Height, pos = 3, cex = 0.8, col = \"black\"); \
 bp2 <- barplot(Data1.KEGG.BMI, main=\"BMI\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,50), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-text(x=bp2, y=Data1.KEGG.BMI, label=Data1.KEGG.BMI, pos = 3, cex = 0.8, col = "black"); \
+text(x=bp2, y=Data1.KEGG.BMI, label=Data1.KEGG.BMI, pos = 3, cex = 0.8, col = \"black\"); \
 par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.23), bg=\"transparent\", cex=1.5, y.intersp=1.5); \
 dev.off();" 
 \
 png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.REACTOME.pValBonf.Barplots.plots.vs4.png\", height=2000, width=4250, res=300); par(oma=c(1,1,4,10), mar=c(5,5,4,2), mfrow=c(1,2)); \
 bp3 <- barplot(Data1.REACTOME.Height, main=\"Height\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,60), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-text(x=bp3, y=Data1.REACTOME.Height, label=Data1.REACTOME.Height, pos = 3, cex = 0.8, col = "black"); \
+text(x=bp3, y=Data1.REACTOME.Height, label=Data1.REACTOME.Height, pos = 3, cex = 0.8, col = \"black\"); \
 bp4 <- barplot(Data1.REACTOME.BMI, main=\"BMI\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,60), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-text(x=bp4, y=Data1.REACTOME.BMI, label=Data1.REACTOME.BMI, pos = 3, cex = 0.8, col = "black"); \
+text(x=bp4, y=Data1.REACTOME.BMI, label=Data1.REACTOME.BMI, pos = 3, cex = 0.8, col = \"black\"); \
 par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.23), bg=\"transparent\", cex=1.5, y.intersp=1.5); \
 dev.off();"
 
