@@ -15516,39 +15516,36 @@ cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.
 rm /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw
 
 module load R/3.4.3_mkl gcc; 
-R -q -e "library(\"data.table\"); ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.gz', header=T); print(proc.time() - ptm); ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * (as.matrix(Data3) %*% t(as.matrix(Data3))); print(proc.time() - ptm); write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.cov.ColCrct.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);"
-R -q -e "library(\"data.table\"); ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.gz', header=T); print(proc.time() - ptm); ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * (as.matrix(Data3) %*% t(as.matrix(Data3))); print(proc.time() - ptm); write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.cov.ColCrct.txt", quote=FALSE, col.name=FALSE, row.name=FALSE); "
+R -q -e "library(\"data.table\"); ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.gz', header=T); print(proc.time() - ptm); ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * (as.matrix(Data3) %*% t(as.matrix(Data3))); print(proc.time() - ptm); write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.cov.ColCrct.txt\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
+R -q -e "library(\"data.table\"); ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.gz', header=T); print(proc.time() - ptm); ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * (as.matrix(Data3) %*% t(as.matrix(Data3))); print(proc.time() - ptm); write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.cov.ColCrct.txt\", quote=FALSE, col.name=FALSE, row.name=FALSE); "
 
 R -q -e "library(\"data.table\"); \
-	Data1 <- as.matrix(fread(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.cov.ColCrct.txt\", header=F)); \
+	Data1 <- as.matrix(fread(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.raw.edit.cov.ColCrct.txt\", header=F)); \
 	Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.values.txt\", header=F); \
-	Data1 <- as.matrix(fread(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.raw.edit.cov.ColCrct.txt\", header=F)); \
-	Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.values.txt\", header=F); \
 	print(Data1[1:5,1:5]); \
 	Data1.diag <- as.numeric(c(diag(Data1))); \
 	print(Data1.diag[1:10]); \
 	Data1.trace <- sum(Data1.diag); \
 	Data2.pve <- Data2[,1] / Data1.trace; \
 	print(Data2.pve[1:5]); \
-	write.table(Data2.pve, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", quote=FALSE, row.names=FALSE, col.names=FALSE); \
+	write.table(Data2.pve, \"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.selfR.pve.txt\", quote=FALSE, row.names=FALSE, col.names=FALSE); \
 "
+#	...Data1 <- as.matrix(fread(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.cov.ColCrct.txt\", header=F)); \...
 
 
 
 
-
-
-R -q -e "library(\"RColorBrewer\"); Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.noRan10kIrish.txt\", header=T); \
+R -q -e "library(\"RColorBrewer\"); Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.noRan10kIrish.txt\", header=T); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.selfR.pve.txt\", header=F); \
 	Data1 <- cbind(Data1, rep(\"gray\", nrow(Data1))); Data1 <- cbind(Data1, rep(19, nrow(Data1))); Data1[,ncol(Data1)-1] <- factor(Data1[,ncol(Data1)-1], levels=c(colors(), brewer.pal(12, \"Paired\"), brewer.pal(8, \"Set2\"), brewer.pal(12, \"Set3\"), brewer.pal(9, \"RdPu\"))); Data1[Data1[ncol(Data1)-2] == \"African\", ncol(Data1)-1] <- brewer.pal(9, \"RdPu\")[5]; Data1[Data1[ncol(Data1)-2] == \"British.Ran4000\", ncol(Data1)-1] <- brewer.pal(12, \"Paired\")[1]; Data1[Data1[ncol(Data1)-2] == \"Caribbean\", ncol(Data1)-1] <- brewer.pal(12, \"Paired\")[3]; Data1[Data1[ncol(Data1)-2] == \"Chinese\", ncol(Data1)-1] <- brewer.pal(12, \"Paired\")[7]; Data1[Data1[ncol(Data1)-2] == \"Indian\", ncol(Data1)-1] <- brewer.pal(12, \"Set3\")[8]; Data1[Data1[ncol(Data1)-2] == \"Pakistani\", ncol(Data1)-1] <- brewer.pal(8, \"Set2\")[6]; \
         png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PCAPlots/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.PCplots.vs2.png\", height=4250, width=5000, res=300); par(oma=c(1,1,1,15), mar=c(5,5,4,2), mfrow=c(2,2)); \
-        plot(Data1[,3], Data1[,4], xaxt=\"n\", xlab=\"\", ylab=\"PC2\", pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	mtext(\"PC1\", side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	plot(Data1[,5], Data1[,6], xaxt=\"n\", xlab=\"\", ylab=\"PC4\", pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	mtext(\"PC3\", side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	plot(Data1[,7], Data1[,8], xaxt=\"n\", xlab=\"\", ylab=\"PC6\", pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	mtext(\"PC5\", side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	plot(Data1[,9], Data1[,10], xaxt=\"n\", xlab=\"\", ylab=\"PC8\", pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \ 
-	mtext(\"PC7\", side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+        plot(Data1[,3], Data1[,4], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC2 (\", as.character(Data2[2,1]), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	mtext(paste(\"PC1 (\", as.character(Data2[1,1]), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	plot(Data1[,5], Data1[,6], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC4 (\", as.character(Data2[4,1]), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	mtext(paste(\"PC3 (\", as.character(Data2[3,1]), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	plot(Data1[,7], Data1[,8], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC6 (\", as.character(Data2[6,1]), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	mtext(paste(\"PC5 (\", as.character(Data2[5,1]), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	plot(Data1[,9], Data1[,10], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC8 (\", as.character(Data2[8,1]), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \ 
+	mtext(paste(\"PC7 (\", as.character(Data2[7,1]), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 	par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); \
 	legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(19,19,19,19,19,19), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.0295,.059), bg=\"transparent\", cex=1.5, y.intersp=2); \
 dev.off();"
