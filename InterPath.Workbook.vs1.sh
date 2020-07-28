@@ -14448,6 +14448,7 @@ REACTOME_BMI    1       0       1       2       0       0       0       2
 ```
 
 #From http://www.sthda.com/english/wiki/bar-plots-r-base-graphs
+#From https://stackoverflow.com/questions/12481430/how-to-display-the-frequency-at-the-top-of-each-factor-in-a-barplot-in-r, https://www.r-graph-gallery.com/37-barplot-with-number-of-observation.html
 
 #20200127 NOTE -- include pop size ie 'n' for each population in legend?
 R -q -e "library(\"RColorBrewer\"); Data1 <- read.table(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.AllPaths.pValBonf.Barplots.Info.vs1.txt\", header=T); \
@@ -14468,23 +14469,26 @@ Data1 <- Data1[,c(-3,-7)]; \
 Data1.KEGG <- t(Data1)[,1:2]; Data1.REACTOME <- t(Data1)[,3:4]; \
 Data1.KEGG.Height <- Data1.KEGG[,1]; Data1.KEGG.BMI <- Data1.KEGG[,2]; Data1.REACTOME.Height <- Data1.REACTOME[,1]; Data1.REACTOME.BMI <- Data1.REACTOME[,2]; \
 Data1.colors <- c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]); \
-png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.KEGG.pValBonf.Barplots.plots.vs2.talk.png\", height=2000, width=5000, res=300); par(oma=c(1,1,4,20), mar=c(5,5,4,2), mfrow=c(1,2)); \
-barplot(Data1.KEGG.Height, main=\"Height\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,50), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-barplot(Data1.KEGG.BMI, main=\"BMI\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,50), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African (n=3111)\", \"Brit.Ran4k (n=3848)\", \"Caribbean (n=3833)\", \"Chinese (n=1448)\", \"Indian (n=5077)\", \"Pakistani (n=1581)\"), pch=c(15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.15), bg=\"transparent\", cex=2, y.intersp=2); \
+png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.KEGG.pValBonf.Barplots.plots.vs4.png\", height=2000, width=5000, res=300); par(oma=c(1,1,4,10), mar=c(5,5,4,2), mfrow=c(1,2)); \
+bp1 <- barplot(Data1.KEGG.Height, main=\"Height\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,50), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
+text(x=bp1, y=Data1.KEGG.Height, label=Data1.KEGG.Height, pos = 3, cex = 0.8, col = "black"); \
+bp2 <- barplot(Data1.KEGG.BMI, main=\"BMI\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,50), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
+text(x=bp2, y=Data1.KEGG.BMI, label=Data1.KEGG.BMI, pos = 3, cex = 0.8, col = "black"); \
+par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.23), bg=\"transparent\", cex=1.5, y.intersp=1.5); \
 dev.off();" 
 \
-png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.REACTOME.pValBonf.Barplots.plots.vs2.png\", height=2000, width=4250, res=300); par(oma=c(1,1,4,10), mar=c(5,5,4,2), mfrow=c(1,2)); \
-barplot(Data1.REACTOME.Height, main=\"Height\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,60), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-barplot(Data1.REACTOME.BMI, main=\"BMI\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,60), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
+png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.REACTOME.pValBonf.Barplots.plots.vs4.png\", height=2000, width=4250, res=300); par(oma=c(1,1,4,10), mar=c(5,5,4,2), mfrow=c(1,2)); \
+bp3 <- barplot(Data1.REACTOME.Height, main=\"Height\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,60), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
+text(x=bp3, y=Data1.REACTOME.Height, label=Data1.REACTOME.Height, pos = 3, cex = 0.8, col = "black"); \
+bp4 <- barplot(Data1.REACTOME.BMI, main=\"BMI\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,60), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
+text(x=bp4, y=Data1.REACTOME.BMI, label=Data1.REACTOME.BMI, pos = 3, cex = 0.8, col = "black"); \
 par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.23), bg=\"transparent\", cex=1.5, y.intersp=1.5); \
 dev.off();"
 
-png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.KEGG.pValBonf.Barplots.plots.vs2.talk.png\", height=2000, width=5000, res=300); par(oma=c(1,1,4,10), mar=c(5,5,4,2), mfrow=c(1,2)); \
-par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.23), bg=\"transparent\", cex=1.5, y.intersp=1.5); \
-
 #Data1.KEGG <- t(Data1)[,1]; Data1.REACTOME <- t(Data1)[,3:4]; \
 #par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African (n=3111)\", \"Brit.Ran4k (n=3848)\", \"Brit.Ran10k (n=9603)\", \"Caribbean (n=3833)\", \"Chinese (n=1448)\", \"Indian (n=5077)\", \"Irish (n=11575)\", \"Pakistani (n=1581)\"), pch=c(15,15,15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.23), bg=\"transparent\", cex=1.5, y.intersp=1.5); \
+#png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.AllPops.HeightBMI.ColCrct.localPCs.KEGG.pValBonf.Barplots.plots.vs2.talk.png\", height=2000, width=5000, res=300); par(oma=c(1,1,4,20), mar=c(5,5,4,2), mfrow=c(1,2)); \
+#par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"African (n=3111)\", \"Brit.Ran4k (n=3848)\", \"Caribbean (n=3833)\", \"Chinese (n=1448)\", \"Indian (n=5077)\", \"Pakistani (n=1581)\"), pch=c(15,15,15,15,15,15), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.03,.15), bg=\"transparent\", cex=2, y.intersp=2); \
 
 #On MacBook Pro
 #scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.*.pValBonf.Barplots.plots.*png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/.
@@ -15532,20 +15536,17 @@ R -q -e "library(\"data.table\"); \
 "
 #	...Data1 <- as.matrix(fread(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.cov.ColCrct.txt\", header=F)); \...
 
-
-
-
 R -q -e "library(\"RColorBrewer\"); Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.noRan10kIrish.txt\", header=T); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.selfR.pve.txt\", header=F); \
 	Data1 <- cbind(Data1, rep(\"gray\", nrow(Data1))); Data1 <- cbind(Data1, rep(19, nrow(Data1))); Data1[,ncol(Data1)-1] <- factor(Data1[,ncol(Data1)-1], levels=c(colors(), brewer.pal(12, \"Paired\"), brewer.pal(8, \"Set2\"), brewer.pal(12, \"Set3\"), brewer.pal(9, \"RdPu\"))); Data1[Data1[ncol(Data1)-2] == \"African\", ncol(Data1)-1] <- brewer.pal(9, \"RdPu\")[5]; Data1[Data1[ncol(Data1)-2] == \"British.Ran4000\", ncol(Data1)-1] <- brewer.pal(12, \"Paired\")[1]; Data1[Data1[ncol(Data1)-2] == \"Caribbean\", ncol(Data1)-1] <- brewer.pal(12, \"Paired\")[3]; Data1[Data1[ncol(Data1)-2] == \"Chinese\", ncol(Data1)-1] <- brewer.pal(12, \"Paired\")[7]; Data1[Data1[ncol(Data1)-2] == \"Indian\", ncol(Data1)-1] <- brewer.pal(12, \"Set3\")[8]; Data1[Data1[ncol(Data1)-2] == \"Pakistani\", ncol(Data1)-1] <- brewer.pal(8, \"Set2\")[6]; \
         png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PCAPlots/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.PCplots.vs2.png\", height=4250, width=5000, res=300); par(oma=c(1,1,1,15), mar=c(5,5,4,2), mfrow=c(2,2)); \
-        plot(Data1[,3], Data1[,4], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC2 (\", as.character(Data2[2,1]), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	mtext(paste(\"PC1 (\", as.character(Data2[1,1]), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	plot(Data1[,5], Data1[,6], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC4 (\", as.character(Data2[4,1]), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	mtext(paste(\"PC3 (\", as.character(Data2[3,1]), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	plot(Data1[,7], Data1[,8], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC6 (\", as.character(Data2[6,1]), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	mtext(paste(\"PC5 (\", as.character(Data2[5,1]), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	plot(Data1[,9], Data1[,10], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC8 (\", as.character(Data2[8,1]), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \ 
-	mtext(paste(\"PC7 (\", as.character(Data2[7,1]), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+        plot(Data1[,3], Data1[,4], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC2 (\", round(as.character(Data2[2,1]), digits=3), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	mtext(paste(\"PC1 (\", round(as.character(Data2[1,1]), digits=3), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	plot(Data1[,5], Data1[,6], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC4 (\", round(as.character(Data2[4,1]), digits=3), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	mtext(paste(\"PC3 (\", round(as.character(Data2[3,1]), digits=3), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	plot(Data1[,7], Data1[,8], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC6 (\", round(as.character(Data2[6,1]), digits=3), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	mtext(paste(\"PC5 (\", round(as.character(Data2[5,1]), digits=3), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	plot(Data1[,9], Data1[,10], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC8 (\", round(as.character(Data2[8,1]), digits=3), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \ 
+	mtext(paste(\"PC7 (\", round(as.character(Data2[7,1]), digits=3), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 	par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); \
 	legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(19,19,19,19,19,19), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.0295,.059), bg=\"transparent\", cex=1.5, y.intersp=2); \
 dev.off();"
