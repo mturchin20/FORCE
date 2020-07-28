@@ -15503,6 +15503,8 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscrip
 #/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt
 #/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned
+#/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.values.txt
+#/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt
 
 cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.noRan10kIrish.txt | awk '{ print $1 "\t" $2 }' > /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.noRan10kIrish.FIDIIDs
 
@@ -15518,23 +15520,16 @@ module load R/3.4.3_mkl gcc; R -q -e "library(\"data.table\"); \
 "
 
 R -q -e "library(\"data.table\"); \
-                
+	Data1 <- as.matrix(fread(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.noRan10kIrish.raw.edit.cov.ColCrct.txt\", header=F)); \
+	Data2 <- read.table(\"
 	Data1 <- as.matrix(fread(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.raw.edit.cov.ColCrct.txt\", header=F)); \
-                
 	Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.values.txt\", header=F); \
-                
 	print(Data1[1:5,1:5]); \
-                
 	Data1.diag <- as.numeric(c(diag(Data1))); \
-                
 	print(Data1.diag[1:10]); \
-                
 	Data1.trace <- sum(Data1.diag); \
-                
 	Data2.pve <- Data2[,1] / Data1.trace; \
-                
 	print(Data2.pve[1:5]); \
-                
 	write.table(Data2.pve, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.selfR.pve.txt\", quote=FALSE, row.names=FALSE, col.names=FALSE); \
 "
 
