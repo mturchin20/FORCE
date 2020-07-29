@@ -15550,14 +15550,14 @@ R -q -e "library(\"data.table\"); \
 R -q -e "library(\"RColorBrewer\"); Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.noRan10kIrish.txt\", header=T); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.selfR.pve.txt\", header=F); \
 	Data1 <- cbind(Data1, rep(\"gray\", nrow(Data1))); Data1 <- cbind(Data1, rep(19, nrow(Data1))); Data1[,ncol(Data1)-1] <- factor(Data1[,ncol(Data1)-1], levels=c(colors(), brewer.pal(12, \"Paired\"), brewer.pal(8, \"Set2\"), brewer.pal(12, \"Set3\"), brewer.pal(9, \"RdPu\"))); Data1[Data1[ncol(Data1)-2] == \"African\", ncol(Data1)-1] <- brewer.pal(9, \"RdPu\")[5]; Data1[Data1[ncol(Data1)-2] == \"British.Ran4000\", ncol(Data1)-1] <- brewer.pal(12, \"Paired\")[1]; Data1[Data1[ncol(Data1)-2] == \"Caribbean\", ncol(Data1)-1] <- brewer.pal(12, \"Paired\")[3]; Data1[Data1[ncol(Data1)-2] == \"Chinese\", ncol(Data1)-1] <- brewer.pal(12, \"Paired\")[7]; Data1[Data1[ncol(Data1)-2] == \"Indian\", ncol(Data1)-1] <- brewer.pal(12, \"Set3\")[8]; Data1[Data1[ncol(Data1)-2] == \"Pakistani\", ncol(Data1)-1] <- brewer.pal(8, \"Set2\")[6]; \
         png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PCAPlots/ukb_chrAll_v3.All.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.PCplots.vs3.png\", height=4250, width=5000, res=300); par(oma=c(1,1,1,15), mar=c(5,5,4,2), mfrow=c(2,2)); \
-        plot(Data1[,3], Data1[,4], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC2 (PVE: \", as.character(signif(100*Data2[2,1], digits=2)), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	mtext(paste(\"PC1 (PVE: \", as.character(signif(100*Data2[1,1], digits=3)), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	plot(Data1[,5], Data1[,6], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC4 (PVE: \", as.character(signif(100*Data2[4,1], digits=3)), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	mtext(paste(\"PC3 (PVE: \", as.character(signif(100*Data2[3,1], digits=3)), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	plot(Data1[,7], Data1[,8], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC6 (PVE: \", as.character(signif(100*Data2[6,1], digits=3)), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	mtext(paste(\"PC5 (PVE: \", as.character(signif(100*Data2[5,1], digits=3)), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-	plot(Data1[,9], Data1[,10], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC8 (PVE: \", as.character(signif(100*Data2[8,1], digits=3)), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \ 
-	mtext(paste(\"PC7 (PVE: \", as.character(signif(100*Data2[7,1], digits=3)), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+        plot(Data1[,3], Data1[,4], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC2 (\", as.character(signif(100*Data2[2,1], digits=2)), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	mtext(paste(\"PC1 (\", as.character(signif(100*Data2[1,1], digits=3)), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	plot(Data1[,5], Data1[,6], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC4 (\", as.character(signif(100*Data2[4,1], digits=3)), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	mtext(paste(\"PC3 (\", as.character(signif(100*Data2[3,1], digits=3)), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	plot(Data1[,7], Data1[,8], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC6 (\", as.character(signif(100*Data2[6,1], digits=3)), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	mtext(paste(\"PC5 (\", as.character(signif(100*Data2[5,1], digits=3)), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+	plot(Data1[,9], Data1[,10], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC8 (\", as.character(signif(100*Data2[8,1], digits=3)), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \ 
+	mtext(paste(\"PC7 (\", as.character(signif(100*Data2[7,1], digits=3)), \"%)\", sep=\"\"), side=1, line=3.5, cex=1.6); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 	par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); \
 	legend(\"topright\", c(\"African\", \"Brit.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), pch=c(19,19,19,19,19,19), col=c(brewer.pal(12, \"Paired\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(12, \"Paired\")[7]), xpd=TRUE, inset=c(.0295,.059), bg=\"transparent\", cex=1.5, y.intersp=2); \
 dev.off();"
@@ -15566,11 +15566,13 @@ dev.off();"
 #	...plot(Data1[,11], Data1[,12], xlab=\"PC9\", ylab=\"PC10\", pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=1.75, cex.main=1.75, cex.axis=1.75, cex.lab=1.75); plot(Data1[,13], Data1[,14], xlab=\"PC11\", ylab=\"PC12\", pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=1.75, cex.main=1.75, cex.axis=1.75, cex.lab=1.75); plot(Data1[,15], Data1[,16], xlab=\"PC13\", ylab=\"PC14\", pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=1.75, cex.main=1.75, cex.axis=1.75, cex.lab=1.75); plot(Data1[,17], Data1[,18], xlab=\"PC15\", ylab=\"PC16\", pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=1.75, cex.main=1.75, cex.axis=1.75, cex.lab=1.75);... 
 #	mtext(\"UKBioBank (Full Dataset)\", line=-.75, outer=TRUE, cex=2.5); \
 #	legend(\"topright\", c(\"African\", \"Brit.Ran4000\", \"Brit.Ran10000\", \"Caribbean\", \"Chinese\", \"Indian\", \"Irish\", \"Pakistani\"), pch=c(19, 19, 19, 19, 19, 19, 19, 19), col=c(brewer.pal(9, \"RdPu\")[5], brewer.pal(12, \"Paired\")[1], brewer.pal(12, \"Paired\")[2], brewer.pal(12, \"Paired\")[3], brewer.pal(12, \"Paired\")[7], brewer.pal(12, \"Set3\")[8], brewer.pal(12, \"Paired\")[9], brewer.pal(8, \"Set2\")[6]), xpd=TRUE, inset=c(.025,.0385), bg=\"transparent\", cex=1.35, y.intersp=2); \
+#	plot(Data1[,3], Data1[,4], xaxt=\"n\", xlab=\"\", ylab=paste(\"PC2 (PVE: \", as.character(signif(100*Data2[2,1], digits=2)), \"%)\", sep=\"\"), pch=Data1[,ncol(Data1)], col=as.character(Data1[,ncol(Data1)-1]), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PCAPlots
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PCAPlots/ukb_chrAll_v3.*PCplots.vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PCAPlots/.
-
+##scp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PCAPlots/ukb_chrAll_v3.*PCplots.vs*.png mturchin20@midway.rcc.uchicago.edu:/home/mturchin20/TempStuff/TempStuff4/.
+##scp -p mturchin20@midway.rcc.uchicago.edu:/home/mturchin20/TempStuff/TempStuff4/ukb_chrAll_v3.*PCplots.vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PCAPlots/.
 
 
 
@@ -15849,7 +15851,7 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 
 R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
 	for (i in DataTypes[1]) { \
-		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.African.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.PhenoComps.vs3.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.African.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.PhenoComps.vs4.points.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
                 for (j in UKBioBankPops[1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 			print(j); \
 			Data1a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/Height/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.KEGG.Results.txt.pre.gz\", sep=\"\"), header=F); \	
@@ -15863,10 +15865,12 @@ R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"A
 			Data1c <- merge(Data1a, Data1b, by=\"Pathway\"); Data2c <- merge(Data2a, Data2b, by=\"Pathway\"); \
 			print(head(Data1c)); \	
 			print(cor(-log10(Data1c[,2]),-log10(Data1c[,3]))); print(cor(-log10(Data2c[,2]),-log10(Data2c[,3]))); \
+			Paths1 <- Data1c[-log10(Data1c[,2]) < 2.25 & -log10(Data1c[,3]) > 4.5,]; Paths1.Labels <- unlist(lapply(strsplit(as.character(Paths1[,1]), \"_\"), function(x) { return(paste(x[2:length(x)], collapse=\"_\"));})); \
 			plot(-log10(Data1c[,2]),-log10(Data1c[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
 			mtext(\"Height -log10(p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			abline(h=-log10(Data1b.Thresh), lwd=3, lty=3, col=\"RED\"); abline(v=-log10(Data1a.Thresh), lwd=3, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
-			draw.ellipse(1.5,7.5,1,3, lwd=3, lty=2, border=\"BLUE\"); \
+			points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), col=\"WHITE\", cex=2); points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), cex=1, pch=16, col=\"BLUE\"); \
+			text(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), labels=c(\"(2)\", \"(3)\", \"(1)\", \"(4)\"), pos=4, col=\"BLUE\"); \
 			plot(-log10(Data2c[,2]),-log10(Data2c[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,11), ylim=c(0,11), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
 			mtext(\"Height -log10(p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			abline(h=-log10(Data2b.Thresh), lwd=3, lty=3, col=\"RED\"); abline(v=-log10(Data2a.Thresh), lwd=3, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
@@ -15874,11 +15878,14 @@ R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"A
 	dev.off(); }; print(warnings()); \
 "
 
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.African.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.PhenoComps.vs4.text.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
 #			draw.ellipse(1.5,7.5,1,3, lwd=3, lty=2, border=\"BLUE\"); \
+#			text(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), labels=Paths1.Labels, pos=4, col=\"BLUE\"); \
+#			points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), col=\"WHITE\", cex=2); points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), cex=1.5, pch=15, col=\"BLUE\"); \
 
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots
-#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.*.vs3.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/. 
+#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.*.vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/. 
 
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8`; do
@@ -24833,6 +24840,24 @@ CHR     SNP     BP      A1      TEST    NMISS   BETA    STAT    P
     635   65405  259293
 [  mturchin@node1740  ~]$cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/SubFiles/$l/$pValCutoff/ukb_chrAll_v3.${ancestry2}.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.$pValCutoff.txt | grep HLA | wc
      23     138   11294
+#20200729
+> vals1 <- c("nana_nana", "nana_nana2")
+> strsplit(vals1, "_")
+[[1]]
+[1] "nana" "nana"
+
+[[2]]
+[1] "nana"  "nana2"
+
+> lapply(strsplit(vals1, "_"), function(x) { return(paste(x, collapse="_"));})
+[[1]]
+[1] "nana_nana"
+
+[[2]]
+[1] "nana_nana2"
+
+> unlist(lapply(strsplit(vals1, "_"), function(x) { return(paste(x, collapse="_"));}))
+[1] "nana_nana"  "nana_nana2"
 
 
 
