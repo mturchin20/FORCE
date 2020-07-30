@@ -16040,11 +16040,14 @@ R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"A
 			print(head(Data1c)); \	
 			print(cor(-log10(Data1c[,2]),-log10(Data1c[,3]))); print(cor(-log10(Data2c[,2]),-log10(Data2c[,3]))); \
 			Paths1 <- Data1c[-log10(Data1c[,2]) < 2.25 & -log10(Data1c[,3]) > 4.5,]; Paths1.Labels <- unlist(lapply(strsplit(as.character(Paths1[,1]), \"_\"), function(x) { return(paste(x[2:length(x)], collapse=\"_\"));})); \
+			Paths1.Labels.New <- sapply(Paths1.Labels, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), \"_\")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[1:length(Pathway.Names.New.temp)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { Pathway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, \"\")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.Names.New.temp2, paste(Pathway.Names.New.temp3, collapse=\"\")); }; return(paste(Pathway.Names.New.temp2, collapse=\" \")); }); \
+			Paths1.Labels.New[1] <- \"ErbB Signaling Pathway\"; \
 			plot(-log10(Data1c[,2]),-log10(Data1c[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,10), ylim=c(0,10), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
+			points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), col=\"WHITE\", cex=2); points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), cex=1, pch=16, col=\"BLUE\"); \
 			mtext(\"Height -log10(p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			abline(h=-log10(Data1b.Thresh), lwd=3, lty=3, col=\"RED\"); abline(v=-log10(Data1a.Thresh), lwd=3, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
 			text(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), labels=c(\"2\", \"3\", \"1\", \"4\"), pos=4, col=\"BLUE\", cex=1.15); \
-			legend(\"bottomright\", c(Paths1.Labels[3], Paths1.Labels[1], Paths1.Labels[2], Paths1.Labels[4]), pch=c(49,50,51,52), col=\"BLUE\", cex=.75); \
+			legend(\"bottomright\", c(Paths1.Labels.New[3], Paths1.Labels.New[1], Paths1.Labels.New[2], Paths1.Labels.New[4]), pch=c(49,50,51,52), col=\"BLUE\", cex=1); \
 			plot(-log10(Data2c[,2]),-log10(Data2c[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,10), ylim=c(0,10), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
 			mtext(\"Height -log10(p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			abline(h=-log10(Data2b.Thresh), lwd=3, lty=3, col=\"RED\"); abline(v=-log10(Data2a.Thresh), lwd=3, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
@@ -16052,6 +16055,9 @@ R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"A
 		}; mtext(\"KEGG\", side=3, line=-3, outer=TRUE, at=.2735, cex=3); mtext(\"REACTOME\", side=3, line=-3, outer=TRUE, at=.785, cex=3); \
 	dev.off(); }; print(warnings()); \
 "
+
+#Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), \"_\")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { Pathway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, \"\")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.Names.New.temp2, paste(Pathway.Names.New.temp3, collapse=\"\")); }; return(paste(Pathway.Names.New.temp2, collapse=\" \")); }); \
+
 
 			text(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), labels=c(\"(2)\", \"(3)\", \"(1)\", \"(4)\"), pos=4, col=\"BLUE\"); \
 			points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), col=\"WHITE\", cex=2); points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), cex=1, pch=16, col=\"BLUE\"); \
