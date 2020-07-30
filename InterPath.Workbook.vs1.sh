@@ -16025,7 +16025,7 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 
 R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
 	for (i in DataTypes[1]) { \
-		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.African.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.PhenoComps.vs4.points.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.African.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.PhenoComps.vs4.legend.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
                 for (j in UKBioBankPops[1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 			print(j); \
 			Data1a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/Height/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.KEGG.Results.txt.pre.gz\", sep=\"\"), header=F); \	
@@ -16043,8 +16043,8 @@ R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"A
 			plot(-log10(Data1c[,2]),-log10(Data1c[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,10), ylim=c(0,10), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
 			mtext(\"Height -log10(p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			abline(h=-log10(Data1b.Thresh), lwd=3, lty=3, col=\"RED\"); abline(v=-log10(Data1a.Thresh), lwd=3, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
-			points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), col=\"WHITE\", cex=2); points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), cex=1, pch=16, col=\"BLUE\"); \
-			text(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), labels=c(\"(2)\", \"(3)\", \"(1)\", \"(4)\"), pos=4, col=\"BLUE\"); \
+			text(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), labels=c(\"2\", \"3\", \"1\", \"4\"), pos=4, col=\"BLUE\", cex=1.15); \
+			legend(\"bottomright\", c(Paths1.Labels[3], Paths1.Labels[1], Paths1.Labels[2], Paths1.Labels[4]), pch=c(49,50,51,52), col=\"BLUE\", cex=.75); \
 			plot(-log10(Data2c[,2]),-log10(Data2c[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"BMI -log10(p-Values)\", xlim=c(0,10), ylim=c(0,10), pch=16, cex.main=2, cex.axis=2, cex.lab=2); \
 			mtext(\"Height -log10(p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			abline(h=-log10(Data2b.Thresh), lwd=3, lty=3, col=\"RED\"); abline(v=-log10(Data2a.Thresh), lwd=3, lty=3, col=\"RED\"); abline(0,1,col=\"BLACK\"); \ 
@@ -16052,6 +16052,9 @@ R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"A
 		}; mtext(\"KEGG\", side=3, line=-3, outer=TRUE, at=.2735, cex=3); mtext(\"REACTOME\", side=3, line=-3, outer=TRUE, at=.785, cex=3); \
 	dev.off(); }; print(warnings()); \
 "
+
+			text(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), labels=c(\"(2)\", \"(3)\", \"(1)\", \"(4)\"), pos=4, col=\"BLUE\"); \
+			points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), col=\"WHITE\", cex=2); points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), cex=1, pch=16, col=\"BLUE\"); \
 
 		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.African.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.PhenoComps.vs4.text.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
 #			draw.ellipse(1.5,7.5,1,3, lwd=3, lty=2, border=\"BLUE\"); \
