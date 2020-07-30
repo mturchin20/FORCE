@@ -15078,8 +15078,99 @@ R -q -e "library(\"RColorBrewer\"); png(\"/users/mturchin/LabMisc/RamachandranLa
 
 
 
+#Main Figure: PC1 Loading vs pVal Across Pop Plots
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PC1LoadingPlots
+
+R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
+	for (i in DataTypes[1]) { \
+		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/PC1/ukb_v3.African.HeightBMI.AllPaths.ColCrct.localPCs.PC1LoadvspVals.lengths.plots.vs1.png\", height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
+                for (j in UKBioBankPops[c(1)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+			print(j); \
+			Data1a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
+			Data1b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
+			Data2a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
+			Data2b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
+			Data1a[Data1a[,6] == 0,6] <- 1e-11; Data1b[Data1b[,6] == 0,6] <- 1e-11; Data2a[Data2a[,6] == 0,6] <- 1e-11; Data2b[Data2b[,6] == 0,6] <- 1e-11; \ 
+			Data1a <- Data1a[Data1a[,9] >= 2000 & Data1a[,9] < 3500,]; Data1b <- Data1b[Data1b[,9] >= 2000 & Data1b[,9] < 3500,]; Data2a <- Data2a[Data2a[,9] >= 2000 & Data2a[,9] < 3500,]; Data2b <- Data2b[Data2b[,9] >= 2000 & Data2b[,9] < 3500,]; RegrLine1 <- lm(-log10(Data1a[,6]) ~ Data1a[,15]); RegrLine2 <- lm(-log10(Data1b[,6]) ~ Data1b[,15]); RegrLine3 <- lm(-log10(Data2a[,6]) ~ Data2a[,15]); RegrLine4 <- lm(-log10(Data2b[,6]) ~ Data2b[,15]); \
+			plot(Data2a[,15], -log10(Data2a[,6]), main=\"Height\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,11.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine3, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine3)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine3)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			mtext(\"Proportion of Local PC1 Loaded SNPs\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(Data2b[,15], -log10(Data2b[,6]), main=\"BMI\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,11.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine4, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine4)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine4)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			mtext(\"Proportion of Local PC1 Loaded SNPs\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+		}; \ 
+	dev.off(); }; print(warnings()); \
+"
+
+#			 print(head(Data1a));...
+
+R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
+	for (i in DataTypes[1]) { \
+		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/PC1/ukb_v3.African.HeightBMI.AllPaths.ColCrct.localPCs.PC1LoadvspVals.pvals.plots.vs1.png\", height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
+                for (j in UKBioBankPops[c(1)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+			print(j); \
+			Data1a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
+			Data1b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
+			Data2a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
+			Data2b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
+			Data1a[Data1a[,6] == 0,6] <- 1e-11; Data1b[Data1b[,6] == 0,6] <- 1e-11; Data2a[Data2a[,6] == 0,6] <- 1e-11; Data2b[Data2b[,6] == 0,6] <- 1e-11; \ 
+			Data1a <- Data1a[Data1a[,6] < 1e-5,]; Data1b <- Data1b[Data1b[,6] < 1e-5,]; Data2a <- Data2a[Data2a[,6] < 1e-5,]; Data2b <- Data2b[Data2b[,6] < 1e-5,];	RegrLine1 <- lm(-log10(Data1a[,6]) ~ Data1a[,15]); RegrLine2 <- lm(-log10(Data1b[,6]) ~ Data1b[,15]); RegrLine3 <- lm(-log10(Data2a[,6]) ~ Data2a[,15]); RegrLine4 <- lm(-log10(Data2b[,6]) ~ Data2b[,15]); \
+			plot(Data1a[,15], -log10(Data1a[,6]), main=\"Height\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,11.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine3, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine3)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine3)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			mtext(\"Proportion of Local PC1 Loaded SNPs\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(Data1b[,15], -log10(Data1b[,6]), main=\"BMI\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,11.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine4, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine4)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine4)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			mtext(\"Proportion of Local PC1 Loaded SNPs\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+		}; \ 
+	dev.off(); }; print(warnings()); \
+"
+
+R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
+	for (i in DataTypes[1]) { \
+		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/PC1/ukb_v3.AllPops.HeightBMI.AllPaths.ColCrct.localPCs.PC1LoadvspVals.lengths.plots.vs1.png\", height=12500, width=9250, res=300); par(oma=c(1,12,8,1), mar=c(5,5,4,2), mfrow=c(6,4)); \
+                for (j in UKBioBankPops) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+			print(j); \
+			Data1a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
+			Data1b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
+			Data2a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
+			Data2b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/PC1/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValAll.wQuantFlagCounts.TRUE.txt.gz\", sep=\"\"), header=F); \
+			Data1a[Data1a[,6] == 0,6] <- 1e-11; Data1b[Data1b[,6] == 0,6] <- 1e-11; Data2a[Data2a[,6] == 0,6] <- 1e-11; Data2b[Data2b[,6] == 0,6] <- 1e-11; \ 
+			RegrLine1 <- lm(-log10(Data1a[,6]) ~ Data1a[,15]); RegrLine2 <- lm(-log10(Data1b[,6]) ~ Data1b[,15]); RegrLine3 <- lm(-log10(Data2a[,6]) ~ Data2a[,15]); RegrLine4 <- lm(-log10(Data2b[,6]) ~ Data2b[,15]); \
+			plot(Data1a[,15], -log10(Data1a[,6]), main=\"Height\", xlab=\"Proportion of Local PC1 Loaded SNPs\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,11.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine1, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine1)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine1)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			plot(Data1b[,15], -log10(Data1b[,6]), main=\"BMI\", xlab=\"Proportion of Local PC1 Loaded SNPs\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,11.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine2, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine2)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine2)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			plot(Data2a[,15], -log10(Data2a[,6]), main=\"Height\", xlab=\"Proportion of Local PC1 Loaded SNPs\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,11.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine3, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine3)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine3)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			plot(Data2b[,15], -log10(Data2b[,6]), main=\"BMI\", xlab=\"Proportion of Local PC1 Loaded SNPs\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,11.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine4, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine4)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine4)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+		}; mtext(\"KEGG Height\", side=3, outer=TRUE, at=.1325, cex=3); mtext(\"KEGG BMI\", side=3, outer=TRUE, at=.3825, cex=3); mtext(\"REACTOME Height\", side=3, outer=TRUE, at=.6325, cex=3); mtext(\"REACTOME BMI\", side=3, outer=TRUE, at=.8825, cex=3); \
+		mtext(\"African\", side=2, line=4, outer=TRUE, at=.91975, cex=3); mtext(\"Brit.Ran4k\", side=2, line=4, outer=TRUE, at=.7515, cex=3); mtext(\"Caribbean\", side=2, line=4, outer=TRUE, at=.5845, cex=3); mtext(\"Chinese\", side=2, line=4, outer=TRUE, at=.4165, cex=3); mtext(\"Indian\", side=2, line=4, outer=TRUE, at=.2515, cex=3); mtext(\"Pakistani\", side=2, line=4, outer=TRUE, at=.085, cex=3); \
+	dev.off(); }; print(warnings()); \
+"
+
+#On MacBook Pro
+#mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PC1LoadingPlots
+#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/PC1/ukb_v3.*PC1LoadvspVals*plots.vs1.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/GenDiv/PC1/.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Main Figure: RFMix ancestry vs pVal Across Pop Plots
 
 
 
