@@ -13502,6 +13502,7 @@ done;
 
 #On R/3.4.3_mkl
 #From: https://www.rdocumentation.org/packages/pheatmap/versions/1.0.12/topics/pheatmap, https://towardsdatascience.com/pheatmap-draws-pretty-heatmaps-483dab9a3cc, https://stackoverflow.com/questions/57729914/how-can-you-show-the-rownames-in-pheatmap-on-the-left-side-of-the-graph, https://stackoverflow.com/questions/39590849/using-a-pheatmap-in-arrangegrob, https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html, https://stackoverflow.com/questions/15505607/diagonal-labels-orientation-on-x-axis-in-heatmaps,https://slowkow.com/notes/pheatmap-tutorial/, https://rstudio-pubs-static.s3.amazonaws.com/408658_512da947714740b99253228f084a08a9.html 
+
 cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | R -q -e "library(\"pheatmap\"); library(\"grid\"); library(\"gridExtra\"); library(\"RColorBrewer\"); Data1 <- read.table(file('stdin'), header=F); \
 draw_colnames_45 <- function (coln, gaps, ...) { coord <- pheatmap:::find_coordinates(length(coln), gaps); x <- coord\$coord - 0.5 * coord\$size; res <- grid::textGrob(coln, x = x, y = unit(1, \"npc\") - unit(3,\"bigpts\"),vjust = 1, hjust = 1, rot = 45, gp = grid::gpar(...)); return(res) }; \
 assignInNamespace(x = \"draw_colnames\", value = \"draw_colnames_45\", ns = asNamespace(\"pheatmap\")); \
@@ -13514,19 +13515,23 @@ PSMA_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / ((Data1[,3
 Results.Full.pValDiff.raw <- cbind(PSMA_pValDiff_raw, PSMB_pValDiff_raw, PSMC_pValDiff_raw, PSMD_pValDiff_raw, PSME_pValDiff_raw, PSMF_pValDiff_raw); Results.Full.pValDiff.scaled <- cbind(PSMA_pValDiff_scaled, PSMB_pValDiff_scaled, PSMC_pValDiff_scaled, PSMD_pValDiff_scaled, PSME_pValDiff_scaled, PSMF_pValDiff_scaled); Results.Full.pValDiff.scaled2 <- cbind(PSMA_pValDiff_scaled2, PSMB_pValDiff_scaled2, PSMC_pValDiff_scaled2, PSMD_pValDiff_scaled2, PSME_pValDiff_scaled2, PSMF_pValDiff_scaled2); \
 Pathway.Names <- Data1[,1]; \
 print(head(Pathway.Names)); \
-Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), \"_\")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; return(paste(Pathway.Names.New.temp, collapse=\"_\")); }); \
-for (i in 1:length(Pathway.Names.New)) { Pathway.Names.New[i] <- paste(Pathway.Names.New[i], \"\n(SNPs = \", as.character(Data1[i,3]), \")\", sep=\"\"); }; \
+Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), \"_\")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { Pathway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, \"\")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.Names.New.temp2, paste(Pathway.Names.New.temp3, collapse=\"\")); }; return(paste(Pathway.Names.New.temp2, collapse=\" \")); }); \
+Pathway.Names.New[1] <- \"Activation of NF-KappaB in B Cells\"; Pathway.Names.New[3] <- \"Assembly of the Pre-Replicative Complex\"; Pathway.Names.New[7] <- \"Downstream Signaling Events of the B Cell Receptor\"; Pathway.Names.New[8] <- \"HIV Infection\"; Pathway.Names.New[9] <- \"Host Interactions of HIV Factors\"; Pathway.Names.New[11] <- \"Regulation of Apoptosis\"; \ 
 print(head(Pathway.Names.New)); \
 rownames(Results.Full.pValDiff.scaled) <- Pathway.Names.New; \
 Gene.Names.New <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
 Gene.Names.New.SNPs <- c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff); \
-for (i in 1:length(Gene.Names.New)) { Gene.Names.New[i] <- paste(Gene.Names.New[i], \"\n(SNPs = \", as.character(Gene.Names.New.SNPs[i]), \")\", sep=\"\"); }; \
 colnames(Results.Full.pValDiff.raw) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled2) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
 colnames(Results.Full.pValDiff.scaled) <- Gene.Names.New; \
-png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.BMI.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.vs2.png\", height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
-pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"\", color=my_palette1); \
+png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.BMI.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.vs3.png\", height=2000, width=3500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
+pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"\", fontsize=16, color=my_palette1); \
 dev.off(); \
 "
+
+#for (i in 1:length(Pathway.Names.New)) { Pathway.Names.New[i] <- paste(Pathway.Names.New[i], \"\n(SNPs = \", as.character(Data1[i,3]), \")\", sep=\"\"); }; \
+#for (i in 1:length(Gene.Names.New)) { Gene.Names.New[i] <- paste(Gene.Names.New[i], \"\n(SNPs = \", as.character(Gene.Names.New.SNPs[i]), \")\", sep=\"\"); }; \
+
+Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), \"_\")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; return(paste(Pathway.Names.New.temp, collapse=\"_\")); }); \
 
 #PSMA_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,5])) / (Data1[,3] - Data1[,6]); PSMB_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,8])) / (Data1[,3] - Data1[,9]); PSMC_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,11])) / (Data1[,3] - Data1[,12]); PSMD_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,14])) / (Data1[,3] - Data1[,15]); PSME_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,17])) / (Data1[,3] - Data1[,18]); PSMF_pValDiff_scaled <- (-log10(Data1[,2]) - -log10(Data1[,20])) / (Data1[,3] - Data1[,21]); \ 
 #rownames(Results.Full.pValDiff.scaled2) <- Data1[,1]; \
@@ -14802,6 +14807,39 @@ for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n",
 done;
 
 #					...perl -lane 'sub log10 { my $n = shift; return log($n)/log(10); }; if (($F[1] < $F[4]) || ($F[2] < $F[5])) { if (abs((-1*log10($F[1])) - (-1*log10($F[2]))) > 0) { print join("\t", @F), "\t", (-1*log10($F[1])) - (-1*log10($F[2])); }; };' | ... Info.$ancestry2b.$l.SigDiffs.vs1.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Main Figure: Proteasome Plots Work
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -17123,10 +17161,11 @@ set opaque_background, off
 set ray_opaque_background, 0
 png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/PyMOL/ProteasomeFigure1.vs1.png, width=1200, height=1200, dpi=300, ray=0
 png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/PyMOL/ProteasomeFigure1.wRay.vs1.png, width=1200, height=1200, dpi=300, ray=1
-remove psmc_2 psmd_2 dss1_2
+remove psmc_1 psmd_1 dss1_1
 png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/PyMOL/ProteasomeFigure2.vs1.png, width=1200, height=1200, dpi=300, ray=0
 png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/PyMOL/ProteasomeFigure2.wRay.vs1.png, width=1200, height=1200, dpi=300, ray=1
 
+#remove psmc_2 psmd_2 dss1_2
 #set bg_rgb, white
 #set opaque_background, off
 #png nana1.png, width=1200, height=1200, dpi=300
