@@ -16056,16 +16056,13 @@ R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"A
 	dev.off(); }; print(warnings()); \
 "
 
-#Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), \"_\")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { Pathway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, \"\")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.Names.New.temp2, paste(Pathway.Names.New.temp3, collapse=\"\")); }; return(paste(Pathway.Names.New.temp2, collapse=\" \")); }); \
-
-
-			text(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), labels=c(\"(2)\", \"(3)\", \"(1)\", \"(4)\"), pos=4, col=\"BLUE\"); \
-			points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), col=\"WHITE\", cex=2); points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), cex=1, pch=16, col=\"BLUE\"); \
-
-		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.African.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.PhenoComps.vs4.text.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
+#		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.African.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.PhenoComps.vs4.text.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
+#		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots/ukb_v3.African.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.PhenoComps.vs4.points.png\", sep=\"\"), height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
 #			draw.ellipse(1.5,7.5,1,3, lwd=3, lty=2, border=\"BLUE\"); \
 #			text(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), labels=Paths1.Labels, pos=4, col=\"BLUE\"); \
 #			points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), col=\"WHITE\", cex=2); points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), cex=1.5, pch=15, col=\"BLUE\"); \
+#			text(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), labels=c(\"(2)\", \"(3)\", \"(1)\", \"(4)\"), pos=4, col=\"BLUE\"); \
+#			points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), col=\"WHITE\", cex=2); points(x=-log10(Paths1[,2]), y=-log10(Paths1[,3]), cex=1, pch=16, col=\"BLUE\"); \
 
 #On MacBook Pro
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/PhenoCompDotPlots
