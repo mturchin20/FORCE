@@ -13384,6 +13384,8 @@ paste <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2A
 <(join <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_DropPSMF.txt | awk '{ print $1 "\t" $4 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdrops.noDups.txt | perl -lane 'my @vals1 = split(",", $F[2]); print $F[0], "\t", scalar(@vals1);' | sort -k 1,1)) \ 
 <(join <(cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_DropPSMG.txt | awk '{ print $1 "\t" $4 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdrops.noDups.txt | perl -lane 'my @vals1 = split(",", $F[2]); print $F[0], "\t", scalar(@vals1);' | sort -k 1,1)) > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt 
 
+#cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/20200801_Backup_ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt
+
 cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | awk '{ print $1 "\t" $4 "\t" $7 "\t" $10 "\t" $13 "\t" $16 "\t" $19 "\t" $22 }' | perl -ane 'foreach my $val1 (@F) { my @vals2 = split(/_/, $val1); print join("_", @vals2[0..$#vals2-1]), "\t"; } print "\n";' | perl -lane 'foreach my $val1 (@F) { print $val1; };' | uniq -c
 
 cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep PSM | awk '{ print $1 }' > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.PSMpathways.txt
@@ -13415,7 +13417,7 @@ done
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/20200527_Orig_ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt
 
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African | head -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; 
 		echo $i $ancestry2
 
@@ -13430,6 +13432,8 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 
 	done
 done
+
+#		paste <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_DropNone.txt.gz | awk '{ print $1 "\t" $3 "\t" $4 "\t" $7 }' | sort -k 1,1) \
 
 ```
 [  mturchin@node1164  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | awk '{ print $1 "\t" $4 "\t" $7 "\t" $10 "\t" $13 "\t" $16 "\t" $19 "\t" $22 }' | perl -ane 'foreach my $val1 (@F) { my @vals2 = split(/_/, $val1); print join("_", @vals2[0..$#vals2-1]), "\t"; } print "\n";' | perl -lane 'foreach my $val1 (@F) { print $val1; };' | uniq -c
@@ -13559,13 +13563,15 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 			draw_colnames_45 <- function (coln, gaps, ...) { coord <- pheatmap:::find_coordinates(length(coln), gaps); x <- coord\$coord - 0.5 * coord\$size; res <- grid::textGrob(coln, x = x, y = unit(1, \"npc\") - unit(3,\"bigpts\"),vjust = 1, hjust = 1, rot = 45, gp = grid::gpar(...)); return(res) }; \
 			assignInNamespace(x = \"draw_colnames\", value = \"draw_colnames_45\", ns = asNamespace(\"pheatmap\")); \
 			colors1 = seq(.07,-.03,length=100); my_palette1 <- colorRampPalette(brewer.pal(11, \"RdYlBu\")[2:10])(n = 99); \
-			Data1[Data1[,2] == 0,2] <- 1e-10; Data1[Data1[,5] == 0,5] <- 1e-10; Data1[Data1[,8] == 0,8] <- 1e-10; Data1[Data1[,11] == 0,11] <- 1e-10; Data1[Data1[,14] == 0,14] <- 1e-10; Data1[Data1[,17] == 0,17] <- 1e-10; Data1[Data1[,20] == 0,20] <- 1e-10; \ 
 			Pathway.Names <- Data1[,1]; \
 			print((Pathway.Names)); \
 			Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), \"_\")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { Pathway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, \"\")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.Names.New.temp2, paste(Pathway.Names.New.temp3, collapse=\"\")); }; return(paste(Pathway.Names.New.temp2, collapse=\" \")); }); \
 			Pathway.Names.New[1] <- \"Activation of NF-KappaB in B Cells\"; Pathway.Names.New[3] <- \"Assembly of the Pre-Replicative Complex\"; Pathway.Names.New[7] <- \"Downstream Signaling Events of the B Cell Receptor\"; Pathway.Names.New[8] <- \"HIV Infection\"; Pathway.Names.New[9] <- \"Host Interactions of HIV Factors\"; Pathway.Names.New[11] <- \"Regulation of Apoptosis\"; \ 
 			print(head(Pathway.Names.New)); \
 			Data1[,1] <- Pathway.Names.New; \
+			checkNA col
+			remove NA col
+			Data1[Data1[,2] == 0,2] <- 1e-10; Data1[Data1[,5] == 0,5] <- 1e-10; Data1[Data1[,8] == 0,8] <- 1e-10; Data1[Data1[,11] == 0,11] <- 1e-10; Data1[Data1[,14] == 0,14] <- 1e-10; Data1[Data1[,17] == 0,17] <- 1e-10; Data1[Data1[,20] == 0,20] <- 1e-10; \ 
 			PSMA_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / (Data1[,3] - Data1[,6]); PSMB_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / (Data1[,3] - Data1[,9]); PSMC_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / (Data1[,3] - Data1[,12]); PSMD_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / (Data1[,3] - Data1[,15]); PSME_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / (Data1[,3] - Data1[,18]); PSMF_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / (Data1[,3] - Data1[,21]); \ 
 			Results.Full.pValDiff.scaled <- cbind(PSMA_pValDiff_scaled, PSMB_pValDiff_scaled, PSMC_pValDiff_scaled, PSMD_pValDiff_scaled, PSME_pValDiff_scaled, PSMF_pValDiff_scaled); \
 			rownames(Results.Full.pValDiff.scaled) <- Data1[,1]; \
@@ -13582,40 +13588,17 @@ done
 #			PSMA_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,5]); PSMB_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,8]); PSMC_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,11]); PSMD_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,14]); PSME_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,17]); PSMF_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,20]); \ 
 #			PSMA_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / ((Data1[,3] - Data1[,6]) * (1/Data1[,3])); PSMB_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / ((Data1[,3] - Data1[,9]) * (1/Data1[,3])); PSMC_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / ((Data1[,3] - Data1[,12]) * (1/Data1[,3])); PSMD_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / ((Data1[,3] - Data1[,15]) * (1/Data1[,3])); PSME_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / ((Data1[,3] - Data1[,18]) * (1/Data1[,3])); PSMF_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / ((Data1[,3] - Data1[,21]) * (1/Data1[,3])); \ 
 
+#On MacBook Pro
+#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3*loop*vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/.
 
 
-		paste <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_DropNone.txt.gz | awk '{ print $1 "\t" $3 "\t" $4 "\t" $7 }' | sort -k 1,1) \
-		<(join <(zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_DropPSMA.txt.gz | awk '{ print $1 "\t" $4 }' | sort -k 1,1) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.PSMdrops.noDups.txt | perl -lane 'my @vals1 = split(",", $F[2]); print $F[0], "\t", scalar(@vals1);' | sort -k 1,1)) \  
-
-		cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | R -q -e "library(\"pheatmap\"); library(\"grid\"); library(\"gridExtra\"); library(\"RColorBrewer\"); Data1 <- read.table(file('stdin'), header=F); \
-		draw_colnames_45 <- function (coln, gaps, ...) { coord <- pheatmap:::find_coordinates(length(coln), gaps); x <- coord\$coord - 0.5 * coord\$size; res <- grid::textGrob(coln, x = x, y = unit(1, \"npc\") - unit(3,\"bigpts\"),vjust = 1, hjust = 1, rot = 45, gp = grid::gpar(...)); return(res) }; \
-		assignInNamespace(x = \"draw_colnames\", value = \"draw_colnames_45\", ns = asNamespace(\"pheatmap\")); \
-		colors1 = seq(.07,-.03,length=100); my_palette1 <- colorRampPalette(brewer.pal(11, \"RdYlBu\")[2:10])(n = 99); \
-		Data1[Data1[,2] == 0,2] <- 1e-10; Data1[Data1[,5] == 0,5] <- 1e-10; Data1[Data1[,8] == 0,8] <- 1e-10; Data1[Data1[,11] == 0,11] <- 1e-10; Data1[Data1[,14] == 0,14] <- 1e-10; Data1[Data1[,17] == 0,17] <- 1e-10; Data1[Data1[,20] == 0,20] <- 1e-10; \ 
-		PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21])); \
-		PSMA_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,5]); PSMB_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,8]); PSMC_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,11]); PSMD_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,14]); PSME_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,17]); PSMF_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,20]); \ 
-		PSMA_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / (Data1[,3] - Data1[,6]); PSMB_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / (Data1[,3] - Data1[,9]); PSMC_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / (Data1[,3] - Data1[,12]); PSMD_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / (Data1[,3] - Data1[,15]); PSME_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / (Data1[,3] - Data1[,18]); PSMF_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / (Data1[,3] - Data1[,21]); \ 
-		PSMA_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / ((Data1[,3] - Data1[,6]) * (1/Data1[,3])); PSMB_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / ((Data1[,3] - Data1[,9]) * (1/Data1[,3])); PSMC_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / ((Data1[,3] - Data1[,12]) * (1/Data1[,3])); PSMD_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / ((Data1[,3] - Data1[,15]) * (1/Data1[,3])); PSME_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / ((Data1[,3] - Data1[,18]) * (1/Data1[,3])); PSMF_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / ((Data1[,3] - Data1[,21]) * (1/Data1[,3])); \ 
-		Results.Full.pValDiff.raw <- cbind(PSMA_pValDiff_raw, PSMB_pValDiff_raw, PSMC_pValDiff_raw, PSMD_pValDiff_raw, PSME_pValDiff_raw, PSMF_pValDiff_raw); Results.Full.pValDiff.scaled <- cbind(PSMA_pValDiff_scaled, PSMB_pValDiff_scaled, PSMC_pValDiff_scaled, PSMD_pValDiff_scaled, PSME_pValDiff_scaled, PSMF_pValDiff_scaled); Results.Full.pValDiff.scaled2 <- cbind(PSMA_pValDiff_scaled2, PSMB_pValDiff_scaled2, PSMC_pValDiff_scaled2, PSMD_pValDiff_scaled2, PSME_pValDiff_scaled2, PSMF_pValDiff_scaled2); \
-		Pathway.Names <- Data1[,1]; \
-		print(head(Pathway.Names)); \
-		Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), \"_\")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; return(paste(Pathway.Names.New.temp, collapse=\"_\")); }); \
-		for (i in 1:length(Pathway.Names.New)) { Pathway.Names.New[i] <- paste(Pathway.Names.New[i], \"\n(SNPs = \", as.character(Data1[i,3]), \")\", sep=\"\"); }; \
-		print(head(Pathway.Names.New)); \
-		rownames(Results.Full.pValDiff.scaled) <- Pathway.Names.New; \
-		Gene.Names.New <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
-		Gene.Names.New.SNPs <- c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff); \
-		for (i in 1:length(Gene.Names.New)) { Gene.Names.New[i] <- paste(Gene.Names.New[i], \"\n(SNPs = \", as.character(Gene.Names.New.SNPs[i]), \")\", sep=\"\"); }; \
-		colnames(Results.Full.pValDiff.raw) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled2) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
-		colnames(Results.Full.pValDiff.scaled) <- Gene.Names.New; \
-		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.${ancestry2}.QCed.${i}.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.vs2.png\", height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
-		pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"\", color=my_palette1); \
-		dev.off(); \
-"
 
 
-	done
-done
+
+
+
+
+
 
 
 
