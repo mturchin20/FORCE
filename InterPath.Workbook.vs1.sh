@@ -13608,8 +13608,8 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 			PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21])); \
 			Data2 <- cbind(c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"), c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff)); \
 			Data3 <- Data1[,c(1,2,3)]; \
-			print(Data2); \
-			print(Data3); \ 	
+			write.table(Data2, quote=FALSE, row.names=FALSE, col.names=FALSE); \
+			write.table(Data3, quote=FALSE, row.names=FALSE, col.names=FALSE); \ 	
 		"
 	done
 done
