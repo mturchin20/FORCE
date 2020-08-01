@@ -13369,11 +13369,6 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 ##cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep PSM | perl -lane 'print $F[0], "_Orig", "\t", join("\t", @F[1..$#F]);' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_Orig.txt
 cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/REACTOME/pValBonf/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.txt | grep PSM | perl -lane 'print $F[0], "_DropNone", "\t", join("\t", @F[1..$#F]);' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_DropNone.txt
 
-
-
-
-
-
 for i in `cat <(echo "_DropPSMA _DropPSMB _DropPSMC _DropPSMD _DropPSME _DropPSMF _DropPSMG" | perl -lane 'print join("\n", @F);')`; do
 
 	zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep $i > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops${i}.txt
@@ -13395,7 +13390,7 @@ cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Anal
 
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 1`; do
 	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
-		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 1`; do
+		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African | head -n 1`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; 
 			echo $i $ancestry2
 
@@ -13507,23 +13502,24 @@ cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveM
 draw_colnames_45 <- function (coln, gaps, ...) { coord <- pheatmap:::find_coordinates(length(coln), gaps); x <- coord\$coord - 0.5 * coord\$size; res <- grid::textGrob(coln, x = x, y = unit(1, \"npc\") - unit(3,\"bigpts\"),vjust = 1, hjust = 1, rot = 45, gp = grid::gpar(...)); return(res) }; \
 assignInNamespace(x = \"draw_colnames\", value = \"draw_colnames_45\", ns = asNamespace(\"pheatmap\")); \
 colors1 = seq(.07,-.03,length=100); my_palette1 <- colorRampPalette(brewer.pal(11, \"RdYlBu\")[2:10])(n = 99); \
-Data1[Data1[,2] == 0,2] <- 1e-11; Data1[Data1[,5] == 0,5] <- 1e-11; Data1[Data1[,8] == 0,8] <- 1e-11; Data1[Data1[,11] == 0,11] <- 1e-11; Data1[Data1[,14] == 0,14] <- 1e-11; Data1[Data1[,17] == 0,17] <- 1e-11; Data1[Data1[,20] == 0,20] <- 1e-11; \ 
+Data1[Data1[,2] == 0,2] <- 1e-10; Data1[Data1[,5] == 0,5] <- 1e-10; Data1[Data1[,8] == 0,8] <- 1e-10; Data1[Data1[,11] == 0,11] <- 1e-10; Data1[Data1[,14] == 0,14] <- 1e-10; Data1[Data1[,17] == 0,17] <- 1e-10; Data1[Data1[,20] == 0,20] <- 1e-10; \ 
 PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21])); \
 PSMA_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,5]); PSMB_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,8]); PSMC_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,11]); PSMD_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,14]); PSME_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,17]); PSMF_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,20]); \ 
 PSMA_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / (Data1[,3] - Data1[,6]); PSMB_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / (Data1[,3] - Data1[,9]); PSMC_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / (Data1[,3] - Data1[,12]); PSMD_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / (Data1[,3] - Data1[,15]); PSME_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / (Data1[,3] - Data1[,18]); PSMF_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / (Data1[,3] - Data1[,21]); \ 
 PSMA_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / ((Data1[,3] - Data1[,6]) * (1/Data1[,3])); PSMB_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / ((Data1[,3] - Data1[,9]) * (1/Data1[,3])); PSMC_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / ((Data1[,3] - Data1[,12]) * (1/Data1[,3])); PSMD_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / ((Data1[,3] - Data1[,15]) * (1/Data1[,3])); PSME_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / ((Data1[,3] - Data1[,18]) * (1/Data1[,3])); PSMF_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / ((Data1[,3] - Data1[,21]) * (1/Data1[,3])); \ 
 Results.Full.pValDiff.raw <- cbind(PSMA_pValDiff_raw, PSMB_pValDiff_raw, PSMC_pValDiff_raw, PSMD_pValDiff_raw, PSME_pValDiff_raw, PSMF_pValDiff_raw); Results.Full.pValDiff.scaled <- cbind(PSMA_pValDiff_scaled, PSMB_pValDiff_scaled, PSMC_pValDiff_scaled, PSMD_pValDiff_scaled, PSME_pValDiff_scaled, PSMF_pValDiff_scaled); Results.Full.pValDiff.scaled2 <- cbind(PSMA_pValDiff_scaled2, PSMB_pValDiff_scaled2, PSMC_pValDiff_scaled2, PSMD_pValDiff_scaled2, PSME_pValDiff_scaled2, PSMF_pValDiff_scaled2); \
 Pathway.Names <- Data1[,1]; \
-print(head(Pathway.Names)); \
+print((Pathway.Names)); \
 Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), \"_\")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { Pathway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, \"\")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.Names.New.temp2, paste(Pathway.Names.New.temp3, collapse=\"\")); }; return(paste(Pathway.Names.New.temp2, collapse=\" \")); }); \
 Pathway.Names.New[1] <- \"Activation of NF-KappaB in B Cells\"; Pathway.Names.New[3] <- \"Assembly of the Pre-Replicative Complex\"; Pathway.Names.New[7] <- \"Downstream Signaling Events of the B Cell Receptor\"; Pathway.Names.New[8] <- \"HIV Infection\"; Pathway.Names.New[9] <- \"Host Interactions of HIV Factors\"; Pathway.Names.New[11] <- \"Regulation of Apoptosis\"; \ 
 print(head(Pathway.Names.New)); \
+print(Pathway.Names.New); \
 rownames(Results.Full.pValDiff.scaled) <- Pathway.Names.New; \
 Gene.Names.New <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
 Gene.Names.New.SNPs <- c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff); \
 colnames(Results.Full.pValDiff.raw) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled2) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
 colnames(Results.Full.pValDiff.scaled) <- Gene.Names.New; \
-png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.BMI.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.vs3.png\", height=2000, width=3500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
+png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.BMI.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.vs3.png\", height=2000, width=3750, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
 pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"\", fontsize=16, color=my_palette1); \
 dev.off(); \
 "
@@ -13561,10 +13557,38 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 		fix the columns and things and such, added in that NA column flag which isn't accounted for in the code below -- also, get rid of the different standardizing variants, only keep the column standardizing variant
 	
 		...	
-		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.${ancestry2}.QCed.${i}.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.vs3.png\", height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
+		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.${ancestry2}.QCed.${i}.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.loopVrs.vs3.png\", height=2000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
 		pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"\", color=my_palette1); \
 		dev.off(); \
-"
+
+		cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | R -q -e "library(\"pheatmap\"); library(\"grid\"); library(\"gridExtra\"); library(\"RColorBrewer\"); Data1 <- read.table(file('stdin'), header=F); \
+			draw_colnames_45 <- function (coln, gaps, ...) { coord <- pheatmap:::find_coordinates(length(coln), gaps); x <- coord\$coord - 0.5 * coord\$size; res <- grid::textGrob(coln, x = x, y = unit(1, \"npc\") - unit(3,\"bigpts\"),vjust = 1, hjust = 1, rot = 45, gp = grid::gpar(...)); return(res) }; \
+			assignInNamespace(x = \"draw_colnames\", value = \"draw_colnames_45\", ns = asNamespace(\"pheatmap\")); \
+			colors1 = seq(.07,-.03,length=100); my_palette1 <- colorRampPalette(brewer.pal(11, \"RdYlBu\")[2:10])(n = 99); \
+			Data1[Data1[,2] == 0,2] <- 1e-10; Data1[Data1[,5] == 0,5] <- 1e-10; Data1[Data1[,8] == 0,8] <- 1e-10; Data1[Data1[,11] == 0,11] <- 1e-10; Data1[Data1[,14] == 0,14] <- 1e-10; Data1[Data1[,17] == 0,17] <- 1e-10; Data1[Data1[,20] == 0,20] <- 1e-10; \ 
+			PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21])); \
+			PSMA_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,5]); PSMB_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,8]); PSMC_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,11]); PSMD_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,14]); PSME_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,17]); PSMF_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,20]); \ 
+			PSMA_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / (Data1[,3] - Data1[,6]); PSMB_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / (Data1[,3] - Data1[,9]); PSMC_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / (Data1[,3] - Data1[,12]); PSMD_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / (Data1[,3] - Data1[,15]); PSME_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / (Data1[,3] - Data1[,18]); PSMF_pValDiff_scaled <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / (Data1[,3] - Data1[,21]); \ 
+			PSMA_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / ((Data1[,3] - Data1[,6]) * (1/Data1[,3])); PSMB_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / ((Data1[,3] - Data1[,9]) * (1/Data1[,3])); PSMC_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / ((Data1[,3] - Data1[,12]) * (1/Data1[,3])); PSMD_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / ((Data1[,3] - Data1[,15]) * (1/Data1[,3])); PSME_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / ((Data1[,3] - Data1[,18]) * (1/Data1[,3])); PSMF_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / ((Data1[,3] - Data1[,21]) * (1/Data1[,3])); \ 
+			Results.Full.pValDiff.raw <- cbind(PSMA_pValDiff_raw, PSMB_pValDiff_raw, PSMC_pValDiff_raw, PSMD_pValDiff_raw, PSME_pValDiff_raw, PSMF_pValDiff_raw); Results.Full.pValDiff.scaled <- cbind(PSMA_pValDiff_scaled, PSMB_pValDiff_scaled, PSMC_pValDiff_scaled, PSMD_pValDiff_scaled, PSME_pValDiff_scaled, PSMF_pValDiff_scaled); Results.Full.pValDiff.scaled2 <- cbind(PSMA_pValDiff_scaled2, PSMB_pValDiff_scaled2, PSMC_pValDiff_scaled2, PSMD_pValDiff_scaled2, PSME_pValDiff_scaled2, PSMF_pValDiff_scaled2); \
+			Pathway.Names <- Data1[,1]; \
+			print((Pathway.Names)); \
+			Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), \"_\")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { Pathway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, \"\")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.Names.New.temp2, paste(Pathway.Names.New.temp3, collapse=\"\")); }; return(paste(Pathway.Names.New.temp2, collapse=\" \")); }); \
+			Pathway.Names.New[1] <- \"Activation of NF-KappaB in B Cells\"; Pathway.Names.New[3] <- \"Assembly of the Pre-Replicative Complex\"; Pathway.Names.New[7] <- \"Downstream Signaling Events of the B Cell Receptor\"; Pathway.Names.New[8] <- \"HIV Infection\"; Pathway.Names.New[9] <- \"Host Interactions of HIV Factors\"; Pathway.Names.New[11] <- \"Regulation of Apoptosis\"; \ 
+			print(head(Pathway.Names.New)); \
+			print(Pathway.Names.New); \
+			rownames(Results.Full.pValDiff.scaled) <- Pathway.Names.New; \
+			Gene.Names.New <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
+			Gene.Names.New.SNPs <- c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff); \
+			colnames(Results.Full.pValDiff.raw) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); colnames(Results.Full.pValDiff.scaled2) <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
+			colnames(Results.Full.pValDiff.scaled) <- Gene.Names.New; \
+			png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.BMI.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.loopVrs.vs3.png\", height=2000, width=3750, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
+			pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"\", fontsize=16, color=my_palette1); \
+			dev.off(); \
+		"
+	done
+done
+
 
 
 
