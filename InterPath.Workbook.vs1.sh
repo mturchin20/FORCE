@@ -13584,13 +13584,53 @@ done
 #
 #		kind of thing, and make it the second version of the above heatplots and stuff
 #		fix the columns and things and such, added in that NA column flag which isn't accounted for in the code below -- also, get rid of the different standardizing variants, only keep the column standardizing variant
-#			PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21])); \
 #			PSMA_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,5]); PSMB_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,8]); PSMC_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,11]); PSMD_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,14]); PSME_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,17]); PSMF_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,20]); \ 
 #			PSMA_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / ((Data1[,3] - Data1[,6]) * (1/Data1[,3])); PSMB_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / ((Data1[,3] - Data1[,9]) * (1/Data1[,3])); PSMC_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / ((Data1[,3] - Data1[,12]) * (1/Data1[,3])); PSMD_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / ((Data1[,3] - Data1[,15]) * (1/Data1[,3])); PSME_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / ((Data1[,3] - Data1[,18]) * (1/Data1[,3])); PSMF_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / ((Data1[,3] - Data1[,21]) * (1/Data1[,3])); \ 
 
 #On MacBook Pro
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3*loop*vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/.
 
+
+for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 1`; do
+		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; 
+		echo $i $ancestry2
+
+		zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt.gz | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | R -q -e "library(\"pheatmap\"); library(\"RColorBrewer\"); library(\"xtable\"); Data1 <- read.table(file('stdin'), header=F); \
+			Pathway.Names <- Data1[,1]; \
+			Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), \"_\")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { Pathway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, \"\")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.Names.New.temp2, paste(Pathway.Names.New.temp3, collapse=\"\")); }; return(paste(Pathway.Names.New.temp2, collapse=\" \")); }); \
+			Pathway.Names.New[1] <- \"Activation of NF-KappaB in B Cells\"; Pathway.Names.New[3] <- \"Assembly of the Pre-Replicative Complex\"; Pathway.Names.New[7] <- \"Downstream Signaling Events of the B Cell Receptor\"; Pathway.Names.New[8] <- \"HIV Infection\"; Pathway.Names.New[9] <- \"Host Interactions of HIV Factors\"; Pathway.Names.New[11] <- \"Regulation of Apoptosis\"; \ 
+			Data1[,1] <- Pathway.Names.New; \
+			Data1 <- Data1[!is.na(Data1[,2]),]; \
+			Data1 <- Data1[,c(1,3:ncol(Data1))]; \
+			print(head(Data1)); \
+			Data1[Data1[,2] == 0,2] <- 1e-10; Data1[Data1[,5] == 0,5] <- 1e-10; Data1[Data1[,8] == 0,8] <- 1e-10; Data1[Data1[,11] == 0,11] <- 1e-10; Data1[Data1[,14] == 0,14] <- 1e-10; Data1[Data1[,17] == 0,17] <- 1e-10; Data1[Data1[,20] == 0,20] <- 1e-10; \ 
+			PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21])); \
+			Data2 <- cbind(c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"), c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff)); \
+			Data3 <- Data1[,c(1,2,3)]; \
+			print(Data2); \
+			print(Data3); \ 	
+		"
+	done
+done
+
+#		cat ... | drop NAs | R -q -e "Data1 <- read.table(\"...
+
+                                       V1           V3   V4
+1      Activation of NF-KappaB in B Cells 1.860777e-05  465
+2   Antigen Processing Cross Presentation 3.955551e-05  850
+3 Assembly of the Pre-Replicative Complex 3.293483e-05  331
+4                  Cell Cycle Checkpoints 5.780754e-06  670
+5                              Cell Cycle 1.288246e-06 2459
+6                      Cell Cycle Mitotic 4.509021e-05 1906
+                                                         V5           V6   V7
+1      REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS_DropPSMA 1.258848e-05  448
+2   REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION_DropPSMA 3.228683e-05  833
+3 REACTOME_ASSEMBLY_OF_THE_PRE_REPLICATIVE_COMPLEX_DropPSMA 1.260107e-05  314
+4                  REACTOME_CELL_CYCLE_CHECKPOINTS_DropPSMA 4.523583e-06  653
+5                              REACTOME_CELL_CYCLE_DropPSMA 5.958958e-07 2442
+6                      REACTOME_CELL_CYCLE_MITOTIC_DropPSMA 4.194417e-05 1889
+                                                         V8           V9  V10
 
 
 
