@@ -13392,7 +13392,7 @@ cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Anal
 
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 1`; do
 	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
-		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African | head -n 1`; do
+		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; 
 			echo $i $ancestry2
 
@@ -13417,7 +13417,7 @@ done
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/20200527_Orig_ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt
 
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African | head -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; 
 		echo $i $ancestry2
 
@@ -13550,15 +13550,10 @@ Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp 
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3*vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/.
 
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African | head -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; 
 		echo $i $ancestry2
 
-#		cat ... | drop NAs | R -q -e "Data1 <- read.table(\"...
-#
-#		kind of thing, and make it the second version of the above heatplots and stuff
-#		fix the columns and things and such, added in that NA column flag which isn't accounted for in the code below -- also, get rid of the different standardizing variants, only keep the column standardizing variant
-	
 		zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt.gz | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | R -q -e "library(\"pheatmap\"); library(\"grid\"); library(\"gridExtra\"); library(\"RColorBrewer\"); Data1 <- read.table(file('stdin'), header=F); \
 			draw_colnames_45 <- function (coln, gaps, ...) { coord <- pheatmap:::find_coordinates(length(coln), gaps); x <- coord\$coord - 0.5 * coord\$size; res <- grid::textGrob(coln, x = x, y = unit(1, \"npc\") - unit(3,\"bigpts\"),vjust = 1, hjust = 1, rot = 45, gp = grid::gpar(...)); return(res) }; \
 			assignInNamespace(x = \"draw_colnames\", value = \"draw_colnames_45\", ns = asNamespace(\"pheatmap\")); \
@@ -13585,6 +13580,10 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 	done
 done
 
+#		cat ... | drop NAs | R -q -e "Data1 <- read.table(\"...
+#
+#		kind of thing, and make it the second version of the above heatplots and stuff
+#		fix the columns and things and such, added in that NA column flag which isn't accounted for in the code below -- also, get rid of the different standardizing variants, only keep the column standardizing variant
 #			PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21])); \
 #			PSMA_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,5]); PSMB_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,8]); PSMC_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,11]); PSMD_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,14]); PSME_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,17]); PSMF_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,20]); \ 
 #			PSMA_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / ((Data1[,3] - Data1[,6]) * (1/Data1[,3])); PSMB_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / ((Data1[,3] - Data1[,9]) * (1/Data1[,3])); PSMC_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / ((Data1[,3] - Data1[,12]) * (1/Data1[,3])); PSMD_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / ((Data1[,3] - Data1[,15]) * (1/Data1[,3])); PSME_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / ((Data1[,3] - Data1[,18]) * (1/Data1[,3])); PSMF_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / ((Data1[,3] - Data1[,21]) * (1/Data1[,3])); \ 
