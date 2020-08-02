@@ -13793,6 +13793,7 @@ Activation of NF-KappaB in B Cells & 643 & 4.61E-01 \\
   Regulation of Apoptosis & 774 & 5.16E-02 \\
 ```
 
+zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt.gz | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | awk '{ if ($2 != "NA") { print $0 } } ' | awk '{ print $1 "\t " $3 "\t" $6 "\t" $9 "\t" $12 "\t" $15 "\t" $18 "\t" $21 }' 
 
 
 
@@ -14716,12 +14717,16 @@ dev.off();"
 R -q -e "library(\"RColorBrewer\"); Data1 <- read.table(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.BritReps.HeightBMI.ColCrct.localPCs.AllPaths.pValBonf.Barplots.Info.vs2.txt\", header=T); \
 Data1.KEGG <- t(Data1)[,1:2]; Data1.REACTOME <- t(Data1)[,3:4]; \
 Data1.KEGG.Height <- Data1.KEGG[,1]; Data1.KEGG.BMI <- Data1.KEGG[,2]; Data1.REACTOME.Height <- Data1.REACTOME[,1]; Data1.REACTOME.BMI <- Data1.REACTOME[,2]; \
-png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.BritReps.HeightBMI.ColCrct.localPCs.AllPaths.pValBonf.Barplots.plots.vs3.png\", height=4000, width=4750, res=300); par(oma=c(1,5,5,18), mar=c(5,5,4,2), mfrow=c(2,2)); \
+png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Barplots/ukb_v3.BritReps.HeightBMI.ColCrct.localPCs.AllPaths.pValBonf.Barplots.plots.vs4.png\", height=4000, width=4750, res=300); par(oma=c(1,5,5,18), mar=c(5,5,4,2), mfrow=c(2,2)); \
 Data1.colors <- c(brewer.pal(11, \"Spectral\")[1], brewer.pal(11, \"Spectral\")[2], brewer.pal(11, \"Spectral\")[3], brewer.pal(11, \"Spectral\")[4], brewer.pal(11, \"Spectral\")[5], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(11, \"RdYlBu\")[10], brewer.pal(11, \"RdYlBu\")[9], brewer.pal(11, \"RdYlBu\")[8], brewer.pal(11, \"RdYlBu\")[7]); \ 
-barplot(Data1.KEGG.Height, main=\"\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,7), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-barplot(Data1.KEGG.BMI, main=\"\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,7), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-barplot(Data1.REACTOME.Height, main=\"\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,7), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
-barplot(Data1.REACTOME.BMI, main=\"\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,7), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
+bp1 <- barplot(Data1.KEGG.Height, main=\"\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,7), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
+text(x=bp1, y=Data1.KEGG.Height, label=Data1.KEGG.Height, pos=3, cex=2, col = \"black\", xpd=TRUE); \
+bp2 <- barplot(Data1.KEGG.BMI, main=\"\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,7), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
+text(x=bp2, y=Data1.KEGG.BMI, label=Data1.KEGG.BMI, pos=3, cex=2, col = \"black\", xpd=TRUE); \
+bp3 <- barplot(Data1.REACTOME.Height, main=\"\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,7), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
+text(x=bp3, y=Data1.REACTOME.Height, label=Data1.REACTOME.Height, pos=3, cex=2, col = \"black\", xpd=TRUE); \
+bp4 <- barplot(Data1.REACTOME.BMI, main=\"\", xlab=\"\", ylab=\"Number of Significant Pathways\", ylim=c(0,7), names=NA, col=Data1.colors, beside=TRUE, cex=2, cex.main=3, cex.axis=2, cex.lab=2); \
+text(x=bp4, y=Data1.REACTOME.BMI, label=Data1.REACTOME.BMI, pos=3, cex=2, col = \"black\", xpd=TRUE); \
 mtext(\"Height\", side=3, outer=TRUE, at=.275, cex=3); mtext(\"BMI\", side=3, outer=TRUE, at=.775, cex=3); \
 mtext(\"KEGG\", side=2, line=1, outer=TRUE, at=.765, cex=3); mtext(\"REACTOME\", side=2, line=1, outer=TRUE, at=.265, cex=3); \
 par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); legend(\"topright\", c(\"Brit.Ran4k\", \"Brit.Ran4k.2\", \"Brit.Ran4k.3\", \"Brit.Ran4k.4\", \"Brit.Ran4k.5\", \"Brit.Ran10k\", \"Brit.Ran10k.2\", \"Brit.Ran10k.3\", \"Brit.Ran10k.4\", \"Brit.Ran10k.5\"), pch=c(16,16,16,16,16,16,16,16,16,16), col=c(brewer.pal(11, \"Spectral\")[1], brewer.pal(11, \"Spectral\")[2], brewer.pal(11, \"Spectral\")[3], brewer.pal(11, \"Spectral\")[4], brewer.pal(11, \"Spectral\")[5], brewer.pal(11, \"RdYlBu\")[11], brewer.pal(11, \"RdYlBu\")[10], brewer.pal(11, \"RdYlBu\")[9], brewer.pal(11, \"RdYlBu\")[8], brewer.pal(11, \"RdYlBu\")[7]), xpd=TRUE, inset=c(.036,.29), bg=\"transparent\", cex=1.5, y.intersp=2); \ 
