@@ -13793,8 +13793,21 @@ Activation of NF-KappaB in B Cells & 643 & 4.61E-01 \\
   Regulation of Apoptosis & 774 & 5.16E-02 \\
 ```
 
-zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt.gz | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | awk '{ if ($2 != "NA") { print $0 } } ' | awk '{ print $1 "\t " $3 "\t" $6 "\t" $9 "\t" $12 "\t" $15 "\t" $18 "\t" $21 }' 
+zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt.gz | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | awk '{ if ($2 != "NA") { print $0 } } ' | awk '{ print $1 "\t " $3 "\t" $6 "\t" $9 "\t" $12 "\t" $15 "\t" $18 "\t" $21 }' | sed 's/_DropNone//g' | cat <(echo -e "Pathway\tDropNone\tDropPSMA\tDropPSMB\tDropPSMC\tDropPSMD\tDropPSME\tDropPSMF") - | column -t 
 
+[  mturchin@node1164  ~]$zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt.gz | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | awk '{ if ($2 != "NA") { print $0 } } ' | awk '{ print $1 "\t " $3 "\t" $6 "\t" $9 "\t" $12 "\t" $15 "\t" $18 "\t" $21 }' | sed 's/_DropNone//g' | cat <(echo -e "Pathway\tDropNone\tDropPSMA\tDropPSMB\tDropPSMC\tDropPSMD\tDropPSME\tDropPSMF") - | column -t
+Pathway                                                      DropNone              DropPSMA              DropPSMB              DropPSMC              DropPSMD              DropPSME              DropPSMF
+REACTOME_ACTIVATION_OF_NF_KAPPAB_IN_B_CELLS                  1.86077653210326e-05  1.25884771069451e-05  0.000162242542744995  3.30132793746607e-05  9.02709162711179e-05  0.0002382893683337    1.8468138497596e-05
+REACTOME_ANTIGEN_PROCESSING_CROSS_PRESENTATION               3.95555057099983e-05  3.22868285047573e-05  0.000208184348311047  9.16238803823077e-05  0.00011999612721314   0.000105998729554413  6.41101871936556e-05
+REACTOME_ASSEMBLY_OF_THE_PRE_REPLICATIVE_COMPLEX             3.29348302599008e-05  1.26010690180145e-05  0.000120787889151597  7.61158611215507e-05  0.000156132237271844  0.000371633749917777  1.75346097583962e-05
+REACTOME_CELL_CYCLE_CHECKPOINTS                              5.78075413959489e-06  4.52358338254299e-06  7.47974198409551e-05  1.99788031565173e-05  8.49172139716359e-06  3.52524426245893e-05  1.64287972381771e-06
+REACTOME_CELL_CYCLE                                          1.28824619549661e-06  5.95895795818535e-07  2.42621212009908e-09  3.42021939214732e-07  6.26656744762144e-06  1.2916292320142e-06   6.19800684109606e-07
+REACTOME_CELL_CYCLE_MITOTIC                                  4.50902059876412e-05  4.19441695038714e-05  4.37376067266015e-05  0.000100276077834582  0.000410345917243093  5.61454576151199e-05  4.13048687537554e-05
+REACTOME_DOWNSTREAM_SIGNALING_EVENTS_OF_B_CELL_RECEPTOR_BCR  1.19460098360058e-05  5.71714067509888e-06  4.98625820173348e-05  1.46849211724032e-05  8.03806945772756e-05  8.57149100199628e-05  1.24300531361143e-05
+REACTOME_HIV_INFECTION                                       7.52814482307684e-07  7.51644685381692e-07  1.55878719199087e-05  6.24841728358305e-07  7.5696380859025e-06   1.17972724278381e-06  1.75783700528953e-06
+REACTOME_HOST_INTERACTIONS_OF_HIV_FACTORS                    7.52104318824109e-06  5.17824574064463e-06  6.3668294222774e-05   1.31562476632929e-05  1.94674303586329e-05  3.42733358196234e-05  2.77006335118735e-05
+REACTOME_M_G1_TRANSITION                                     3.19088388867073e-06  1.37776742858975e-06  2.35603511753446e-05  7.48862853394705e-06  1.39110564916223e-05  2.30180319742423e-05  1.72758477501311e-06
+REACTOME_REGULATION_OF_APOPTOSIS                             1.21823335637039e-05  5.15256597033442e-06  3.3376624270165e-05   4.17564671262305e-05  8.73320362146934e-05  6.67960020916958e-05  1.23535927594176e-05
 
 
 
