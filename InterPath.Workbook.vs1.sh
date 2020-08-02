@@ -13590,7 +13590,6 @@ done
 #On MacBook Pro
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3*loop*vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/.
 
-
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
 	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; 
@@ -13608,7 +13607,7 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 			Data2 <- cbind(c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"), c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff)); \
 			Data3 <- Data1[,c(1,3,2)]; \
 			print(xtable(Data2, include.rownames=FALSE)); \
-			print(xtable(Data3, digits=c(0,0,0,-3)), include.rownames=FALSE); \
+			print(xtable(Data3, digits=c(0,0,0,-2)), include.rownames=FALSE); \
 		"
 	done
 done
@@ -13630,24 +13629,24 @@ BMI African
 \end{tabular}
 \end{table}
 % latex table generated in R 3.4.3 by xtable 1.8-4 package
-% Sat Aug  1 21:52:52 2020
+% Sat Aug  1 21:58:08 2020
 \begin{table}[ht]
 \centering
 \begin{tabular}{lrr}
   \hline
 V1 & V4 & V3 \\
   \hline
-Activation of NF-KappaB in B Cells & 465 & 0.000 \\
-  Antigen Processing Cross Presentation & 850 & 0.000 \\
-  Assembly of the Pre-Replicative Complex & 331 & 0.000 \\
-  Cell Cycle Checkpoints & 670 & 0.000 \\
-  Cell Cycle & 2459 & 0.000 \\
-  Cell Cycle Mitotic & 1906 & 0.000 \\
-  Downstream Signaling Events of the B Cell Receptor & 745 & 0.000 \\
-  HIV Infection & 1346 & 0.000 \\
-  Host Interactions of HIV Factors & 963 & 0.000 \\
-  M G1 Transition & 458 & 0.000 \\
-  Regulation of Apoptosis & 564 & 0.000 \\
+Activation of NF-KappaB in B Cells & 465 & 1.86E-05 \\
+  Antigen Processing Cross Presentation & 850 & 3.96E-05 \\
+  Assembly of the Pre-Replicative Complex & 331 & 3.29E-05 \\
+  Cell Cycle Checkpoints & 670 & 5.78E-06 \\
+  Cell Cycle & 2459 & 1.29E-06 \\
+  Cell Cycle Mitotic & 1906 & 4.51E-05 \\
+  Downstream Signaling Events of the B Cell Receptor & 745 & 1.19E-05 \\
+  HIV Infection & 1346 & 7.53E-07 \\
+  Host Interactions of HIV Factors & 963 & 7.52E-06 \\
+  M G1 Transition & 458 & 3.19E-06 \\
+  Regulation of Apoptosis & 564 & 1.22E-05 \\
 
 
 
@@ -13672,7 +13671,43 @@ HIV Infection 7.52814482307684e-07 1346
 Host Interactions of HIV Factors 7.52104318824109e-06 963
 M G1 Transition 3.19088388867073e-06 458
 Regulation of Apoptosis 1.21823335637039e-05 564
+
+
 BMI British.Ran4000
+1 & PSMA & 40 \\
+  2 & PSMB & 91 \\
+  3 & PSMC & 29 \\
+  4 & PSMD & 101 \\
+  5 & PSME & 25 \\
+  6 & PSMF & 26 \\
+   \hline
+\end{tabular}
+\end{table}
+% latex table generated in R 3.4.3 by xtable 1.8-4 package
+% Sat Aug  1 21:58:09 2020
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrr}
+  \hline
+V1 & V4 & V3 \\
+  \hline
+Activation of NF-KappaB in B Cells & 756 & 2.28E-01 \\
+  Antigen Processing Cross Presentation & 1104 & 2.48E-05 \\
+  Assembly of the Pre-Replicative Complex & 507 & 1.84E-02 \\
+  Cell Cycle Checkpoints & 1121 & 6.77E-02 \\
+  Cell Cycle Mitotic & 3304 & 2.34E-01 \\
+  Downstream Signaling Events of the B Cell Receptor & 1248 & 3.25E-01 \\
+  HIV Infection & 2221 & 8.26E-02 \\
+  Host Interactions of HIV Factors & 1541 & 1.55E-02 \\
+  M G1 Transition & 697 & 3.02E-01 \\
+  Regulation of Apoptosis & 906 & 2.98E-02 \\
+
+
+
+
+
+
+
 PSMA 40
 PSMB 91
 PSMC 29
@@ -13690,6 +13725,40 @@ Host Interactions of HIV Factors 0.0154592789720183 1541
 M G1 Transition 0.302191605894097 697
 Regulation of Apoptosis 0.0297571393259852 906
 BMI Caribbean
+
+1 & PSMA & 18 \\
+  2 & PSMB & 77 \\
+  3 & PSMC & 21 \\
+  4 & PSMD & 69 \\
+  5 & PSME & 15 \\
+  6 & PSMF & 16 \\
+   \hline
+\end{tabular}
+\end{table}
+% latex table generated in R 3.4.3 by xtable 1.8-4 package
+% Sat Aug  1 21:58:10 2020
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrr}
+  \hline
+V1 & V4 & V3 \\
+  \hline
+Activation of NF-KappaB in B Cells & 507 & 9.93E-01 \\
+  Antigen Processing Cross Presentation & 871 & 5.15E-02 \\
+  Assembly of the Pre-Replicative Complex & 357 & 7.25E-01 \\
+  Cell Cycle Checkpoints & 736 & 8.83E-01 \\
+  Cell Cycle & 2711 & 2.51E-01 \\
+  Cell Cycle Mitotic & 2111 & 7.98E-01 \\
+  Downstream Signaling Events of the B Cell Receptor & 829 & 8.37E-01 \\
+  HIV Infection & 1483 & 3.11E-01 \\
+  Host Interactions of HIV Factors & 1055 & 6.68E-01 \\
+  M G1 Transition & 500 & 6.37E-01 \\
+  Regulation of Apoptosis & 615 & 9.42E-01 \\
+
+
+
+
+
 PSMA 18
 PSMB 77
 PSMC 21
@@ -13708,6 +13777,37 @@ Host Interactions of HIV Factors 0.667847408485379 1055
 M G1 Transition 0.636856835077021 500
 Regulation of Apoptosis 0.941662707997957 615
 BMI Chinese
+
+1 & PSMA & 13 \\
+  2 & PSMB & 74 \\
+  3 & PSMC & 18 \\
+  4 & PSMD & 58 \\
+  5 & PSME & 12 \\
+  6 & PSMF & 16 \\
+   \hline
+\end{tabular}
+\end{table}
+% latex table generated in R 3.4.3 by xtable 1.8-4 package
+% Sat Aug  1 21:58:11 2020
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrr}
+  \hline
+V1 & V4 & V3 \\
+  \hline
+Activation of NF-KappaB in B Cells & 433 & 5.27E-01 \\
+  Antigen Processing Cross Presentation & 771 & 1.11E-02 \\
+  Assembly of the Pre-Replicative Complex & 292 & 8.77E-01 \\
+  Cell Cycle Checkpoints & 589 & 5.41E-01 \\
+  Downstream Signaling Events of the B Cell Receptor & 698 & 1.40E-01 \\
+  HIV Infection & 1266 & 3.68E-03 \\
+  Host Interactions of HIV Factors & 902 & 4.24E-02 \\
+  M G1 Transition & 400 & 8.20E-01 \\
+  Regulation of Apoptosis & 527 & 2.26E-02 \\
+
+
+
+
 PSMA 13
 PSMB 74
 PSMC 18
@@ -13724,6 +13824,41 @@ Host Interactions of HIV Factors 0.0423984807972675 902
 M G1 Transition 0.8196371225738 400
 Regulation of Apoptosis 0.0226284683855766 527
 BMI Indian
+
+1 & PSMA & 29 \\
+  2 & PSMB & 85 \\
+  3 & PSMC & 25 \\
+  4 & PSMD & 78 \\
+  5 & PSME & 21 \\
+  6 & PSMF & 21 \\
+   \hline
+\end{tabular}
+\end{table}
+% latex table generated in R 3.4.3 by xtable 1.8-4 package
+% Sat Aug  1 21:56:34 2020
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrr}
+  \hline
+V1 & V4 & V3 \\
+  \hline
+Activation of NF-KappaB in B Cells & 618 & 9.978E-01 \\
+  Antigen Processing Cross Presentation & 977 & 4.476E-01 \\
+  Assembly of the Pre-Replicative Complex & 427 & 5.019E-01 \\
+  Cell Cycle Checkpoints & 909 & 8.042E-01 \\
+  Cell Cycle & 3361 & 1.873E-01 \\
+  Cell Cycle Mitotic & 2656 & 2.316E-01 \\
+  Downstream Signaling Events of the B Cell Receptor & 1037 & 5.534E-01 \\
+  HIV Infection & 1836 & 9.803E-02 \\
+  Host Interactions of HIV Factors & 1278 & 3.788E-01 \\
+  M G1 Transition & 590 & 4.658E-01 \\
+  Regulation of Apoptosis & 754 & 5.606E-01 \\
+
+
+
+
+
+
 PSMA 29
 PSMB 85
 PSMC 25
@@ -13742,6 +13877,36 @@ Host Interactions of HIV Factors 0.378759853023096 1278
 M G1 Transition 0.465760300869325 590
 Regulation of Apoptosis 0.560597095502968 754
 BMI Pakistani
+
+1 & PSMA & 30 \\
+  2 & PSMB & 90 \\
+  3 & PSMC & 24 \\
+  4 & PSMD & 86 \\
+  5 & PSME & 21 \\
+  6 & PSMF & 22 \\
+   \hline
+\end{tabular}
+\end{table}
+% latex table generated in R 3.4.3 by xtable 1.8-4 package
+% Sat Aug  1 21:58:12 2020
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrr}
+  \hline
+V1 & V4 & V3 \\
+  \hline
+Activation of NF-KappaB in B Cells & 643 & 4.61E-01 \\
+  Antigen Processing Cross Presentation & 1036 & 8.74E-03 \\
+  Assembly of the Pre-Replicative Complex & 444 & 9.73E-01 \\
+  Cell Cycle Checkpoints & 940 & 1.63E-01 \\
+  Downstream Signaling Events of the B Cell Receptor & 1073 & 6.57E-02 \\
+  Host Interactions of HIV Factors & 1315 & 1.00E-01 \\
+  M G1 Transition & 612 & 6.66E-01 \\
+  Regulation of Apoptosis & 774 & 5.16E-02 \\
+
+
+
+
 PSMA 30
 PSMB 90
 PSMC 24
