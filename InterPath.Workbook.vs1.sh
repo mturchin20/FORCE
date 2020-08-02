@@ -13648,31 +13648,6 @@ Activation of NF-KappaB in B Cells & 465 & 1.86E-05 \\
   M G1 Transition & 458 & 3.19E-06 \\
   Regulation of Apoptosis & 564 & 1.22E-05 \\
 
-
-
-
-
-
-
-PSMA 17
-PSMB 74
-PSMC 20
-PSMD 62
-PSME 15
-PSMF 16
-Activation of NF-KappaB in B Cells 1.86077653210326e-05 465
-Antigen Processing Cross Presentation 3.95555057099983e-05 850
-Assembly of the Pre-Replicative Complex 3.29348302599008e-05 331
-Cell Cycle Checkpoints 5.78075413959489e-06 670
-Cell Cycle 1.28824619549661e-06 2459
-Cell Cycle Mitotic 4.50902059876412e-05 1906
-Downstream Signaling Events of the B Cell Receptor 1.19460098360058e-05 745
-HIV Infection 7.52814482307684e-07 1346
-Host Interactions of HIV Factors 7.52104318824109e-06 963
-M G1 Transition 3.19088388867073e-06 458
-Regulation of Apoptosis 1.21823335637039e-05 564
-
-
 BMI British.Ran4000
 1 & PSMA & 40 \\
   2 & PSMB & 91 \\
@@ -13702,30 +13677,7 @@ Activation of NF-KappaB in B Cells & 756 & 2.28E-01 \\
   M G1 Transition & 697 & 3.02E-01 \\
   Regulation of Apoptosis & 906 & 2.98E-02 \\
 
-
-
-
-
-
-
-PSMA 40
-PSMB 91
-PSMC 29
-PSMD 101
-PSME 25
-PSMF 26
-Activation of NF-KappaB in B Cells 0.228170939314901 756
-Antigen Processing Cross Presentation 2.48220128655774e-05 1104
-Assembly of the Pre-Replicative Complex 0.018446518122968 507
-Cell Cycle Checkpoints 0.0676983079721984 1121
-Cell Cycle Mitotic 0.234021269917787 3304
-Downstream Signaling Events of the B Cell Receptor 0.325195487143201 1248
-HIV Infection 0.0825892689572143 2221
-Host Interactions of HIV Factors 0.0154592789720183 1541
-M G1 Transition 0.302191605894097 697
-Regulation of Apoptosis 0.0297571393259852 906
 BMI Caribbean
-
 1 & PSMA & 18 \\
   2 & PSMB & 77 \\
   3 & PSMC & 21 \\
@@ -13755,29 +13707,7 @@ Activation of NF-KappaB in B Cells & 507 & 9.93E-01 \\
   M G1 Transition & 500 & 6.37E-01 \\
   Regulation of Apoptosis & 615 & 9.42E-01 \\
 
-
-
-
-
-PSMA 18
-PSMB 77
-PSMC 21
-PSMD 69
-PSME 15
-PSMF 16
-Activation of NF-KappaB in B Cells 0.993176040312159 507
-Antigen Processing Cross Presentation 0.0514631315115399 871
-Assembly of the Pre-Replicative Complex 0.724562461150812 357
-Cell Cycle Checkpoints 0.882893204478591 736
-Cell Cycle 0.251132207389987 2711
-Cell Cycle Mitotic 0.798416859484875 2111
-Downstream Signaling Events of the B Cell Receptor 0.837083160481375 829
-HIV Infection 0.3108768945152 1483
-Host Interactions of HIV Factors 0.667847408485379 1055
-M G1 Transition 0.636856835077021 500
-Regulation of Apoptosis 0.941662707997957 615
 BMI Chinese
-
 1 & PSMA & 13 \\
   2 & PSMB & 74 \\
   3 & PSMC & 18 \\
@@ -13805,26 +13735,7 @@ Activation of NF-KappaB in B Cells & 433 & 5.27E-01 \\
   M G1 Transition & 400 & 8.20E-01 \\
   Regulation of Apoptosis & 527 & 2.26E-02 \\
 
-
-
-
-PSMA 13
-PSMB 74
-PSMC 18
-PSMD 58
-PSME 12
-PSMF 16
-Activation of NF-KappaB in B Cells 0.526860499449583 433
-Antigen Processing Cross Presentation 0.011057307719426 771
-Assembly of the Pre-Replicative Complex 0.877108427042388 292
-Cell Cycle Checkpoints 0.540672849265132 589
-Downstream Signaling Events of the B Cell Receptor 0.139644115543775 698
-HIV Infection 0.00367596846480378 1266
-Host Interactions of HIV Factors 0.0423984807972675 902
-M G1 Transition 0.8196371225738 400
-Regulation of Apoptosis 0.0226284683855766 527
 BMI Indian
-
 1 & PSMA & 29 \\
   2 & PSMB & 85 \\
   3 & PSMC & 25 \\
@@ -13854,30 +13765,7 @@ Activation of NF-KappaB in B Cells & 618 & 9.978E-01 \\
   M G1 Transition & 590 & 4.658E-01 \\
   Regulation of Apoptosis & 754 & 5.606E-01 \\
 
-
-
-
-
-
-PSMA 29
-PSMB 85
-PSMC 25
-PSMD 78
-PSME 21
-PSMF 21
-Activation of NF-KappaB in B Cells 0.997821117907055 618
-Antigen Processing Cross Presentation 0.447562252249737 977
-Assembly of the Pre-Replicative Complex 0.501921197144216 427
-Cell Cycle Checkpoints 0.804211280346215 909
-Cell Cycle 0.187339676143836 3361
-Cell Cycle Mitotic 0.23158725967712 2656
-Downstream Signaling Events of the B Cell Receptor 0.553423392903359 1037
-HIV Infection 0.0980313811999507 1836
-Host Interactions of HIV Factors 0.378759853023096 1278
-M G1 Transition 0.465760300869325 590
-Regulation of Apoptosis 0.560597095502968 754
 BMI Pakistani
-
 1 & PSMA & 30 \\
   2 & PSMB & 90 \\
   3 & PSMC & 24 \\
@@ -13903,25 +13791,12 @@ Activation of NF-KappaB in B Cells & 643 & 4.61E-01 \\
   Host Interactions of HIV Factors & 1315 & 1.00E-01 \\
   M G1 Transition & 612 & 6.66E-01 \\
   Regulation of Apoptosis & 774 & 5.16E-02 \\
-
-
-
-
-PSMA 30
-PSMB 90
-PSMC 24
-PSMD 86
-PSME 21
-PSMF 22
-Activation of NF-KappaB in B Cells 0.461277479315263 643
-Antigen Processing Cross Presentation 0.00873898677627216 1036
-Assembly of the Pre-Replicative Complex 0.973096515490702 444
-Cell Cycle Checkpoints 0.162791892405044 940
-Downstream Signaling Events of the B Cell Receptor 0.0656620838017052 1073
-Host Interactions of HIV Factors 0.100298080663847 1315
-M G1 Transition 0.665786572348851 612
-Regulation of Apoptosis 0.0515646543467851 774
 ```
+
+
+
+
+
 
 
 
