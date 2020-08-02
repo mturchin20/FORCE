@@ -13606,26 +13606,55 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 			Data1[Data1[,2] == 0,2] <- 1e-10; Data1[Data1[,5] == 0,5] <- 1e-10; Data1[Data1[,8] == 0,8] <- 1e-10; Data1[Data1[,11] == 0,11] <- 1e-10; Data1[Data1[,14] == 0,14] <- 1e-10; Data1[Data1[,17] == 0,17] <- 1e-10; Data1[Data1[,20] == 0,20] <- 1e-10; \ 
 			PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21])); \
 			Data2 <- cbind(c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"), c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff)); \
-			Data3 <- Data1[,c(1,2,3)]; \
-			write.table(Data2, quote=FALSE, row.names=FALSE, col.names=FALSE); \
-			write.table(Data3, quote=FALSE, row.names=FALSE, col.names=FALSE); \ 	
+			Data3 <- Data1[,c(1,3,2)]; \
+			print(xtable(Data2, include.rownames=FALSE)); \
+			print(xtable(Data3, digits=c(0,0,0,-3)), include.rownames=FALSE); \
 		"
 	done
 done
 
+#			Data3[,3] <- signif(Data3[,3], digits=3); \
+#			print(head(Data3)); \
+#			write.table(Data2, quote=FALSE, row.names=FALSE, col.names=FALSE); \
+#			write.table(Data3, quote=FALSE, row.names=FALSE, col.names=FALSE); \ 	
+
 ```
 BMI African
-> library("pheatmap"); library("RColorBrewer"); library("xtable"); Data1 <- read.table(file('stdin'), header=F);                         Pathway.Names <- Data1[,1];                         Pathway.Names.New <- sapply(Pathway.Names, functi
-on(x) { Pathway.Names.New.temp <- strsplit(as.character(x), "_")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { P
-athway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, "")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.N
-ames.New.temp2, paste(Pathway.Names.New.temp3, collapse="")); }; return(paste(Pathway.Names.New.temp2, collapse=" ")); });                         Pathway.Names.New[1] <- "Activation of NF-KappaB in B Cells"; Pathway.Names.New[3] <- "Asse
-mbly of the Pre-Replicative Complex"; Pathway.Names.New[7] <- "Downstream Signaling Events of the B Cell Receptor"; Pathway.Names.New[8] <- "HIV Infection"; Pathway.Names.New[9] <- "Host Interactions of HIV Factors"; Pathway.Names.New[11]
- <- "Regulation of Apoptosis";                         Data1[,1] <- Pathway.Names.New;                         Data1 <- Data1[!is.na(Data1[,2]),];                         Data1 <- Data1[,c(1,3:ncol(Data1))];                         Data1[
-Data1[,2] == 0,2] <- 1e-10; Data1[Data1[,5] == 0,5] <- 1e-10; Data1[Data1[,8] == 0,8] <- 1e-10; Data1[Data1[,11] == 0,11] <- 1e-10; Data1[Data1[,14] == 0,14] <- 1e-10; Data1[Data1[,17] == 0,17] <- 1e-10; Data1[Data1[,20] == 0,20] <- 1e-10
-;                         PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PS
-ME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21]));                         Data2 <- cbind(c("PSMA", "PSMB", "PSMC", "PSMD", "PSME", "PSMF"), c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, 
-PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff));                         Data3 <- Data1[,c(1,2,3)];                         write.table(Data2, quote=FALSE, row.names=FALSE, col.names=FALSE);                         write.table(Data3, quote=FAL
-SE, row.names=FALSE, col.names=FALSE);
+1 & PSMA & 17 \\
+  2 & PSMB & 74 \\
+  3 & PSMC & 20 \\
+  4 & PSMD & 62 \\
+  5 & PSME & 15 \\
+  6 & PSMF & 16 \\
+   \hline
+\end{tabular}
+\end{table}
+% latex table generated in R 3.4.3 by xtable 1.8-4 package
+% Sat Aug  1 21:52:52 2020
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrr}
+  \hline
+V1 & V4 & V3 \\
+  \hline
+Activation of NF-KappaB in B Cells & 465 & 0.000 \\
+  Antigen Processing Cross Presentation & 850 & 0.000 \\
+  Assembly of the Pre-Replicative Complex & 331 & 0.000 \\
+  Cell Cycle Checkpoints & 670 & 0.000 \\
+  Cell Cycle & 2459 & 0.000 \\
+  Cell Cycle Mitotic & 1906 & 0.000 \\
+  Downstream Signaling Events of the B Cell Receptor & 745 & 0.000 \\
+  HIV Infection & 1346 & 0.000 \\
+  Host Interactions of HIV Factors & 963 & 0.000 \\
+  M G1 Transition & 458 & 0.000 \\
+  Regulation of Apoptosis & 564 & 0.000 \\
+
+
+
+
+
+
+
 PSMA 17
 PSMB 74
 PSMC 20
@@ -13644,7 +13673,6 @@ Host Interactions of HIV Factors 7.52104318824109e-06 963
 M G1 Transition 3.19088388867073e-06 458
 Regulation of Apoptosis 1.21823335637039e-05 564
 BMI British.Ran4000
-> library("pheatmap"); library("RColorBrewer"); library("xtable"); Data1 <- read.table(file('stdin'), header=F);                         Pathway.Names <- Data1[,1];                         Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), "_")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { Pathway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, "")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.Names.New.temp2, paste(Pathway.Names.New.temp3, collapse="")); }; return(paste(Pathway.Names.New.temp2, collapse=" ")); });                         Pathway.Names.New[1] <- "Activation of NF-KappaB in B Cells"; Pathway.Names.New[3] <- "Assembly of the Pre-Replicative Complex"; Pathway.Names.New[7] <- "Downstream Signaling Events of the B Cell Receptor"; Pathway.Names.New[8] <- "HIV Infection"; Pathway.Names.New[9] <- "Host Interactions of HIV Factors"; Pathway.Names.New[11] <- "Regulation of Apoptosis";                         Data1[,1] <- Pathway.Names.New;                         Data1 <- Data1[!is.na(Data1[,2]),];                         Data1 <- Data1[,c(1,3:ncol(Data1))];                         Data1[Data1[,2] == 0,2] <- 1e-10; Data1[Data1[,5] == 0,5] <- 1e-10; Data1[Data1[,8] == 0,8] <- 1e-10; Data1[Data1[,11] == 0,11] <- 1e-10; Data1[Data1[,14] == 0,14] <- 1e-10; Data1[Data1[,17] == 0,17] <- 1e-10; Data1[Data1[,20] == 0,20] <- 1e-10;                         PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21]));                         Data2 <- cbind(c("PSMA", "PSMB", "PSMC", "PSMD", "PSME", "PSMF"), c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff));                         Data3 <- Data1[,c(1,2,3)];                         write.table(Data2, quote=FALSE, row.names=FALSE, col.names=FALSE);                         write.table(Data3, quote=FALSE, row.names=FALSE, col.names=FALSE);
 PSMA 40
 PSMB 91
 PSMC 29
@@ -13662,7 +13690,6 @@ Host Interactions of HIV Factors 0.0154592789720183 1541
 M G1 Transition 0.302191605894097 697
 Regulation of Apoptosis 0.0297571393259852 906
 BMI Caribbean
-> library("pheatmap"); library("RColorBrewer"); library("xtable"); Data1 <- read.table(file('stdin'), header=F);                         Pathway.Names <- Data1[,1];                         Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), "_")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { Pathway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, "")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.Names.New.temp2, paste(Pathway.Names.New.temp3, collapse="")); }; return(paste(Pathway.Names.New.temp2, collapse=" ")); });                         Pathway.Names.New[1] <- "Activation of NF-KappaB in B Cells"; Pathway.Names.New[3] <- "Assembly of the Pre-Replicative Complex"; Pathway.Names.New[7] <- "Downstream Signaling Events of the B Cell Receptor"; Pathway.Names.New[8] <- "HIV Infection"; Pathway.Names.New[9] <- "Host Interactions of HIV Factors"; Pathway.Names.New[11] <- "Regulation of Apoptosis";                         Data1[,1] <- Pathway.Names.New;                         Data1 <- Data1[!is.na(Data1[,2]),];                         Data1 <- Data1[,c(1,3:ncol(Data1))];                         Data1[Data1[,2] == 0,2] <- 1e-10; Data1[Data1[,5] == 0,5] <- 1e-10; Data1[Data1[,8] == 0,8] <- 1e-10; Data1[Data1[,11] == 0,11] <- 1e-10; Data1[Data1[,14] == 0,14] <- 1e-10; Data1[Data1[,17] == 0,17] <- 1e-10; Data1[Data1[,20] == 0,20] <- 1e-10;                         PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21]));                         Data2 <- cbind(c("PSMA", "PSMB", "PSMC", "PSMD", "PSME", "PSMF"), c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff));                         Data3 <- Data1[,c(1,2,3)];                         write.table(Data2, quote=FALSE, row.names=FALSE, col.names=FALSE);                         write.table(Data3, quote=FALSE, row.names=FALSE, col.names=FALSE);
 PSMA 18
 PSMB 77
 PSMC 21
@@ -13680,10 +13707,7 @@ HIV Infection 0.3108768945152 1483
 Host Interactions of HIV Factors 0.667847408485379 1055
 M G1 Transition 0.636856835077021 500
 Regulation of Apoptosis 0.941662707997957 615
->
->
 BMI Chinese
-> library("pheatmap"); library("RColorBrewer"); library("xtable"); Data1 <- read.table(file('stdin'), header=F);                         Pathway.Names <- Data1[,1];                         Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), "_")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { Pathway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, "")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.Names.New.temp2, paste(Pathway.Names.New.temp3, collapse="")); }; return(paste(Pathway.Names.New.temp2, collapse=" ")); });                         Pathway.Names.New[1] <- "Activation of NF-KappaB in B Cells"; Pathway.Names.New[3] <- "Assembly of the Pre-Replicative Complex"; Pathway.Names.New[7] <- "Downstream Signaling Events of the B Cell Receptor"; Pathway.Names.New[8] <- "HIV Infection"; Pathway.Names.New[9] <- "Host Interactions of HIV Factors"; Pathway.Names.New[11] <- "Regulation of Apoptosis";                         Data1[,1] <- Pathway.Names.New;                         Data1 <- Data1[!is.na(Data1[,2]),];                         Data1 <- Data1[,c(1,3:ncol(Data1))];                         Data1[Data1[,2] == 0,2] <- 1e-10; Data1[Data1[,5] == 0,5] <- 1e-10; Data1[Data1[,8] == 0,8] <- 1e-10; Data1[Data1[,11] == 0,11] <- 1e-10; Data1[Data1[,14] == 0,14] <- 1e-10; Data1[Data1[,17] == 0,17] <- 1e-10; Data1[Data1[,20] == 0,20] <- 1e-10;                         PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21]));                         Data2 <- cbind(c("PSMA", "PSMB", "PSMC", "PSMD", "PSME", "PSMF"), c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff));                         Data3 <- Data1[,c(1,2,3)];                         write.table(Data2, quote=FALSE, row.names=FALSE, col.names=FALSE);                         write.table(Data3, quote=FALSE, row.names=FALSE, col.names=FALSE);
 PSMA 13
 PSMB 74
 PSMC 18
@@ -13699,10 +13723,7 @@ HIV Infection 0.00367596846480378 1266
 Host Interactions of HIV Factors 0.0423984807972675 902
 M G1 Transition 0.8196371225738 400
 Regulation of Apoptosis 0.0226284683855766 527
->
->
 BMI Indian
-> library("pheatmap"); library("RColorBrewer"); library("xtable"); Data1 <- read.table(file('stdin'), header=F);                         Pathway.Names <- Data1[,1];                         Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), "_")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { Pathway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, "")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.Names.New.temp2, paste(Pathway.Names.New.temp3, collapse="")); }; return(paste(Pathway.Names.New.temp2, collapse=" ")); });                         Pathway.Names.New[1] <- "Activation of NF-KappaB in B Cells"; Pathway.Names.New[3] <- "Assembly of the Pre-Replicative Complex"; Pathway.Names.New[7] <- "Downstream Signaling Events of the B Cell Receptor"; Pathway.Names.New[8] <- "HIV Infection"; Pathway.Names.New[9] <- "Host Interactions of HIV Factors"; Pathway.Names.New[11] <- "Regulation of Apoptosis";                         Data1[,1] <- Pathway.Names.New;                         Data1 <- Data1[!is.na(Data1[,2]),];                         Data1 <- Data1[,c(1,3:ncol(Data1))];                         Data1[Data1[,2] == 0,2] <- 1e-10; Data1[Data1[,5] == 0,5] <- 1e-10; Data1[Data1[,8] == 0,8] <- 1e-10; Data1[Data1[,11] == 0,11] <- 1e-10; Data1[Data1[,14] == 0,14] <- 1e-10; Data1[Data1[,17] == 0,17] <- 1e-10; Data1[Data1[,20] == 0,20] <- 1e-10;                         PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21]));                         Data2 <- cbind(c("PSMA", "PSMB", "PSMC", "PSMD", "PSME", "PSMF"), c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff));                         Data3 <- Data1[,c(1,2,3)];                         write.table(Data2, quote=FALSE, row.names=FALSE, col.names=FALSE);                         write.table(Data3, quote=FALSE, row.names=FALSE, col.names=FALSE);
 PSMA 29
 PSMB 85
 PSMC 25
@@ -13720,10 +13741,7 @@ HIV Infection 0.0980313811999507 1836
 Host Interactions of HIV Factors 0.378759853023096 1278
 M G1 Transition 0.465760300869325 590
 Regulation of Apoptosis 0.560597095502968 754
->
->
 BMI Pakistani
-> library("pheatmap"); library("RColorBrewer"); library("xtable"); Data1 <- read.table(file('stdin'), header=F);                         Pathway.Names <- Data1[,1];                         Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp <- strsplit(as.character(x), "_")[[1]]; Pathway.Names.New.temp <- Pathway.Names.New.temp[2:(length(Pathway.Names.New.temp)-1)]; Pathway.Names.New.temp2 <- c(); for (i in 1:length(Pathway.Names.New.temp)) { Pathway.Names.New.temp3 <- tolower(Pathway.Names.New.temp[i]); Pathway.Names.New.temp3 <- strsplit(Pathway.Names.New.temp3, "")[[1]]; Pathway.Names.New.temp3[1] <- toupper(Pathway.Names.New.temp3[1]); Pathway.Names.New.temp2 <- c(Pathway.Names.New.temp2, paste(Pathway.Names.New.temp3, collapse="")); }; return(paste(Pathway.Names.New.temp2, collapse=" ")); });                         Pathway.Names.New[1] <- "Activation of NF-KappaB in B Cells"; Pathway.Names.New[3] <- "Assembly of the Pre-Replicative Complex"; Pathway.Names.New[7] <- "Downstream Signaling Events of the B Cell Receptor"; Pathway.Names.New[8] <- "HIV Infection"; Pathway.Names.New[9] <- "Host Interactions of HIV Factors"; Pathway.Names.New[11] <- "Regulation of Apoptosis";                         Data1[,1] <- Pathway.Names.New;                         Data1 <- Data1[!is.na(Data1[,2]),];                         Data1 <- Data1[,c(1,3:ncol(Data1))];                         Data1[Data1[,2] == 0,2] <- 1e-10; Data1[Data1[,5] == 0,5] <- 1e-10; Data1[Data1[,8] == 0,8] <- 1e-10; Data1[Data1[,11] == 0,11] <- 1e-10; Data1[Data1[,14] == 0,14] <- 1e-10; Data1[Data1[,17] == 0,17] <- 1e-10; Data1[Data1[,20] == 0,20] <- 1e-10;                         PSMA_NumDiff <- round(mean(Data1[,3] - Data1[,6])); PSMB_NumDiff <- round(mean(Data1[,3] - Data1[,9])); PSMC_NumDiff <- round(mean(Data1[,3] - Data1[,12])); PSMD_NumDiff <- round(mean(Data1[,3] - Data1[,15])); PSME_NumDiff <- round(mean(Data1[,3] - Data1[,18])); PSMF_NumDiff <- round(mean(Data1[,3] - Data1[,21]));                         Data2 <- cbind(c("PSMA", "PSMB", "PSMC", "PSMD", "PSME", "PSMF"), c(PSMA_NumDiff, PSMB_NumDiff, PSMC_NumDiff, PSMD_NumDiff, PSME_NumDiff, PSMF_NumDiff));                         Data3 <- Data1[,c(1,2,3)];                         write.table(Data2, quote=FALSE, row.names=FALSE, col.names=FALSE);                         write.table(Data3, quote=FALSE, row.names=FALSE, col.names=FALSE);
 PSMA 30
 PSMB 90
 PSMC 24
@@ -13738,9 +13756,15 @@ Downstream Signaling Events of the B Cell Receptor 0.0656620838017052 1073
 Host Interactions of HIV Factors 0.100298080663847 1315
 M G1 Transition 0.665786572348851 612
 Regulation of Apoptosis 0.0515646543467851 774
->
->
 ```
+
+
+
+
+
+
+
+
 
 
 
