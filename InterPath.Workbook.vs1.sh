@@ -10755,7 +10755,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	echo $ancestry1 $ancestry2
 
-	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop --het --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop 
+	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop --het --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink 
 	vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcf.gz --site-pi --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools 
 	vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcf.gz --het --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools 
 
@@ -10774,7 +10774,11 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	echo $ancestry1 $ancestry2
 
-	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop --het --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop 
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,6]));"
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,5]));"
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools.sites.pi | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,3]));"
+
+	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop --het --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.het 
 	vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcf.gz --site-pi --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools 
 	vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcf.gz --het --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools 
 
