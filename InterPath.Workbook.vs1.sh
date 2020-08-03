@@ -13577,12 +13577,16 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 			colnames(Results.Full.pValDiff.scaled) <- Gene.Names.New; \
 			png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.${ancestry2}.QCed.BMI.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.loopVrs.vs3.png\", height=2000, width=3750, res=300); par(oma=c(1,1,10,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
 			pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"\", fontsize=16, color=my_palette1); \
-			grid.text(expression(paste(Delta, \" -log10(pVal)\", sep=\"\")), x=.93, y=.95, gp = gpar(fontsize = 16)); \
-			grid.text(\"per SNP\", x=.93, y=.935, gp = gpar(fontsize = 16)); \
+			grid.text(expression(bold(underline(\"REACTOME Pathway\"))), x=.6, y=.97, gp = gpar(fontsize = 16)); \
+			grid.text(expression(paste(Delta, \" -log10(pVal), per SNP\", sep=\"\")), x=.9, y=.97, gp = gpar(fontsize = 14)); \
 			dev.off(); \
 		"
 	done
 done
+
+		}; print(length(plotPoints1)); grid.newpage(); pushViewport(viewport(layout = grid.layout(4, 5, height=unit(c(.0001,.2,.5,5), \"null\"), width=unit(c(.1,5,.4,5,.1), \"null\")))); \ 
+		grid.text(\"Height\", gp=gpar(cex=5.5), just=c(.3,.5), vp=viewport(layout.pos.row=3, layout.pos.col=2)); grid.text(\"BMI\", gp=gpar(cex=5.5), just=c(.3,.5), vp=viewport(layout.pos.row=3, layout.pos.col=4)); \ 
+		for (i2 in 1:1) { grid.text(\"\", gp=gpar(cex=4), rot=90, just=c(.4,.5), vp=viewport(layout.pos.row=i2+3, layout.pos.col=1)); for (j2 in 1:2) { print(plotPoints1[[(2*i2)-2+j2]], vp=viewport(layout.pos.row=i2+3, layout.pos.col=j2*2)); };}; dev.off(); }; \
 
 #		cat ... | drop NAs | R -q -e "Data1 <- read.table(\"...
 #
@@ -13592,6 +13596,10 @@ done
 #			PSMA_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / ((Data1[,3] - Data1[,6]) * (1/Data1[,3])); PSMB_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / ((Data1[,3] - Data1[,9]) * (1/Data1[,3])); PSMC_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / ((Data1[,3] - Data1[,12]) * (1/Data1[,3])); PSMD_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / ((Data1[,3] - Data1[,15]) * (1/Data1[,3])); PSME_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / ((Data1[,3] - Data1[,18]) * (1/Data1[,3])); PSMF_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / ((Data1[,3] - Data1[,21]) * (1/Data1[,3])); \ 
 #			LabelInfo.x <- c(-1.025, .025); LabelInfo.y <- c(1.05,1.05); LabelInfo.text <- c(\"a)\", \"b)\"); text(x=LabelInfo.x, y=LabelInfo.y, label=LabelInfo.text, pos=1, font=2, cex=3, col = \"black\", xpd=TRUE); \
 #			grid.text(1:100, x=rep(seq(0.05, 0.91, length.out=10), 10), y=rep(seq(0, 1, 0.1)+0.05, each=10)); \
+#			pheatmap1 <- pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"\", fontsize=16, color=my_palette1); \
+#			grid.newpage(); pushViewport(viewport(layout = grid.layout(2,1, height=unit(c(.2,.8), \"null\"), width=1))); \
+#			print(pheatmap1, vp=viewport(layout.pos.row=2, layout.pos.col=1)); \
+#			grid.text(\"per SNP\", x=.91, y=.92, gp = gpar(fontsize = 16)); \
 
 #On MacBook Pro
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3*loop*vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/.
