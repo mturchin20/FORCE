@@ -13549,8 +13549,10 @@ Pathway.Names.New <- sapply(Pathway.Names, function(x) { Pathway.Names.New.temp 
 #mkdir /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3*vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/.
 
+#From: https://stackoverflow.com/questions/25241333/r-how-do-i-add-lines-and-text-to-pheatmap, https://stats.idre.ucla.edu/r/codefragments/greek_letters/, https://r.789695.n4.nabble.com/lowercase-and-uppercase-greek-letters-td4676364.html, https://stackoverflow.com/questions/13739643/how-to-use-times-new-roman-font-in-grid-text
+
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 1`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
+	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; 
 		echo $i $ancestry2
 
@@ -13573,8 +13575,10 @@ for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane '
 			rownames(Results.Full.pValDiff.scaled) <- Data1[,1]; \
 			Gene.Names.New <- c(\"PSMA\", \"PSMB\", \"PSMC\", \"PSMD\", \"PSME\", \"PSMF\"); \
 			colnames(Results.Full.pValDiff.scaled) <- Gene.Names.New; \
-			png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.${ancestry2}.QCed.BMI.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.loopVrs.vs3.png\", height=2000, width=3750, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
+			png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.${ancestry2}.QCed.BMI.PSMdrops.noDups.ColCrct.localPCs.REACTOME.Results.heatplot.loopVrs.vs3.png\", height=2000, width=3750, res=300); par(oma=c(1,1,10,1), mar=c(5,5,4,2), mfrow=c(1,1)); \
 			pheatmap(as.matrix(Results.Full.pValDiff.scaled), cluster_cols=FALSE, cluster_rows=FALSE, main=\"\", fontsize=16, color=my_palette1); \
+			grid.text(expression(paste(Delta, \" -log10(pVal)\", sep=\"\")), x=.93, y=.95, gp = gpar(fontsize = 16)); \
+			grid.text(\"per SNP\", x=.93, y=.935, gp = gpar(fontsize = 16)); \
 			dev.off(); \
 		"
 	done
@@ -13586,6 +13590,8 @@ done
 #		fix the columns and things and such, added in that NA column flag which isn't accounted for in the code below -- also, get rid of the different standardizing variants, only keep the column standardizing variant
 #			PSMA_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,5]); PSMB_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,8]); PSMC_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,11]); PSMD_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,14]); PSME_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,17]); PSMF_pValDiff_raw <- -log10(Data1[,2]) - -log10(Data1[,20]); \ 
 #			PSMA_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,5])) / ((Data1[,3] - Data1[,6]) * (1/Data1[,3])); PSMB_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,8])) / ((Data1[,3] - Data1[,9]) * (1/Data1[,3])); PSMC_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,11])) / ((Data1[,3] - Data1[,12]) * (1/Data1[,3])); PSMD_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,14])) / ((Data1[,3] - Data1[,15]) * (1/Data1[,3])); PSME_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,17])) / ((Data1[,3] - Data1[,18]) * (1/Data1[,3])); PSMF_pValDiff_scaled2 <- -1*(-log10(Data1[,2]) - -log10(Data1[,20])) / ((Data1[,3] - Data1[,21]) * (1/Data1[,3])); \ 
+#			LabelInfo.x <- c(-1.025, .025); LabelInfo.y <- c(1.05,1.05); LabelInfo.text <- c(\"a)\", \"b)\"); text(x=LabelInfo.x, y=LabelInfo.y, label=LabelInfo.text, pos=1, font=2, cex=3, col = \"black\", xpd=TRUE); \
+#			grid.text(1:100, x=rep(seq(0.05, 0.91, length.out=10), 10), y=rep(seq(0, 1, 0.1)+0.05, each=10)); \
 
 #On MacBook Pro
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3*loop*vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/.
@@ -13879,7 +13885,7 @@ REACTOME_REGULATION_OF_APOPTOSIS                             0.0515646543467851 
 ```
 
 
-i
+
 
 
 
