@@ -10773,14 +10773,14 @@ done
 #		vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcf.gz --chr $i --window-pi 100000000000000 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chr${i}_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools
 #	done
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | head -n 1`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	echo $ancestry1 $ancestry2
 
 	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,6]));"
 #	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,5]));"
 	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools.sites.pi | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,3]));"
-	zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.mibs.gz | R -q -e "neg.is.na <- Negate(is.na); Data1 <- read.table(file('stdin'), header=F); Data1[upper.tri(Data1, diag=TRUE)] <- NA; print(dim(Data1)); Data1 <- matrix(Data1, ncol=1); Data1 <- Data1[neg.is.na(Data1),]; print(dim(Data1)); meanIBS <- mean(Data1); sdIBS <- sd(Data1); print(c(meanIBS, sdIBS));"
+	zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.mibs.gz | R -q -e "neg.is.na <- Negate(is.na); Data1 <- read.table(file('stdin'), header=F); Data1[upper.tri(Data1, diag=TRUE)] <- NA; Data1 <- unlist(c(Data1)); Data1 <- Data1[neg.is.na(Data1)]; meanIBS <- mean(Data1); sdIBS <- sd(Data1); print(c(1-meanIBS, meanIBS, sdIBS));"
 
 done
 
