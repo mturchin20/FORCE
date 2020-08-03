@@ -13800,6 +13800,8 @@ zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additive
 zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt.gz | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | awk '{ if ($2 != "NA") { print $0 } } ' | awk '{ print $1 "\t " $3 "\t" $6 "\t" $9 "\t" $12 "\t" $15 "\t" $18 "\t" $21 }' | sed 's/_DropNone//g' | cat <(echo -e "Pathway\tDropNone\tDropPSMA\tDropPSMB\tDropPSMC\tDropPSMD\tDropPSME\tDropPSMF") - | column -t 
 zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt.gz | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | awk '{ if ($2 != "NA") { print $0 } } ' | awk '{ print $1 "\t " $3 "\t" $6 "\t" $9 "\t" $12 "\t" $15 "\t" $18 "\t" $21 }' | sed 's/_DropNone//g' | cat <(echo -e "Pathway\tDropNone\tDropPSMA\tDropPSMB\tDropPSMC\tDropPSMD\tDropPSME\tDropPSMF") - | column -t 
 
+#...R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1[,c(2:ncol(Data1))] <- apply(Data1[,c(2:ncol(Data1))], 2, function(x) { return(signif(x, digits=4... 
+
 ```
 [  mturchin@node1164  ~]$zcat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PSMdrops/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.PSMdrops.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.PSMdrops_All.txt.gz | grep -v CYTOKINE_SIGNALING_IN_IMMUNE_SYSTEM | grep -v MITOTIC_G1_G1_S_PHASES | awk '{ if ($2 != "NA") { print $0 } } ' | awk '{ print $1 "\t " $3 "\t" $6 "\t" $9 "\t" $12 "\t" $15 "\t" $18 "\t" $21 }' | sed 's/_DropNone//g' | cat <(echo -e "Pathway\tDropNone\tDropPSMA\tDropPSMB\tDropPSMC\tDropPSMD\tDropPSME\tDropPSMF") - | column -t
 Pathway                                                      DropNone              DropPSMA              DropPSMB              DropPSMC              DropPSMD              DropPSME              DropPSMF
@@ -13876,6 +13878,8 @@ REACTOME_REGULATION_OF_APOPTOSIS                             0.0515646543467851 
 
 ```
 
+
+i
 
 
 
