@@ -10762,8 +10762,6 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 
 done
 
-			echo -e "\nfor (( PathNum2=$PathNum; PathNum2 <= $PathNum+39; PathNum2=PathNum2+1 )); do Check1=\`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.v3.ImptHRC.dose.100geno.Regions.c2.${k}.noDups.txt | perl -slane 'if (\$. == \$PathNum2b) { print \$F[\$#F]; }' -- -PathNum2b=\$PathNum2\`; echo \$Check1; if [ \$Check1 == \"TRUE\" ]; then plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --extract /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\${PathNum2}.noDups.PLINK.SNPIDs --distance ibs gz square0 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/IBS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Pathways\${PathNum2}.noDups.onlyPath; fi; done;")
-
 #	/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.pruned
 #	vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.vcf.gz --window-pi 100000000000000 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.WindowAll
 #		vcftools --gzvcf /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcf.gz --chr $i --window-pi 100000000000000 --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chr${i}_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools
@@ -10777,20 +10775,44 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	echo $ancestry1 $ancestry2
 
-	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,6]));"
+#	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,6]));"
 #	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,5]));"
-	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools.sites.pi | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,3]));"
-	zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.mibs.gz | R -q -e "neg.is.na <- Negate(is.na); Data1 <- read.table(file('stdin'), header=F); Data1[upper.tri(Data1, diag=TRUE)] <- NA; Data1 <- unlist(c(Data1)); Data1 <- Data1[neg.is.na(Data1)]; meanIBS <- mean(Data1); sdIBS <- sd(Data1); print(c(1-meanIBS, meanIBS, sdIBS));"
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools.sites.pi | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,3]));" | grep -v ^\>
+	zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.mibs.gz | R -q -e "neg.is.na <- Negate(is.na); Data1 <- read.table(file('stdin'), header=F); Data1[upper.tri(Data1, diag=TRUE)] <- NA; Data1 <- unlist(c(Data1)); Data1 <- Data1[neg.is.na(Data1)]; meanIBS <- mean(Data1); sdIBS <- sd(Data1); print(c(1-meanIBS, meanIBS, sdIBS));" | grep -v ^\>
 
 done
 
-			R -q -e \"library(\\\"data.table\\\"); neg.is.na <- Negate(is.na); Data1 <- as.matrix(fread(\\\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/IBS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Pathways\${PathNum2}.noDups.onlyPath.mibs.gz\\\", header=F)); Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\\\", header=F); Data1[upper.tri(Data1, diag=TRUE)] <- NA; Data1 <- c(Data1); Data1 <- Data1[neg.is.na(Data1)]; meanIBS <- mean(Data1); sdIBS <- sd(Data1); quantIBS <- quantile(Data1); Results1 <- c(); Results1 <- rbind(Results1, c(as.character(Pathways[\$PathNum2,1]), meanIBS, sdIBS, quantIBS)); write.table(Results1, file=\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/IBS/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Pathways\${PathNum2}.noDups.onlyPath.mibs.summary.txt\\\", quote=FALSE, row.names=FALSE, col.names=FALSE);\"; fi; done;")
+```
+[  mturchin@node1103  ~/LabMisc/RamachandranLab/InterPath]$for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
+>         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>         echo $ancestry1 $ancestry2
+> 
+> #       cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,6]));"  
+> #       cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,5]));"
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools.sites.pi | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,3]));" | grep -v ^\>
+>         zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.mibs.gz | R -q -e "neg.is.na <- Negate(is.na); Data1 <- read.table(file('stdin'), header=F); Data1[upper.tri(Data1, diag=TRUE)] <- NA; Data1 <- unlist(c(Data1)); Data1 <- Data1[neg.is.na(Data1)]; meanIBS <- mean(Data1); sdIBS <- sd(Data1); print(c(1-meanIBS, meanIBS, sdIBS));" | grep -v ^\>
+> 
+> done
+African African
+[1] 0.3023548
+[1] 0.240535683 0.759464317 0.008346525
+British British.Ran4000
+[1] 0.1991797
+[1] 0.1601978920 0.8398021080 0.0009051707
+Caribbean Caribbean
+[1] 0.290087
+[1] 0.229956502 0.770043498 0.004769856
+Chinese Chinese
+[1] 0.3082307
+[1] 0.241286158 0.758713842 0.003574166
+Indian Indian
+[1] 0.2155706
+[1] 0.172956078 0.827043922 0.002520271
+Pakistani Pakistani
+[1] 0.2161516
+[1] 0.174829814 0.825170186 0.002563711
 
-
-
-
-
-
+```
 
 #From: https://www.cog-genomics.org/plink/1.9/distance
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -E 'Ran10000|Irish'`; do
