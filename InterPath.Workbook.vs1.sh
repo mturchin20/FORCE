@@ -10751,6 +10751,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 
 done
 
+#From: https://www.biostars.org/p/221082/ 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 	echo $ancestry1 $ancestry2
@@ -10783,35 +10784,18 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 done
 
 ```
-[  mturchin@node1103  ~/LabMisc/RamachandranLab/InterPath]$for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
->         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
->         echo $ancestry1 $ancestry2
-> 
-> #       cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,6]));"  
-> #       cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,5]));"
->         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools.sites.pi | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,3]));" | grep -v ^\>
->         zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.mibs.gz | R -q -e "neg.is.na <- Negate(is.na); Data1 <- read.table(file('stdin'), header=F); Data1[upper.tri(Data1, diag=TRUE)] <- NA; Data1 <- unlist(c(Data1)); Data1 <- Data1[neg.is.na(Data1)]; meanIBS <- mean(Data1); sdIBS <- sd(Data1); print(c(1-meanIBS, meanIBS, sdIBS));" | grep -v ^\>
-> 
-> done
 African African
 [1] 0.3023548
-[1] 0.240535683 0.759464317 0.008346525
 British British.Ran4000
 [1] 0.1991797
-[1] 0.1601978920 0.8398021080 0.0009051707
 Caribbean Caribbean
 [1] 0.290087
-[1] 0.229956502 0.770043498 0.004769856
 Chinese Chinese
 [1] 0.3082307
-[1] 0.241286158 0.758713842 0.003574166
 Indian Indian
 [1] 0.2155706
-[1] 0.172956078 0.827043922 0.002520271
 Pakistani Pakistani
 [1] 0.2161516
-[1] 0.174829814 0.825170186 0.002563711
-
 ```
 
 #From: https://www.cog-genomics.org/plink/1.9/distance
@@ -15246,6 +15230,7 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscrip
 R -q -e "library(\"ggplot2\"); library(\"reshape\"); \
 	png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/FstHeatplots/ukb_chrAll_v3.AllPops.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.heatplots.vs2.png\", height=2000, width=2000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \
 		Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.SmallPops.txt\", header=T); Data2 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.SmallPops.txt\", header=T); Data4 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Caribbean.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.SmallPops.txt\", header=T); Data5 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Chinese.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.SmallPops.txt\", header=T); Data6 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Indian.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.SmallPops.txt\", header=T); Data8 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/Fst/ukb_chrAll_v3.Pakistani.QCed.reqDrop.QCed.dropRltvs.PCAdrop.SNPoverlap.pruned.flashpca.pcs.txt.wInfo.wAncs.PLINK.within.AllPops.fst.SmallPops.txt\", header=T); \
+		Data1[1,1] <- NA; Data2[2,1] <- NA; Data4[3,1] <- NA; Data5[4,1] <- NA; Data6[5,1] <- NA; Data8[6,1] <- NA; \
 		colnames(Data2)[1] <- \"British.Ran4k\"; DataAll <- cbind(Data1, Data2, Data4, Data5, Data6, Data8); DataAll[upper.tri(DataAll, diag=FALSE)] <- NA; DataAll <- cbind(c(\"African\", \"British.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"), DataAll); \ 
 		print(head(DataAll)); \
 		DataAll.melted <- melt(DataAll); colnames(DataAll.melted)[1] <- \"ind.1\"; colnames(DataAll.melted)[2] <- \"ind.2\"; DataAll.melted[,3] <- signif(DataAll.melted[,3], digits=3); \
@@ -15410,8 +15395,7 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 
 R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
 	for (i in DataTypes[1]) { \
-		png(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/IBSPlots/ukb_v3.African.Height.AllPaths.ColCrct.localPCs.pValsVsIBS.noHLA.plots.vs4.png\", height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
-                for (j in UKBioBankPops[c(1)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
+                for (j in UKBioBankPops[1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 			print(j); \
 			Data1a <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.KEGG.Height.pValAll.noHLA.txt.gz\", sep=\"\"), header=F); \
 			Data1b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.KEGG.BMI.pValAll.noHLA.txt.gz\", sep=\"\"), header=F); \
@@ -15420,13 +15404,22 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 			Data1a <- Data1a[!is.na(Data1a[,13]),]; Data1b <- Data1b[!is.na(Data1b[,13]),]; Data2a <- Data2a[!is.na(Data2a[,13]),]; Data2b <- Data2b[!is.na(Data2b[,13]),]; \
 			Data1a[Data1a[,13] == 0,13] <- 1e-10; Data1b[Data1b[,13] == 0,13] <- 1e-10; Data2a[Data2a[,13] == 0,13] <- 1e-10; Data2b[Data2b[,13] == 0,13] <- 1e-10; \ 
 			RegrLine1 <- lm(-log10(Data1a[,13]) ~ Data1a[,2]); RegrLine2 <- lm(-log10(Data1b[,13]) ~ Data1b[,2]); RegrLine3 <- lm(-log10(Data2a[,13]) ~ Data2a[,2]); RegrLine4 <- lm(-log10(Data2b[,13]) ~ Data2b[,2]); \
+			png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/IBSPlots/ukb_v3.\", ancestry2, \".Height.KEGG.ColCrct.localPCs.pValsVsIBS.noHLA.plots.vs4.png\", sep=\"\"), height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
 			plot(Data1a[,2], -log10(Data1a[,13]), main=\"Height\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,10.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine1, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine1)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine1)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
 			mtext(\"Mean Pairwise IBS per Pathway\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			plot(Data1b[,2], -log10(Data1b[,13]), main=\"BMI\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,10.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine2, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine2)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine2)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
 			mtext(\"Mean Pairwise IBS per Pathway\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); LabelInfo.x <- c(-1.025, .025); LabelInfo.y <- c(1.05,1.05); LabelInfo.text <- c(\"a)\", \"b)\"); text(x=LabelInfo.x, y=LabelInfo.y, label=LabelInfo.text, pos=1, font=2, cex=3, col = \"black\", xpd=TRUE); \
+			dev.off(); \
+			png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/IBSPlots/ukb_v3.\", ancestry2, \".Height.REACTOME.ColCrct.localPCs.pValsVsIBS.noHLA.plots.vs4.png\", sep=\"\"), height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
+			plot(Data2a[,2], -log10(Data2a[,13]), main=\"Height\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,10.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine3, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine3)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine3)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			mtext(\"Mean Pairwise IBS per Pathway\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(Data2b[,2], -log10(Data2b[,13]), main=\"BMI\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,10.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine4, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine4)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine4)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			mtext(\"Mean Pairwise IBS per Pathway\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+			par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); LabelInfo.x <- c(-1.025, .025); LabelInfo.y <- c(1.05,1.05); LabelInfo.text <- c(\"a)\", \"b)\"); text(x=LabelInfo.x, y=LabelInfo.y, label=LabelInfo.text, pos=1, font=2, cex=3, col = \"black\", xpd=TRUE); \
+			dev.off(); \
 		}; \ 
-	dev.off(); }; print(warnings()); \
+	}; print(warnings()); \
 "
 
 #On MacBook Pro
@@ -25469,6 +25462,34 @@ CHR     SNP     BP      A1      TEST    NMISS   BETA    STAT    P
 [  mturchin@node1111  ~]$l="REACTOME"
 [  mturchin@node1111  ~]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.PathwaysAll.noDups.onlyPath.mibs.summary.wInfo.$l.$i.$pValCutoff.txt.gz | grep HLA | wc
      23     299   13153
+[  mturchin@node1103  ~/LabMisc/RamachandranLab/InterPath]$for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
+>         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
+>         echo $ancestry1 $ancestry2
+>
+> #       cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,6]));"
+> #       cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools.het | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,5]));"
+>         cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.vcftools.sites.pi | R -q -e "Data1 <- read.table(file('stdin'), header=T); print(mean(Data1[,3]));" | grep -v ^\>
+>         zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/GenDiv/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.plink.mibs.gz | R -q -e "neg.is.na <- Negate(is.na); Data1 <- read.table(file('stdin'), header=F); Data1[upper.tri(Data1, diag=TRUE)] <- NA; Data1 <- unlist(c(Data1)); Data1 <- Data1[neg.is.na(Data1)]; meanIBS <- mean(Data1); sdIBS <- sd(Data1); print(c(1-meanIBS, meanIBS, sdIBS));" | grep -v ^\>
+>
+> done
+African African
+[1] 0.3023548
+[1] 0.240535683 0.759464317 0.008346525
+British British.Ran4000
+[1] 0.1991797
+[1] 0.1601978920 0.8398021080 0.0009051707
+Caribbean Caribbean
+[1] 0.290087
+[1] 0.229956502 0.770043498 0.004769856
+Chinese Chinese
+[1] 0.3082307
+[1] 0.241286158 0.758713842 0.003574166
+Indian Indian
+[1] 0.2155706
+[1] 0.172956078 0.827043922 0.002520271
+Pakistani Pakistani
+[1] 0.2161516
+[1] 0.174829814 0.825170186 0.002563711
 
 
 
