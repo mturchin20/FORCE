@@ -6797,6 +6797,92 @@ done;
 #cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/Epistasis/Followup/*Height*All.set.epi.specifics*
 #cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/Epistasis/Followup/*BMI*All.set.epi.specifics*
 
+```
+(InterPath) [  mturchin@login003  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/Epistasis/Followup/ukb_chrAll_v3.All.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.pValBonf.PathwaysAll.set.epi.specifics.txt
+African
+
+British.Ran4000
+
+Caribbean
+
+Chinese
+
+Indian
+
+Pakistani
+
+(InterPath) [  mturchin@login003  ~]$echo $i
+BMI
+(InterPath) [  mturchin@login003  ~]$i="Height"
+(InterPath) [  mturchin@login003  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/Epistasis/Followup/ukb_chrAll_v3.All.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.pValBonf.PathwaysAll.set.epi.specifics.txt
+African
+KEGG_PHOSPHATIDYLINOSITOL_SIGNALING_SYSTEM 91 4.497e-05 1681 629165758 7.947e-11 1
+  10  10:134411966   21   21:43586397     0.913728      44.3145    2.811e-11
+INPP5A 10:134411966 intronic,NA,NA 229102
+ABCG1 21:43586397 intergenic_downstream,dist=33402,NA 366872
+UMODL1 21:43586397 intergenic_upstream,dist=23292,NA 366872
+
+British.Ran4000
+
+Caribbean
+
+Chinese
+
+Indian
+
+Pakistani
+
+(InterPath) [  mturchin@login003  ~]$echo $l
+KEGG
+(InterPath) [  mturchin@login003  ~]$l="REACTOME"
+(InterPath) [  mturchin@login003  ~]$l="REACTOME"
+(InterPath) [  mturchin@login003  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/Epistasis/Followup/ukb_chrAll_v3.All.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.pValBonf.PathwaysAll.set.epi.specifics.txt
+African
+
+British.Ran4000
+
+Caribbean
+REACTOME_SIGNALING_BY_RHO_GTPASES 664 9.553e-06 2635 1079940985 4.630e-11 1
+   8    8:13404303   18   18:71234727     0.342092       43.937    3.409e-11
+FBXO15 18:71234727 intergenic_downstream,dist=505861,NA 371116
+LOC100505817 18:71234727 intergenic_upstream,dist=217603,NA 371116
+DLC1 8:13404303 intronic,NA,NA 196106
+
+Chinese
+
+Indian
+
+Pakistani
+
+(InterPath) [  mturchin@login003  ~]$i="BMI"
+(InterPath) [  mturchin@login003  ~]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/Epistasis/Followup/ukb_chrAll_v3.All.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.pValBonf.PathwaysAll.set.epi.specifics.txt
+African
+REACTOME_GLYCEROPHOSPHOLIPID_BIOSYNTHESIS 818 9.695e-08 897 335749219 1.489e-10 1
+  12   12:14693353    4   4:129890790     0.260162      41.4135    1.238e-10
+PLBD1 12:14693353 intronic,NA,NA   250370
+SCLT1 4:129890790 intronic,NA,NA   97181
+REACTOME_ASSEMBLY_OF_THE_PRE_REPLICATIVE_COMPLEX 1124 3.293e-05 331 123874340 4.036e-10 1
+  22   22:35797833   22   22:23489042     0.224304      39.3532    3.552e-10
+RAB36 22:23489042 intronic,NA,NA   369008
+MCM5 22:35797833 intronic,NA,NA 371139
+REACTOME_INTEGRIN_CELL_SURFACE_INTERACTIONS 862 5.806e-05 1594 596631334 8.380e-11 1
+  17   17:45320514    6    6:25897169    -0.735562      42.3042    7.851e-11
+ITGB3 17:45320514 intergenic_downstream,dist=10694,NA 322821
+MYL4 17:45320514 intergenic_upstream,dist=19469,NA 322821
+SLC17A2 6:25897169 intergenic_downstream,dist=15815,NA 131412
+SLC17A3 6:25897169 intergenic_upstream,dist=22698,NA 131412
+
+British.Ran4000
+
+Caribbean
+
+Chinese
+
+Indian
+
+Pakistani
+```
+
 for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	for i in `cat <(echo "Height BMI Waist Hip" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do
 		rm -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/PLINK/Epistasis/Followup/ukb_chrAll_v3.All.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.$l.ArchExplr.pValBonf.PathwaysAll.wComplement.set.epi.specifics.txt
@@ -15404,17 +15490,17 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 			Data1a <- Data1a[!is.na(Data1a[,13]),]; Data1b <- Data1b[!is.na(Data1b[,13]),]; Data2a <- Data2a[!is.na(Data2a[,13]),]; Data2b <- Data2b[!is.na(Data2b[,13]),]; \
 			Data1a[Data1a[,13] == 0,13] <- 1e-10; Data1b[Data1b[,13] == 0,13] <- 1e-10; Data2a[Data2a[,13] == 0,13] <- 1e-10; Data2b[Data2b[,13] == 0,13] <- 1e-10; \ 
 			RegrLine1 <- lm(-log10(Data1a[,13]) ~ Data1a[,2]); RegrLine2 <- lm(-log10(Data1b[,13]) ~ Data1b[,2]); RegrLine3 <- lm(-log10(Data2a[,13]) ~ Data2a[,2]); RegrLine4 <- lm(-log10(Data2b[,13]) ~ Data2b[,2]); \
-			png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/IBSPlots/ukb_v3.\", ancestry2, \".Height.KEGG.ColCrct.localPCs.pValsVsIBS.noHLA.plots.vs4.png\", sep=\"\"), height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
+			png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/IBSPlots/ukb_v3.\", ancestry2, \".HeightBMI.KEGG.ColCrct.localPCs.pValsVsIBS.noHLA.plots.vs4.png\", sep=\"\"), height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
 			plot(Data1a[,2], -log10(Data1a[,13]), main=\"Height\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,10.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine1, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine1)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine1)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
 			mtext(\"Mean Pairwise IBS per Pathway\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			plot(Data1b[,2], -log10(Data1b[,13]), main=\"BMI\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,10.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine2, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine2)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine2)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
 			mtext(\"Mean Pairwise IBS per Pathway\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); LabelInfo.x <- c(-1.025, .025); LabelInfo.y <- c(1.05,1.05); LabelInfo.text <- c(\"a)\", \"b)\"); text(x=LabelInfo.x, y=LabelInfo.y, label=LabelInfo.text, pos=1, font=2, cex=3, col = \"black\", xpd=TRUE); \
 			dev.off(); \
-			png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/IBSPlots/ukb_v3.\", ancestry2, \".Height.REACTOME.ColCrct.localPCs.pValsVsIBS.noHLA.plots.vs4.png\", sep=\"\"), height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
-			plot(Data2a[,2], -log10(Data2a[,13]), main=\"Height\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,10.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine3, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine3)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine3)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/IBSPlots/ukb_v3.\", ancestry2, \".HeightBMI.REACTOME.ColCrct.localPCs.pValsVsIBS.noHLA.plots.vs4.png\", sep=\"\"), height=2250, width=4500, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(1,2)); \
+			plot(Data2a[,2], -log10(Data2a[,13]), main=\"Height\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,10.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine3, col=\"RED\", lwd=2, lty=2); legend(\"topright\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine3)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine3)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
 			mtext(\"Mean Pairwise IBS per Pathway\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-			plot(Data2b[,2], -log10(Data2b[,13]), main=\"BMI\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,10.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine4, col=\"RED\", lwd=2, lty=2); legend(\"topleft\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine4)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine4)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
+			plot(Data2b[,2], -log10(Data2b[,13]), main=\"BMI\", xaxt=\"n\", xlab=\"\", ylab=\"MAPIT-R -log10(p-Values)\", ylim=c(0,10.25), cex=2, cex.main=3, cex.axis=2, cex.lab=2); abline(RegrLine4, col=\"RED\", lwd=2, lty=2); legend(\"topright\", c(\"Regression Line\", paste(\"Beta: \", signif(summary(RegrLine4)\$coefficients[2,1], 3), sep=\"\"), paste(\"pVal: \", signif(summary(RegrLine4)\$coefficients[2,4], 3), sep=\"\")), lwd=c(2,NA,NA), lty=c(2,NA,NA), col=c(\"RED\",NA,NA), bg=\"transparent\", cex=1.5); \
 			mtext(\"Mean Pairwise IBS per Pathway\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			par(fig = c(0, 1, 0, 1), mfrow=c(1,1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE); plot(0, 0, type = \"n\", bty = \"n\", xaxt = \"n\", yaxt = \"n\"); LabelInfo.x <- c(-1.025, .025); LabelInfo.y <- c(1.05,1.05); LabelInfo.text <- c(\"a)\", \"b)\"); text(x=LabelInfo.x, y=LabelInfo.y, label=LabelInfo.text, pos=1, font=2, cex=3, col = \"black\", xpd=TRUE); \
 			dev.off(); \
