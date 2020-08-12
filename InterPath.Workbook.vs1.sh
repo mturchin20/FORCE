@@ -16971,13 +16971,13 @@ AATF    0.0270201561157053      NA      NA      NA      NA      NA      NA      
 ABAT    0.187945575587662       NA      NA      0.0517950123321455      0.063983131067169       0.0765592129297207      0.0881655594068933      0.0928935241329126      0.104075354129793       0.115375173881024       0.120232649884315       0.127984782948564
 ABCC5   0.00343414043737265     0.0148936170212766      0.01953125      0.0517950123321455      0.063983131067169       0.0765592129297207      0.0881655594068933      0.0928935241329126      0.104075354129793       0.115375173881024       0.120232649884315       0.127984782948564
  
-R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); \
+R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Sizes <- c(500,600,700,800,900,1000,1100,1200,1300,1400,1500); \
 	for (i in DataTypes[1]) { \
                 for (j in UKBioBankPops[1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
-			print(j); Sizes <- c(500,600,700,800,900,1000,1100,1200,1300,1400,1500); \
+			print(j); \
 			Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/Analyses/HyperEnrich/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.GeneList.Restricted.AllSizes.pVals.edits.txt.gz\", header=F); \
-			Data1 <- Data1[!is.na(Data1[,2]),]; Data1 <- Data1[!is.na(Data1[,ncol(Data1)]),]; Data1 <- cbind(Data1, rep(\"BLACK\", nrow(Data1))); Data1 <- cbind(Data1, rep(16, nrow(Data1))); \
-			Data1[grep(\"PSM\", Data1[,1], ncol(Data1)-1] <- \"BLUE\"; Data1[grep(\"PSM\", Data1[,1], ncol(Data1)] <- 15; \ 
+			Data1 <- Data1[!is.na(Data1[,2]),]; Data1 <- Data1[!is.na(Data1[,ncol(Data1)]),]; Data1 <- cbind(Data1, rep(\"BLACK\", nrow(Data1))); Data1[,ncol(Data1)] <- factor(Data1[,ncol(Data1)], levels=c(\"BLACK\", \"BLUE\")); Data1 <- cbind(Data1, rep(16, nrow(Data1))); \
+			Data1[grep(\"PSM\", Data1[,1]), ncol(Data1)-1] <- \"BLUE\"; Data1[grep(\"PSM\", Data1[,1]), ncol(Data1)] <- 15; \ 
 			png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/HyperEnrichPlots/ukb_v3.\", ancestry2, \".HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.HyperEnrichPlots.RestrictComps.AllSizes.vs1.png\", sep=\"\"), height=12000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(6,2)); \
 			for (k in 3:13) { \
 				Data2 <- Data1[,c(2,k,ncol(Data1)-1,ncol(Data1))]; Data2 <- Data2[!is.na(Data2[,1]),]; Data2 <- Data2[!is.na(Data2[,2]),]; \
@@ -16989,9 +16989,11 @@ R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"A
 	}; print(warnings()); \
 "
 
+#On MacBook Pro
+#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/HyperEnrichPlots/ukb_v3.*.vs*.png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/HyperEnrichPlots/. 
 
-			Data1b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/BMI/Analyses/HyperEnrich/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.GeneList.And.Restricted.pVal.Comps.txt.gz\", sep=\"\"), header=F); \
-			Data2b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/BMI/Analyses/HyperEnrich/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.GeneList.And.Restricted.pVal.Comps.txt.gz\", sep=\"\"), header=F); \
+				Paths1.Overlap <- crossprod(table(stack(Paths1))); Paths1.Overlap[lower.tri(Paths1.Overlap, diag=FALSE)] <- NA; Paths1.Overlap.Melted <- melt(Paths1.Overlap); colnames(Paths1.Overlap.Melted)[1] <- \"ind.1\"; colnames(Paths1.Overlap.Melted)[2] <- \"ind.2\"; Paths1.Overlap.Melted\$ind.1 <- factor(Paths1.Overlap.Melted\$ind.1, levels=c(\"NonSyn\", \"Exonic\", \"Genic\", \"Genic20kb\", \"Intronic20kb\")); Paths1.Overlap.Melted\$ind.2 <- factor(Paths1.Overlap.Melted\$ind.2, levels=c(\"NonSyn\", \"Exonic\", \"Genic\", \"Genic20kb\", \"Intronic20kb\")); \ 
+
 			plot(-log10(Data1b[,2]), -log10(Data1b[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"Restricted -log10(p-Values)\", xlim=c(0,10), ylim=c(0,10), pch=16, col=brewer.pal(8, \"Set2\")[2], cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			mtext(\"No Restriction -log10(p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			abline(0,1, lwd=3, col=\"BLACK\"); \
