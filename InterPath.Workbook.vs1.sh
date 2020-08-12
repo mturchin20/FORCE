@@ -16853,10 +16853,10 @@ R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"A
 			print(j); \
 			Data1b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/BMI/Analyses/HyperEnrich/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValBonf.GeneList.And.Restricted.pVal.Comps.txt.gz\", sep=\"\"), header=F); \
 			Data2b <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/BMI/Analyses/HyperEnrich/ukb_chrAll_v3.\", ancestry2, \".QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.GeneList.And.Restricted.pVal.Comps.txt.gz\", sep=\"\"), header=F); \
-			plot(-log10(Data1b[,2]), -log10(Data1b[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"Restricted -log10(p-Values)\", xlim=c(0,8.5), ylim=c(0,8.5), pch=16, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(-log10(Data1b[,2]), -log10(Data1b[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"Restricted -log10(p-Values)\", xlim=c(0,8.5), ylim=c(0,8.5), pch=16, col=brewer.pal(8, \"Set2\")[2], cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			mtext(\"No Restriction -log10(p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			abline(0,1, lwd=3, col=\"BLACK\"); \
-			plot(-log10(Data2b[,2]), -log10(Data2b[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"Restricted -log10(p-Values)\", xlim=c(0,8.5), ylim=c(0,8.5), pch=16, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+			plot(-log10(Data2b[,2]), -log10(Data2b[,3]), main=\"\", xaxt=\"n\", xlab=\"\", ylab=\"Restricted -log10(p-Values)\", xlim=c(0,8.5), ylim=c(0,8.5), pch=16, col=brewer.pal(8, \"Set2\")[2], cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			mtext(\"No Restriction -log10(p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 			draw.ellipse(3.35,5.15,.75,.75, lwd=3, lty=2, border=\"BLUE\"); \
 			abline(0,1, lwd=3, col=\"BLACK\"); \
