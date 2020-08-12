@@ -16976,12 +16976,12 @@ R -q -e "library(\"RColorBrewer\"); library(\"plotrix\"); UKBioBankPops <- c(\"A
                 for (j in UKBioBankPops[1]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 			print(j); Sizes <- c(500,600,700,800,900,1000,1100,1200,1300,1400,1500); \
 			Data1 <- read.table(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/Analyses/HyperEnrich/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.REACTOME.ArchExplr.pValBonf.GeneList.Restricted.AllSizes.pVals.edits.txt.gz\", header=F); \
-			Data1 <- Data1[!is.na(Data1[,2]),]; Data1 <- Data1[!is.na(Data1[,ncol(Data1)]),]; \
-			Data1 color thing? \ 
+			Data1 <- Data1[!is.na(Data1[,2]),]; Data1 <- Data1[!is.na(Data1[,ncol(Data1)]),]; Data1 <- cbind(Data1, rep(\"BLACK\", nrow(Data1))); Data1 <- cbind(Data1, rep(16, nrow(Data1))); \
+			Data1[grep(\"PSM\", Data1[,1], ncol(Data1)-1] <- \"BLUE\"; Data1[grep(\"PSM\", Data1[,1], ncol(Data1)] <- 15; \ 
 			png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/HyperEnrichPlots/ukb_v3.\", ancestry2, \".HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.HyperEnrichPlots.RestrictComps.AllSizes.vs1.png\", sep=\"\"), height=12000, width=4000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(6,2)); \
 			for (k in 3:13) { \
-				Data2 <- Data1[,c(2,k,ncol(Data1))]; Data2 <- Data2[!is.na(Data2[,2]),]; \
-				plot(-log10(Data2[,1]), -log10(Data2[,2]), main=paste(\"Size Limit: \", Sizes[k-2], \" SNPs\", sep=\"\"), xaxt=\"n\", xlab=\"\", ylab=\"Restricted -log10(p-Values)\", xlim=c(0,10), ylim=c(0,10), pch=16, col=Data2[,3], cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+				Data2 <- Data1[,c(2,k,ncol(Data1)-1,ncol(Data1))]; Data2 <- Data2[!is.na(Data2[,1]),]; Data2 <- Data2[!is.na(Data2[,2]),]; \
+				plot(-log10(Data2[,1]), -log10(Data2[,2]), main=paste(\"Size Limit: \", Sizes[k-2], \" SNPs\", sep=\"\"), xaxt=\"n\", xlab=\"\", ylab=\"Restricted -log10(p-Values)\", xlim=c(0,10), ylim=c(0,10), pch=Data2[,ncol(Data2)], col=Data2[,ncol(Data2)-1], cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 				mtext(\"No Restriction -log10(p-Values)\", side=1, line=3.5, cex=2); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
 				abline(0,1, lwd=3, col=\"BLACK\"); \
 			}; \
