@@ -111,6 +111,29 @@ gzip /users/mturchin/LabMisc/RamachandranLab/InterPath/Backup/*.txt
 singularity instance start -B /users/mturchin/scratch/UMichImptServer/test1:/data/ docker://genepi/imputationserver mis-docker
 singularity run -B /users/mturchin/scratch/UMichImptServer/test1:/data/ instance://mis-docker
 
+#20200827
+#Cleaning up/moving files to externals for Sohini & clearing up space
+
+#British.Ran10000/v3 .zip -- on external H
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/*info.gz
+#British.Ran10000.2/v3 .zip -- on external H
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/*info.gz
+#British.Ran10000.3/v3 .zip -- on external H
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/*info.gz
+
+
+
+
+
+
+
+
+
+
+
 
 #20180607
 #Vs1
@@ -16982,7 +17005,7 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 			Data1 <- Data1[!is.na(Data1[,2]),]; Data1 <- Data1[!is.na(Data1[,ncol(Data1)]),]; Data1 <- cbind(Data1, rep(2, nrow(Data1))); Data1 <- cbind(Data1, rep(\"BLACK\", nrow(Data1))); Data1[,ncol(Data1)] <- factor(Data1[,ncol(Data1)], levels=c(\"BLACK\", \"BLUE\")); Data1 <- cbind(Data1, rep(16, nrow(Data1))); \
 			Data1[grep(\"PSM\", Data1[,1]), ncol(Data1)-2] <- 3.5; Data1[grep(\"PSM\", Data1[,1]), ncol(Data1)-1] <- \"BLUE\"; Data1[grep(\"PSM\", Data1[,1]), ncol(Data1)] <- 17; \ 
 			png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/HyperEnrichPlots/ukb_v3.\", ancestry2, \".HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.HyperEnrichPlots.RestrictComps.AllSizes.vs1.png\", sep=\"\"), height=8000, width=6000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2), mfrow=c(4,3)); \
-			for (k in 3:13) { \
+			for (k in 13:3) { \
 				Data2 <- Data1[,c(2,k,ncol(Data1)-2,ncol(Data1)-1,ncol(Data1))]; Data2 <- Data2[!is.na(Data2[,1]),]; Data2 <- Data2[!is.na(Data2[,2]),]; \
 				plot(-log10(Data2[,1]), -log10(Data2[,2]), main=paste(\"Size Limit: \", Sizes[k-2], \" SNPs\", sep=\"\"), xaxt=\"n\", xlab=\"\", ylab=\"Restricted -log10(p-Values)\", xlim=c(0,8), ylim=c(0,8), pch=Data2[,ncol(Data2)], col=Data2[,ncol(Data2)-1], cex=Data2[,ncol(Data2)-2], cex.main=2, cex.axis=2, cex.lab=2); \
 				mtext(\"No Restriction -log10(p-Values)\", side=1, line=3.5, cex=1.5); axis(side=1, mgp=c(3,1.5,0), cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
