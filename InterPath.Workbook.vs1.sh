@@ -114,6 +114,8 @@ singularity run -B /users/mturchin/scratch/UMichImptServer/test1:/data/ instance
 #20200827
 #Cleaning up/moving files to externals for Sohini & clearing up space
 
+#Starting point: mturchin            data+sramacha  USR               13993
+
 #British.Ran10000/v3 .zip -- on external H
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/*vcf.gz
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/*info.gz
@@ -123,6 +125,32 @@ rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imput
 #British.Ran10000.3/v3 .zip -- on external H
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/*vcf.gz
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/*info.gz
+#British.Ran10000.4/v3 .zip -- on external H
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imputation/mturchin20/v3/*info.gz
+#British.Ran10000.5/v3 .zip -- on external H
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/*info.gz
+#British.Ran4000/v3 .zip -- on external H
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3/*info.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3/*.zip
+#British.Ran4000.2/v3 .zip -- on external H
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/Imputation/mturchin20/v3/*info.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.2/Imputation/mturchin20/v3/*zip
+#British.Ran4000.3/v3 .zip -- on external H
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3/*info.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.3/Imputation/mturchin20/v3/*.zip
+#British.Ran4000.4/v3 .zip -- on external H
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/Imputation/mturchin20/v3/*info.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.4/Imputation/mturchin20/v3/*.zip
+#British.Ran4000.5/v3 .zip -- on external H
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation/mturchin20/v3/*info.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation/mturchin20/v3/*.zip
 
 
 
