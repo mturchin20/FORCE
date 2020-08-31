@@ -131,7 +131,7 @@ rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.4/Imput
 #British.Ran10000.5/v3 .zip -- on external H
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/*vcf.gz
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.5/Imputation/mturchin20/v3/*info.gz
-#British.Ran4000/v3 .zip -- on external H
+#British.Ran4000/v3 .vcf.gz/.info.gz -- on external H
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3/*vcf.gz
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3/*info.gz
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/v3/*.zip
@@ -152,11 +152,24 @@ rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputa
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation/mturchin20/v3/*info.gz
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000.5/Imputation/mturchin20/v3/*.zip
 
-
-
-
-
-
+#African/v3 .vcf.gz/.info.gz -- on external D 
+rm /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/v3/*info.gz
+#Caribbean/v3 .vcf.gz/.info.gz -- on external D 
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Caribbean/Caribbean/Imputation/mturchin20/v3/*info.gz
+#Chinese/v3 .vcf.gz/.info.gz -- on external D 
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Chinese/Chinese/Imputation/mturchin20/v3/*info.gz
+#Indian/v3 .zip -- on external D 
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/Imputation/mturchin20/v3/*info.gz
+#Irish/v3 .zip -- on external D 
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Irish/Irish/Imputation/mturchin20/v3/*info.gz
+#Pakistani/v3 .zip -- on external D 
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3/*vcf.gz
+rm /users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/Imputation/mturchin20/v3/*info.gz
 
 
 
