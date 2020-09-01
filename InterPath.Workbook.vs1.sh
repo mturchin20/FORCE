@@ -115,6 +115,7 @@ singularity run -B /users/mturchin/scratch/UMichImptServer/test1:/data/ instance
 #Cleaning up/moving files to externals for Sohini & clearing up space
 
 #Starting point: mturchin            data+sramacha  USR               13993
+#End point: mturchin            data+sramacha  USR                7133 
 
 #British.Ran10000/v3 .zip -- on external H
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/*vcf.gz
