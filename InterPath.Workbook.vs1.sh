@@ -18052,33 +18052,28 @@ library("devtools"); library("data.table"); devtools::load_all();
 X <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T);
 Y <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", header=T);
 Pathways <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.ExonicPlus20kb.noDups.MAPITR.tests.txt", header=F); 
+Covars <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt", header=T);
 ##Pathways.Use <- Pathways[3:4,];
 
 Y.Height <- Y[,3];
 Y.Height.noNAs <- Y.Height[!is.na(Y.Height)];
 X.noNAs <- X[!is.na(Y.Height),];
+Covars.noNAs <- Covars[!is.na(Y.Height),];
+Covars.noNAs.PCs <- Covars.noNAs[,(ncol(Covars.noNAs)-9):ncol(Covars.noNAs)];
 
 ptm <- proc.time()
 Output1 <- MAPITR(X.noNAs, Y.Height.noNAs, Pathways)
 print(proc.time() - ptm)
+ptm <- proc.time()
+Output2 <- MAPITR(X.noNAs, Y.Height.noNAs, Pathways, Covariates=Covars.noNAs.PCs)
+print(proc.time() - ptm)
 
-Output1$Results[1,2]
+Output1$Results
+Output2$Results
 
-Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T);
 
 
-					if (length(Pathways.Regions[[1]]) > 1) { Data3 <- 
 
-fread(cmd=paste(\\\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\\\", as.character(i), \\\".noDups.txt.gz\\\", sep=\\\"\\\"), header=T); Data3.cov <- as.matrix(read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.ColCrct.txt\\\", header=F)); \ 
-				
-Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt\\\", header=T); 
-Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\\\", header=F); 
-Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.v3.ImptHRC.dose.100geno.Regions.c2.${k}.noDups.txt\\\", header=F); 
-Y.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.${ancestry2}.v3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.c2.${k}.Pathways1.noDups.txt.gz\\\", header=T); 
-Y.Check.Pheno <- Y.Check\\\$$Pheno1; Y.Check.Pheno.noNAs <- Y.Check.Pheno[neg.is.na(Y.Check.Pheno)]; PermAdj <- 9; Y.Seed <- $AncSeed1 + $PhenoSeed1 + PermAdj; \
-					
-Y <- read.table(paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.${ancestry2}.v3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.c2.${k}.Pathways\\\", i, \\\".noDups.txt.gz\\\", sep=\\\"\\\"), header=T); 
-Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; }; \ 
 
 
 
