@@ -18052,8 +18052,16 @@ library("devtools"); library("data.table"); devtools::load_all();
 X <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T);
 Y <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt", header=T);
 Pathways <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.ExonicPlus20kb.noDups.MAPITR.tests.txt", header=F); 
+##Pathways.Use <- Pathways[3:4,];
 
+Y.Height <- Y[,3];
+Y.Height.noNAs <- Y.Height[!is.na(Y.Height)];
+X.noNAs <- X[!is.na(Y.Height),];
+
+ptm <- proc.time()
 Output1 <- MAPITR(X.noNAs, Y.Height.noNAs, Pathways)
+print(proc.time() - ptm)
+
 Output1$Results[1,2]
 
 Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T);
