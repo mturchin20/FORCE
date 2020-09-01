@@ -121,6 +121,7 @@ rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputat
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000/Imputation/mturchin20/v3/*info.gz
 #British.Ran10000.2/v3 .zip -- on external H
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/*vcf.gz
+
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.2/Imputation/mturchin20/v3/*info.gz
 #British.Ran10000.3/v3 .zip -- on external H
 rm /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran10000.3/Imputation/mturchin20/v3/*vcf.gz
@@ -18026,6 +18027,41 @@ png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analy
 #NOTE -- in EndNote, make sure using 'BibTeX export' style
 #cat /Users/mturchin20/Google\ Drive/EndNote/Libraries/InterPath/TurchinMichael_MasterLibrary_1.vs1.txt | perl -lane 'if ($. == 1) { $type = "article"; } if ($F[0] =~ m/^\@(article|book)/) { $type2 = $1; if (@tempRefLog) { $author =~ s/\{//g; $author =~ s/\}//g; $author =~ s/,//g; $year =~ s/\{//g; $year =~ s/\}//g; $year=~ s/,//g; print "\@$type\{$author$year,"; print "\t", join("\n\t", @tempRefLog[0..$#tempRefLog-2]); print $tempRefLog[$#tempRefLog-1], "\n"; @tempRefLog = (); $author = ""; $year = ""; $type = $type2;} else { push(@tempRefLog, join(" ", @F)); } } else { if ($F[0] =~ /^author/) { $author = $F[2]; }; if ($F[0] =~ /^year/) { $year = $F[2]; }; push(@tempRefLog, join(" ", @F)); }; if(eof()) { $author =~ s/\{//g; $author =~ s/\}//g; $author =~ s/,//g; $year =~ s/\{//g; $year =~ s/\}//g; $year=~ s/,//g; print "\@article{$author$year,"; print "\t", join("\n\t", @tempRefLog[0..$#tempRefLog-2]); print $tempRefLog[$#tempRefLog-1], "\n";}' > /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Production/Manuscript/Main.bib 
 #NOTE -- manually edit top entry/Abraham2017 line(s)
+
+
+
+
+
+
+
+
+
+
+
+#MAPITR R package checks
+#20200831
+
+R -q -e "library("devtools"); devtools::load_all();
+
+
+
+Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T);
+
+
+					if (length(Pathways.Regions[[1]]) > 1) { Data3 <- 
+
+fread(cmd=paste(\\\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Regions.c2.${k}.Pathways\\\", as.character(i), \\\".noDups.txt.gz\\\", sep=\\\"\\\"), header=T); Data3.cov <- as.matrix(read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.ColCrct.txt\\\", header=F)); \ 
+				
+Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt\\\", header=T); 
+Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\\\", header=F); 
+Pathways.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/c2.all.v6.1.wcp_comps.symbols.${ancestry2}.v3.ImptHRC.dose.100geno.Regions.c2.${k}.noDups.txt\\\", header=F); 
+Y.Check <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.${ancestry2}.v3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.c2.${k}.Pathways1.noDups.txt.gz\\\", header=T); 
+Y.Check.Pheno <- Y.Check\\\$$Pheno1; Y.Check.Pheno.noNAs <- Y.Check.Pheno[neg.is.na(Y.Check.Pheno)]; PermAdj <- 9; Y.Seed <- $AncSeed1 + $PhenoSeed1 + PermAdj; \
+					
+Y <- read.table(paste(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos/ukb9200.2017_8_WinterRetreat.Phenos.Transformed.Edit.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.${ancestry2}.v3.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.c2.${k}.Pathways\\\", i, \\\".noDups.txt.gz\\\", sep=\\\"\\\"), header=T); 
+Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; }; \ 
+
+
 
 
 
