@@ -12967,12 +12967,12 @@ PopGroup1="AllPops"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -l
 done
 
 #PopGroup1 either "AllPops" or "BritReps"
-PopGroup1="BritReps"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+PopGroup1="AllPops"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 	echo $l
 	PopGroupBash="error1"; if [ $PopGroup1 == "AllPops" ]; then PopGroupBash="head"; fi; if [ $PopGroup1 == "BritReps" ]; then PopGroupBash="tail"; fi;
 	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 2`; do
 		echo $i
-		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | $PopGroupBash -n 16 | head -n 16 | tail -n 16 | grep -E "Ran"`; do
+		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | $PopGroupBash -n 16 | head -n 16 | tail -n 16 | grep -vE "Ran"`; do
 			for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb GD125000 GD500000 GD25000" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 				ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
 				NumPaths1=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`	
@@ -12985,6 +12985,7 @@ PopGroup1="BritReps"; for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -
 	done;
 done 
 
+#		for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | $PopGroupBash -n 16 | head -n 16 | tail -n 16 | grep -E "Ran"`; do
 
 
 
@@ -15124,7 +15125,7 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscrip
 
 R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); library(\"cowplot\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
 	for (m in DataTypes1[1]) { for (i in DataTypes2[1]) { for (l in Paths[2:3]) { \
-		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompHeatplots/ukb_v3.AllPops.HeightBMI.\", i, \".\", l, \".\", m, \".ColCrct.localPCs.PopComp.Heatplots.vs4.png\", sep=\"\"), height=4250, width=7750, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \ 
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompHeatplots/ukb_v3.AllPops.HeightBMI.\", i, \".\", l, \".\", m, \".ColCrct.localPCs.PopComp.Heatplots.vs5.png\", sep=\"\"), height=4250, width=7750, res=300); par(oma=c(1,1,1,1), mar=c(5,5,5,5)); \ 
 		plotPoints1 <- c(); ListCounter1 <- 1; for (j in Strats[4]) { \	
 			for (k in c(\"Height\", \"BMI\", \"WaistAdjBMI\", \"HipAdjBMI\")[1:2]) { \
 				Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
@@ -15134,7 +15135,7 @@ R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); 
 				Data6 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Indian/Indian/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.Indian.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
 				Data8 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/Pakistani/Pakistani/mturchin20/Analyses/InterPath/\", k, \"/SubFiles/\", l, \"/\", m, \"/ukb_chrAll_v3.Pakistani.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.\", k, \".\", j, \".noDups.Vs2.\", i, \".ColCrct.localPCs.AllPaths.Results.wGenes.wVars.\", l, \".ArchExplr.\", m, \".txt\", sep=\"\"), header=F); \
 				Paths1 <- list(\"African\" = as.character(Data1[,1]), \"British.Ran4k\" = as.character(Data2[,1]), \"Caribbean\" = as.character(Data4[,1]), \"Chinese\" = as.character(Data5[,1]), \"Indian\" = as.character(Data6[,1]), \"Pakistani\" = as.character(Data8[,1])); \
-				Paths1.Overlap <- crossprod(table(stack(Paths1))); Paths1.Overlap[lower.tri(Paths1.Overlap, diag=FALSE)] <- NA; Paths1.Overlap.Melted <- melt(Paths1.Overlap); colnames(Paths1.Overlap.Melted)[1] <- \"ind.1\"; colnames(Paths1.Overlap.Melted)[2] <- \"ind.2\"; Paths1.Overlap.Melted\$ind.1 <- factor(Paths1.Overlap.Melted\$ind.1, levels=c(\"African\", \"British.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\")); Paths1.Overlap.Melted\$ind.2 <- factor(Paths1.Overlap.Melted\$ind.2, levels=c(\"African\", \"British.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\")); \ 
+				Paths1.Overlap <- crossprod(table(stack(Paths1))); Paths1.Overlap[upper.tri(Paths1.Overlap, diag=FALSE)] <- NA; Paths1.Overlap.Melted <- melt(Paths1.Overlap); colnames(Paths1.Overlap.Melted)[1] <- \"ind.1\"; colnames(Paths1.Overlap.Melted)[2] <- \"ind.2\"; Paths1.Overlap.Melted\$ind.1 <- factor(Paths1.Overlap.Melted\$ind.1, levels=rev(c(\"African\", \"British.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"))); Paths1.Overlap.Melted\$ind.2 <- factor(Paths1.Overlap.Melted\$ind.2, levels=rev(c(\"African\", \"British.Ran4k\", \"Caribbean\", \"Chinese\", \"Indian\", \"Pakistani\"))); \ 
 				print(Paths1.Overlap); tag1 <- \"Z\"; if (k == \"Height\") { tag1 <- \"a)\"; }; if (k == \"BMI\") { tag1 <- \"b)\"; }; \
 				ggplot1 <- ggplot(Paths1.Overlap.Melted, aes(ind.1, ind.2, fill=value)) + geom_tile(colour=\"white\") + scale_fill_gradient(low = \"lightgoldenrodyellow\", high=\"red\", name=\"Pathways\", na.value=\"white\") + geom_text(aes(ind.1, ind.2, label = value), color = \"black\", size=14) + theme_minimal() + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), plot.margin=unit(c(5,5,5,5),\"points\"), panel.grid.major = element_blank(), panel.border = element_blank(), panel.background = element_blank(), axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1, size=40), axis.text.y = element_text(size=40), legend.position=c(.775,.15), legend.direction=\"horizontal\", legend.title=element_text(size=27), legend.text=element_text(size=23), plot.tag=element_text(face=\"bold\", size=60)) + guides(fill = guide_colorbar(barwidth = 22, barheight = 4.5, title.position = \"top\", title.hjust = 0.5)) + labs(tag = tag1); plotPoints1[[ListCounter1]] <- ggplot1; ListCounter1 <- ListCounter1 + 1; \
 			}; \
