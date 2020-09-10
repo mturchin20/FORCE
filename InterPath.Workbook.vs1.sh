@@ -17186,7 +17186,7 @@ British.Ran10000.5  9596         597507  BMI     186   669
 
 #Supplementary Table: UKB Subset QC stats
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | head -n 8 | tail -n 2`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | head -n 8 | grep -v Irish`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
 
 	NumBegin1=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/ukb_chr1_v2.${ancestry2}.fam | wc | awk '{ print $1 }'`
@@ -17200,22 +17200,17 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 	NumUKBDrop=`join -v 2 <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.ukb22419_rel_s488363.wukbDrops.drop.FIDIIDs | awk '{ print $1 "_" $2 }' | sort) <(join <(cat /users/mturchin/data/ukbiobank_jun17/ukb_sqc_v2.wfam.ukbDrops.FIDIIDs | awk '{ print $1 "_" $2 }' | sort) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.fam | awk '{ print $1 "_" $2 }' | sort)) | wc | awk '{ print $1 }'` 
 #	NumTotalDrops=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.ukbKing.drop.ukbDrops.FIDIIDs | wc | awk '{ print $1 }'`
 #	NumAfterFirstQC=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.fam | wc | awk '{ print $1 }'`
+	NumAfterFam=`expr $NumAfterMiss - $NumFamDrop`
 	NumTotalDrops=`expr $NumFamDrop + $NumUKBDrop`
 	NumAfterFirstQC=`expr $NumAfterMiss - $NumTotalDrops`
 	NumPCADrop=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.flashpca.pcs.wInfo.PCAdrops.FIDIIDs | wc | awk '{ print $1 }'`
 	NumAfterPCADrop=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.fam | wc | awk '{ print $1 }'`
 
-	echo $NumBegin1 $NumBegin2 $NumMissDrop $NumAfterMiss $NumFamDrop $NumUKBDrop $NumTotalDrops $NumAfterFirstQC $NumPCADrop $NumAfterPCADrop
+	echo $ancestry2 $NumBegin1 $NumBegin2 $NumMissDrop $NumAfterMiss $NumFamDrop $NumUKBDrop $NumAfterFam $NumTotalDrops $NumAfterFirstQC $NumPCADrop $NumAfterPCADrop
 	
-done	
+done | awk '{ print $1 "\t" $2 "\t" $5 "\t" $8 "\t" $10 "\t" $12 }' | cat <(echo -e "Subset\tBegin\tiMiss\tAfterFam\tAfterUKB\tAfterPCA") - | column -t 
 
-	=`cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chrAll_v2_2.British.Ran4000.QCed.pruned.QCed.fam
-	NumAfterMiss=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.fam | wc | awk '{ print $1 }'`
-	NumAfter=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.dropRltvs.fam | wc | awk '{ print $1 }'`
-
-	cat /users/mturchin/data/ukbiobank_jun17/ukb_sqc_v2.wfam.ukbDrops.FIDIIDs
-	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.ukb22419_rel_s488363.wukbDrops.drop.FIDIIDs
-
+| R -q -e "library(\"xtable\"); Data1 <- read.table(file('stdin'), header=T); Data1.sub <- Data1[1:8,c(1,2,3,5,6)]; print(xtable(Data1.sub));"
 
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.ukbKing.drop.ukbDrops.FIDIIDs
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.flashpca.pcs.wInfo.PCAdrops.FIDIIDs
@@ -17230,25 +17225,25 @@ done
 #ukb qual drops
 #/users/mturchin/data/ukbiobank_jun17/ukb_sqc_v2.wfam.ukbDrops.FIDIIDs
 
-
-done
-				NumIndv=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.fam | wc | awk '{ print $1 }'`
-				NumSNPs=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | wc | awk '{ print $1 }'`
-				NumKEGG=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^KEGG"_" | grep -vw NA | wc | awk '{ print $1 }'`
-				NumREACTOME=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^REACTOME"_" | grep -vw NA | wc | awk '{ print $1 }'`
-
-				echo $ancestry2 $NumIndv $NumSNPs $i $NumKEGG $NumREACTOME
-
-			done;
-		done;
-	done; 
-done | column -t | R -q -e "library(\"xtable\"); Data1 <- read.table(file('stdin'), header=T); Data1.sub <- Data1[1:8,c(1,2,3,5,6)]; print(xtable(Data1.sub));"
-
 ```
+Subset            Begin  iMiss  AfterFam  AfterUKB  AfterPCA
+African           3205   3202   3117      3116      3111
+British.Ran4000   3889   3888   3878      3866      3848
+British.Ran10000  9733   9726   9683      9639      9603
+Caribbean         4299   4296   3861      3854      3833
+Chinese           1504   1502   1454      1454      1448
+Indian            5716   5715   5261      5203      5077
+Pakistani         1748   1746   1609      1604      1581
 
-
-
-
+Subset              Begin  iMiss  AfterFam  AfterUKB  AfterPCA
+British.Ran4000.2   3907   3906   3900      3890      3869
+British.Ran4000.3   3884   3881   3875      3859      3836
+British.Ran4000.4   3882   3879   3868      3855      3838
+British.Ran4000.5   3894   3891   3886      3871      3853
+British.Ran10000.2  9747   9745   9698      9669      9628
+British.Ran10000.3  9740   9736   9692      9671      9636
+British.Ran10000.4  9750   9748   9697      9665      9593
+British.Ran10000.5  9739   9731   9687      9654      9596
 ```
 
 
