@@ -15121,7 +15121,7 @@ British British.Ran10000.5
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/PopCompHeatplots
 
-#From: https://stackoverflow.com/questions/17576381/corner-labels-in-ggplot2, https://viz-ggplot2.rsquaredacademy.com/labels.html
+#From: https://stackoverflow.com/questions/17576381/corner-labels-in-ggplot2, https://viz-ggplot2.rsquaredacademy.com/labels.html, https://stackoverflow.com/questions/49306986/reorder-r-ggplot-heatmap-layout-while-preserving-correct-y-axis-labels/49307187
 
 R -q -e "library(\"RColorBrewer\"); library(\"ggplot2\"); library(\"reshape\"); library(\"grid\"); library(\"gridExtra\"); library(\"cowplot\"); DataTypes1 <- c(\"pValBonf\", \"pVal0001\", \"pVal001\", \"pVal01\"); Strats <- c(\"NonSyn\", \"Exonic\", \"ExonicPlus\", \"ExonicPlus20kb\", \"IntronicPlus20kb\"); DataTypes2 <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_perm1\"); Paths <- c(\"BIOCARTA\", \"KEGG\", \"REACTOME\", \"PID\"); \
 	for (m in DataTypes1[1]) { for (i in DataTypes2[1]) { for (l in Paths[2:3]) { \
@@ -17178,6 +17178,39 @@ British.Ran10000.5  9596         597507  BMI     186   669
 
 
 
+
+
+#Supplementary Table: UKB Subset QC stats
+
+for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do
+	echo -e "Subset\tIndividuals\tSNPs\tPheno\tKEGG\tREACTOME" 
+	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 2`; do
+		
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | head -n 8`; do
+	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
+	
+	
+
+
+done
+				NumIndv=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.fam | wc | awk '{ print $1 }'`
+				NumSNPs=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim | wc | awk '{ print $1 }'`
+				NumKEGG=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^KEGG"_" | grep -vw NA | wc | awk '{ print $1 }'`
+				NumREACTOME=`zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz | grep ^REACTOME"_" | grep -vw NA | wc | awk '{ print $1 }'`
+
+				echo $ancestry2 $NumIndv $NumSNPs $i $NumKEGG $NumREACTOME
+
+			done;
+		done;
+	done; 
+done | column -t | R -q -e "library(\"xtable\"); Data1 <- read.table(file('stdin'), header=T); Data1.sub <- Data1[1:8,c(1,2,3,5,6)]; print(xtable(Data1.sub));"
+
+```
+
+
+
+
+```
 
 
 
