@@ -17177,19 +17177,58 @@ British.Ran10000.5  9596         597507  BMI     186   669
 
 
 
-
-
+#   3396 African
+# 442688 British
+#   4519 Caribbean
+#   1574 Chinese
+#   5951 Indian
+#   1837 Pakistani
 
 #Supplementary Table: UKB Subset QC stats
 
-for l in `cat <(echo "BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do
-	echo -e "Subset\tIndividuals\tSNPs\tPheno\tKEGG\tREACTOME" 
-	for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 2`; do
-		
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | head -n 8`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | head -n 8 | tail -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
+
+	NumBegin1=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/ukb_chr1_v2.${ancestry2}.fam | wc | awk '{ print $1 }'`
+	NumBegin2=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v2.${ancestry2}.QCed.fam | wc | awk '{ print $1 }'`
+##	NumBegin=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v2.${ancestry2}.QCed.reqDrop.QCed.fam | wc | awk '{ print $1 }'`
+	NumMissDrop=`join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v2.${ancestry2}.QCed.fam | awk '{ print $1 "_" $2 }' | sort) <(cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v2.All.QCed.imiss.SumStats.dropiMiss.FIDIIDs | awk '{ print $1 "_" $2 }' | sort) | wc | awk '{ print $1 }'`
+	NumAfterMiss=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.fam | wc | awk '{ print $1 }'`
+##	NumFamDrop=`join <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v2.${ancestry2}.QCed.fam | awk '{ print $1 "_" $2 }' | sort) <(cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v2.All.QCed.pruned.QCed.ukb22419_rel_s488363.wukbDrops.drop.FIDIIDs | awk '{ print $1 "_" $2 }' | sort) | wc | awk '{ print $1 }'`
+	NumFamDrop=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.ukb22419_rel_s488363.wukbDrops.drop.FIDIIDs | wc | awk '{ print $1 }'`
+##	NumUKBDrop=`join -v 1 <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v2.${ancestry2}.QCed.fam | awk '{ print $1 "_" $2 }' | sort) <(cat /users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v2.All.QCed.pruned.QCed.ukb22419_rel_s488363.wukbDrops.drop.FIDIIDs | awk '{ print $1 "_" $2 }' | sort) | join - <(cat /users/mturchin/data/ukbiobank_jun17/ukb_sqc_v2.wfam.ukbDrops.FIDIIDs | awk '{ print $1 "_" $2 }' | sort) | wc | awk '{ print $1 }'`
+	NumUKBDrop=`join -v 2 <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.ukb22419_rel_s488363.wukbDrops.drop.FIDIIDs | awk '{ print $1 "_" $2 }' | sort) <(join <(cat /users/mturchin/data/ukbiobank_jun17/ukb_sqc_v2.wfam.ukbDrops.FIDIIDs | awk '{ print $1 "_" $2 }' | sort) <(cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.fam | awk '{ print $1 "_" $2 }' | sort)) | wc | awk '{ print $1 }'` 
+#	NumTotalDrops=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.ukbKing.drop.ukbDrops.FIDIIDs | wc | awk '{ print $1 }'`
+#	NumAfterFirstQC=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.fam | wc | awk '{ print $1 }'`
+	NumTotalDrops=`expr $NumFamDrop + $NumUKBDrop`
+	NumAfterFirstQC=`expr $NumAfterMiss - $NumTotalDrops`
+	NumPCADrop=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.flashpca.pcs.wInfo.PCAdrops.FIDIIDs | wc | awk '{ print $1 }'`
+	NumAfterPCADrop=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.fam | wc | awk '{ print $1 }'`
+
+	echo $NumBegin1 $NumBegin2 $NumMissDrop $NumAfterMiss $NumFamDrop $NumUKBDrop $NumTotalDrops $NumAfterFirstQC $NumPCADrop $NumAfterPCADrop
 	
-	
+done	
+
+	=`cat /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chrAll_v2_2.British.Ran4000.QCed.pruned.QCed.fam
+	NumAfterMiss=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.fam | wc | awk '{ print $1 }'`
+	NumAfter=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.dropRltvs.fam | wc | awk '{ print $1 }'`
+
+	cat /users/mturchin/data/ukbiobank_jun17/ukb_sqc_v2.wfam.ukbDrops.FIDIIDs
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.ukb22419_rel_s488363.wukbDrops.drop.FIDIIDs
+
+
+#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.ukbKing.drop.ukbDrops.FIDIIDs
+#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.flashpca.pcs.wInfo.PCAdrops.FIDIIDs
+#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v2.${ancestry2}.QCed.fam
+#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v2.${ancestry2}.QCed.reqDrop.QCed.fam
+#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v2.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.fam
+#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr1_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.fam
+#
+#fam drop
+##/users/mturchin/data/ukbiobank_jun17/mturchin/FullDataset/ukb_chrAll_v2.All.QCed.pruned.QCed.ukb22419_rel_s488363.wukbDrops.drop.FIDIIDs 
+#/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.ukb22419_rel_s488363.wukbDrops.drop.FIDIIDs
+#ukb qual drops
+#/users/mturchin/data/ukbiobank_jun17/ukb_sqc_v2.wfam.ukbDrops.FIDIIDs
 
 
 done
