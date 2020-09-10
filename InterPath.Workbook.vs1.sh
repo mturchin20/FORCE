@@ -16401,18 +16401,18 @@ done
 
 R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_10perms\"); \
 	for (i in DataTypes[2:2]) { print(i); \
-		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/ukb_v3.AllPops.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.pValHists.vs3.png\", sep=\"\"), height=12000, width=9250, res=300); par(oma=c(1,12,8,1), mar=c(5,5,4,2), mfrow=c(6,4)); \
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/ukb_v3.AllPops.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.pValHists.vs4.png\", sep=\"\"), height=12000, width=9250, res=300); par(oma=c(1,12,8,1), mar=c(5,5,4,2), mfrow=c(6,4)); \
                 for (j in UKBioBankPops[c(1,2,4,5,6,8)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 			Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/Height/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.KEGG.Results.txt.pre.gz\", sep=\"\"), header=F); \	
 			Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.KEGG.Results.txt.pre.gz\", sep=\"\"), header=F); \	
 			Data3 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/Height/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.REACTOME.Results.txt.pre.gz\", sep=\"\"), header=F); \	
 			Data4 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.REACTOME.Results.txt.pre.gz\", sep=\"\"), header=F); \	
 			Data1 <- Data1[!is.na(Data1[,3]) & Data1[,4] >= 0,]; Data2 <- Data2[!is.na(Data2[,3]) & Data2[,4] >= 0,]; Data3 <- Data3[!is.na(Data3[,3]) & Data3[,4] >= 0,]; Data4 <- Data4[!is.na(Data4[,3]) & Data4[,4] >= 0,]; \
-			Data1[Data1[,4] == 0,4] <- 1e-11; Data2[Data2[,4] == 0,4] <- 1e-11; Data3[Data3[,4] == 0,4] <- 1e-11; Data4[Data4[,4] == 0,4] <- 1e-11; \
-			hist(Data1[,4], main=\"\", xlab=\"p-Values\", breaks=25, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-			hist(Data2[,4], main=\"\", xlab=\"p-Values\", breaks=25, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-			hist(Data3[,4], main=\"\", xlab=\"p-Values\", breaks=25, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-			hist(Data4[,4], main=\"\", xlab=\"p-Values\", breaks=25, cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+			Data1[Data1[,4] == 0,4] <- 1e-10; Data2[Data2[,4] == 0,4] <- 1e-10; Data3[Data3[,4] == 0,4] <- 1e-10; Data4[Data4[,4] == 0,4] <- 1e-10; \
+			hist(Data1[,4], freq=FALSE, main=\"\", xlab=\"p-Values\", breaks=25, cex=2, cex.main=2, cex.axis=2, cex.lab=2); abline(h=1, col=\"RED\", lwd=2, lty=2); \
+			hist(Data2[,4], freq=FALSE, main=\"\", xlab=\"p-Values\", breaks=25, cex=2, cex.main=2, cex.axis=2, cex.lab=2); abline(h=1, col=\"RED\", lwd=2, lty=2); \
+			hist(Data3[,4], freq=FALSE, main=\"\", xlab=\"p-Values\", breaks=25, cex=2, cex.main=2, cex.axis=2, cex.lab=2); abline(h=1, col=\"RED\", lwd=2, lty=2); \
+			hist(Data4[,4], freq=FALSE, main=\"\", xlab=\"p-Values\", breaks=25, cex=2, cex.main=2, cex.axis=2, cex.lab=2); abline(h=1, col=\"RED\", lwd=2, lty=2); \
 		}; mtext(\"KEGG Height\", side=3, outer=TRUE, at=.1325, cex=3); mtext(\"KEGG BMI\", side=3, outer=TRUE, at=.3825, cex=3); mtext(\"REACTOME Height\", side=3, outer=TRUE, at=.6325, cex=3); mtext(\"REACTOME BMI\", side=3, outer=TRUE, at=.8825, cex=3); \
 		mtext(\"African\", side=2, line=4, outer=TRUE, at=.91975, cex=3); mtext(\"Brit.Ran4k\", side=2, line=4, outer=TRUE, at=.7515, cex=3); mtext(\"Caribbean\", side=2, line=4, outer=TRUE, at=.5845, cex=3); mtext(\"Chinese\", side=2, line=4, outer=TRUE, at=.4165, cex=3); mtext(\"Indian\", side=2, line=4, outer=TRUE, at=.2515, cex=3); mtext(\"Pakistani\", side=2, line=4, outer=TRUE, at=.085, cex=3); \
 	dev.off(); }; print(warnings()); \
@@ -17186,7 +17186,7 @@ British.Ran10000.5  9596         597507  BMI     186   669
 
 #Supplementary Table: UKB Subset QC stats
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | head -n 8 | grep -v Irish`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 16 | head -n 16 | head -n 16 | grep -v Irish`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`;
 
 	NumBegin1=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/ukb_chr1_v2.${ancestry2}.fam | wc | awk '{ print $1 }'`
@@ -17208,9 +17208,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 
 	echo $ancestry2 $NumBegin1 $NumBegin2 $NumMissDrop $NumAfterMiss $NumFamDrop $NumUKBDrop $NumAfterFam $NumTotalDrops $NumAfterFirstQC $NumPCADrop $NumAfterPCADrop
 	
-done | awk '{ print $1 "\t" $2 "\t" $5 "\t" $8 "\t" $10 "\t" $12 }' | cat <(echo -e "Subset\tBegin\tiMiss\tAfterFam\tAfterUKB\tAfterPCA") - | column -t 
-
-| R -q -e "library(\"xtable\"); Data1 <- read.table(file('stdin'), header=T); Data1.sub <- Data1[1:8,c(1,2,3,5,6)]; print(xtable(Data1.sub));"
+done | awk '{ print $1 "\t" $2 "\t" $5 "\t" $8 "\t" $10 "\t" $12 }' | cat <(echo -e "Subset\tBegin\tiMiss\tAfterFam\tAfterUKB\tAfterPCA") - | column -t | R -q -e "library(\"xtable\"); Data1 <- read.table(file('stdin'), header=T); print(xtable(Data1));"
 
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v2_2.${ancestry2}.QCed.pruned.QCed.ukbKing.drop.ukbDrops.FIDIIDs
 #/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.flashpca.pcs.wInfo.PCAdrops.FIDIIDs
