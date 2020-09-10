@@ -16401,7 +16401,7 @@ done
 
 R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"British;British.Ran4000\",\"British;British.Ran10000\",\"Caribbean;Caribbean\",\"Chinese;Chinese\",\"Indian;Indian\",\"Irish;Irish\",\"Pakistani;Pakistani\"); DataTypes <- c(\"GjDrop_wCov_GK\",\"GjDrop_wCov_GK_10perms\"); \
 	for (i in DataTypes[2:2]) { print(i); \
-		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/ukb_v3.AllPops.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.pValHists.vs4.png\", sep=\"\"), height=12000, width=9250, res=300); par(oma=c(1,12,8,1), mar=c(5,5,4,2), mfrow=c(6,4)); \
+		tiff(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/ukb_v3.AllPops.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.pValHists.vs4.tiff\", sep=\"\"), height=12000, width=9250, res=300, compression=\"zip\"); par(oma=c(1,12,8,1), mar=c(5,5,4,2), mfrow=c(6,4)); \
                 for (j in UKBioBankPops[c(1,2,4,5,6,8)]) { ancestry1 = strsplit(j, \";\")[[1]][1]; ancestry2 = strsplit(j, \";\")[[1]][2]; \
 			Data1 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/Height/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.KEGG.Results.txt.pre.gz\", sep=\"\"), header=F); \	
 			Data2 <- read.table(paste(\"/users/mturchin/data/ukbiobank_jun17/subsets/\", ancestry1, \"/\", ancestry2, \"/mturchin20/Analyses/InterPath/BMI/ukb_chrAll_v3.\", ancestry2, \".QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.\", i, \".ColCrct.localPCs.KEGG.Results.txt.pre.gz\", sep=\"\"), header=F); \	
@@ -16417,6 +16417,8 @@ R -q -e "library(\"RColorBrewer\"); UKBioBankPops <- c(\"African;African\",\"Bri
 		mtext(\"African\", side=2, line=4, outer=TRUE, at=.91975, cex=3); mtext(\"Brit.Ran4k\", side=2, line=4, outer=TRUE, at=.7515, cex=3); mtext(\"Caribbean\", side=2, line=4, outer=TRUE, at=.5845, cex=3); mtext(\"Chinese\", side=2, line=4, outer=TRUE, at=.4165, cex=3); mtext(\"Indian\", side=2, line=4, outer=TRUE, at=.2515, cex=3); mtext(\"Pakistani\", side=2, line=4, outer=TRUE, at=.085, cex=3); \
 	dev.off(); }; print(warnings()); \
 "
+
+		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/ukb_v3.AllPops.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.pValHists.vs4.png\", sep=\"\"), height=12000, width=9250, res=300); par(oma=c(1,12,8,1), mar=c(5,5,4,2), mfrow=c(6,4)); \
 		 
 #		png(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/ukb_v3.AllPops.HeightBMI.AllPaths.\", i, \".ColCrct.localPCs.pValHists.vs1.png\", sep=\"\"), height=16000, width=9250, res=300); par(oma=c(1,12,8,1), mar=c(5,5,4,2), mfrow=c(8,4)); \
 #		tiff(paste(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/pValHists/ukb_v3.AllPops.HeightBMI.AllPaths.10perms.pValHists.vs2.tif\", sep=\"\"), height=16000, width=9250, res=300, compression=\"lzw\"); par(oma=c(1,12,8,1), mar=c(5,5,4,2), mfrow=c(8,4)); \
