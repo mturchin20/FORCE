@@ -16270,7 +16270,7 @@ Height
 	This gene encodes a member of the subtilisin-like proprotein convertase family, which includes proteases that process protein and peptide precursors trafficking through regulated or constitutive branches of the secretory pathway. The encoded protein undergoes an initial autocatalytic processing event in the ER to generate a heterodimer which exits the ER. It then sorts to the trans-Golgi network where a second autocatalytic event takes place and the catalytic activity is acquired. This encoded protein is widely expressed and one of the seven basic amino acid-specific members which cleave their substrates at single or paired basic residues. It mediates posttranslational endoproteolytic processing for several integrin alpha subunits and is thought to process prorenin, pro-membrane type-1 matrix metalloproteinase and HIV-1 glycoprotein gp160. Alternative splicing results in multiple transcript variants, some of which encode distinct isoforms, including a protease packaged into dense core granules (PC5A) and a type 1 membrane bound protease (PC5B)
 2019-10-16 31562340 Akiyama M 2019-09-27 Nat Commun www.ncbi.nlm.nih.gov/pubmed/31562340  Characterizing rare and low-frequency height-associated variants in the Japanese population.  Height  159,095 Japanese ancestry individuals  32,692 Japanese ancestry individuals 9q21.13  9 76141970 PCSK5 PCSK5    ENSG00000099139     rs7869196-? rs7869196 0   7869196 intron_variant   0     NR  2E-11 10.698970004336019     0.021059182   [0.015-0.027] unit decrease Illumina [27896057] (imputed) N body height http://www.ebi.ac.uk/efo/EFO_0004339 GCST008839 Genome-wide genotyping array
 2019-05-21 30595370 Kichaev G 2018-12-27 Am J Hum Genet www.ncbi.nlm.nih.gov/pubmed/30595370 Leveraging Polygenic Functional Enrichment to Improve GWAS Power.  Height  approximately 458,000 European ancestry individuals  NA 9q21.13 9    75896973  PCSK5   ENSG00000099139       rs35307904-? rs35307904 0 35307904  intron_variant 0 NR 2E-106 105.69897000433602         NR [~ 8900000] (imputed)       N body height  http://www.ebi.ac.uk/efo/EFO_0004339   GCST007841   Genome-wide genotyping array
-Wood2014
+
       6 CDC42EP3
       This gene encodes a member of a small family of guanosine triphosphate (GTP) metabolizing proteins that contain a CRIB (Cdc42, Rac interactive binding) domain. Members of this family of proteins act as effectors of CDC42 function. The encoded protein is involved in actin cytoskeleton re-organization during cell shape changes, including pseudopodia formation. A pseudogene of this gene is found on chromosome 19. Alternative splicing results in multiple transcript variants.
 
@@ -16311,9 +16311,9 @@ The protein encoded by this gene belongs to the family of latent TGF-beta bindin
       8 NR
       8 BMP2
       5 TGFB2
-This gene encodes a secreted ligand of the TGF-beta (transforming growth factor-beta) superfamily of proteins. Ligands of this family bind various TGF-beta receptors leading to recruitment and activation of SMAD family transcription factors that regulate gene expression. The encoded preproprotein is proteolytically processed to generate a latency-associated peptide (LAP) and a mature peptide, and is found in either a latent form composed of a mature peptide homodimer, a LAP homodimer, and a latent TGF-beta binding protein, or in an active form consisting solely of the mature peptide homodimer. The mature peptide may also form heterodimers with other TGF-beta family members. Disruption of the TGF-beta/SMAD pathway has been implicated in a variety of human cancers. A chromosomal translocation that includes this gene is associated with Peters' anomaly, a congenital defect of the anterior chamber of the eye. Mutations in this gene may be associated with Loeys-Dietz syndrome. This gene encodes multiple isoforms that may undergo similar proteolytic processing. 
-
       5 LTBP2
+The protein encoded by this gene belongs to the family of latent transforming growth factor (TGF)-beta binding proteins (LTBP), which are extracellular matrix proteins with multi-domain structure. This protein is the largest member of the LTBP family possessing unique regions and with most similarity to the fibrillins. It has thus been suggested that it may have multiple functions: as a member of the TGF-beta latent complex, as a structural component of microfibrils, and a role in cell adhesion.       
+
       3 UQCC
       3 GHR
       2 intergenic
@@ -16407,8 +16407,14 @@ BMI
      56 VEGFA
      41 NR
       6 VEGFB
+This gene encodes a member of the PDGF (platelet-derived growth factor)/VEGF (vascular endothelial growth factor) family. The VEGF family members regulate the formation of blood vessels and are involved in endothelial cell physiology. This member is a ligand for VEGFR-1 (vascular endothelial growth factor receptor 1) and NRP-1 (neuropilin-1). Studies in mice showed that this gene was co-expressed with nuclear-encoded mitochondrial genes and the encoded protein specifically controlled endothelial uptake of fatty acids. Alternatively spliced transcript variants encoding distinct isoforms have been identified. 
+
       6 MACROD1
+MACROD1 (Mono-ADP Ribosylhydrolase 1) is a Protein Coding gene. Diseases associated with MACROD1 include Endometrial Cancer and Hypercholesterolemia, Familial, 4. Gene Ontology (GO) annotations related to this gene include hydrolase activity, acting on glycosyl bonds and deacetylase activity. An important paralog of this gene is MACROD2.
+
       5 ERBB4
+This gene is a member of the Tyr protein kinase family and the epidermal growth factor receptor subfamily. It encodes a single-pass type I membrane protein with multiple cysteine rich domains, a transmembrane domain, a tyrosine kinase domain, a phosphotidylinositol-3 kinase binding site and a PDZ domain binding motif. The protein binds to and is activated by neuregulins and other factors and induces a variety of cellular responses including mitogenesis and differentiation. Multiple proteolytic events allow for the release of a cytoplasmic fragment and an extracellular fragment. Mutations in this gene have been associated with cancer. Alternatively spliced variants which encode different protein isoforms have been described; however, not all variants have been fully characterized.
+
       4 ZNF318
       4 YIPF3
       4 XPO5
@@ -16420,8 +16426,12 @@ Immune System
 KEGG_AUTOIMMUNE_THYROID_DISEASE
 Height
       5 TGFB2
+This gene encodes a secreted ligand of the TGF-beta (transforming growth factor-beta) superfamily of proteins. Ligands of this family bind various TGF-beta receptors leading to recruitment and activation of SMAD family transcription factors that regulate gene expression. The encoded preproprotein is proteolytically processed to generate a latency-associated peptide (LAP) and a mature peptide, and is found in either a latent form composed of a mature peptide homodimer, a LAP homodimer, and a latent TGF-beta binding protein, or in an active form consisting solely of the mature peptide homodimer. The mature peptide may also form heterodimers with other TGF-beta family members. Disruption of the TGF-beta/SMAD pathway has been implicated in a variety of human cancers. A chromosomal translocation that includes this gene is associated with Peters' anomaly, a congenital defect of the anterior chamber of the eye. Mutations in this gene may be associated with Loeys-Dietz syndrome. This gene encodes multiple isoforms that may undergo similar proteolytic processing.
+
       5 NR
       3 HLA-C
+HLA-C belongs to the HLA class I heavy chain paralogues. This class I molecule is a heterodimer consisting of a heavy chain and a light chain (beta-2 microglobulin). The heavy chain is anchored in the membrane. Class I molecules play a central role in the immune system by presenting peptides derived from endoplasmic reticulum lumen. They are expressed in nearly all cells. The heavy chain is approximately 45 kDa and its gene contains 8 exons. Exon one encodes the leader peptide, exons 2 and 3 encode the alpha1 and alpha2 domain, which both bind the peptide, exon 4 encodes the alpha3 domain, exon 5 encodes the transmembrane region, and exons 6 and 7 encode the cytoplasmic tail. Polymorphisms within exon 2 and exon 3 are responsible for the peptide binding specificity of each class one molecule. Typing for these polymorphisms is routinely done for bone marrow and kidney transplantation. Over one hundred HLA-C alleles have been described
+
       3 HLA-B
       1 ZNFX1
       1 ZNF483
@@ -16433,8 +16443,14 @@ BMI
      27 NR
      26 TGFB2
      15 LYPLAL1
+LYPLAL1 (Lysophospholipase Like 1) is a Protein Coding gene. Gene Ontology (GO) annotations related to this gene include hydrolase activity and lysophospholipase activity. An important paralog of this gene is LYPLA1.
+
      11 ITGB8
+This gene is a member of the integrin beta chain family and encodes a single-pass type I membrane protein with a VWFA domain and four cysteine-rich repeats. This protein noncovalently binds to an alpha subunit to form a heterodimeric integrin complex. In general, integrin complexes mediate cell-cell and cell-extracellular matrix interactions and this complex plays a role in human airway epithelial proliferation. Alternatively spliced variants which encode different protein isoforms have been described; however, not all variants have been fully characterized.
+
       5 HLA-DRB1
+HLA-DRB1 belongs to the HLA class II beta chain paralogs. The class II molecule is a heterodimer consisting of an alpha (DRA) and a beta chain (DRB), both anchored in the membrane. It plays a central role in the immune system by presenting peptides derived from extracellular proteins. Class II molecules are expressed in antigen presenting cells. The beta chain is approximately 26-28 kDa. It is encoded by 6 exons. Exon one encodes the leader peptide; exons 2 and 3 encode the two extracellular domains; exon 4 encodes the transmembrane domain; and exon 5 encodes the cytoplasmic tail. Within the DR molecule the beta chain contains all the polymorphisms specifying the peptide binding specificities. Hundreds of DRB1 alleles have been described and some alleles have increased frequencies associated with certain diseases. There are multiple pseudogenes of this gene. 
+
       3 HLA-C
       2 SP8
       2 RPL23P8
@@ -16443,7 +16459,9 @@ BMI
 KEGG_ALLOGRAFT_REJECTION
 Height
       3 HLA-C
+
       3 HLA-B
+
       1 ZNFX1
       1 XXbac-BPG248L24.10
       1 USP8P1
@@ -16455,7 +16473,11 @@ Height
 BMI
      14 NR
      10 TNFAIP8
+TNFAIP8 (TNF Alpha Induced Protein 8) is a Protein Coding gene. Among its related pathways are Metabolism and Glycerophospholipid biosynthesis. Gene Ontology (GO) annotations related to this gene include cysteine-type endopeptidase inhibitor activity involved in apoptotic process.
+
       8 HSD17B4
+The protein encoded by this gene is a bifunctional enzyme that is involved in the peroxisomal beta-oxidation pathway for fatty acids. It also acts as a catalyst for the formation of 3-ketoacyl-CoA intermediates from both straight-chain and 2-methyl-branched-chain fatty acids. Defects in this gene that affect the peroxisomal fatty acid beta-oxidation activity are a cause of D-bifunctional protein deficiency (DBPD). An apparent pseudogene of this gene is present on chromosome 8. Multiple alternatively spliced transcript variants encoding distinct isoforms have been found for this gene. 
+
       5 HLA-DRB1
       3 MIR1244-3
       3 MIR1244-2
@@ -16463,11 +16485,15 @@ BMI
       3 HLA-C
       3 FAM170A
       3 DTWD2
+DTWD2 (DTW Domain Containing 2) is a Protein Coding gene. Diseases associated with DTWD2 include 46,Xy Sex Reversal 8 and Renal-Hepatic-Pancreatic Dysplasia
+
 KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION
 Height
       3 HLA-C
       3 HLA-B
       2 C2CD4A
+C2CD4A (C2 Calcium Dependent Domain Containing 4A) is a Protein Coding gene. Diseases associated with C2CD4A include Maturity-Onset Diabetes Of The Young. Gene Ontology (GO) annotations related to this gene include calcium ion binding and calcium-dependent phospholipid binding. An important paralog of this gene is C2CD4B.
+
       1 XXbac-BPG248L24.10
       1 USP8P1
       1 TAP2
@@ -16479,12 +16505,18 @@ BMI
       9 NR
       5 HLA-DRB1
       4 IFI30
+The protein encoded by this gene is a lysosomal thiol reductase that at low pH can reduce protein disulfide bonds. The enzyme is expressed constitutively in antigen-presenting cells and induced by gamma-interferon in other cell types. This enzyme has an important role in MHC class II-restricted antigen processing. 
+
       3 ZNF318
+ZNF318 (Zinc Finger Protein 318) is a Protein Coding gene. Among its related pathways are Androgen receptor signaling pathway. Gene Ontology (GO) annotations related to this gene include nucleic acid binding.
+
       3 YIPF3
       3 XPO5
       3 VEGFA
       3 TMEM63B
       3 TJAP1
+This gene encodes a tight junction-associated protein. Incorporation of the encoded protein into tight junctions occurs at a late stage of formation of the junctions. The encoded protein localizes to the Golgi and may function in vesicle trafficking. Alternatively spliced transcript variants have been described. A related pseudogene exists on the X chromosome. 
+
       3 TCTE1
 
 
@@ -16493,10 +16525,16 @@ KEGG_DILATED_CARDIOMYOPATHY
 Height
      10 NR
       8 IGF1
+The protein encoded by this gene is similar to insulin in function and structure and is a member of a family of proteins involved in mediating growth and development. The encoded protein is processed from a precursor, bound by a specific receptor, and secreted. Defects in this gene are a cause of insulin-like growth factor I deficiency. Alternative splicing results in multiple transcript variants encoding different isoforms that may undergo similar processing to generate mature protein.
+
       7 ADCY3
       5 TGFB2
       4 IGF1R
+This receptor binds insulin-like growth factor with a high affinity. It has tyrosine kinase activity. The insulin-like growth factor I receptor plays a critical role in transformation events. Cleavage of the precursor generates alpha and beta subunits. It is highly overexpressed in most malignant tissues where it functions as an anti-apoptotic agent by enhancing cell survival. Alternatively spliced transcript variants encoding distinct isoforms have been found for this gene. 
+
       3 POMC
+This gene encodes a preproprotein that undergoes extensive, tissue-specific, post-translational processing via cleavage by subtilisin-like enzymes known as prohormone convertases. There are eight potential cleavage sites within the preproprotein and, depending on tissue type and the available convertases, processing may yield as many as ten biologically active peptides involved in diverse cellular functions. The encoded protein is synthesized mainly in corticotroph cells of the anterior pituitary where four cleavage sites are used; adrenocorticotrophin, essential for normal steroidogenesis and the maintenance of normal adrenal weight, and lipotropin beta are the major end products. In other tissues, including the hypothalamus, placenta, and epithelium, all cleavage sites may be used, giving rise to peptides with roles in pain and energy homeostasis, melanocyte stimulation, and immune modulation. These include several distinct melanotropins, lipotropins, and endorphins that are contained within the adrenocorticotrophin and beta-lipotropin peptides. The antimicrobial melanotropin alpha peptide exhibits antibacterial and antifungal activity. Mutations in this gene have been associated with early onset obesity, adrenal insufficiency, and red hair pigmentation. Alternatively spliced transcript variants encoding the same protein have been described.
+
       3 LINC00485
       2 LAMA2
       2 DNAJC27
@@ -16504,21 +16542,30 @@ Height
 BMI
      43 NR
      26 TGFB2
+
      15 LYPLAL1
      15 ADCY3
+
      11 ITGB8
      10 TNFAIP8
       8 HSD17B4
+The protein encoded by this gene is a bifunctional enzyme that is involved in the peroxisomal beta-oxidation pathway for fatty acids. It also acts as a catalyst for the formation of 3-ketoacyl-CoA intermediates from both straight-chain and 2-methyl-branched-chain fatty acids. Defects in this gene that affect the peroxisomal fatty acid beta-oxidation activity are a cause of D-bifunctional protein deficiency (DBPD). An apparent pseudogene of this gene is present on chromosome 8. Multiple alternatively spliced transcript variants encoding distinct isoforms have been found for this gene. 
+
       3 UQCC
       3 TRPC4AP
       3 TP53INP2
 KEGG_VIRAL_MYOCARDITIS
 Height
       9 HMGA1
+This gene encodes a chromatin-associated protein involved in the regulation of gene transcription, integration of retroviruses into chromosomes, and the metastatic progression of cancer cells. The encoded protein preferentially binds to the minor groove of AT-rich regions in double-stranded DNA. Multiple transcript variants encoding different isoforms have been found for this gene. Pseudogenes of this gene have been identified on multiple chromosomes
+
       7 NR
       3 HLA-C
       3 HLA-B
+
       2 LAMA2
+Laminin, an extracellular protein, is a major component of the basement membrane. It is thought to mediate the attachment, migration, and organization of cells into tissues during embryonic development by interacting with other extracellular matrix components. It is composed of three subunits, alpha, beta, and gamma, which are bound to each other by disulfide bonds into a cross-shaped molecule. This gene encodes the alpha 2 chain, which constitutes one of the subunits of laminin 2 (merosin) and laminin 4 (s-merosin). Mutations in this gene have been identified as the cause of congenital merosin-deficient muscular dystrophy. Two transcript variants encoding different proteins have been found for this gene.
+
       1 XXbac-BPG248L24.10
       1 WISP3
       1 USP8P1
@@ -16526,9 +16573,13 @@ Height
       1 OR9Q1
 BMI
      23 HMGA1
+
      18 NR
       9 CYCSL1
+CYCSP55 (CYCS Pseudogene 55) is a Pseudogene.
+
       5 HLA-DRB1
+
       3 UQCC
       3 TRPC4AP
       3 TP53INP2
@@ -16541,11 +16592,17 @@ Metabolism
 KEGG_PURINE_METABOLISM
 Height
      19 ADAMTSL3
+ADAMTSL3 (ADAMTS Like 3) is a Protein Coding gene. Diseases associated with ADAMTSL3 include Peters-Plus Syndrome and Geleophysic Dysplasia. Among its related pathways are Metabolism of proteins and O-glycosylation of TSR domain-containing proteins. Gene Ontology (GO) annotations related to this gene include peptidase activity and metallopeptidase activity. An important paralog of this gene is ADAMTSL1.
+
      18 NR
      17 ADAMTS17
+This gene encodes a member of the ADAMTS (a disintegrin and metalloproteinase with thrombospondin motifs) protein family. ADAMTS family members share several distinct protein modules, including a propeptide region, a metalloproteinase domain, a disintegrin-like domain, and a thrombospondin type 1 (TS) motif. Individual members of this family differ in the number of C-terminal TS motifs, and some have unique C-terminal domains. The encoded preproprotein is proteolytically processed to generate the mature protein, which may promote breast cancer cell growth and survival. Mutations in this gene are associated with a Weill-Marchesani-like syndrome, which is characterized by lenticular myopia, ectopia lentis, glaucoma, spherophakia, and short stature.
+
       7 ADCY3
       6 ADAMTS3
       5 PDE3A
+This gene encodes a member of the cGMP-inhibited cyclic nucleotide phosphodiesterase (cGI-PDE) family. cGI-PDE enzymes hydrolyze both cAMP and cGMP, and play critical roles in many cellular processes by regulating the amplitude and duration of intracellular cyclic nucleotide signals. The encoded protein mediates platelet aggregation and also plays important roles in cardiovascular function by regulating vascular smooth muscle contraction and relaxation. Inhibitors of the encoded protein may be effective in treating congestive heart failure. Alternatively spliced transcript variants encoding multiple isoforms have been observed for this gene. 
+
       5 ADAMTS10
       3 SH3GL3
       3 POMC
@@ -16553,10 +16610,15 @@ Height
 BMI 
     104 NR
      40 ADAMTSL3
+
      33 ADAMTS9
+This gene encodes a member of the ADAMTS (a disintegrin and metalloproteinase with thrombospondin motifs) protein family. Members of the family share several distinct protein modules, including a propeptide region, a metalloproteinase domain, a disintegrin-like domain, and a thrombospondin type 1 (TS) motif. Individual members of this family differ in the number of C-terminal TS motifs, and some have unique C-terminal domains. Members of the ADAMTS family have been implicated in the cleavage of proteoglycans, the control of organ shape during development, and the inhibition of angiogenesis. This gene is localized to chromosome 3p14.3-p14.2, an area known to be lost in hereditary renal tumors. Alternative splicing results in multiple transcript variants encoding different isoforms that may undergo similar proteolytic processing. 
+
      15 ADCY3
      10 ADAMTS3
       8 CENTA2
+The protein encoded by this gene binds beta-tubulin and increases the stability of microtubules. The encoded protein can also translocate to the cell membrane and bind phosphatidylinositol 3,4,5-trisphosphate (PtdInsP3) and inositol 1,3,4,5-tetrakisphosphate (InsP4). In addition, this protein is a GTPase-activating protein for ADP ribosylation factor 6 and may be able to block the entry of some RNA viruses. 
+
       7 NT5C2
       7 FHIT
       7 ADAMTS9-AS2
@@ -16564,30 +16626,55 @@ BMI
 KEGG_BETA_ALANINE_METABOLISM
 Height
       1 ALDH2
+This protein belongs to the aldehyde dehydrogenase family of proteins. Aldehyde dehydrogenase is the second enzyme of the major oxidative pathway of alcohol metabolism. Two major liver isoforms of aldehyde dehydrogenase, cytosolic and mitochondrial, can be distinguished by their electrophoretic mobilities, kinetic properties, and subcellular localizations. Most Caucasians have two major isozymes, while approximately 50% of East Asians have the cytosolic isozyme but not the mitochondrial isozyme. A remarkably higher frequency of acute alcohol intoxication among East Asians than among Caucasians could be related to the absence of a catalytically active form of the mitochondrial isozyme. The increased exposure to acetaldehyde in individuals with the catalytically inactive form may also confer greater susceptibility to many types of cancer. This gene encodes a mitochondrial isoform, which has a low Km for acetaldehydes, and is localized in mitochondrial matrix. Alternative splicing results in multiple transcript variants encoding distinct isoforms.
+
 BMI   
       1 DPYSL5
+This gene encodes a member of the CRMP (collapsing response mediator protein) family thought to be involved in neural development. Antibodies to the encoded protein were found in some patients with neurologic symptoms who had paraneoplastic syndrome. A pseudogene of this gene is found on chromosome 11. Multiple alternatively spliced variants, encoding the same protein, have been identified. 
+
       1 DPYD-AS1
       1 DPYD
+The protein encoded by this gene is a pyrimidine catabolic enzyme and the initial and rate-limiting factor in the pathway of uracil and thymidine catabolism. Mutations in this gene result in dihydropyrimidine dehydrogenase deficiency, an error in pyrimidine metabolism associated with thymine-uraciluria and an increased risk of toxicity in cancer patients receiving 5-fluorouracil chemotherapy. Two transcript variants encoding different isoforms have been found for this gene.
+
 KEGG_ETHER_LIPID_METABOLISM
 Height
       1 MAFF
+The protein encoded by this gene is a basic leucine zipper (bZIP) transcription factor that lacks a transactivation domain. It is known to bind the US-2 DNA element in the promoter of the oxytocin receptor (OTR) gene and most likely heterodimerizes with other leucine zipper-containing proteins to enhance expression of the OTR gene during term pregnancy. The encoded protein can also form homodimers, and since it lacks a transactivation domain, the homodimer may act as a repressor of transcription. This gene may also be involved in the cellular stress response. Multiple transcript variants encoding two different isoforms have been found for this gene. 
+
       1 AGPS
+This gene is a member of the FAD-binding oxidoreductase/transferase type 4 family. It encodes a protein that catalyzes the second step of ether lipid biosynthesis in which acyl-dihydroxyacetonephosphate (DHAP) is converted to alkyl-DHAP by the addition of a long chain alcohol and the removal of a long-chain acid anion. The protein is localized to the inner aspect of the peroxisomal membrane and requires FAD as a cofactor. Mutations in this gene have been associated with rhizomelic chondrodysplasia punctata, type 3 and Zellweger syndrome.
+
 BMI   
       1 PLA2G6
+The protein encoded by this gene is an A2 phospholipase, a class of enzyme that catalyzes the release of fatty acids from phospholipids. The encoded protein may play a role in phospholipid remodelling, arachidonic acid release, leukotriene and prostaglandin synthesis, fas-mediated apoptosis, and transmembrane ion flux in glucose-stimulated B-cells. Several transcript variants encoding multiple isoforms have been described, but the full-length nature of only three of them have been determined to date.
+
       1 PLA2G4A
+This gene encodes a member of the cytosolic phospholipase A2 group IV family. The enzyme catalyzes the hydrolysis of membrane phospholipids to release arachidonic acid which is subsequently metabolized into eicosanoids. Eicosanoids, including prostaglandins and leukotrienes, are lipid-based cellular hormones that regulate hemodynamics, inflammatory responses, and other intracellular pathways. The hydrolysis reaction also produces lysophospholipids that are converted into platelet-activating factor. The enzyme is activated by increased intracellular Ca(2+) levels and phosphorylation, resulting in its translocation from the cytosol and nucleus to perinuclear membrane vesicles. Alternative splicing results in multiple transcript variants.
+
       1 PLA2G2D
+This gene encodes a secreted member of the phospholipase A2 family, and is found in a cluster of related family members on chromosome 1. Phospholipase A2 family members hydrolyze the sn-2 fatty acid ester bond of glycerophospholipids to produce lysophospholipids and free fatty acid. This gene may be involved in inflammation and immune response, and in weight loss associated with chronic obstructive pulmonary disease. Alternative splicing results in multiple transcript variants encoding different isoforms.
+
       1 NR
 KEGG_O_GLYCAN_BIOSYNTHESIS
 Height
       4 B4GALNT3
+B4GALNT3 transfers N-acetylgalactosamine (GalNAc) onto glucosyl residues to form N,N-prime-diacetyllactosediamine (LacdiNAc, or LDN), a unique terminal structure of cell surface N-glycans (Ikehara et al., 2006 [PubMed 16728562]).
+
       1 GALNT2
+This gene encodes a member of the glycosyltransferase 2 protein family. Members of this family initiate mucin-type O-glycoslation of peptides in the Golgi apparatus. The encoded protein may be involved in O-linked glycosylation of the immunoglobulin A1 hinge region. This gene may influence triglyceride levels, and may be involved Type 2 diabetes, as well as several types of cancer. Alternative splicing results in multiple transcript variants.
+
 BMI   
       3 NR
       2 GALNT10
+This gene encodes a member of the GalNAc polypeptide N-acetylgalactosaminyltransferases. These enzymes catalyze the first step in the synthesis of mucin-type oligosaccharides. These proteins transfer GalNAc from UDP-GalNAc to either serine or threonine residues of polypeptide acceptors. The protein encoded by this locus may have increased catalytic activity toward glycosylated peptides compared to activity toward non-glycosylated peptides.
+
       2 B4GALNT3
+
       1 WBSCR17
       1 RP11-575M4.1
       1 MFAP3
+MFAP3 (Microfibril Associated Protein 3) is a Protein Coding gene. Diseases associated with MFAP3 include Lutembacher's Syndrome and Postural Orthostatic Tachycardia Syndrome. Among its related pathways are Degradation of the extracellular matrix and Elastic fibre formation. An important paralog of this gene is MFAP3L.
+
       1 GALNT2
       1 C1GALT1
 
