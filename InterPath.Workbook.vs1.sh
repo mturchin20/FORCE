@@ -16240,15 +16240,93 @@ KEGG_BETA_ALANINE_METABOLISM
 KEGG_ETHER_LIPID_METABOLISM
 KEGG_O_GLYCAN_BIOSYNTHESIS
 
-for i in `cat <(echo "KEGG_CHEMOKINE_SIGNALING_PATHWAY KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION KEGG_WNT_SIGNALING_PATHWAY KEGG_ERBB_SIGNALING_PATHWAY KEGG_AUTOIMMUNE_THYROID_DISEASE KEGG_ALLOGRAFT_REJECTION KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION KEGG_DILATED_CARDIOMYOPATHY KEGG_VIRAL_MYOCARDITIS KEGG_PURINE_METABOLISM KEGG_BETA_ALANINE_METABOLISM KEGG_ETHER_LIPID_METABOLISM KEGG_O_GLYCAN_BIOSYNTHESIS" | perl -lane 'print join("\n", @F);') | head -n 2`; do
+for i in `cat <(echo "KEGG_CHEMOKINE_SIGNALING_PATHWAY KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION KEGG_WNT_SIGNALING_PATHWAY KEGG_ERBB_SIGNALING_PATHWAY KEGG_AUTOIMMUNE_THYROID_DISEASE KEGG_ALLOGRAFT_REJECTION KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION KEGG_DILATED_CARDIOMYOPATHY KEGG_VIRAL_MYOCARDITIS KEGG_PURINE_METABOLISM KEGG_BETA_ALANINE_METABOLISM KEGG_ETHER_LIPID_METABOLISM KEGG_O_GLYCAN_BIOSYNTHESIS" | perl -lane 'print join("\n", @F);')`; do
+	echo $i
 	
 	cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValAll/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValAll.txt | grep $i | sed 's/,/\n/g' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.txt
 	cat /users/mturchin/Data2/GWASCatalog/gwas_catalog_v1.0.2-associations_e100_r2020-09-09.tsv | grep -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.txt | grep height > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.GWAScat.Height.txt 
 	cat /users/mturchin/Data2/GWASCatalog/gwas_catalog_v1.0.2-associations_e100_r2020-09-09.tsv | grep -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.txt | grep BMI > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.GWAScat.BMI.txt 
 
 done
+for i in `cat <(echo "KEGG_CHEMOKINE_SIGNALING_PATHWAY KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION KEGG_WNT_SIGNALING_PATHWAY KEGG_ERBB_SIGNALING_PATHWAY KEGG_AUTOIMMUNE_THYROID_DISEASE KEGG_ALLOGRAFT_REJECTION KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION KEGG_DILATED_CARDIOMYOPATHY KEGG_VIRAL_MYOCARDITIS KEGG_PURINE_METABOLISM KEGG_BETA_ALANINE_METABOLISM KEGG_ETHER_LIPID_METABOLISM KEGG_O_GLYCAN_BIOSYNTHESIS" | perl -lane 'print join("\n", @F);') | head -n 2`; do
+	echo $i
 
-BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
+	echo "Height"
+	cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.GWAScat.Height.txt | perl -F\\t -lane 'print $F[13];' | sed 's/,/\n/g' | sed 's/^\s//g' | grep -v ^$ | sort | uniq -c | sort -rg -k 1,1 | head -n 10
+	
+	echo ""
+	echo "BMI"
+	cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.GWAScat.BMI.txt | perl -F\\t -lane 'print $F[13];' | sed 's/,/\n/g' | sed 's/^\s//g' | grep -v ^$ | sort | uniq -c | sort -rg -k 1,1 | head -n 10
+	
+	echo ""
+	echo ""
+done
+
+Cellular Signaling
+KEGG_CHEMOKINE_SIGNALING_PATHWAY
+Height:
+
+BMI:
+
+KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION
+Height:
+
+BMI:
+
+KEGG_WNT_SIGNALING_PATHWAY
+Height:
+
+BMI:
+KEGG_ERBB_SIGNALING_PATHWAY
+Height:
+
+BMI:
+
+
+Immune System
+KEGG_AUTOIMMUNE_THYROID_DISEASE
+Height:
+
+BMI:
+KEGG_ALLOGRAFT_REJECTION
+Height:
+
+BMI:
+KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION
+Height:
+
+BMI:
+
+
+Heart Condition
+KEGG_DILATED_CARDIOMYOPATHY
+Height:
+
+BMI:
+KEGG_VIRAL_MYOCARDITIS
+Height:
+
+BMI:
+
+
+Metabolism
+KEGG_PURINE_METABOLISM
+Height:
+
+BMI:
+KEGG_BETA_ALANINE_METABOLISM
+Height:
+
+BMI:
+KEGG_ETHER_LIPID_METABOLISM
+Height:
+
+BMI:
+KEGG_O_GLYCAN_BIOSYNTHESIS
+Height:
+
+BMI:
+
 
 
 
