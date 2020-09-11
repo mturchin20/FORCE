@@ -16207,27 +16207,48 @@ phyper(q=x, m=m, n=n, k=k, lower.tail=FALSE)
 
 #20200911
 
+mkdir /users/mturchin/Data2/GWASCatalog
+cd /users/mturchin/Data2/GWASCatalog
+wget https://www.ebi.ac.uk/gwas/api/search/downloads/alternative
+mv /users/mturchin/Data2/GWASCatalog/alternative /users/mturchin/Data2/GWASCatalog/gwas_catalog_v1.0.2-associations_e100_r2020-09-09.tsv
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes
+
+
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValAll/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValAll.txt | grep -E "KEGG_CHEMOKINE_SIGNALING_PATHWAY|KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION|KEGG_WNT_SIGNALING_PATHWAY|KEGG_ERBB_SIGNALING_PATHWAY"
+cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValAll/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValAll.txt | grep -E "KEGG_CHEMOKINE_SIGNALING_PATHWAY|KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION|KEGG_WNT_SIGNALING_PATHWAY|KEGG_ERBB_SIGNALING_PATHWAY" | head -n 1 > 
+cat 
+
 Cellular Signaling
-KEGG_CHEMOKINE\_SIGNALING\_PATHWAY
-KEGG_CYTOKINE\_CYTOKINE\_RECEPTOR\_INTERACTION
-KEGG_WNT\_SIGNALING\_PATHWAY
-KEGG_ERBB\_SIGNALING\_PATHWAY
+KEGG_CHEMOKINE_SIGNALING_PATHWAY
+KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION
+KEGG_WNT_SIGNALING_PATHWAY
+KEGG_ERBB_SIGNALING_PATHWAY
 
 Immune System
-KEGG_AUTOIMMUNE\_THYROID\_DISEASE
-KEGG_ALLOGRAFT\_REJECTION
-KEGG_ANTIGEN\_PROCESSING\_AND\_PRESENTATION
+KEGG_AUTOIMMUNE_THYROID_DISEASE
+KEGG_ALLOGRAFT_REJECTION
+KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION
 
 Heart Condition
-KEGG_DILATED\_CARDIOMYOPATHY
-KEGG_VIRAL\_MYOCARDITIS
+KEGG_DILATED_CARDIOMYOPATHY
+KEGG_VIRAL_MYOCARDITIS
 
 Metabolism
-KEGG_PURINE\_METABOLISM
-KEGG_BETA\_ALANINE\_METABOLISM
-KEGG_ETHER\_LIPID\_METABOLISM
-KEGG_O\_GLYCAN\_BIOSYNTHESIS
+KEGG_PURINE_METABOLISM
+KEGG_BETA_ALANINE_METABOLISM
+KEGG_ETHER_LIPID_METABOLISM
+KEGG_O_GLYCAN_BIOSYNTHESIS
 
+for i in `cat <(echo "KEGG_CHEMOKINE_SIGNALING_PATHWAY KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION KEGG_WNT_SIGNALING_PATHWAY KEGG_ERBB_SIGNALING_PATHWAY KEGG_AUTOIMMUNE_THYROID_DISEASE KEGG_ALLOGRAFT_REJECTION KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION KEGG_DILATED_CARDIOMYOPATHY KEGG_VIRAL_MYOCARDITIS KEGG_PURINE_METABOLISM KEGG_BETA_ALANINE_METABOLISM KEGG_ETHER_LIPID_METABOLISM KEGG_O_GLYCAN_BIOSYNTHESIS" | perl -lane 'print join("\n", @F);') | head -n 2`; do
+	
+	cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/Analyses/InterPath/BMI/SubFiles/KEGG/pValAll/ukb_chrAll_v3.African.QCed.100geno.Regions.Exonic.c2.InterPath.vs1.BMI.ExonicPlus20kb.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.wGenes.wVars.KEGG.ArchExplr.pValAll.txt | grep $i | sed 's/,/\n/g' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.txt
+	cat /users/mturchin/Data2/GWASCatalog/gwas_catalog_v1.0.2-associations_e100_r2020-09-09.tsv | grep -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.txt | grep height > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.GWAScat.Height.txt 
+	cat /users/mturchin/Data2/GWASCatalog/gwas_catalog_v1.0.2-associations_e100_r2020-09-09.tsv | grep -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.txt | grep BMI > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.GWAScat.BMI.txt 
+
+done
+
+BIOCARTA KEGG REACTOME PID" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 2`; do
 
 
 
