@@ -16248,11 +16248,11 @@ for i in `cat <(echo "KEGG_CHEMOKINE_SIGNALING_PATHWAY KEGG_CYTOKINE_CYTOKINE_RE
 	cat /users/mturchin/Data2/GWASCatalog/gwas_catalog_v1.0.2-associations_e100_r2020-09-09.tsv | grep -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.txt | grep BMI > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.GWAScat.BMI.txt 
 
 done
-for i in `cat <(echo "KEGG_CHEMOKINE_SIGNALING_PATHWAY KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION KEGG_WNT_SIGNALING_PATHWAY KEGG_ERBB_SIGNALING_PATHWAY KEGG_AUTOIMMUNE_THYROID_DISEASE KEGG_ALLOGRAFT_REJECTION KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION KEGG_DILATED_CARDIOMYOPATHY KEGG_VIRAL_MYOCARDITIS KEGG_PURINE_METABOLISM KEGG_BETA_ALANINE_METABOLISM KEGG_ETHER_LIPID_METABOLISM KEGG_O_GLYCAN_BIOSYNTHESIS" | perl -lane 'print join("\n", @F);') | head -n 2`; do
+for i in `cat <(echo "KEGG_CHEMOKINE_SIGNALING_PATHWAY KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION KEGG_WNT_SIGNALING_PATHWAY KEGG_ERBB_SIGNALING_PATHWAY KEGG_AUTOIMMUNE_THYROID_DISEASE KEGG_ALLOGRAFT_REJECTION KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION KEGG_DILATED_CARDIOMYOPATHY KEGG_VIRAL_MYOCARDITIS KEGG_PURINE_METABOLISM KEGG_BETA_ALANINE_METABOLISM KEGG_ETHER_LIPID_METABOLISM KEGG_O_GLYCAN_BIOSYNTHESIS" | perl -lane 'print join("\n", @F);') | grep ERBB`; do
 	echo $i
 
 	echo "Height"
-	cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.GWAScat.Height.txt | perl -F\\t -lane 'print $F[13];' | sed 's/,/\n/g' | sed 's/^\s//g' | grep -v ^$ | sort | uniq -c | sort -rg -k 1,1 | head -n 10
+	cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/TopPathways/SpecificGenes/ukb_chrAll_v3.African.QCed.InterPath.GjDrop_wCov_GK.ColCrct.localPCs.KEGG.$i.genes.GWAScat.Height.txt | perl -F\\t -lane 'print $F[13];' | sed 's/,/\n/g' | sed 's/^\s//g' | grep -v ^$ | sort | uniq -c | sort -rg -k 1,1 
 	
 	echo ""
 	echo "BMI"
@@ -16264,68 +16264,332 @@ done
 
 Cellular Signaling
 KEGG_CHEMOKINE_SIGNALING_PATHWAY
-Height:
+Height
+      7 ADCY3
+      6 PCSK5
+	This gene encodes a member of the subtilisin-like proprotein convertase family, which includes proteases that process protein and peptide precursors trafficking through regulated or constitutive branches of the secretory pathway. The encoded protein undergoes an initial autocatalytic processing event in the ER to generate a heterodimer which exits the ER. It then sorts to the trans-Golgi network where a second autocatalytic event takes place and the catalytic activity is acquired. This encoded protein is widely expressed and one of the seven basic amino acid-specific members which cleave their substrates at single or paired basic residues. It mediates posttranslational endoproteolytic processing for several integrin alpha subunits and is thought to process prorenin, pro-membrane type-1 matrix metalloproteinase and HIV-1 glycoprotein gp160. Alternative splicing results in multiple transcript variants, some of which encode distinct isoforms, including a protease packaged into dense core granules (PC5A) and a type 1 membrane bound protease (PC5B)
+2019-10-16 31562340 Akiyama M 2019-09-27 Nat Commun www.ncbi.nlm.nih.gov/pubmed/31562340  Characterizing rare and low-frequency height-associated variants in the Japanese population.  Height  159,095 Japanese ancestry individuals  32,692 Japanese ancestry individuals 9q21.13  9 76141970 PCSK5 PCSK5    ENSG00000099139     rs7869196-? rs7869196 0   7869196 intron_variant   0     NR  2E-11 10.698970004336019     0.021059182   [0.015-0.027] unit decrease Illumina [27896057] (imputed) N body height http://www.ebi.ac.uk/efo/EFO_0004339 GCST008839 Genome-wide genotyping array
+2019-05-21 30595370 Kichaev G 2018-12-27 Am J Hum Genet www.ncbi.nlm.nih.gov/pubmed/30595370 Leveraging Polygenic Functional Enrichment to Improve GWAS Power.  Height  approximately 458,000 European ancestry individuals  NA 9q21.13 9    75896973  PCSK5   ENSG00000099139       rs35307904-? rs35307904 0 35307904  intron_variant 0 NR 2E-106 105.69897000433602         NR [~ 8900000] (imputed)       N body height  http://www.ebi.ac.uk/efo/EFO_0004339   GCST007841   Genome-wide genotyping array
+Wood2014
+      6 CDC42EP3
+      This gene encodes a member of a small family of guanosine triphosphate (GTP) metabolizing proteins that contain a CRIB (Cdc42, Rac interactive binding) domain. Members of this family of proteins act as effectors of CDC42 function. The encoded protein is involved in actin cytoskeleton re-organization during cell shape changes, including pseudopodia formation. A pseudogene of this gene is found on chromosome 19. Alternative splicing results in multiple transcript variants.
 
-BMI:
+      5 NR
+      3 STAT2
+The protein encoded by this gene is a member of the STAT protein family. In response to cytokines and growth factors, STAT family members are phosphorylated by the receptor associated kinases, and then form homo- or heterodimers that translocate to the cell nucleus where they act as transcription activators. In response to interferon (IFN), this protein forms a complex with STAT1 and IFN regulatory factor family protein p48 (ISGF3G), in which this protein acts as a transactivator, but lacks the ability to bind DNA directly. Transcription adaptor P300/CBP (EP300/CREBBP) has been shown to interact specifically with this protein, which is thought to be involved in the process of blocking IFN-alpha response by adenovirus. Multiple transcript variants encoding different isoforms have been found for this gene. 
 
+      3 POMC
+      2 LINC00211
+      2 DNAJC27
+      2 CENPO
+      1 TGS1
+BMI  
+     24 NR
+     15 ADCY3
+This gene encodes adenylyl cyclase 3 which is a membrane-associated enzyme and catalyzes the formation of the secondary messenger cyclic adenosine monophosphate (cAMP). This protein appears to be widely expressed in various human tissues and may be involved in a number of physiological and pathophysiological metabolic processes. Two transcript variants encoding different isoforms have been found for this gene. 
+
+      6 PLCB3
+This gene encodes a member of the phosphoinositide phospholipase C beta enzyme family that catalyze the production of the secondary messengers diacylglycerol and inositol 1,4,5-triphosphate from phosphatidylinositol in G-protein-linked receptor-mediated signal transduction. Alternative splicing results in multiple transcript variants.
+
+      4 TSEN2
+This gene encodes one of the subunits of the tRNA splicing endonuclease. This endonuclease catalyzes the first step in RNA splicing which is the removal of introns. Mutations in this gene have been associated with pontocerebellar hypoplasia type 2. A pseudogene has been identified on chromosome 4. Multiple transcript variants encoding different isoforms have been found for this gene.
+
+      4 TMEM40
+      4 TIMP4
+      4 SYN2
+      4 SNORA7A
+      4 RPL32
+      4 RAF1
 KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION
-Height:
+Height
+     17 GDF5
+This gene encodes a secreted ligand of the TGF-beta (transforming growth factor-beta) superfamily of proteins. Ligands of this family bind various TGF-beta receptors leading to recruitment and activation of SMAD family transcription factors that regulate gene expression. The encoded preproprotein is proteolytically processed to generate each subunit of the disulfide-linked homodimer. This protein regulates the development of numerous tissue and cell types, including cartilage, joints, brown fat, teeth, and the growth of neuronal axons and dendrites. Mutations in this gene are associated with acromesomelic dysplasia, brachydactyly, chondrodysplasia, multiple synostoses syndrome, proximal symphalangism, and susceptibility to osteoarthritis.
 
-BMI:
+     11 LTBP1
+The protein encoded by this gene belongs to the family of latent TGF-beta binding proteins (LTBPs). The secretion and activation of TGF-betas is regulated by their association with latency-associated proteins and with latent TGF-beta binding proteins. The product of this gene targets latent complexes of transforming growth factor beta to the extracellular matrix, where the latent cytokine is subsequently activated by several different mechanisms. Alternatively spliced transcript variants encoding different isoforms have been identified. 
 
+      8 NR
+      8 BMP2
+      5 TGFB2
+This gene encodes a secreted ligand of the TGF-beta (transforming growth factor-beta) superfamily of proteins. Ligands of this family bind various TGF-beta receptors leading to recruitment and activation of SMAD family transcription factors that regulate gene expression. The encoded preproprotein is proteolytically processed to generate a latency-associated peptide (LAP) and a mature peptide, and is found in either a latent form composed of a mature peptide homodimer, a LAP homodimer, and a latent TGF-beta binding protein, or in an active form consisting solely of the mature peptide homodimer. The mature peptide may also form heterodimers with other TGF-beta family members. Disruption of the TGF-beta/SMAD pathway has been implicated in a variety of human cancers. A chromosomal translocation that includes this gene is associated with Peters' anomaly, a congenital defect of the anterior chamber of the eye. Mutations in this gene may be associated with Loeys-Dietz syndrome. This gene encodes multiple isoforms that may undergo similar proteolytic processing. 
+
+      5 LTBP2
+      3 UQCC
+      3 GHR
+      2 intergenic
+      2 HGFAC
+BMI  
+     75 NR
+     56 VEGFA
+This gene is a member of the PDGF/VEGF growth factor family. It encodes a heparin-binding protein, which exists as a disulfide-linked homodimer. This growth factor induces proliferation and migration of vascular endothelial cells, and is essential for both physiological and pathological angiogenesis. Disruption of this gene in mice resulted in abnormal embryonic blood vessel formation. This gene is upregulated in many known tumors and its expression is correlated with tumor stage and progression. Elevated levels of this protein are found in patients with POEMS syndrome, also known as Crow-Fukase syndrome. Allelic variants of this gene have been associated with microvascular complications of diabetes 1 (MVCD1) and atherosclerosis. Alternatively spliced transcript variants encoding different isoforms have been described. There is also evidence for alternative translation initiation from upstream non-AUG (CUG) codons resulting in additional isoforms. A recent study showed that a C-terminally extended isoform is produced by use of an alternative in-frame translation termination codon via a stop codon readthrough mechanism, and that this isoform is antiangiogenic. Expression of some isoforms derived from the AUG start codon is regulated by a small upstream open reading frame, which is located within an internal ribosome entry site. The VEGF levels are increased in SARS-CoV-2 infection, thus promoting inflammation by increasing the level of angiopoietin II (Ang II), one of the two products of the SARS-CoV-2-attacking target, angiotensin-converting enzyme 2 (ACE2). In turn, Ang II facilitates the elevation of VEGF, forming a vicious cycle in the release of inflammatory cytokines. 
+
+     30 BMP2
+This gene encodes a secreted ligand of the TGF-beta (transforming growth factor-beta) superfamily of proteins. Ligands of this family bind various TGF-beta receptors leading to recruitment and activation of SMAD family transcription factors that regulate gene expression. The encoded preproprotein is proteolytically processed to generate each subunit of the disulfide-linked homodimer, which plays a role in bone and cartilage development. Duplication of a regulatory region downstream of this gene causes a form of brachydactyly characterized by a malformed index finger and second toe in human patients.
+
+     26 TGFB2
+     23 GDF5
+     18 LTBP1
+     15 LYPLAL1
+LYPLAL1 (Lysophospholipase Like 1) is a Protein Coding gene. Gene Ontology (GO) annotations related to this gene include hydrolase activity and lysophospholipase activity. An important paralog of this gene is LYPLA1.
+
+     10 TNFAIP8
+      9 LOC149844
+      8 HSD17B4
 KEGG_WNT_SIGNALING_PATHWAY
-Height:
+Height
+      8 FBXW11
+This gene encodes a member of the F-box protein family which is characterized by an approximately 40 amino acid motif, the F-box. The F-box proteins constitute one of the four subunits of ubiquitin protein ligase complex called SCFs (SKP1-cullin-F-box), which function in phosphorylation-dependent ubiquitination. The F-box proteins are divided into 3 classes: Fbws containing WD-40 domains, Fbls containing leucine-rich repeats, and Fbxs containing either different protein-protein interaction modules or no recognizable motifs. The protein encoded by this gene belongs to the Fbws class and, in addition to an F-box, contains multiple WD40 repeats. This gene contains at least 14 exons, and its alternative splicing generates 3 transcript variants diverging at the presence/absence of two alternate exons. 
 
-BMI:
+      4 NR
+      3 NFATC4
+This gene encodes a member of the nuclear factor of activated T cells (NFAT) protein family. The encoded protein is part of a DNA-binding transcription complex. This complex consists of at least two components: a preexisting cytosolic component that translocates to the nucleus upon T cell receptor stimulation and an inducible nuclear component. NFAT proteins are activated by the calmodulin-dependent phosphatase, calcineurin. The encoded protein plays a role in the inducible expression of cytokine genes in T cells, especially in the induction of interleukin-2 and interleukin-4. Alternative splicing results in multiple transcript variants.
+      3 ANAPC10
+ANAPC10 is a core subunit of the anaphase-promoting complex (APC), or cyclosome, a ubiquitin protein ligase that is essential for progression through the cell cycle. APC initiates sister chromatid separation by ubiquitinating the anaphase inhibitor securin (PTTG1; MIM 604147) and triggers exit from mitosis by ubiquitinating cyclin B (CCNB1; MIM 123836), the activating subunit of cyclin-dependent kinase-1 (CDK1; MIM 116940) (summary by Wendt et al., 2001 [PubMed 11524682])
+
+      2 WNT4
+      2 SMAD3
+      2 PPARD
+      2 NFATC2
+      2 CCND2-AS1
+      2 CCND2
+BMI
+     64 NR
+     21 CEP63
+This gene encodes a protein with six coiled-coil domains. The protein is localized to the centrosome, a non-membraneous organelle that functions as the major microtubule-organizing center in animal cells. Several alternatively spliced transcript variants have been found, but their biological validity has not been determined.
+
+     21 ANAPC13
+This gene encodes a component of the anaphase promoting complex, a large ubiquitin-protein ligase that controls cell cycle progression by regulating the degradation of cell cycle regulators such as B-type cyclins. The encoded protein is evolutionarily conserved and is required for the integrity and ubiquitin ligase activity of the anaphase promoting complex. Pseudogenes and splice variants have been found for this gene; however, the biological validity of some of the splice variants has not been determined
+
+     15 FBXW11
+     11 TCF7L2
+      8 SMAD3
+The SMAD family of proteins are a group of intracellular signal transducer proteins similar to the gene products of the Drosophila gene 'mothers against decapentaplegic' (Mad) and the C. elegans gene Sma. The SMAD3 protein functions in the transforming growth factor-beta signaling pathway, and transmits signals from the cell surface to the nucleus, regulating gene activity and cell proliferation. It also functions as a tumor suppressor. Mutations in this gene are associated with aneurysms-osteoarthritis syndrome and Loeys-Dietz Syndrome 3. 
+
+      6 PLCB3
+      5 WNT2B
+      4 ZNF663
+      4 ZNF334
 KEGG_ERBB_SIGNALING_PATHWAY
-Height:
+Height
+      4 NR
+      1 ZHX3
+      1 TGFA
+This gene encodes a growth factor that is a ligand for the epidermal growth factor receptor, which activates a signaling pathway for cell proliferation, differentiation and development. This protein may act as either a transmembrane-bound ligand or a soluble ligand. This gene has been associated with many types of cancers, and it may also be involved in some cases of cleft lip/palate. Alternatively spliced transcript variants encoding different isoforms have been found for this gene.
 
-BMI:
+      1 SPIN1
+      1 SMARCA5
+      1 SHOX2
+      1 SERPINI1
+      1 RSRC1
+      1 PRKCA
+      1 PRKAR2B
+      1 PLCG2
+      1 PIK3R1
+      1 MYCN
+      1 MYC
+      1 MIR548G
+      1 MEGF9
+      1 MAPK3
+      1 MAP2K2
+      1 GOLIM4
+      1 GACAT3
+      1 GAB1
+The protein encoded by this gene is a member of the IRS1-like multisubstrate docking protein family. It is an important mediator of branching tubulogenesis and plays a central role in cellular growth response, transformation and apoptosis. Two transcript variants encoding different isoforms have been found for this gene.
+
+      1 DCBLD2
+      1 DCBLD1
+      1 COX5BP8
+      1 CCRK
+The protein encoded by this gene contains a kinase domain most closely related to the cyclin-dependent protein kinases. The encoded kinase may activate cyclin-dependent kinase 2 and is involved in cell growth. Alternatively spliced transcript variants encoding distinct isoforms have been reported.
+
+      1 AKT3
+BMI  
+     56 VEGFA
+     41 NR
+      6 VEGFB
+      6 MACROD1
+      5 ERBB4
+      4 ZNF318
+      4 YIPF3
+      4 XPO5
+      4 TSEN2
+      4 TMEM63B
 
 
 Immune System
 KEGG_AUTOIMMUNE_THYROID_DISEASE
-Height:
-
-BMI:
+Height
+      5 TGFB2
+      5 NR
+      3 HLA-C
+      3 HLA-B
+      1 ZNFX1
+      1 ZNF483
+      1 XXbac-BPG248L24.10
+      1 USP8P1
+      1 TGS1
+      1 TGFA
+BMI
+     27 NR
+     26 TGFB2
+     15 LYPLAL1
+     11 ITGB8
+      5 HLA-DRB1
+      3 HLA-C
+      2 SP8
+      2 RPL23P8
+      2 MACC1-AS1
+      2 MACC1
 KEGG_ALLOGRAFT_REJECTION
-Height:
-
-BMI:
+Height
+      3 HLA-C
+      3 HLA-B
+      1 ZNFX1
+      1 XXbac-BPG248L24.10
+      1 USP8P1
+      1 TNFSF10
+      1 TNFAIP8L3
+      1 MTCO3P1
+      1 IL20RB
+      1 HLA-DQB1
+BMI
+     14 NR
+     10 TNFAIP8
+      8 HSD17B4
+      5 HLA-DRB1
+      3 MIR1244-3
+      3 MIR1244-2
+      3 MIR1244-1
+      3 HLA-C
+      3 FAM170A
+      3 DTWD2
 KEGG_ANTIGEN_PROCESSING_AND_PRESENTATION
-Height:
-
-BMI:
+Height
+      3 HLA-C
+      3 HLA-B
+      2 C2CD4A
+      1 XXbac-BPG248L24.10
+      1 USP8P1
+      1 TAP2
+      1 PLCD4
+      1 NONE
+      1 MTCO3P1
+      1 LTA4H
+BMI
+      9 NR
+      5 HLA-DRB1
+      4 IFI30
+      3 ZNF318
+      3 YIPF3
+      3 XPO5
+      3 VEGFA
+      3 TMEM63B
+      3 TJAP1
+      3 TCTE1
 
 
 Heart Condition
 KEGG_DILATED_CARDIOMYOPATHY
-Height:
-
-BMI:
+Height
+     10 NR
+      8 IGF1
+      7 ADCY3
+      5 TGFB2
+      4 IGF1R
+      3 POMC
+      3 LINC00485
+      2 LAMA2
+      2 DNAJC27
+      2 CENPO
+BMI
+     43 NR
+     26 TGFB2
+     15 LYPLAL1
+     15 ADCY3
+     11 ITGB8
+     10 TNFAIP8
+      8 HSD17B4
+      3 UQCC
+      3 TRPC4AP
+      3 TP53INP2
 KEGG_VIRAL_MYOCARDITIS
-Height:
-
-BMI:
+Height
+      9 HMGA1
+      7 NR
+      3 HLA-C
+      3 HLA-B
+      2 LAMA2
+      1 XXbac-BPG248L24.10
+      1 WISP3
+      1 USP8P1
+      1 TMX2-CTNND1
+      1 OR9Q1
+BMI
+     23 HMGA1
+     18 NR
+      9 CYCSL1
+      5 HLA-DRB1
+      3 UQCC
+      3 TRPC4AP
+      3 TP53INP2
+      3 SPAG4
+      3 PROCR
+      3 PIGU
 
 
 Metabolism
 KEGG_PURINE_METABOLISM
-Height:
-
-BMI:
+Height
+     19 ADAMTSL3
+     18 NR
+     17 ADAMTS17
+      7 ADCY3
+      6 ADAMTS3
+      5 PDE3A
+      5 ADAMTS10
+      3 SH3GL3
+      3 POMC
+      3 POLR2B
+BMI 
+    104 NR
+     40 ADAMTSL3
+     33 ADAMTS9
+     15 ADCY3
+     10 ADAMTS3
+      8 CENTA2
+      7 NT5C2
+      7 FHIT
+      7 ADAMTS9-AS2
+      7 ADAMTS10
 KEGG_BETA_ALANINE_METABOLISM
-Height:
-
-BMI:
+Height
+      1 ALDH2
+BMI   
+      1 DPYSL5
+      1 DPYD-AS1
+      1 DPYD
 KEGG_ETHER_LIPID_METABOLISM
-Height:
-
-BMI:
+Height
+      1 MAFF
+      1 AGPS
+BMI   
+      1 PLA2G6
+      1 PLA2G4A
+      1 PLA2G2D
+      1 NR
 KEGG_O_GLYCAN_BIOSYNTHESIS
-Height:
-
-BMI:
+Height
+      4 B4GALNT3
+      1 GALNT2
+BMI   
+      3 NR
+      2 GALNT10
+      2 B4GALNT3
+      1 WBSCR17
+      1 RP11-575M4.1
+      1 MFAP3
+      1 GALNT2
+      1 C1GALT1
 
 
 
