@@ -18657,6 +18657,33 @@ png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analy
 
 
 
+#Revision Simulations
+#20201113
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations
+
+#From MacBook Pro:
+#scp -p /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Simulations/Simulations.20201109_Lorin.zip mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/.
+
+cd /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations
+unzip Simulations.20201109_Lorin.zip
+
+mkdir 20201109Lorin
+mv Power\ Simulations/ 20201109Lorin/PowerSimulations
+mv PopStruct\ Power\ Simulations/ 20201109Lorin/PopStructPowerSimulations
+mv Null\ Simulations/ 20201109Lorin/NullSimulations
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
