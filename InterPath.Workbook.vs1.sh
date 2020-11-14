@@ -18661,9 +18661,12 @@ png /Users/mturchin20/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Analy
 #20201113
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20200800Greg/
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20200800Greg/Data
 
 #From MacBook Pro:
-#scp -p /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Simulations/Simulations.20201109_Lorin.zip mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/.
+#scp -p /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Simulations/Simulations.20201109_Lorin.zip mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/. 
+#scp -p /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Simulations/Simulations/Data/*. /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20200800Greg/Data/.
 
 cd /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations
 unzip Simulations.20201109_Lorin.zip
@@ -18673,6 +18676,7 @@ mv Power\ Simulations/ 20201109Lorin/PowerSimulations
 mv PopStruct\ Power\ Simulations/ 20201109Lorin/PopStructPowerSimulations
 mv Null\ Simulations/ 20201109Lorin/NullSimulations
 
+cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/PopStructPowerSimulations/PopStruct_Sim_rho8_S1.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs1.R
 
 
 
