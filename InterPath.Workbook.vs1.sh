@@ -18692,33 +18692,20 @@ cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 
 cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | grep -E 'exonic|intronic|UTR|upstream|downstream' | sort -k 1,1 | perl -lane 'my @info1 = split(/,/, $F[2]); if ($info1[0] =~ m/intergenic/) { my @dists1 = split(/=/, $info1[1]); if ($dists1[1] <= 20000) { print join("\t", @F); } } else { print join("\t", @F); }' | perl -lane 'if ($. == 1) { @gene1; push(@gene1, $F[0]); push(@gene1, $F[1]); } else { if ($F[0] ne $gene1[0]) { print $gene1[0], "\t", join(",", @gene1[1..$#gene1]); @gene1 = (); push(@gene1, $F[0]); push(@gene1, $F[1]); } else { push(@gene1, $F[1]); } if (eof()) { print $gene1[0], "\t", join(",", @gene1[1..$#gene1]); } };' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.txt 
 cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.txt | grep 16: | grep -v NONE > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.txt
+##cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); if ($#vals1 > 0) { print join("\t", @F); }' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.noSingleSNPs.txt
+cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); for (my $i=0; $i <= $#vals1; $i++) { print $F[0], "\t", $vals1[$i]; }' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[1]}) { push(@{$hash1{$F[1]}}, $F[0]); } else { $hash1{$F[1]} = [($F[0])] }; if (eof()) { foreach my $entry1 (keys %hash1) { print $entry1, "\t", join(",", @{$hash1{$entry1}}); }}' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.perSNPs.txt
 
-zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | sed 's/\s/\n/g' | grep 16: > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Chr16.SNPIDs.txt
+zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | sed 's/\s/\n/g' | awk '{ print $1 "\t" NR }' | grep 16: > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Chr16.SNPIDs.txt
 
 #R -q -e "
 library("data.table"); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T);
 SNPs <- read.table("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Chr16.SNPIDs.txt", header=F);
-Data3.Chr16 <- Data3[,SNPs];
-write.table(Data3.Cher16, /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Chr16.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);";
+##Data3.Chr16 <- Data3[,SNPs];
+Data3.Chr16 <- as.matrix(Data3)[,SNPs[,2]];
+write.table(Data3.Chr16, "/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Chr16.txt", quote=FALSE, col.name=FALSE, row.name=FALSE);
+#"
 
-
-
-	R -q -e "library("data.table"); library("feather"); \ 
-	ptm <- proc.time(); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T); print(proc.time() - ptm); \ 
-	ptm <- proc.time(); Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); print(proc.time() - ptm); \
-	ptm <- proc.time(); Data3.cov <- 1/ncol(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm); \
-	write.table(Data3.cov, \"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.ColCrct.txt\", quote=FALSE, col.name=FALSE, row.name=FALSE);"
-done 
-
-#& 
-#	Data3.mean <- apply(Data3, 2, mean); Data3.sd <- apply(Data3, 2, sd); Data3.sd[which(Data3.sd==0)] <- 1; Data3 <- t((t(Data3)-Data3.mean)/Data3.sd); \
-#	mv /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt.2 /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.noFix.cov.txt
-#	ptm <- proc.time(); Data3.cov <- 1/nrow(Data3) * tcrossprod(as.matrix(Data3)); print(proc.time() - ptm); \
-#sbatch -t 24:00:00 --mem 20g --account=ccmb-condo -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.slurm.QCed.reqDrop.QCed.dropRltvs.PCAdrop.GEMMA.error --comment "$ancestry1 $ancestry2" <(echo -e '#!/bin/sh'; echo -e "\n
-
-#20181028 NOTE -- the 'noFix' thing I believe was just to account for this single SNP that passed previous filters in the Chinese subset that was causing the entire covariance matrix just to be NA; I had previously looked into this and only found 1 SNP that appeared fix in any population (and then subsequently realized this single SNP may have been messing up the original covariance matrix; running the above code produced a correct covariance matrix for Chinese subset). So just soft linking the other files to the new filename schema even though I don't believe anything would actually change between the two versions of the files
-
-
+gzip -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Chr16.txt
 
 
 
@@ -26570,6 +26557,32 @@ Indian Indian
 Pakistani Pakistani
 [1] 0.2161516
 [1] 0.174829814 0.825170186 0.002563711
+#20201114
+> dim(Data3.Chr16)
+[1]  3111 13698
+> Data3.Chr16[1:10,1:10]
+      16:92224_G 16:92370_G 16:92391_A 16:97610_G 16:101277_T 16:105325_A
+ [1,]          2          0          0          0           1           1
+ [2,]          1          0          0          0           0           2
+ [3,]          0          1          1          1           0           1
+ [4,]          0          1          1          0           0           0
+ [5,]          1          1          1          0           1           0
+ [6,]          1          1          1          0           1           1
+ [7,]          1          0          0          1           0           1
+ [8,]          1          0          0          1           1           1
+ [9,]          1          0          0          2           0           1
+[10,]          0          1          1          1           0           1
+      16:106596_T 16:114535_A 16:115072_A 16:118809_G
+ [1,]           0           0           0           1
+ [2,]           0           0           0           0
+ [3,]           1           1           0           0
+ [4,]           0           2           2           0
+ [5,]           0           2           0           0
+ [6,]           1           1           1           0
+ [7,]           0           0           0           1
+ [8,]           0           0           1           1
+ [9,]           0           1           2           0
+[10,]           0           0           0           1
 
 
 
