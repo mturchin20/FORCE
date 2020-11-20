@@ -18701,6 +18701,8 @@ cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveM
 
 zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | sed 's/\s/\n/g' | awk '{ print $1 "\t" NR }' | grep 16: > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Chr16.SNPIDs.txt
 
+zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 10 | perl -lane 'print join("\t", @F[0..9]);' | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1; vals2 <- c(\"X1.759036_A\",\"X1.767096_G\"); vals2; Data1[,vals2];"
+
 #R -q -e "
 library("data.table"); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T);
 SNPs <- read.table("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Chr16.SNPIDs.txt", header=F);
@@ -26587,6 +26589,41 @@ Pakistani Pakistani
  [8,]           0           0           1           1
  [9,]           0           1           2           0
 [10,]           0           0           0           1
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 10 | perl -lane 'print join("\t", @F[0..9]);' | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1; vals2 <- c(\"X1.759036_A\",\"X1.767096_G\"); vals2; Data1[,vals2];"
+> Data1 <- read.table(file('stdin'), header=T); Data1; vals2 <- c("X1.759036_A","X1.767096_G"); vals2; Data1[,vals2];
+  X1.729632_T X1.752721_G X1.754105_T X1.756604_G X1.759036_A X1.761147_C
+1           0           1           0           1           0           1
+2           0           0           0           0           0           0
+3           0           1           0           2           0           2
+4           0           0           0           0           0           0
+5           0           0           0           0           0           0
+6           0           0           0           0           0           0
+7           0           0           0           0           0           0
+8           0           2           0           2           0           2
+9           1           0           1           1           1           1
+  X1.767096_G X1.768448_A X1.779322_G X1.808631_A
+1           0           0           1           0
+2           0           0           2           0
+3           2           0           0           0
+4           0           0           1           0
+5           0           0           2           0
+6           0           0           2           0
+7           0           0           2           0
+8           0           1           0           1
+9           1           0           1           0
+[1] "X1.759036_A" "X1.767096_G"
+  X1.759036_A X1.767096_G
+1           0           0
+2           0           0
+3           0           2
+4           0           0
+5           0           0
+6           0           0
+7           0           0
+8           0           0
+9           1           1
+> 
+> 
 
 
 
