@@ -18672,6 +18672,10 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 load("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20200800Greg/Data/gene_ids.RData");
 load("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20200800Greg/Data/gene_snp_list.RData");
 load("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20200800Greg/Data/chromosome16_snps.RData");
+write.table(
+
+working on SimulationMain.Revisions.vs1.R
+
 
 R -q -e " \
 load(\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20200800Greg/Data/gene_ids.RData\");
