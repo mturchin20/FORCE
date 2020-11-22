@@ -9,13 +9,14 @@ Genes <- args[6]
 Covars <- args[7]
 Output1 <- args[8]
 seed.value <- args[9]
-pve <- args[10]
-rho <- args[11]
-pc.var <- args[12] 
-ngenes <- args[13]
-ncausal1 <- args[14]
-ncausal2 <- args[15]
-ncausal3 <- args[16]
+n.datasets <- args[10]
+pve <- args[11]
+rho <- args[12]
+pc.var <- args[13] 
+ngenes <- args[14]
+ncausal1 <- args[15]
+ncausal2 <- args[16]
+ncausal3 <- args[17]
 
 set.seed(seed.value)
 
@@ -106,7 +107,8 @@ for(i in 1:n.datasets){
   ######################################################################################
   ######################################################################################
   ######################################################################################
-  
+ 
+if (FALSE) { 
   ### Set the number of cores ###
   cores = detectCores()
   
@@ -148,6 +150,9 @@ for(i in 1:n.datasets){
   
   ### Report Status ###
   cat("Completed Dataset", j, "\n", sep = " ")
+
+  }
+
 }
 
 #Save final Results

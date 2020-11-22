@@ -18691,8 +18691,9 @@ cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs1.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs1.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.vs1.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.wPCs.vs1.R
+ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.wPCs.vs1.dev.R
 
-#From: https://stackoverflow.com/questions/22906804/matrix-expression-causes-error-requires-numeric-complex-matrix-vector-arguments
+#From: https://stackoverflow.com/questions/22906804/matrix-expression-causes-error-requires-numeric-complex-matrix-vector-arguments, https://swcarpentry.github.io/r-novice-inflammation/05-cmdline/, https://stackoverflow.com/questions/21969145/why-or-when-is-rscript-or-littler-better-than-r-cmd-batch
 #Genes = Pathways, X SNPs across L genes, X SNPs across groups G1, G2, and G3, all three have additive effects, G1 and G2 have interaction effects
 
 plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --chr 16 --recodeAD --out /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16 
@@ -18756,6 +18757,20 @@ Conda
 #
 #gzip -f /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Chr16.txt
 
+Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.R 
+
+X <- args[5]
+Genes <- args[6]
+Covars <- args[7]
+Output1 <- args[8]
+seed.value <- args[9]
+pve <- args[10]
+rho <- args[11]
+pc.var <- args[12]
+ngenes <- args[13]
+ncausal1 <- args[14]
+ncausal2 <- args[15]
+ncausal3 <- args[16]
 
 
 
