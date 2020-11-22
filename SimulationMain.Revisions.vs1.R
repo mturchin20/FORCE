@@ -60,7 +60,7 @@ for(i in 1:n.datasets){
 
   ### Simulate the Additive Effects ###
   SNPs.additive = c(s1,s2,s3);
-  Xmarginal = X[,SNPs.additive]
+  Xmarginal = as.matrix(X[,SNPs.additive])
   beta=rnorm(dim(Xmarginal)[2])
   y_marginal=c(Xmarginal%*%beta)
   beta=beta*sqrt(pve*rho/var(y_marginal))
