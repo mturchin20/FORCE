@@ -1,12 +1,23 @@
-library(MAPITR)
-
-set.seed(11151990)
+#library("MAPITR")
+library("devtools")
+devtools::load_all("/users/mturchin/LabMisc/RamachandranLab/MAPITR")
 
 args <- commandArgs()
 print(args)
-rho <- args[1]
-pc.var = 0.10 
-#Variance Explained by PCs (Population Structure)
+X <- args[1]
+Genes <- args[2]
+Covars <- args[3]
+Output1 <- args[4]
+seed.value <- args[5]
+pve <- args[6]
+rho <- args[7]
+pc.var <- args[8] 
+ngenes <- args[9]
+ncausal1 <- args[10]
+ncausal2 <- args[11]
+ncausal3 <- args[12]
+
+set.seed(seed.value)
 
 X <- as.matrix(read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz", header=T));
 Genes <- read.table("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.Rformat.txt", header=F);
@@ -20,6 +31,7 @@ ind = nrow(X); nsnp = ncol(X)
 n.datasets = 100 #Total Number of Simulations 
 pve = 0.6; #Heritability of the trait
 rho = 0.8; #Proportion of the heritability caused by additive effects {0.8, 0.5}
+pc.var = 0.1
 
 ### Set Up Causal Pathways in Three Groups
 ngenes = 20; #number of genes needed to get around 1000 SNPs pulled for G1, G2, and G3
