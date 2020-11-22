@@ -18712,13 +18712,36 @@ zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mtu
 #Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt\\\", header=T);
 #/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt
 
-cat /dev/null > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Simulations1.yml
+##module load anaconda/3-5.2.0
+##module load anaconda/2020.02
+##conda create -n py39 python=3.9
+##conda activate py39
+##mkdir /users/mturchin/data/mturchin/miniconda3RH
+##cd /users/mturchin/data/mturchin/miniconda3RH
+cd /users/mturchin/data/mturchin
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+#PATH=/users/mturchin/data/mturchin/miniconda3RH/bin:$PATH:$HOME/bin; export PATH
+#Edit $HOME/.bashrc for conda init on/off stuff
+conda info --envs
+conda env export --name InterPath2 > /users/mturchin/LabMisc/RamachandranLab/InterPath/InterPath2.Conda.yml
+cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/InterPath2.Conda.yml /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Simulations1.yml
+#Edit /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Simulations1.yml
+conda env create --file /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Simulations1.yml
+conda activate Simulations1
+conda install git
+#Add 'devtools' library to R and then do load_all for MAPITR too
+#install.packages(c("doParallel", "CompQuadForm"))
+
+__conda_setup="$('/users/mturchin/data/mturchin/miniconda3RH/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"; eval "$__conda_setup"; unset __conda_setup;
+conda activate Simulations1
 
 name: R_mkl
 channels:
   - conda-forge
   - defaults
 dependencies:
+  - conda-forge::python=3.9
   - conda-forge::r-essentials=3.6
   - conda-forge::libblas=3.8.0=14_mkl
 Conda
