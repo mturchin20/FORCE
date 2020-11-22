@@ -50,11 +50,13 @@ for(i in 1:n.datasets){
   }
   genes.pulled.SNPs.uniq <- unique(genes.pulled.SNPs);
   genes.pulled.SNPs.uniq.ids <- 1:length(genes.pulled.SNPs.uniq)
-  s1=sample(genes.pulled.SNPs.uniq.ids, ncausal1*length(genes.pulled.SNPs.uniq), replace=F)
-  s2=sample(genes.pulled.SNPs.uniq.ids[-s1], ncausal2*length(genes.pulled.SNPs.uniq), replace=F)
-  s3=sample(genes.pulled.SNPs.uniq.ids[-c(s1,s2)], ncausal3*length(genes.pulled.SNPs.uniq), replace=F)
-
-
+  s1.ids=sample(genes.pulled.SNPs.uniq.ids, round(ncausal1*length(genes.pulled.SNPs.uniq)), replace=F)
+  s2.ids=sample(genes.pulled.SNPs.uniq.ids[-s1.ids], round(ncausal2*length(genes.pulled.SNPs.uniq)), replace=F)
+  s3.ids.size <- round(ncausal3*length(genes.pulled.SNPs.uniq)); if (s3.size > length(genes.pulled.SNPs.uniq.ids[-c(s1.ids,s2.ids)])) { s3.size <- s3.size - 1; }
+  s3.ids=sample(genes.pulled.SNPs.uniq.ids[-c(s1.ids,s2.ids)], s3.ids.size, replace=F)
+  s1 <- genes.pulled.SNPs.uniq[s1.ids]
+  s2 <- genes.pulled.SNPs.uniq[s2.ids]
+  s3 <- genes.pulled.SNPs.uniq[s3.ids]
 
   ### Simulate the Additive Effects ###
   SNPs.additive = c(s1,s2,s3);
