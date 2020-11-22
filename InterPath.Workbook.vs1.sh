@@ -18708,6 +18708,11 @@ zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mtu
 zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 10 | perl -lane 'print join("\t", @F[0..9]);' | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1; vals2 <- c(\"X1.759036_A\",\"X1.767096_G\"); vals2; Data1[,vals2];"
 zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.gz | head -n 1 | perl -lane 'for (my $i = 0; $i <= $#F; $i++) { my @vals1 = split(/:/, $F[$i]); $F[$i] = "X" . $vals1[0] . "." . $vals1[1]; }; print join("\t", @F);' > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.SNPIDs.Rformat.txt
 
+#PC files work here
+#Covars <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt\\\", header=T);
+/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt
+/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt
+
 ##R -q -e "
 #library("data.table"); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T);
 #SNPs <- read.table("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Chr16.SNPIDs.txt", header=F);
@@ -26816,6 +26821,23 @@ ACD     X16.67691668
 8             1           0
 9             0           0
 10            1           0
+> Covars <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt", header=T);
+> PCs <- Covars[,(ncol(Covars)-9):ncol(Covars)];
+> head(PCs)
+          PC1         PC2          PC3          PC4          PC5          PC6
+1  0.04262247  0.06472549  0.014802492 -0.003232103  0.005077714  0.007413034
+2 -0.04833220  0.09323409 -0.034531395  0.016626459 -0.059208202  0.032256388
+3  0.05830222 -0.01906958 -0.003463464 -0.052884163 -0.005070142  0.003675518
+4  0.04301901 -0.04005602 -0.004438877  0.051873063  0.002956998 -0.009833231
+5  0.03305777  0.09547545  0.027382145  0.013766928  0.019162907  0.003098561
+6  0.05543779 -0.05263333 -0.011359364  0.038945372  0.004623354 -0.010621944
+           PC7          PC8          PC9         PC10
+1 -0.008834202  0.024494333 -0.019286814  0.044921767
+2  0.046432084  0.001368003  0.007650980 -0.009530469
+3 -0.003882983 -0.008676035  0.015393426 -0.007375629
+4  0.016949126  0.001562741  0.001856091  0.004544207
+5  0.000982229  0.033428122 -0.007542121  0.017494883
+6  0.027819427 -0.004468708 -0.003553934 -0.015372199
 
 
 
