@@ -18693,11 +18693,13 @@ cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 
 plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --chr 16 --recodeAD --out /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16 
 cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw | perl -lane 'if ($. == 1) { @vals1; for (my $i = 6; $i <= $#F; $i++) { if ($F[$i] =~ m/HET/) { $PH = 1 } else { push(@vals1, $i); } } } print join("\t", @F[@vals1]);' | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.gz
+zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.gz | perl -lane 'if ($. == 1) { for (my $i = 0; $i <= $#F; $i++) { my @vals2 = split(/_/, $F[$i]); $F[$i] = $vals2[0]; }} print join("\t", @F);' | gzip > /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz 
 
 cat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.txt | grep -E 'exonic|intronic|UTR|upstream|downstream' | sort -k 1,1 | perl -lane 'my @info1 = split(/,/, $F[2]); if ($info1[0] =~ m/intergenic/) { my @dists1 = split(/=/, $info1[1]); if ($dists1[1] <= 20000) { print join("\t", @F); } } else { print join("\t", @F); }' | perl -lane 'if ($. == 1) { @gene1; push(@gene1, $F[0]); push(@gene1, $F[1]); } else { if ($F[0] ne $gene1[0]) { print $gene1[0], "\t", join(",", @gene1[1..$#gene1]); @gene1 = (); push(@gene1, $F[0]); push(@gene1, $F[1]); } else { push(@gene1, $F[1]); } if (eof()) { print $gene1[0], "\t", join(",", @gene1[1..$#gene1]); } };' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.txt 
 cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.txt | grep 16: | grep -v NONE > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.txt
 ##cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); if ($#vals1 > 0) { print join("\t", @F); }' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.noSingleSNPs.txt
 cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.txt | perl -lane 'my @vals1 = split(/,/, $F[1]); for (my $i=0; $i <= $#vals1; $i++) { print $F[0], "\t", $vals1[$i]; }' | perl -lane 'if ($. == 1) { my %hash1; } if ($hash1{$F[1]}) { push(@{$hash1{$F[1]}}, $F[0]); } else { $hash1{$F[1]} = [($F[0])] }; if (eof()) { foreach my $entry1 (keys %hash1) { print $entry1, "\t", join(",", @{$hash1{$entry1}}); }}' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.perSNPs.txt
+cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.txt | sed 's/16:/X16./g' > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.Rformat.txt
 
 zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | sed 's/\s/\n/g' | awk '{ print $1 "\t" NR }' | grep 16: > /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.Chr16.SNPIDs.txt
 zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 10 | perl -lane 'print join("\t", @F[0..9]);' | R -q -e "Data1 <- read.table(file('stdin'), header=T); Data1; vals2 <- c(\"X1.759036_A\",\"X1.767096_G\"); vals2; Data1[,vals2];"
@@ -26626,6 +26628,126 @@ Pakistani Pakistani
 (InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz | head -n 1 | perl -lane 'for (my $i = 0; $i <= $#F; $i++) { my @vals1 = split(/:/, $F[$i]); $F[$i] = "X" . $vals1[0] . "." . $vals1[1]; }; print join("\t", @F);' | perl -lane 'print join("\t", @F[0..9]);'
 X1.729632_T     X1.752721_G     X1.754105_T     X1.756604_G     X1.759036_A     X1.761147_C     X1.767096_G     X1.768448_A     X1.779322_G     X1.808631_A
 > 
+> X.Headers[,2:3]
+           V2          V3
+1 X16.92370_G X16.92391_A
+> unlist(X.Headers[,2:3])
+         V2          V3 
+X16.92370_G X16.92391_A 
+Levels: X16.92370_G X16.92391_A
+> unlist(X.Headers[,c(3,102,4364)])
+            V3           V102          V4364 
+   X16.92391_A   X16.455646_G X16.23001192_T 
+Levels: X16.92391_A X16.455646_G X16.23001192_T
+> X[1:10,unlist(X.Headers[,c(3,102,4364)])]
+   X16.92224_G X16.92370_G X16.92391_A
+1            2           0           0
+2            1           0           0
+3            0           1           1
+4            0           1           1
+5            1           1           1
+6            1           1           1
+7            1           0           0
+8            1           0           0
+9            1           0           0
+10           0           1           1
+> unlist(X.Headers[,c(3,102,4364)])
+            V3           V102          V4364 
+   X16.92391_A   X16.455646_G X16.23001192_T 
+Levels: X16.92391_A X16.455646_G X16.23001192_T
+> as.character(unlist(X.Headers[,c(3,102,4364)]))
+[1] "X16.92391_A"    "X16.455646_G"   "X16.23001192_T"
+> X[1:10,as.character(unlist(X.Headers[,c(3,102,4364)]))]
+   X16.92391_A X16.455646_G X16.23001192_T
+1            0            0              0
+2            0            0              0
+3            1            0              0
+4            1            0              0
+5            1            1              0
+6            1            0              0
+7            0            0              0
+8            0            1              0
+9            0            0              0
+10           1            1              0
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.gz | head -n 10 | perl -lane 'print join("\t", @F[0..9]);' | perl -lane 'if ($. == 1) { for (my $i = 0; $i <= $#F; $i++) { my @vals2 = split(/_/, $F[$i]); $F[$i] = $vals2[0]; }} print join("\t", @F);'
+16:92224        16:92370        16:92391        16:97610        16:101277       16:105325       16:106596       16:114535       16:115072       16:118809
+2       0       0       0       1       1       0       0       0       1
+1       0       0       0       0       2       0       0       0       0
+0       1       1       1       0       1       1       1       0       0
+0       1       1       0       0       0       0       2       2       0
+1       1       1       0       1       0       0       2       0       0
+1       1       1       0       1       1       1       1       1       0
+1       0       0       1       0       1       0       0       0       1
+1       0       0       1       1       1       0       0       1       1
+1       0       0       2       0       1       0       1       2       0
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.gz | head -n 1 | sed 's/\s/\n/g' | head -n 10
+16:92224_G
+16:92370_G
+16:92391_A
+16:97610_G
+16:101277_T
+16:105325_A
+16:106596_T
+16:114535_A
+16:115072_A
+16:118809_G
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.gz | head -n 1 | sed 's/\s/\n/g' | sort | uniq | wc
+  13698   13698  189125
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.gz | head -n 1 | perl -lane 'if ($. == 1) { for (my $i = 0; $i <= $#F; $i++) { my @vals2 = split(/_/, $F[$i]); $F[$i] = $vals2[0]; }} print join("\t", @F);' | sed 's/\s/\n/g' | head -n 10       
+16:92224
+16:92370
+16:92391
+16:97610
+16:101277
+16:105325
+16:106596
+16:114535
+16:115072
+16:118809
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.gz | head -n 1 | perl -lane 'if ($. == 1) { for (my $i = 0; $i <= $#F; $i++) { my @vals2 = split(/_/, $F[$i]); $F[$i] = $vals2[0]; }} print join("\t", @F);' | sed 's/\s/\n/g' | sort | uniq | wc
+  13698   13698  161676
+[  mturchin@node1328  ~/LabMisc/RamachandranLab/InterPath]$zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz | head -n 10 | perl -lane 'print join("\t", @F[0..9]);'
+16:92224        16:92370        16:92391        16:97610        16:101277       16:105325       16:106596       16:114535       16:115072       16:118809
+2       0       0       0       1       1       0       0       0       1
+1       0       0       0       0       2       0       0       0       0
+0       1       1       1       0       1       1       1       0       0
+0       1       1       0       0       0       0       2       2       0
+1       1       1       0       1       0       0       2       0       0
+1       1       1       0       1       1       1       1       1       0
+1       0       0       1       0       1       0       0       0       1
+1       0       0       1       1       1       0       0       1       1
+1       0       0       2       0       1       0       1       2       0
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.txt | head -n 10
+AARS    16:70303580,16:70303659,16:70311944
+ABAT    16:8749156,16:8753398,16:8753573,16:8754962,16:8758775,16:8762166,16:8764553,16:8769568,16:8771186,16:8771449,16:8771482,16:8772613,16:8772793,16:8774073,16:8791426,16:8795453,16:8799403,16:8802097,16:8802832,16:8808270,16:8808945,16:8809852,16:8812663,16:8815000,16:8816135,16:8818682,16:8821979,16:8823848,16:8828533,16:8828699,16:8829340,16:8829715,16:8830468,16:8833192,16:8833920,16:8834085,16:8839954,16:8840627,16:8841547,16:8844389,16:8849326,16:8850647,16:8851324,16:8852581,16:8854407,16:8855251,16:8857749,16:8862212,16:8866195,16:8866280,16:8866321,16:8866582,16:8868776,16:8871388,16:8872830,16:8873709,16:8873960,16:8876788,16:8876845,16:8880989
+ABCA17P 16:2418179,16:2429057,16:2438567,16:2460423
+ABCA3   16:2328790,16:2330169,16:2348528,16:2353206,16:2360099,16:2368169,16:2373687,16:2378456
+ABCC1   16:16025841,16:16030411,16:16041768,16:16047542,16:16047825,16:16048587,16:16049633,16:16054650,16:16060994,16:16066040,16:16073437,16:16073656,16:16077287,16:16082128,16:16086833,16:16088201,16:16095952,16:16096788,16:16097975,16:16104489,16:16108894,16:16114507,16:16114767,16:16117683,16:16119024,16:16138322,16:16141566,16:16141823,16:16148252,16:16148625,16:16155103,16:16167812,16:16170477,16:16171442,16:16173221,16:16184232,16:16184366,16:16204758,16:16205143,16:16205501,16:16205741,16:16205865,16:16213872,16:16214255,16:16220690,16:16220858,16:16224312,16:16225971,16:16227943,16:16230290,16:16236431,16:16236523,16:16236650,16:16238584
+ABCC11  16:48186373,16:48190385,16:48201432,16:48201707,16:48204078,16:48208014,16:48238117,16:48242379,16:48244485,16:48244996,16:48265777
+ABCC12  16:48119125,16:48122582,16:48134784,16:48134856,16:48138272,16:48175235,16:48177220,16:48177897,16:48186373,16:48190385
+ABCC6   16:16238584,16:16249190,16:16251599,16:16257410,16:16259497,16:16270877,16:16272670,16:16275880,16:16276292,16:16276345,16:16276964,16:16278863,16:16278869,16:16280776,16:16281007,16:16282307,16:16284809,16:16288356,16:16289532,16:16290343,16:16291099,16:16291971,16:16292323,16:16294465,16:16305355
+ABCC6P1 16:18601266
+ACD     16:67691668
+(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.txt | sed 's/16:/X16./g' | head -n 10
+AARS    X16.70303580,X16.70303659,X16.70311944
+ABAT    X16.8749156,X16.8753398,X16.8753573,X16.8754962,X16.8758775,X16.8762166,X16.8764553,X16.8769568,X16.8771186,X16.8771449,X16.8771482,X16.8772613,X16.8772793,X16.8774073,X16.8791426,X16.8795453,X16.8799403,X16.8802097,X16.8802832,X16.8808270,X16.8808945,X16.8809852,X16.8812663,X16.8815000,X16.8816135,X16.8818682,X16.8821979,X16.8823848,X16.8828533,X16.8828699,X16.8829340,X16.8829715,X16.8830468,X16.8833192,X16.8833920,X16.8834085,X16.8839954,X16.8840627,X16.8841547,X16.8844389,X16.8849326,X16.8850647,X16.8851324,X16.8852581,X16.8854407,X16.8855251,X16.8857749,X16.8862212,X16.8866195,X16.8866280,X16.8866321,X16.8866582,X16.8868776,X16.8871388,X16.8872830,X16.8873709,X16.8873960,X16.8876788,X16.8876845,X16.8880989
+ABCA17P X16.2418179,X16.2429057,X16.2438567,X16.2460423
+ABCA3   X16.2328790,X16.2330169,X16.2348528,X16.2353206,X16.2360099,X16.2368169,X16.2373687,X16.2378456
+ABCC1   X16.16025841,X16.16030411,X16.16041768,X16.16047542,X16.16047825,X16.16048587,X16.16049633,X16.16054650,X16.16060994,X16.16066040,X16.16073437,X16.16073656,X16.16077287,X16.16082128,X16.16086833,X16.16088201,X16.16095952,X16.16096788,X16.16097975,X16.16104489,X16.16108894,X16.16114507,X16.16114767,X16.16117683,X16.16119024,X16.16138322,X16.16141566,X16.16141823,X16.16148252,X16.16148625,X16.16155103,X16.16167812,X16.16170477,X16.16171442,X16.16173221,X16.16184232,X16.16184366,X16.16204758,X16.16205143,X16.16205501,X16.16205741,X16.16205865,X16.16213872,X16.16214255,X16.16220690,X16.16220858,X16.16224312,X16.16225971,X16.16227943,X16.16230290,X16.16236431,X16.16236523,X16.16236650,X16.16238584
+ABCC11  X16.48186373,X16.48190385,X16.48201432,X16.48201707,X16.48204078,X16.48208014,X16.48238117,X16.48242379,X16.48244485,X16.48244996,X16.48265777
+ABCC12  X16.48119125,X16.48122582,X16.48134784,X16.48134856,X16.48138272,X16.48175235,X16.48177220,X16.48177897,X16.48186373,X16.48190385
+ABCC6   X16.16238584,X16.16249190,X16.16251599,X16.16257410,X16.16259497,X16.16270877,X16.16272670,X16.16275880,X16.16276292,X16.16276345,X16.16276964,X16.16278863,X16.16278869,X16.16280776,X16.16281007,X16.16282307,X16.16284809,X16.16288356,X16.16289532,X16.16290343,X16.16291099,X16.16291971,X16.16292323,X16.16294465,X16.16305355
+ABCC6P1 X16.18601266
+ACD     X16.67691668
+> unlist(strsplit(as.character(Genes[1,2]), ","))
+[1] "X16.70303580" "X16.70303659" "X16.70311944"
+> X[1:5,unlist(strsplit(as.character(Genes[1,2]), ","))]
+  X16.70303580 X16.70303659 X16.70311944
+1            2            0            0
+2            0            0            1
+3            0            2            0
+4            2            0            0
+5            1            0            0
 
 
 
