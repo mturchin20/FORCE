@@ -36,19 +36,23 @@ G1_snps = matrix(nrow = ncausal1,ncol = n.datasets)
 G2_snps = matrix(nrow = ncausal2,ncol = n.datasets)
 
 ### Run the Analysis ###
-for(j in 1:n.datasets){
+for(i in 1:n.datasets){
   
   #Select Causal Pathways
   gene.ids = 1:nrow(Genes)
-  genes.pulled.ids <- sample(gene.ids, 1:nrow(Genes), replace=F);
+  genes.pulled.ids <- sample(gene.ids, ngenes, replace=F);
   genes.pulled <- Genes[genes.pulled.ids,];
   
 
-  genes.pulled.SNPs <-
-  genes.pulled.SNPs.ids <- 1:length(genes.pulled.SNPs)
-  s1=sample(genes.pulled.SNPs.ids, ncausal1, replace=F)
-  s2=sample(genes.pulled.SNPs.ids[-s1], ncausal2, replace=F)
-  s3=sample(genes.pulled.SNPs.ids[-c(s1,s2)], ncausal3, replace=F)
+  genes.pulled.SNPs <- c();
+  for (j in 1:nrow(genes.pulled)) {
+	genes.pulled.SNPs <- c(genes.pulled.SNPs, unlist(strsplit(as.character(genes.pulled[j,2]), ",")));
+  }
+  genes.pulled.SNPs.uniq <- unique(genes.pulled.SNPs);
+  genes.pulled.SNPs.uniq.ids <- 1:length(genes.pulled.SNPs.uniq)
+  s1=sample(genes.pulled.SNPs.uniq.ids, ncausal1*length(genes.pulled.SNPs.uniq), replace=F)
+  s2=sample(genes.pulled.SNPs.uniq.ids[-s1], ncausal2*length(genes.pulled.SNPs.uniq), replace=F)
+  s3=sample(genes.pulled.SNPs.uniq.ids[-c(s1,s2)], ncausal3*length(genes.pulled.SNPs.uniq), replace=F)
 
 
 
@@ -62,8 +66,8 @@ for(j in 1:n.datasets){
   
   ### Simulate Pairwise Interaction matrix ###
   Xepi = c(); b = c()
-  for(i in 1:ncausal1){
-      Xepi = cbind(Xepi,X[,s1[i]]*X[,s2]) 
+  for(j in 1:ncausal1){
+      Xepi = cbind(Xepi,X[,s1[j]]*X[,s2]) 
     }
   }
   
@@ -98,8 +102,8 @@ for(j in 1:n.datasets){
   regions = matrix(nrow = nsnp, ncol = length(gene_list))
   rownames(regions) = colnames(X)
   colnames(regions) = names(gene_list)
-  for(i in 1:length(gene_list)){
-      regions[which(colnames(X)%in%gene_list[[i]]),i] = 1
+  for(k in 1:length(gene_list)){
+      regions[which(colnames(X)%in%gene_list[[k]]),k] = 1
   }
   
   ######################################################################################

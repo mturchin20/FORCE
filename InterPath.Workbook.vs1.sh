@@ -26748,6 +26748,22 @@ ACD     X16.67691668
 3            0            2            0
 4            2            0            0
 5            1            0            0
+> genes.pulled.ids
+ [1] 808 431 749 134 560 499 856 594 142 248 488 672 718 484 414 444 731 771 163
+[20] 212
+> genes.pulled[1:2,]
+              V1                                  V2
+808         TSR3 X16.1399551,X16.1400478,X16.1401187
+431 LOC100505942                        X16.67538193
+> Genes[808,]
+      V1                                  V2
+808 TSR3 X16.1399551,X16.1400478,X16.1401187
+> length(genes.pulled.SNPs)
+[1] 160
+> length(unique(genes.pulled.SNPs))
+[1] 158
+> genes.pulled.SNPs[duplicated(genes.pulled.SNPs)]
+[1] "X16.50686959" "X16.50692364"
 
 
 
