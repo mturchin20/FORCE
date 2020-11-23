@@ -27,13 +27,13 @@ set.seed(seed.value)
 X <- as.matrix(read.table(X.File, header=T));
 Genes <- read.table(Genes.File, header=F);
 Covars <- read.table(Covars.File, header=T);
-PCs <- Covars[,(ncol(Covars)-9):ncol(Covars)];
+PCs <- as.matrix(Covars[,(ncol(Covars)-9):ncol(Covars)]);
 
 Xmean=apply(X, 2, mean); Xsd=apply(X, 2, sd); X=t((t(X)-Xmean)/Xsd)
 ind = nrow(X); nsnp = ncol(X)
 
 ### Define the Simulation Parameters ###
-n.datasets = 100 #Total Number of Simulations 
+n.datasets = 1 #Total Number of Simulations 
 pve = 0.6; #Heritability of the trait
 rho = 0.8; #Proportion of the heritability caused by additive effects {0.8, 0.5}
 pc.var = 0.1
@@ -50,7 +50,7 @@ G1_snps = matrix(nrow = ncausal1,ncol = n.datasets)
 G2_snps = matrix(nrow = ncausal2,ncol = n.datasets)
 
 ### Run the Analysis ###
-for(i in 1:n.datasets){
+for(i in 1:n.datasets) {
   
   #Select Causal Pathways
   gene.ids = 1:nrow(Genes)
@@ -73,8 +73,8 @@ for(i in 1:n.datasets){
 
   ### Simulate the Additive Effects ###
   SNPs.additive = c(s1,s2,s3);
-  print(dim(X))
-  print(SNPs.additive)
+#  print(dim(X))
+#  print(SNPs.additive)
   Xmarginal = X[,SNPs.additive]
   beta=rnorm(dim(Xmarginal)[2])
   y_marginal=c(Xmarginal%*%beta)
@@ -85,7 +85,6 @@ for(i in 1:n.datasets){
   Xepi = c(); b = c()
   for(j in 1:ncausal1){
       Xepi = cbind(Xepi,X[,s1[j]]*X[,s2]) 
-    }
   }
   
   ### Simulate the Pairwise Effects ###
@@ -123,32 +122,8 @@ if (FALSE) {
   ptm <- proc.time() #Start clock
   vc.mod = InterPath(t(X),y,regions,cores = cores)
   proc.time() - ptm #Stop clock
-  
-  ### Apply Davies Exact Method ###
-  vc.ts = vc.mod$Est
-  names(vc.ts) = colnames(regions)
-  
-  pvals = c()
-  for(i in 1:length(vc.ts)){
-      lambda = sort(vc.mod$Eigenvalues[,i],decreasing = T)
-      Davies_Method = davies(vc.mod$Est[i], lambda = lambda, acc=1e-8)
-      pvals[i] = 2*min(1-Davies_Method$Qq,Davies_Method$Qq)
-      names(pvals)[i] = names(vc.ts[i])
-  }
-  
-  ######################################################################################
-  ######################################################################################
-  ######################################################################################
-  
-  ### Find power for the first group of SNPs ###
-  Pthwys_1 = colnames(regions)[s1]
-  
-  ### Find power for the second group of SNPs ###
-  Pthwys_2 = colnames(regions)[s2]
-  
-  ######################################################################################
-  ######################################################################################
-  ######################################################################################
+ 
+  #Extract results and p-values and stuff
   
   ### Save Results ###
   pval_mat[,j] = pvals
@@ -156,7 +131,7 @@ if (FALSE) {
   G2_snps[,j] = Pthwys_2
   
   ### Report Status ###
-  cat("Completed Dataset", j, "\n", sep = " ")
+#  cat("Completed Dataset", j, "\n", sep = " ")
 
   }
 
