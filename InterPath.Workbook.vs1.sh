@@ -18824,11 +18824,10 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 			nCausal2a=.15
 			Output1.File1="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results.${PVE1}.${Rho1}.${PCs.var1}.${nCausal1a}.${nCausal2a}.Run${o}.txt"	
 
-			Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.dev.R $X.File1 $Genes.File1 $Covars.File1 $Output1.File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs.var1 $nGenes1 $nCausal1a $nCausal2a
+			Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.dev.R $X.File1 $Genes.File1 $Covars.File1 $Genes.File2 $Output1.File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs.var1 $nGenes1 $nCausal1a $nCausal2a
 
         done;
 done
-
 
 #		if [ ! -d /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2 ]; then
 #			mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2

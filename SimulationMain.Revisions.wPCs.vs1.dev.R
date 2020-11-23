@@ -14,7 +14,8 @@ n.datasets <- as.numeric(as.character(args[12]))
 pve <- as.numeric(as.character(args[13]))
 rho <- as.numeric(as.character(args[14]))
 pc.var <- as.numeric(as.character(args[15]))
-ngenes <- as.numeric(as.character(args[16]))
+#ngenes <- as.numeric(as.character(args[16]))
+nsnps <- as.numeric(as.character(args[16]))
 ncausal1 <- as.numeric(as.character(args[17]))
 ncausal2 <- as.numeric(as.character(args[18]))
 #ncausal3 <- args[19]
@@ -44,13 +45,14 @@ rho = 0.8; #Proportion of the heritability caused by additive effects {0.8, 0.5}
 pc.var = 0.1
 
 ### Set Up Causal Pathways in Three Groups
-ngenes = 20; #number of genes needed to get around 1000 SNPs pulled for G1, G2, and G3
+#ngenes = 20; #number of genes needed to get around 1000 SNPs pulled for G1, G2, and G3
+nsnps = 1000;
 ncausal1 = .05; ncausal2 = .2 #Percent of SNPs needed for G1 and G2
 ncausal3 = 1-(ncausal1+ncausal2) #Remaining SNPs to be allocated to G3
 
 ### Create a list to save the final Results ###
 pval_mat = matrix(nrow = nrow(Genes),ncol = n.datasets); pval_mat <- cbind(Genes[,1], pval_mat);
-genes_chosen = matrix(nrow = ngenes, ncol = n.datasets); 
+#genes_chosen = matrix(nrow = ngenes, ncol = n.datasets); 
 G1_snps = matrix(nrow = ncausal1,ncol = n.datasets)
 G2_snps = matrix(nrow = ncausal2,ncol = n.datasets)
 
@@ -59,13 +61,26 @@ for(i in 1:n.datasets) {
   
   #Select Causal Pathways
   gene.ids = 1:nrow(Genes)
-  genes.pulled.ids <- sample(gene.ids, ngenes, replace=F);
-  genes.pulled <- Genes[genes.pulled.ids,];
-
+#  genes.pulled.ids.temp <- sample(gene.ids, 1, replace=F);
+  gene.ids.sampled <- sample(gene.ids);
+  snp.total <- 0;
+  genes.pulled.ids <- c();
   genes.pulled.SNPs <- c();
-  for (j in 1:nrow(genes.pulled)) {
-	genes.pulled.SNPs <- c(genes.pulled.SNPs, unlist(strsplit(as.character(genes.pulled[j,2]), ",")));
+  numloop <- 1;
+  while ((snp.total <= 1000) || (numloop >= length(gene.ids))) {
+  	gene.temp <- Genes[gene.ids.sampled[numloop],];
+  	genes.pulled.ids <- c(genes.pulled.ids, gene.ids.sampled[numloop]);
+	genes.pulled.SNPs <- c(genes.pulled.SNPs, unlist(strsplit(as.character(gene.temp[1,2]), ",")));
+  	snp.total <- length(genes.pulled.SNPs);
+	numloop <- numloop + 1;
+  	print(snp.total);
   }
+  genes.pulled <- Genes[genes.pulled.ids,];
+  print(c(numloop, snp.total, length(genes.pulled.ids)));
+
+#  for (j in 1:nrow(genes.pulled)) {
+#	genes.pulled.SNPs <- c(genes.pulled.SNPs, unlist(strsplit(as.character(genes.pulled[j,2]), ",")));
+#  }
   genes.pulled.SNPs.uniq <- unique(genes.pulled.SNPs);
   genes.pulled.SNPs.uniq.ids <- 1:length(genes.pulled.SNPs.uniq)
   s1.ids=sample(genes.pulled.SNPs.uniq.ids, round(ncausal1*length(genes.pulled.SNPs.uniq)), replace=F)
@@ -119,15 +134,18 @@ for(i in 1:n.datasets) {
   ######################################################################################
   ######################################################################################
  
-#  vc.mod = InterPath(t(X),y,regions,cores = cores)
-  
   ptm <- proc.time() #Start clock
   MAPITR_Output <- MAPITR(X,y,Genes.Analysis[1:10,],Covariates=PCs) 
   print(proc.time() - ptm) #Stop clock
-#  MAPITR_SimData_Genotypes, MAPITR_SimData_Phenotype, MAPITR_SimData_Pathways)
   print(head(MAPITR_Output$Results))
 
-  ### Save Results ###
+#  write.table(y, paste(Output1.File, ".Simulation.Pheno.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+#  write.table( , paste(Output1.File, ".Simulation.nGenes.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+#  write.table( , paste(Output1.File, ".Simulation.nCausal1.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+#  write.table( , paste(Output1.File, ".Simulation.nCausal2.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+#  write.table(MAPITR_Output$Results, paste(Output1.File, ".Results.Output.txt", sep=""), quote=FALSE, col.name=TRUE, row.name=FALSE);
+
+#  ### Save Results ###
 #  pval_mat[,j] = pvals
 #  G1_snps[,j] = Pthwys_1
 #  G2_snps[,j] = Pthwys_2
@@ -136,8 +154,4 @@ for(i in 1:n.datasets) {
 
 #Save final Results
 #Final = list(pval_mat,G1_snps,G2_snps)
-
-#### Save the Results ###
-#file = "/home/lcrawfo1/Results/InterPath/PopStruct_Sim_rho8_S1.RData"
-#save(Final, file = file)
 
