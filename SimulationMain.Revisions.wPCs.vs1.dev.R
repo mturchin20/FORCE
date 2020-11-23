@@ -4,25 +4,29 @@ devtools::load_all("/users/mturchin/LabMisc/RamachandranLab/MAPITR")
 
 args <- commandArgs()
 print(args)
-X <- args[5]
-Genes <- args[6]
-Covars <- args[7]
-Output1 <- args[8]
-seed.value <- args[9]
-n.datasets <- args[10]
-pve <- args[11]
-rho <- args[12]
-pc.var <- args[13] 
-ngenes <- args[14]
-ncausal1 <- args[15]
-ncausal2 <- args[16]
-ncausal3 <- args[17]
+X.File <- args[5]
+Genes.File <- args[6]
+Covars.File <- args[7]
+Output1.File <- args[8]
+seed.value <- as.numeric(as.character(args[9]))
+n.datasets <- as.numeric(as.character(args[10]))
+pve <- as.numeric(as.character(args[11]))
+rho <- as.numeric(as.character(args[12]))
+pc.var <- as.numeric(as.character(args[13]))
+ngenes <- as.numeric(as.character(args[14]))
+ncausal1 <- as.numeric(as.character(args[15]))
+ncausal2 <- as.numeric(as.character(args[16]))
+#ncausal3 <- args[17]
 
 set.seed(seed.value)
 
-X <- as.matrix(read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz", header=T));
-Genes <- read.table("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.Rformat.txt", header=F);
-Covars <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt", header=T);
+#X <- as.matrix(read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz", header=T));
+#Genes <- read.table("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.Rformat.txt", header=F);
+#Covars <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt", header=T);
+#PCs <- Covars[,(ncol(Covars)-9):ncol(Covars)];
+X <- as.matrix(read.table(X.File, header=T));
+Genes <- read.table(Genes.File, header=F);
+Covars <- read.table(Covars.File, header=T);
 PCs <- Covars[,(ncol(Covars)-9):ncol(Covars)];
 
 Xmean=apply(X, 2, mean); Xsd=apply(X, 2, sd); X=t((t(X)-Xmean)/Xsd)
