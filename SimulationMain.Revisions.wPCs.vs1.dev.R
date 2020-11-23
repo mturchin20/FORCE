@@ -4,23 +4,23 @@ devtools::load_all("/users/mturchin/LabMisc/RamachandranLab/MAPITR")
 
 args <- commandArgs()
 print(args)
-X.File <- args[5]
-Genes.File <- args[6]
-Covars.File <- args[7]
-Output1.File <- args[8]
-seed.value <- as.numeric(as.character(args[9]))
-n.datasets <- as.numeric(as.character(args[10]))
-pve <- as.numeric(as.character(args[11]))
-rho <- as.numeric(as.character(args[12]))
-pc.var <- as.numeric(as.character(args[13]))
-ngenes <- as.numeric(as.character(args[14]))
-ncausal1 <- as.numeric(as.character(args[15]))
-ncausal2 <- as.numeric(as.character(args[16]))
-#ncausal3 <- args[17]
+X.File <- args[6]
+Genes.File <- args[7]
+Covars.File <- args[8]
+Output1.File <- args[9]
+seed.value <- as.numeric(as.character(args[10]))
+n.datasets <- as.numeric(as.character(args[11]))
+pve <- as.numeric(as.character(args[12]))
+rho <- as.numeric(as.character(args[13]))
+pc.var <- as.numeric(as.character(args[14]))
+ngenes <- as.numeric(as.character(args[15]))
+ncausal1 <- as.numeric(as.character(args[16]))
+ncausal2 <- as.numeric(as.character(args[17]))
+#ncausal3 <- args[18]
 
 set.seed(seed.value)
 
-#X <- as.matrix(read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African}QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz", header=T));
+#X <- as.matrix(read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz", header=T));
 #Genes <- read.table("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.Rformat.txt", header=F);
 #Covars <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt", header=T);
 #PCs <- Covars[,(ncol(Covars)-9):ncol(Covars)];
@@ -44,7 +44,8 @@ ncausal1 = .05; ncausal2 = .2 #Percent of SNPs needed for G1 and G2
 ncausal3 = 1-(ncausal1+ncausal2) #Remaining SNPs to be allocated to G3
 
 ### Create a list to save the final Results ###
-pval_mat = matrix(nrow = npthwy,ncol = n.datasets); rownames(pval_mat) = names(gene_list)
+pval_mat = matrix(nrow = nrow(Genes),ncol = n.datasets); pval_mat <- cbind(Genes[,1], pval_mat);
+genes_chosen = matrix(nrow = ngenes, ncol = n.datasets); 
 G1_snps = matrix(nrow = ncausal1,ncol = n.datasets)
 G2_snps = matrix(nrow = ncausal2,ncol = n.datasets)
 
@@ -64,7 +65,7 @@ for(i in 1:n.datasets){
   genes.pulled.SNPs.uniq.ids <- 1:length(genes.pulled.SNPs.uniq)
   s1.ids=sample(genes.pulled.SNPs.uniq.ids, round(ncausal1*length(genes.pulled.SNPs.uniq)), replace=F)
   s2.ids=sample(genes.pulled.SNPs.uniq.ids[-s1.ids], round(ncausal2*length(genes.pulled.SNPs.uniq)), replace=F)
-  s3.ids.size <- round(ncausal3*length(genes.pulled.SNPs.uniq)); if (s3.size > length(genes.pulled.SNPs.uniq.ids[-c(s1.ids,s2.ids)])) { s3.size <- s3.size - 1; }
+  s3.ids.size <- round(ncausal3*length(genes.pulled.SNPs.uniq)); if (s3.ids.size > length(genes.pulled.SNPs.uniq.ids[-c(s1.ids,s2.ids)])) { s3.ids.size <- s3.ids.size - 1; }
   s3.ids=sample(genes.pulled.SNPs.uniq.ids[-c(s1.ids,s2.ids)], s3.ids.size, replace=F)
   s1 <- genes.pulled.SNPs.uniq[s1.ids]
   s2 <- genes.pulled.SNPs.uniq[s2.ids]
