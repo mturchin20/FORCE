@@ -21,8 +21,11 @@ ncausal2 <- as.numeric(as.character(args[17]))
 set.seed(seed.value)
 
 #X <- as.matrix(read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz", header=T));
+#X <- as.matrix(read.table("/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran40000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran40000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz", header=T));
 #Genes <- read.table("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.Rformat.txt", header=F);
+#Genes <- read.table("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.British.Ran40000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.Rformat.txt", header=F);
 #Covars <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt", header=T);
+#Covars <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran40000/mturchin20/ukb_chrAll_v3.British.Ran40000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt", header=T);
 #PCs <- Covars[,(ncol(Covars)-9):ncol(Covars)];
 X <- as.matrix(read.table(X.File, header=T));
 Genes <- read.table(Genes.File, header=F);
@@ -108,37 +111,26 @@ for(i in 1:n.datasets) {
   y=(y-mean(y))/sd(y)
   
   ### Check dimensions ###
-  dim(X); length(y)
+  print(dim(X)); print(length(y));
   
   ######################################################################################
   ######################################################################################
   ######################################################################################
  
-if (FALSE) { 
-  ### Set the number of cores ###
-  cores = detectCores()
-  
-  ### Run InterPath ###
-  ptm <- proc.time() #Start clock
   vc.mod = InterPath(t(X),y,regions,cores = cores)
-  proc.time() - ptm #Stop clock
- 
-  #Extract results and p-values and stuff
+  
+  MAPITR_Output <- MAPITR(X, y, Genes) 
+#  MAPITR_SimData_Genotypes, MAPITR_SimData_Phenotype, MAPITR_SimData_Pathways)
   
   ### Save Results ###
-  pval_mat[,j] = pvals
-  G1_snps[,j] = Pthwys_1
-  G2_snps[,j] = Pthwys_2
-  
-  ### Report Status ###
-#  cat("Completed Dataset", j, "\n", sep = " ")
-
-  }
+#  pval_mat[,j] = pvals
+#  G1_snps[,j] = Pthwys_1
+#  G2_snps[,j] = Pthwys_2
 
 }
 
 #Save final Results
-Final = list(pval_mat,G1_snps,G2_snps)
+#Final = list(pval_mat,G1_snps,G2_snps)
 
 #### Save the Results ###
 #file = "/home/lcrawfo1/Results/InterPath/PopStruct_Sim_rho8_S1.RData"
