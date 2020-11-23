@@ -7,16 +7,17 @@ print(args)
 X.File <- args[6]
 Genes.File <- args[7]
 Covars.File <- args[8]
-Output1.File <- args[9]
-seed.value <- as.numeric(as.character(args[10]))
-n.datasets <- as.numeric(as.character(args[11]))
-pve <- as.numeric(as.character(args[12]))
-rho <- as.numeric(as.character(args[13]))
-pc.var <- as.numeric(as.character(args[14]))
-ngenes <- as.numeric(as.character(args[15]))
-ncausal1 <- as.numeric(as.character(args[16]))
-ncausal2 <- as.numeric(as.character(args[17]))
-#ncausal3 <- args[18]
+Genes.Analysis.File <- args[9]
+Output1.File <- args[10]
+seed.value <- as.numeric(as.character(args[11]))
+n.datasets <- as.numeric(as.character(args[12]))
+pve <- as.numeric(as.character(args[13]))
+rho <- as.numeric(as.character(args[14]))
+pc.var <- as.numeric(as.character(args[15]))
+ngenes <- as.numeric(as.character(args[16]))
+ncausal1 <- as.numeric(as.character(args[17]))
+ncausal2 <- as.numeric(as.character(args[18]))
+#ncausal3 <- args[19]
 
 set.seed(seed.value)
 
@@ -30,6 +31,7 @@ set.seed(seed.value)
 X <- as.matrix(read.table(X.File, header=T));
 Genes <- read.table(Genes.File, header=F);
 Covars <- read.table(Covars.File, header=T);
+Genes.Analysis <- read.table(Genes.Analysis.File, header=F);
 PCs <- as.matrix(Covars[,(ncol(Covars)-9):ncol(Covars)]);
 
 Xmean=apply(X, 2, mean); Xsd=apply(X, 2, sd); X=t((t(X)-Xmean)/Xsd)
@@ -117,11 +119,14 @@ for(i in 1:n.datasets) {
   ######################################################################################
   ######################################################################################
  
-  vc.mod = InterPath(t(X),y,regions,cores = cores)
+#  vc.mod = InterPath(t(X),y,regions,cores = cores)
   
-  MAPITR_Output <- MAPITR(X, y, Genes) 
+  ptm <- proc.time() #Start clock
+  MAPITR_Output <- MAPITR(X,y,Genes.Analysis[1:10,],Covariates=PCs) 
+  print(proc.time() - ptm) #Stop clock
 #  MAPITR_SimData_Genotypes, MAPITR_SimData_Phenotype, MAPITR_SimData_Pathways)
-  
+  print(head(MAPITR_Output$Results))
+
   ### Save Results ###
 #  pval_mat[,j] = pvals
 #  G1_snps[,j] = Pthwys_1
