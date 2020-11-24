@@ -30,6 +30,9 @@ Covars <- read.table(Covars.File, header=T);
 Genes.Analysis <- read.table(Genes.Analysis.File, header=F);
 PCs <- as.matrix(Covars[,(ncol(Covars)-9):ncol(Covars)]);
 
+Genes <- Genes[1:50,]
+Genes.Analysis <- Genes.Analysis[1:50,]
+
 Xmean=apply(X, 2, mean); Xsd=apply(X, 2, sd); X=t((t(X)-Xmean)/Xsd)
 ind = nrow(X); nsnp = ncol(X)
 
@@ -45,7 +48,7 @@ for(i in 1:n.datasets) {
   genes.pulled.SNPs <- c();
   snp.total.running <- c(0);
   numloop <- 1;
-  while ((snp.total <= 1000) || (numloop >= length(gene.ids))) {
+  while ((snp.total <= nsnps) || (numloop >= length(gene.ids))) {
   	gene.temp <- Genes[gene.ids.sampled[numloop],];
   	genes.pulled.ids <- c(genes.pulled.ids, gene.ids.sampled[numloop]);
 	genes.pulled.SNPs <- c(genes.pulled.SNPs, unlist(strsplit(as.character(gene.temp[1,2]), ",")));
