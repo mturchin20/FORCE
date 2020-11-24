@@ -115,7 +115,7 @@ for(i in 1:n.datasets) {
   y=(y-mean(y))/sd(y)
   
   ### Check dimensions ###
-  print(dim(X)); print(length(y));
+  print(seed.value); print(dim(X)); print(length(y));
   
   ######################################################################################
   ######################################################################################
@@ -128,7 +128,8 @@ for(i in 1:n.datasets) {
 #  }
 
   ptm <- proc.time() #Start clock
-  MAPITR_Output <- MAPITR(X,y,Genes.Analysis[1:10,],Covariates=PCs) 
+#  MAPITR_Output <- MAPITR(X,y,Genes.Analysis,Covariates=PCs) 
+  MAPITR_Output <- MAPITR(X,y,Genes.Analysis) 
   print(proc.time() - ptm) #Stop clock
 #  print(head(MAPITR_Output$Results))
 

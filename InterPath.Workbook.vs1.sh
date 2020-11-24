@@ -18815,15 +18815,14 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Masked/Results/British.Ran4000
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Masked/Results/British.Ran4000/slurm
           
--dff cd vrsns
--otpt fls
--sbmtjbstp
 -dff pop vrsns
--cllctrslts
 -gtalljbsrnng
 -strtanalysspplngothrgh
+
 #pve: total heritability
 #rho: proportion of PVE that is additive
+#nsnps: nsnp threshold for amount to include for g1, g2, and g3
+#nCausal1a/nCausal2a: % of nsnps that are g1 and g2 (g3 = 1 - nCausal1a - nCausal2a)
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
@@ -18858,6 +18857,26 @@ done
 #		if [ ! -d /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2 ]; then
 #			mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2
 #		fi
+
+#Test run with the following parameters and seed value gets you the below top hits, where the top 4 are true hits and the rest are a mix of not true hits and true hits (thresh=.001)
+#(Simulations1) [  mturchin@node1164  ~/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/African/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results_.9_.1_0_.2_.4.Run1.Results.Output.txt | grep -E 'AHSP|ADGRG3|ATP2A1|ACSM3|ABCA17P|ABCC6|ARMC5|ACSM2B|ABCA3|APRT|ACSM2A|ACSM1|ABCC1'
+#...
+#(Simulations1) [  mturchin@node1164  ~/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin]$R -q -e ".05 / 50"
+#> .05 / 50
+#[1] 0.001
+#> 
+#> 
+#(Simulations1) [  mturchin@node1164  ~/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/African/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results_.9_.1_0_.2_.4.Run1.Results.Output.txt | sort -g -k 2,2 | head -n 10
+#Pathways pValues Est PVE
+#ACSM3 0 0.174625547406022 0.181453757115649
+#ARMC5 0 0.29048239201933 0.288783476172999
+#ABCC1 1.61597615289111e-08 0.342776154177813 0.360975195919421
+#ACSM1 1.56127424637553e-05 0.104298838325541 0.107635553832648
+#ADAM3B 0.00115196239302806 0.0855270099731938 0.0853575397008838
+#ANKS4B 0.00137746497172087 0.150031307949749 0.15028403838003
+#ATP2C2 0.00175230429993123 0.11758571011361 0.119359182267382
+#ABCC6 0.00306253350758112 0.10397685593628 0.106737919309199
+#ABCA3 0.00615804555202226 0.0746622105346362 0.0753737131021618
 
 
 
@@ -26969,6 +26988,39 @@ ACD     X16.67691668
 4  0.016949126  0.001562741  0.001856091  0.004544207
 5  0.000982229  0.033428122 -0.007542121  0.017494883
 6  0.027819427 -0.004468708 -0.003553934 -0.015372199
+(Simulations1) [  mturchin@node1164  ~/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/African/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results_.9_.1_0_.2_.4.Run1.Results.Output.txt | grep -E 'AHSP|ADGRG3|ATP2A1|ACSM3|ABCA17P|ABCC6|ARMC5|ACSM2B|ABCA3|APRT|ACSM2A|ACSM1|ABCC1'
+ABCA17P 0.0401301826795455 0.0251849071198145 0.0253433020933555
+ABCA3 0.00615804555202226 0.0746622105346362 0.0753737131021618
+ABCC1 1.61597615289111e-08 0.342776154177813 0.360975195919421
+ABCC11 0.0506673270488267 0.0383478784849229 0.038368111886496
+ABCC12 0.0236511121023562 0.073784995110328 0.0737551335023894
+ABCC6 0.00306253350758112 0.10397685593628 0.106737919309199
+ABCC6P1 0.847279504859733 0.00175598672088301 0.00175316438606304
+ACSM1 1.56127424637553e-05 0.104298838325541 0.107635553832648
+ACSM2A 0.0790877994384609 0.0296625301269137 0.0298987197320777
+ACSM2B 0.0516166169065748 0.0399209991305222 0.0416234056960166
+ACSM3 0 0.174625547406022 0.181453757115649
+ADGRG3 0.139228374131977 0.0431105635971312 0.0435024771124536
+AHSP 0.0124291013664375 0.0572642813697266 0.057256264797199
+APRT 0.41590453335531 -0.014301660020878 -0.0143014646511713
+ARMC5 0 0.29048239201933 0.288783476172999
+ATP2A1 0.172485769498071 0.033516884450012 0.0334845199271712
+(Simulations1) [  mturchin@node1164  ~/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin]$R -q -e ".05 / 50"
+> .05 / 50
+[1] 0.001
+> 
+> 
+(Simulations1) [  mturchin@node1164  ~/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/African/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results_.9_.1_0_.2_.4.Run1.Results.Output.txt | sort -g -k 2,2 | head -n 10
+Pathways pValues Est PVE
+ACSM3 0 0.174625547406022 0.181453757115649
+ARMC5 0 0.29048239201933 0.288783476172999
+ABCC1 1.61597615289111e-08 0.342776154177813 0.360975195919421
+ACSM1 1.56127424637553e-05 0.104298838325541 0.107635553832648
+ADAM3B 0.00115196239302806 0.0855270099731938 0.0853575397008838
+ANKS4B 0.00137746497172087 0.150031307949749 0.15028403838003
+ATP2C2 0.00175230429993123 0.11758571011361 0.119359182267382
+ABCC6 0.00306253350758112 0.10397685593628 0.106737919309199
+ABCA3 0.00615804555202226 0.0746622105346362 0.0753737131021618
 
 
 
