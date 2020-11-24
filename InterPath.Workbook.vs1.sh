@@ -18692,9 +18692,11 @@ mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMd
 
 cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/PopStructPowerSimulations/PopStruct_Sim_rho8_S1.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs1.R
 cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs1.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.R
+cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs2.R 
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs1.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.vs1.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.wPCs.vs1.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.wPCs.vs1.dev.R
+ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs2.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.vs2.R
 
 #From: https://stackoverflow.com/questions/56735768/how-can-i-pass-arguments-to-an-rscript-i-have-in-my-desktop, https://stackoverflow.com/questions/22906804/matrix-expression-causes-error-requires-numeric-complex-matrix-vector-arguments, https://swcarpentry.github.io/r-novice-inflammation/05-cmdline/, https://stackoverflow.com/questions/21969145/why-or-when-is-rscript-or-littler-better-than-r-cmd-batch
 #Genes = Pathways, X SNPs across L genes, X SNPs across groups G1, G2, and G3, all three have additive effects, G1 and G2 have interaction effects
@@ -18834,14 +18836,14 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 			Datasets1=1
 			PVE1=.6
 			Rho1=.8
-			PCs.var1=.1
+			PCs.var1=0
 			nsnps1=1000
 			nCausal1a=.05
 			nCausal2a=.15
 			Output1.Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
 			Output1.File1="${Output1.Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results.${PVE1}.${Rho1}.${PCs.var1}.${nCausal1a}.${nCausal2a}.Run${o}"; Output1.Slurm1="${Output1.Path/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results.${PVE1}.${Rho1}.${PCs.var1}.${nCausal1a}.${nCausal2a}.Run${o}"
 
-			sbatch -t 72:00:00 --mem 12g -o ${Output1.Slurm1}.slurm.output -e ${Output1.Slurm1}.slurm.error --comment "Sims Null $ancestry2 $o" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.dev.R $X.File1 $Genes.File1 $Covars.File1 $Genes.File2 $Output1.File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs.var1 $nsnps1 $nCausal1a $nCausal2a")
+			sbatch -t 72:00:00 --mem 12g -o ${Output1.Slurm1}.slurm.output -e ${Output1.Slurm1}.slurm.error --comment "Sims Null $ancestry2 $o" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs2.R $X.File1 $Genes.File1 $Covars.File1 $Genes.File2 $Output1.File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs.var1 $nsnps1 $nCausal1a $nCausal2a")
 
         done;
 done
