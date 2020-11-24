@@ -3,7 +3,7 @@ library("devtools")
 devtools::load_all("/users/mturchin/LabMisc/RamachandranLab/MAPITR")
 
 args <- commandArgs()
-print(args)
+#print(args)
 X.File <- args[6]
 Genes.File <- args[7]
 Covars.File <- args[8]
@@ -22,13 +22,6 @@ ncausal2 <- as.numeric(as.character(args[18]))
 
 set.seed(seed.value)
 
-#X <- as.matrix(read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz", header=T));
-#X <- as.matrix(read.table("/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran40000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran40000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz", header=T));
-#Genes <- read.table("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.Rformat.txt", header=F);
-#Genes <- read.table("/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.British.Ran40000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.Rformat.txt", header=F);
-#Covars <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chrAll_v3.African.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt", header=T);
-#Covars <- read.table("/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran40000/mturchin20/ukb_chrAll_v3.British.Ran40000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt", header=T);
-#PCs <- Covars[,(ncol(Covars)-9):ncol(Covars)];
 X <- as.matrix(read.table(X.File, header=T));
 Genes <- read.table(Genes.File, header=F);
 Covars <- read.table(Covars.File, header=T);
@@ -47,14 +40,14 @@ pc.var = 0.1
 ### Set Up Causal Pathways in Three Groups
 #ngenes = 20; #number of genes needed to get around 1000 SNPs pulled for G1, G2, and G3
 nsnps = 1000;
-ncausal1 = .05; ncausal2 = .2 #Percent of SNPs needed for G1 and G2
+ncausal1 = .02; ncausal2 = .02 #Percent of SNPs needed for G1 and G2
 ncausal3 = 1-(ncausal1+ncausal2) #Remaining SNPs to be allocated to G3
 
 ### Create a list to save the final Results ###
-pval_mat = matrix(nrow = nrow(Genes),ncol = n.datasets); pval_mat <- cbind(Genes[,1], pval_mat);
+#pval_mat = matrix(nrow = nrow(Genes),ncol = n.datasets); pval_mat <- cbind(Genes[,1], pval_mat);
 #genes_chosen = matrix(nrow = ngenes, ncol = n.datasets); 
-G1_snps = matrix(nrow = ncausal1,ncol = n.datasets)
-G2_snps = matrix(nrow = ncausal2,ncol = n.datasets)
+#G1_snps = matrix(nrow = ncausal1,ncol = n.datasets)
+#G2_snps = matrix(nrow = ncausal2,ncol = n.datasets)
 
 ### Run the Analysis ###
 for(i in 1:n.datasets) {
@@ -66,17 +59,18 @@ for(i in 1:n.datasets) {
   snp.total <- 0;
   genes.pulled.ids <- c();
   genes.pulled.SNPs <- c();
+  snp.total.running <- c(0);
   numloop <- 1;
   while ((snp.total <= 1000) || (numloop >= length(gene.ids))) {
   	gene.temp <- Genes[gene.ids.sampled[numloop],];
   	genes.pulled.ids <- c(genes.pulled.ids, gene.ids.sampled[numloop]);
 	genes.pulled.SNPs <- c(genes.pulled.SNPs, unlist(strsplit(as.character(gene.temp[1,2]), ",")));
   	snp.total <- length(genes.pulled.SNPs);
+	snp.total.running <- c(snp.total.running, snp.total);
 	numloop <- numloop + 1;
-  	print(snp.total);
   }
   genes.pulled <- Genes[genes.pulled.ids,];
-  print(c(numloop, snp.total, length(genes.pulled.ids)));
+  print(c(numloop, snp.total, length(genes.pulled.ids), snp.total.running[length(snp.total.running)-1]));
 
 #  for (j in 1:nrow(genes.pulled)) {
 #	genes.pulled.SNPs <- c(genes.pulled.SNPs, unlist(strsplit(as.character(genes.pulled[j,2]), ",")));
@@ -140,9 +134,9 @@ for(i in 1:n.datasets) {
   print(head(MAPITR_Output$Results))
 
 #  write.table(y, paste(Output1.File, ".Simulation.Pheno.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
-#  write.table( , paste(Output1.File, ".Simulation.nGenes.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
-#  write.table( , paste(Output1.File, ".Simulation.nCausal1.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
-#  write.table( , paste(Output1.File, ".Simulation.nCausal2.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+#  write.table(genes.pulled, paste(Output1.File, ".Simulation.nGenes.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+#  write.table(s1, paste(Output1.File, ".Simulation.nCausal1.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+#  write.table(s2, paste(Output1.File, ".Simulation.nCausal2.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
 #  write.table(MAPITR_Output$Results, paste(Output1.File, ".Results.Output.txt", sep=""), quote=FALSE, col.name=TRUE, row.name=FALSE);
 
 #  ### Save Results ###
