@@ -20,6 +20,7 @@ ncausal1 <- as.numeric(as.character(args[17]))
 ncausal2 <- as.numeric(as.character(args[18]))
 #ncausal3 <- args[19]
 ncausal3 = 1-(ncausal1+ncausal2) #Remaining SNPs to be allocated to G3
+#nmask <- as.numeric(as.character(args[20]))
 
 set.seed(seed.value)
 
@@ -79,31 +80,35 @@ for(i in 1:n.datasets) {
   y_marginal=Xmarginal%*%beta
   
   ### Simulate Pairwise Interaction matrix ###
-  Xepi = c(); b = c()
-  for(j in 1:ncausal1){
-      Xepi = cbind(Xepi,X[,s1[j]]*X[,s2]) 
+  y_epi <- 0;
+  if (ncausal1 > 0) { 
+	  Xepi = c(); b = c();
+	  for(j in 1:ncausal1){
+	      Xepi = cbind(Xepi,X[,s1[j]]*X[,s2]) 
+	  }
+	  
+	  ### Simulate the Pairwise Effects ###
+	  beta=rnorm(dim(Xepi)[2])
+	  y_epi=c(Xepi%*%beta)
+	  beta=beta*sqrt(pve*(1-rho)/var(y_epi))
+	  y_epi=Xepi%*%beta
+   }
+
+  ### Define the effects of the PCs, if included in simulation ###
+  y_pcs <- 0;
+  if (pc.var > 0) { 
+	  beta=rnorm(dim(PCs)[2])
+	  y_pcs=c(PCs%*%beta)
+	  beta=beta*sqrt(pc.var/var(y_pcs))
+	  y_pcs=PCs%*%beta
   }
-  
-  ### Simulate the Pairwise Effects ###
-  beta=rnorm(dim(Xepi)[2])
-  y_epi=c(Xepi%*%beta)
-  beta=beta*sqrt(pve*(1-rho)/var(y_epi))
-  y_epi=Xepi%*%beta
-  
-#  ### Define the effects of the PCs ###
-#  beta=rnorm(dim(PCs)[2])
-#  y_pcs=c(PCs%*%beta)
-#  beta=beta*sqrt(pc.var/var(y_pcs))
-#  y_pcs=PCs%*%beta
-  
+
   ### Simulate the (Environmental) Error/Noise ###
   y_err=rnorm(ind)
-  y_err=y_err*sqrt((1-pve)/var(y_err))
-#  y_err=y_err*sqrt((1-pve-pc.var)/var(y_err))
+  y_err=y_err*sqrt((1-pve-pc.var)/var(y_err))
   
   ### Simulate the Total Phenotypes ###
-  y=y_marginal+y_epi++y_err
-#  y=y_marginal+y_epi+y_pcs+y_err
+  y=y_marginal+y_epi+y_pcs+y_err
   y=(y-mean(y))/sd(y)
   
   ### Check dimensions ###
@@ -112,25 +117,22 @@ for(i in 1:n.datasets) {
   ######################################################################################
   ######################################################################################
   ######################################################################################
- 
+
+#  if (nmask > 0) {
+#
+#  remove G3 SNPs from X
+#
+#  }
+
   ptm <- proc.time() #Start clock
   MAPITR_Output <- MAPITR(X,y,Genes.Analysis[1:10,],Covariates=PCs) 
   print(proc.time() - ptm) #Stop clock
-  print(head(MAPITR_Output$Results))
+#  print(head(MAPITR_Output$Results))
 
-#  write.table(y, paste(Output1.File, ".Simulation.Pheno.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
-#  write.table(genes.pulled, paste(Output1.File, ".Simulation.nGenes.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
-#  write.table(s1, paste(Output1.File, ".Simulation.nCausal1.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
-#  write.table(s2, paste(Output1.File, ".Simulation.nCausal2.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
-#  write.table(MAPITR_Output$Results, paste(Output1.File, ".Results.Output.txt", sep=""), quote=FALSE, col.name=TRUE, row.name=FALSE);
-
-#  ### Save Results ###
-#  pval_mat[,j] = pvals
-#  G1_snps[,j] = Pthwys_1
-#  G2_snps[,j] = Pthwys_2
+  write.table(y, paste(Output1.File, ".Simulation.Pheno.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+  write.table(genes.pulled, paste(Output1.File, ".Simulation.nGenes.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+  write.table(s1, paste(Output1.File, ".Simulation.nCausal1.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+  write.table(s2, paste(Output1.File, ".Simulation.nCausal2.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+  write.table(MAPITR_Output$Results, paste(Output1.File, ".Results.Output.txt", sep=""), quote=FALSE, col.name=TRUE, row.name=FALSE);
 
 }
-
-#Save final Results
-#Final = list(pval_mat,G1_snps,G2_snps)
-
