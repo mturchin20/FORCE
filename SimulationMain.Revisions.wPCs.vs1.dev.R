@@ -32,10 +32,10 @@ Xmean=apply(X, 2, mean); Xsd=apply(X, 2, sd); X=t((t(X)-Xmean)/Xsd)
 ind = nrow(X); nsnp = ncol(X)
 
 ### Define the Simulation Parameters ###
-n.datasets = 1 #Total Number of Simulations 
-pve = 0.6; #Heritability of the trait
-rho = 0.8; #Proportion of the heritability caused by additive effects {0.8, 0.5}
-pc.var = 0.1
+#n.datasets = 1 #Total Number of Simulations 
+#pve = 0.6; #Heritability of the trait
+#rho = 0.8; #Proportion of the heritability caused by additive effects {0.8, 0.5}
+#pc.var = 0.1
 
 ### Set Up Causal Pathways in Three Groups
 #ngenes = 20; #number of genes needed to get around 1000 SNPs pulled for G1, G2, and G3
