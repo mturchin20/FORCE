@@ -30,8 +30,8 @@ Covars <- read.table(Covars.File, header=T);
 Genes.Analysis <- read.table(Genes.Analysis.File, header=F);
 PCs <- as.matrix(Covars[,(ncol(Covars)-9):ncol(Covars)]);
 
-Genes <- Genes[1:50,]
-Genes.Analysis <- Genes.Analysis[1:50,]
+#Genes <- Genes[1:50,]
+#Genes.Analysis <- Genes.Analysis[1:50,]
 
 Xmean=apply(X, 2, mean); Xsd=apply(X, 2, sd); X=t((t(X)-Xmean)/Xsd)
 ind = nrow(X); nsnp = ncol(X)
