@@ -15,11 +15,12 @@ pve <- as.numeric(as.character(args[13]))
 rho <- as.numeric(as.character(args[14]))
 pc.var <- as.numeric(as.character(args[15]))
 #ngenes <- as.numeric(as.character(args[16]))
-nsnps <- as.numeric(as.character(args[16]))
+#nsnps <- as.numeric(as.character(args[16]))
+ncausaltotal <- as.numeric(as.character(args[16]))
 ncausal1 <- as.numeric(as.character(args[17]))
 ncausal2 <- as.numeric(as.character(args[18]))
-#ncausal3 <- args[19]
-ncausal3 = 1-(ncausal1+ncausal2) #Remaining SNPs to be allocated to G3
+ncausal3 <- as.numeric(as.character(args[19]))
+#ncausal3 = 1-(ncausal1+ncausal2) #Remaining SNPs to be allocated to G3
 #nmask <- as.numeric(as.character(args[20]))
 
 set.seed(seed.value)
@@ -30,8 +31,8 @@ Covars <- read.table(Covars.File, header=T);
 Genes.Analysis <- read.table(Genes.Analysis.File, header=F);
 PCs <- as.matrix(Covars[,(ncol(Covars)-9):ncol(Covars)]);
 
-#Genes <- Genes[1:50,]
-#Genes.Analysis <- Genes.Analysis[1:50,]
+Genes <- Genes[1:50,]
+Genes.Analysis <- Genes.Analysis[1:50,]
 
 Xmean=apply(X, 2, mean); Xsd=apply(X, 2, sd); X=t((t(X)-Xmean)/Xsd)
 ind = nrow(X); nsnp = ncol(X)
@@ -40,37 +41,38 @@ ind = nrow(X); nsnp = ncol(X)
 for(i in 1:n.datasets) {
   
   #Select Causal Pathways
-  gene.ids = 1:nrow(Genes)
-#  genes.pulled.ids.temp <- sample(gene.ids, 1, replace=F);
-  gene.ids.sampled <- sample(gene.ids);
-  snp.total <- 0;
-  genes.pulled.ids <- c();
-  genes.pulled.SNPs <- c();
-  snp.total.running <- c(0);
-  numloop <- 1;
-  while ((snp.total <= nsnps) || (numloop >= length(gene.ids))) {
-  	gene.temp <- Genes[gene.ids.sampled[numloop],];
-  	genes.pulled.ids <- c(genes.pulled.ids, gene.ids.sampled[numloop]);
-	genes.pulled.SNPs <- c(genes.pulled.SNPs, unlist(strsplit(as.character(gene.temp[1,2]), ",")));
-  	snp.total <- length(genes.pulled.SNPs);
-	snp.total.running <- c(snp.total.running, snp.total);
-	numloop <- numloop + 1;
+
+  genes.ids = 1:nrow(Genes)
+  s1.genes.ids <- sample(genes.ids, ncausal1, replace=F);
+  s2.genes.ids <- sample(genes.ids[-s1.genes.ids], ncausal2, replace=F);
+  s3.genes.ids <- sample(genes.ids[c(-s1.genes.ids,-s2.genes.ids)], ncausal3, replace=F);
+  s1 <- c(); s2 <- c(); s3 <- c();
+  for (j in 1:length(s1.genes.ids)) {
+	gene.temp <- Genes[s1.genes.ids[j],];
+	gene.temp.SNPs <- unlist(strsplit(as.character(gene.temp[1,2]), ",")));
+  	s1 <- c(s1, sample(gene.temp.SNPS, round(ncausaltotal * length(gene.temp.SNPs)), replace=F);
   }
-  genes.pulled <- Genes[genes.pulled.ids,];
+  for (j in 1:length(s2.genes.ids)) {
+	gene.temp <- Genes[s2.genes.ids[j],];
+	gene.temp.SNPs <- unlist(strsplit(as.character(gene.temp[1,2]), ",")));
+  	s2 <- c(s2, sample(gene.temp.SNPS, round(ncausaltotal * length(gene.temp.SNPs)), replace=F);
+  }
+  for (j in 1:length(s3.genes.ids)) {
+	gene.temp <- Genes[s3.genes.ids[j],];
+	gene.temp.SNPs <- unlist(strsplit(as.character(gene.temp[1,2]), ",")));
+  	s3 <- c(s3, sample(gene.temp.SNPS, round(ncausaltotal * length(gene.temp.SNPs)), replace=F);
+  }
+  print(c(ncausaltotal,ncausal1,ncausal2,ncausal3,
+  length(s1.genes.ids),
+  length(s2.genes.ids),
+  length(s3.genes.ids),
+  length(s1),
+  length(s2),
+  length(s3),
+
   print(c(numloop, snp.total, length(genes.pulled.ids), snp.total.running[length(snp.total.running)-1]));
 
-#  for (j in 1:nrow(genes.pulled)) {
-#	genes.pulled.SNPs <- c(genes.pulled.SNPs, unlist(strsplit(as.character(genes.pulled[j,2]), ",")));
-#  }
-  genes.pulled.SNPs.uniq <- unique(genes.pulled.SNPs);
-  genes.pulled.SNPs.uniq.ids <- 1:length(genes.pulled.SNPs.uniq)
-  s1.ids=sample(genes.pulled.SNPs.uniq.ids, round(ncausal1*length(genes.pulled.SNPs.uniq)), replace=F)
-  s2.ids=sample(genes.pulled.SNPs.uniq.ids[-s1.ids], round(ncausal2*length(genes.pulled.SNPs.uniq)), replace=F)
-  s3.ids.size <- round(ncausal3*length(genes.pulled.SNPs.uniq)); if (s3.ids.size > length(genes.pulled.SNPs.uniq.ids[-c(s1.ids,s2.ids)])) { s3.ids.size <- s3.ids.size - 1; }
-  s3.ids=sample(genes.pulled.SNPs.uniq.ids[-c(s1.ids,s2.ids)], s3.ids.size, replace=F)
-  s1 <- genes.pulled.SNPs.uniq[s1.ids]
-  s2 <- genes.pulled.SNPs.uniq[s2.ids]
-  s3 <- genes.pulled.SNPs.uniq[s3.ids]
+#want -- final list of SNPs for s1, s2, and s3; these are column ids that can be put just into X[,here];
 
   ### Simulate the Additive Effects ###
   SNPs.additive = c(s1,s2,s3);
