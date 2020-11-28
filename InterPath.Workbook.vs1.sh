@@ -18853,7 +18853,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		Seed1=`echo "$AncSeed1 + ($o * 2)" | bc -l`
 		Datasets1=1
 		PVE1=.9
-		Rho1=.1
+		Rho1=1
 		PCs_var1=0
 		ncausaltotal1=1
 		nCausal1a=2
