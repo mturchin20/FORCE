@@ -18853,15 +18853,28 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		PVE1=.9
 		Rho1=.1
 		PCs_var1=0
-		nsnps1=1000
-		nCausal1a=.2
-		nCausal2a=.5
+		ncausaltotal1=.5
+		nCausal1a=2
+		nCausal2a=2
+		nCausal3a=6
 		Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
 		Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results_${PVE1}_${Rho1}_${PCs_var1}_${nsnps1}_${nCausal1a}_${nCausal2a}.Run${o}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results_${PVE1}_${Rho1}_${PCs_var1}_${nsnps1}_${nCausal1a}_${nCausal2a}.Run${o}"
 
 		sbatch -t 72:00:00 --mem 12g -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims Null $ancestry2 $o" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs2.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $nsnps1 $nCausal1a $nCausal2a")
         done;
 done
+
+pc.var <- as.numeric(as.character(args[15]))
+#ngenes <- as.numeric(as.character(args[16]))
+#nsnps <- as.numeric(as.character(args[16]))
+ncausaltotal <- as.numeric(as.character(args[16]))
+ncausal1 <- as.numeric(as.character(args[17]))
+ncausal2 <- as.numeric(as.character(args[18]))
+ncausal3 <- as.numeric(as.character(args[19]))
+#ncausal3 = 1-(ncausal1+ncausal2) #Remaining SNPs to be allocated to G3
+#nmask <- as.numeric(as.character(args[20]))
+
+
 
                 PVE1=.6
                 Rho1=.8
