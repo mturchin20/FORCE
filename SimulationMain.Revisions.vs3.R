@@ -83,7 +83,7 @@ for(i in 1:n.datasets) {
   y_epi <- 0;
   if ((ncausal1 > 0) && (rho < 1)) { 
 	  Xepi = c(); b = c();
-	  for(j in 1:ncausal1){
+	  for(j in 1:length(s1)){
 	      Xepi = cbind(Xepi,X[,s1[j]]*X[,s2]) 
 	  }
 	  
