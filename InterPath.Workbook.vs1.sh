@@ -18889,12 +18889,6 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 	echo $ancestry1 $ancestry2 $AncSeed1
 
 	for o in {1..25}; do
-		X_File1="/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz";
-		Genes_File1="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.perSNPs.noGeneDups.GenesFormat.Rformat.txt"
-		Covars_File1="/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt"
-		Genes_File2="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.perSNPs.noGeneDups.GenesFormat.Rformat.MAPITRformat.txt"
-		Seed1=`echo "$AncSeed1 + ($o * 2)" | bc -l`
-		Datasets1=1
 		PVE1=.6
 		Rho1=.8
 		PCs_var1=0
@@ -18904,10 +18898,12 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		nCausal3a=50
 		Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
 		Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"
+		GenesPulled1="${Output1_File1}.Simulation.nGenes.txt"
+		Results1="${Output1_File1}.Results.Output.txt"
 
 		sbatch -t 72:00:00 --mem 12g -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims $ancestry2 $o $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
         
-		cat ${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}.Results.	
+		cat ${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}.Results.Output.txt	
 
 		Simulation.nGenes.txt
 		Results.Output.txt
