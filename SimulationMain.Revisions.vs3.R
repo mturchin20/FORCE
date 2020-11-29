@@ -31,8 +31,8 @@ Covars <- read.table(Covars.File, header=T);
 Genes.Analysis <- read.table(Genes.Analysis.File, header=F);
 PCs <- as.matrix(Covars[,(ncol(Covars)-9):ncol(Covars)]);
 
-#Genes <- Genes[1:20,]
-#Genes.Analysis <- Genes.Analysis[1:20,]
+Genes <- Genes[1:20,]
+Genes.Analysis <- Genes.Analysis[1:20,]
 
 Xmean=apply(X, 2, mean); Xsd=apply(X, 2, sd); X=t((t(X)-Xmean)/Xsd)
 ind = nrow(X); nsnp = ncol(X)
@@ -46,7 +46,7 @@ for(i in 1:n.datasets) {
   s1.genes.ids <- sample(genes.ids, ncausal1, replace=F);
   s2.genes.ids <- sample(genes.ids[-s1.genes.ids], ncausal2, replace=F);
   s3.genes.ids <- sample(genes.ids[c(-s1.genes.ids,-s2.genes.ids)], ncausal3, replace=F);
-  genes.pulled <- rbind(cbind(as.character(Genes[c(s1.genes.ids, s2.genes.ids),1]), rep("Epi", length(c(s1.genes.ids, s2.genes.ids)))), cbind(as.character(Genes[s3.genes.ids,1]), rep("Add", length(s3.genes.ids))));
+  genes.pulled <- rbind(cbind(as.character(Genes[s1.genes.ids,1]), rep("Epi1", length(s1.genes.ids))), cbind(as.character(Genes[s2.genes.ids,1]), rep("Epi2", length(s2.genes.ids))), cbind(as.character(Genes[s3.genes.ids,1]), rep("Add", length(s3.genes.ids))));
   s1 <- c(); s1.sizes <- c(); s2 <- c(); s2.sizes <- c(); s3 <- c(); s3.sizes <- c();
   for (j in 1:length(s1.genes.ids)) {
 	gene.temp <- Genes[s1.genes.ids[j],];

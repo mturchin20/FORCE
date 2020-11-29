@@ -18862,52 +18862,36 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
 		Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"
 
-		sbatch -t 72:00:00 --mem 12g -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims Null $ancestry2 $o" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
+		sbatch -t 72:00:00 --mem 8g -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims Null $ancestry2 $o" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
 #		echo Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a
         done;
 done
 
-pc.var <- as.numeric(as.character(args[15]))
-#ngenes <- as.numeric(as.character(args[16]))
-#nsnps <- as.numeric(as.character(args[16]))
-ncausaltotal <- as.numeric(as.character(args[16]))
-ncausal1 <- as.numeric(as.character(args[17]))
-ncausal2 <- as.numeric(as.character(args[18]))
-ncausal3 <- as.numeric(as.character(args[19]))
-#ncausal3 = 1-(ncausal1+ncausal2) #Remaining SNPs to be allocated to G3
-#nmask <- as.numeric(as.character(args[20]))
-
-
-
-                PVE1=.6
-                Rho1=.8
-                PCs_var1=0
-                nsnps1=1000
-                nCausal1a=.05
-
+#                PVE1=.6
+#                Rho1=.8
+#                PCs_var1=0
+#                nsnps1=1000
+#                nCausal1a=.05
 #		if [ ! -d /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2 ]; then
 #			mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2
 #		fi
 
-#Test run with the following parameters and seed value gets you the below top hits, where the top 4 are true hits and the rest are a mix of not true hits and true hits (thresh=.001)
-#(Simulations1) [  mturchin@node1164  ~/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/African/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results_.9_.1_0_.2_.4.Run1.Results.Output.txt | grep -E 'AHSP|ADGRG3|ATP2A1|ACSM3|ABCA17P|ABCC6|ARMC5|ACSM2B|ABCA3|APRT|ACSM2A|ACSM1|ABCC1'
-#...
-#(Simulations1) [  mturchin@node1164  ~/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin]$R -q -e ".05 / 50"
-#> .05 / 50
-#[1] 0.001
-#> 
-#> 
-#(Simulations1) [  mturchin@node1164  ~/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin]$cat /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/African/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results_.9_.1_0_.2_.4.Run1.Results.Output.txt | sort -g -k 2,2 | head -n 10
-#Pathways pValues Est PVE
-#ACSM3 0 0.174625547406022 0.181453757115649
-#ARMC5 0 0.29048239201933 0.288783476172999
-#ABCC1 1.61597615289111e-08 0.342776154177813 0.360975195919421
-#ACSM1 1.56127424637553e-05 0.104298838325541 0.107635553832648
-#ADAM3B 0.00115196239302806 0.0855270099731938 0.0853575397008838
-#ANKS4B 0.00137746497172087 0.150031307949749 0.15028403838003
-#ATP2C2 0.00175230429993123 0.11758571011361 0.119359182267382
-#ABCC6 0.00306253350758112 0.10397685593628 0.106737919309199
-#ABCA3 0.00615804555202226 0.0746622105346362 0.0753737131021618
+#check myjobinfo for the memory requirements
+#check results for these first two
+#start pumping out jobs? or just do a full set once first of one of the below scenarios, then work on developing the 'results collection' code (can start with power & false pos/false neg -- then figure out pROC misc), then pump out the rest of the scenarios
+#a) check mem b) do these first two jobs c) do full 25+25 for one scenario d) begin collecting results code, start getting that going a bit for power + true pos/false pos e) go full on with rest of non-mask scenarios f) figure out msk msc
+#epi (power) analyses: .6, .8 (or .5), PCs_var = 0 (for now, .1 otherwise), ncausaltotal1 =.01 or .1 (might have to tweak  to be two larger numbers), nCausal1a-3a will vary under 4 diff scenarios
+#additive (null) analyses: .6, 1 (for additive only), PCs_var 0/.1
+#phantom epi (null+masking) analyses: .6, 1 (for additive only), PCs_var 0/.1 + masking
+
+
+
+
+
+
+
+
+
 
 
 
