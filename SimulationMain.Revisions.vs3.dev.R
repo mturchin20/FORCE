@@ -46,7 +46,7 @@ for(i in 1:n.datasets) {
   s1.genes.ids <- sample(genes.ids, ncausal1, replace=F);
   s2.genes.ids <- sample(genes.ids[-s1.genes.ids], ncausal2, replace=F);
   s3.genes.ids <- sample(genes.ids[c(-s1.genes.ids,-s2.genes.ids)], ncausal3, replace=F);
-  genes.pulled <- rbind(cbind(as.character(Genes[c(s1.genes.ids, s2.genes.ids),1]), rep("Epi", length(c(s1.genes.ids, s2.genes.ids)))), cbind(as.character(Genes[s3.genes.ids,1]), rep("Add", length(s3.genes.ids))));
+  genes.pulled <- rbind(cbind(as.character(Genes[s1.genes.ids,1]), rep("Epi1", length(s1.genes.ids))), cbind(as.character(Genes[s2.genes.ids,1]), rep("Epi2", length(s2.genes.ids))), cbind(as.character(Genes[s3.genes.ids,1]), rep("Add", length(s3.genes.ids))));
   s1 <- c(); s1.sizes <- c(); s2 <- c(); s2.sizes <- c(); s3 <- c(); s3.sizes <- c();
   for (j in 1:length(s1.genes.ids)) {
 	gene.temp <- Genes[s1.genes.ids[j],];
@@ -112,17 +112,19 @@ for(i in 1:n.datasets) {
   y=(y-mean(y))/sd(y)
   
   ### Check dimensions ###
-  print(seed.value); print(dim(X)); print(length(y));
+  print(seed.value); X.dims <- dim(X); print(X.dims); print(length(y));
   
   ######################################################################################
   ######################################################################################
   ######################################################################################
 
-#  if (nmask > 0) {
-#
-#  remove G3 SNPs from X
-#
-#  }
+  #nmask = prcntg
+  if (nmask > 0) {
+	s1.s2.mask <- sample(c(s1,s2), (length(s1) + length(s2)) * nmask, replace=F);
+#	X <- subset(X, select=-1*s1.s2.mask);
+	X <- X[,-which(colnames(X) %in% s1.s2.mask);
+  }
+  print(c(X.dims, length(s1.s2.mask), dim(X)));
 
   ptm <- proc.time() #Start clock
 #  MAPITR_Output <- MAPITR(X,y,Genes.Analysis,Covariates=PCs) 
@@ -132,8 +134,8 @@ for(i in 1:n.datasets) {
 
   write.table(y, paste(Output1.File, ".Simulation.Pheno.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
   write.table(genes.pulled, paste(Output1.File, ".Simulation.nGenes.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
-  write.table(s1, paste(Output1.File, ".Simulation.nCausal1.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
-  write.table(s2, paste(Output1.File, ".Simulation.nCausal2.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+#  write.table(s1, paste(Output1.File, ".Simulation.nCausal1.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+#  write.table(s2, paste(Output1.File, ".Simulation.nCausal2.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
   write.table(MAPITR_Output$Results, paste(Output1.File, ".Results.Output.txt", sep=""), quote=FALSE, col.name=TRUE, row.name=FALSE);
 
 }

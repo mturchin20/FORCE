@@ -18702,7 +18702,7 @@ ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMd
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.vs3.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.vs3.dev.R
 
-#From: https://stackoverflow.com/questions/56735768/how-can-i-pass-arguments-to-an-rscript-i-have-in-my-desktop, https://stackoverflow.com/questions/22906804/matrix-expression-causes-error-requires-numeric-complex-matrix-vector-arguments, https://swcarpentry.github.io/r-novice-inflammation/05-cmdline/, https://stackoverflow.com/questions/21969145/why-or-when-is-rscript-or-littler-better-than-r-cmd-batch
+#From: https://stackoverflow.com/questions/56735768/how-can-i-pass-arguments-to-an-rscript-i-have-in-my-desktop, https://stackoverflow.com/questions/22906804/matrix-expression-causes-error-requires-numeric-complex-matrix-vector-arguments, https://swcarpentry.github.io/r-novice-inflammation/05-cmdline/, https://stackoverflow.com/questions/21969145/why-or-when-is-rscript-or-littler-better-than-r-cmd-batch, https://stackoverflow.com/questions/5234117/how-to-drop-columns-by-name-in-a-data-frame
 #Genes = Pathways, X SNPs across L genes, X SNPs across groups G1, G2, and G3, all three have additive effects, G1 and G2 have interaction effects
 
 plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno --chr 16 --recodeAD --out /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16 
@@ -18882,7 +18882,7 @@ done
 #a) check mem b) do these first two jobs c) do full 25+25 for one scenario d) begin collecting results code, start getting that going a bit for power + true pos/false pos e) go full on with rest of non-mask scenarios f) figure out msk msc
 #epi (power) analyses: .6, .8 (or .5), PCs_var = 0 (for now, .1 otherwise), ncausaltotal1 =.01 or .1 (might have to tweak  to be two larger numbers), nCausal1a-3a will vary under 4 diff scenarios
 #additive (null) analyses: .6, 1 (for additive only), PCs_var 0/.1
-#phantom epi (null+masking) analyses: .6, 1 (for additive only), PCs_var 0/.1 + masking
+#phantom epi (null+masking) analyses: .6, 1 (for additive only), PCs_var 0/.1 + masking -- only do for African, and only do for scenarios with a lot of epistasis already
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
@@ -27107,6 +27107,23 @@ ABCA3 0.00615804555202226 0.0746622105346362 0.0753737131021618
 8.77967388738707
 3.05883416714174
 2.51568285739641
+> subset(vals1, select=-a)
+     b c
+[1,] 4 7
+[2,] 5 8
+[3,] 6 9
+> vals1[,-which(colnames(vals1) %in% vals2)]
+     b c
+[1,] 4 7
+[2,] 5 8
+[3,] 6 9
+> vals2
+[1] "a"
+> vals1
+     a b c
+[1,] 1 4 7
+[2,] 2 5 8
+[3,] 3 6 9
 
 
 
