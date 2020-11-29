@@ -18901,8 +18901,13 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		GenesPulled1="${Output1_File1}.Simulation.nGenes.txt"
 		Results1="${Output1_File1}.Results.Output.txt"
 
-		sbatch -t 72:00:00 --mem 12g -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims $ancestry2 $o $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
-        
+		NumGenes=`cat $Results1 | wc | awk '{ print $1 }'`
+		pValBonf=`echo ".05 / $NumGenes" | bc -l`;        
+
+		join <(cat Results1 | sort -k 1,1) <(cat GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk 
+
+		awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($1
+ 
 		cat ${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}.Results.Output.txt	
 
 		Simulation.nGenes.txt
