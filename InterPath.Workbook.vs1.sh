@@ -242,6 +242,8 @@ UKBioBankPops=`echo "African;African;Afr British;British.Ran4000;Brit4k British;
 ##UKBioBankPops=`echo "African;African;Afr British;British.Ran4000;Brit4k British;British.Ran10000;Brit10k British;British.Ran100000;Brit100k Caribbean;Caribbean;Carib Chinese;Chinese;Chi Indian;Indian;Indn Irish;Irish;Irish Pakistani;Pakistani;Pkstn"`;
 UKBioBankPops=`echo "African;African;Afr;472840 British;British.Ran4000;Brit4k;138503 British;British.Ran10000;Brit10k;9827442 Caribbean;Caribbean;Carib;328593 Chinese;Chinese;Chi;842743 Indian;Indian;Indn;549281 Irish;Irish;Irish;902143 Pakistani;Pakistani;Pkstn;232849"`;
 UKBioBankPopsRnd2=`echo "African;African;Afr;472840 British;British.Ran4000;Brit4k;138503 British;British.Ran10000;Brit10k;9827442 Caribbean;Caribbean;Carib;328593 Chinese;Chinese;Chi;842743 Indian;Indian;Indn;549281 Irish;Irish;Irish;902143 Pakistani;Pakistani;Pkstn;232849 British;British.Ran4000.2;Brit4k2;847242 British;British.Ran4000.3;Brit4k3;925683 British;British.Ran4000.4;Brit4k4;394757 British;British.Ran4000.5;Brit4k5;642245 British;British.Ran10000.2;Brit10k2;2045872 British;British.Ran10000.3;Brit10k3;5892624 British;British.Ran10000.4;Brit10k4;9574998 British;British.Ran10000.5;Brit10k5;3741930"`;
+UKBioBankPopsRev3=`echo "British;British.Plus6000;Brit4k6k;298474 British;British.PlusEuro;Brit4kEuro;916465 Asian;Southasian;SAS;467901"`;
+
 
 #20180618 NOTE -- overall impression from the first round of these explorations below: a) base R BLAS is not good (as is well known by this poitn) b) load R from Oscar since conda R currently does not implement any of the better BLAS libraries (eg OpenBLAS or MKL) c) tcrossprod() outperforms GetLinearKernal() (apparently), and in generally appears to be best option d) doing the for loop thing with tcrossprod() though leads to a seg fault by the second loop, not sure why e) ccov and covar don't seem to either really matter or make much of a difference (at least top-level enough that once I found out tcrossprod() and the Oscar R combination worked, I stuck with that; I don't think I checked whether ccov/covar did better on the Oscar R module, so that may make a difference tbh) f) covar needs full data (no missing genotypes) I think whereas tcrossprod() seems to handle NAs somehow/someway g) GetLinearKernel() and tcrossprod() do not handle NAs, eg by having them it just makes every resulting new matrix entry NA; need to use imputed data or data removed of any missing genotypes h) the amount of memory for getting the tcrossprod() result on the African raw dataset is about ~18-19gb 
 // [[Rcpp::export]]
@@ -345,7 +347,7 @@ done
 #MacBook Air
 #scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/African/African/mturchin20/ukb_chr*_v2.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.vcf.gz /Volumes/NO\ NAME/ 
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8`; do
+for j in `cat <(echo $UKBioBankPopsRev3 | perl -lane 'print join("\n", @F);') | head -n 3`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
         ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 
@@ -357,6 +359,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 	if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20 ]; then
 		mkdir /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20
 	fi
+done
 
         for i in {1..22}; do
         	plink --bfile /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop --recode vcf --out /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chr${i}_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop
@@ -1345,11 +1348,15 @@ Exonic
 ExonicPlus
 ExonicPlus20kb
 
+
+
+
+
 #		for k in `cat <(echo "IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 Genes" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
 #		for k in `cat <(echo "KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 4`; do
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | head -n 6`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish'`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic GD125000 GD500000 GD25000 Genes PSMdrops PSMdropsComps" | perl -lane 'print join("\n", @F);') | head -n 12 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRev3 | perl -lane 'print join("\n", @F);') | head -n 3`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic GD125000 GD500000 GD25000 Genes PSMdrops PSMdropsComps" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 			ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`
@@ -1492,6 +1499,11 @@ FID IID Height BMI Waist Hip
 1001918 1001918 0.306613912229563 0.456687365862091 0.497191138814954 0.919252922145683
 1002190 1002190 0.702770705686875 2.16658692659075 2.51658292045675 2.64645755214058
 1002805 1002805 0.31568676247995 -1.25459712603051 -0.283450856036853 -0.0445114443704853
+
+
+
+
+
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | tail -n 8 | head -n 8 | tail -n 8`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
@@ -18904,14 +18916,8 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		NumGenes=`cat $Results1 | wc | awk '{ print $1 }'`
 		pValBonf=`echo ".05 / $NumGenes" | bc -l`;        
 
-		join <(cat Results1 | sort -k 1,1) <(cat GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk 
-
-		awk -v pValBonf=$pValBonf '{ if (($13 < pValBonf) && ($1
- 
-		cat ${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}.Results.Output.txt	
-
-		Simulation.nGenes.txt
-		Results.Output.txt
+		join <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }' 
+		join -v 1 <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'
 
 	done;
 done
