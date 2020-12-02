@@ -1107,9 +1107,6 @@ done
 #20191204 NOTE -- updated mem values for post-imputation reruns below
 #50?
 
-15766339             63      batch  mturchin ccmb-condo 2020-12-01T10:16:09 2020-12-01T11:00:54   00:08:24          1  NODE_FAIL      1:0                             9 Asian Southasian ExonicPlus20kb 321 
-15766339.ba+      batch                      ccmb-condo 2020-12-01T10:52:30 2020-12-01T11:04:18   00:11:48          1     FAILED      0:0                                      
-
 80/79
 #20190603 NOTE -- I've noticed now that I kept the output files without 'AdjBMI' even though the input file was the correct 'BMIAdj' file; as further proof, the output files contain the headers for WaistAdjBMI and HipAdjBMI, so this wouldn't the case if the input files of 'AdjBMI' weren't used. I think I originally did this to lower overall filesize space....though maybe would have just created the new ones separated anyways now in retrospect, but whatever
 #From https://stackoverflow.com/questions/5774813/short-formula-call-for-many-variables-when-building-a-model
@@ -1117,7 +1114,7 @@ for j in `cat <(echo $UKBioBankPopsRev3 | perl -lane 'print join("\n", @F);') | 
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10 PSMdrops PSMdropsComps" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 #		NumPaths=`cat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt | wc | awk '{ print $1 }'`
-		NumPaths=380
+		NumPaths=400
 		echo $ancestry1 $ancestry2 $ancestry3 $k
                          	
 		if [ ! -d /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/pathways/$k/phenos ]; then
@@ -1147,7 +1144,7 @@ for j in `cat <(echo $UKBioBankPopsRev3 | perl -lane 'print join("\n", @F);') | 
 	done;
 done;		
 #					...Data2.sd[which(Data2.sd==0)] <- 1;...
-for j in `cat <(echo $UKBioBankPopsRev3 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 3`; do
+for j in `cat <(echo $UKBioBankPopsRev3 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 3 | head -n 1`; do
 	for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb Intronic IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes KEGG75 KEGG50 KEGG25 KEGG10 PSMdrops PSMdropsComps" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 		ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
 		echo $ancestry1 $ancestry2 $ancestry3 $k
