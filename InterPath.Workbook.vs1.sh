@@ -18918,7 +18918,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		PVE1=.6
 		Rho1=.8
 		PCs_var1=0
-		ncausaltotal1=.5
+		ncausaltotal1=.25
 		nCausal1a=10
 		nCausal2a=40
 		nCausal3a=50
@@ -18930,8 +18930,11 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		NumGenes=`cat $Results1 | wc | awk '{ print $1 }'`
 		pValBonf=`echo ".05 / $NumGenes" | bc -l`;        
 
-		join <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }' 
-		join -v 1 <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'
+		TruePos=`join <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'` 
+		FalsePos=`join -v 1 <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'`
+		FalsePosAdd=`join <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Add | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'`
+
+		echo $o $TruePos $FalsePos $FalsePosAdd
 
 	done;
 done

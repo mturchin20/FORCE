@@ -132,10 +132,28 @@ for(i in 1:n.datasets) {
   print(proc.time() - ptm) #Stop clock
 #  print(head(MAPITR_Output$Results))
 
-  write.table(y, paste(Output1.File, ".Simulation.Pheno.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
-  write.table(genes.pulled, paste(Output1.File, ".Simulation.nGenes.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+seed.value <- as.numeric(as.character(args[11]))
+n.datasets <- as.numeric(as.character(args[12]))
+pve <- as.numeric(as.character(args[13]))
+rho <- as.numeric(as.character(args[14]))
+pc.var <- as.numeric(as.character(args[15]))
+#ngenes <- as.numeric(as.character(args[16]))
+#nsnps <- as.numeric(as.character(args[16]))
+ncausaltotal <- as.numeric(as.character(args[16]))
+ncausal1 <- as.numeric(as.character(args[17]))
+ncausal2 <- as.numeric(as.character(args[18]))
+ncausal3 <- as.numeric(as.character(args[19]))
+
+
+  stats <- c(); 
+  stats <- rbind(stats, c(seed.value, n.datasets, pve, rho, pc.var, ncausaltotal, ncausal1, ncausal2, ncausal3)); 
+  stats <- rbind(stats, dim(genes.pulled)); stats <- rbind(stats, length(s1)); stats <- rbind(stats, length(s2)); stats <- rbind(stats, length(s3));
+
+  write.table(y, paste(Output1.File, ".Results.Pheno.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+  write.table(genes.pulled, paste(Output1.File, ".Results.nGenes.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
 #  write.table(s1, paste(Output1.File, ".Simulation.nCausal1.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
 #  write.table(s2, paste(Output1.File, ".Simulation.nCausal2.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
+  write.table(stats, paste(Output1.File, ".Results.statistics.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
   write.table(MAPITR_Output$Results, paste(Output1.File, ".Results.Output.txt", sep=""), quote=FALSE, col.name=TRUE, row.name=FALSE);
 
 }
