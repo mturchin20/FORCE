@@ -119,12 +119,12 @@ for(i in 1:n.datasets) {
   ######################################################################################
 
   #nmask = prcntg
-  if (nmask > 0) {
-	s1.s2.mask <- sample(c(s1,s2), (length(s1) + length(s2)) * nmask, replace=F);
+#  if (nmask > 0) {
+#	s1.s2.mask <- sample(c(s1,s2), (length(s1) + length(s2)) * nmask, replace=F);
 #	X <- subset(X, select=-1*s1.s2.mask);
-	X <- X[,-which(colnames(X) %in% s1.s2.mask);
-  }
-  print(c(X.dims, length(s1.s2.mask), dim(X)));
+#	X <- X[,-which(colnames(X) %in% s1.s2.mask);
+#  }
+#  print(c(X.dims, length(s1.s2.mask), dim(X)));
 
   ptm <- proc.time() #Start clock
 #  MAPITR_Output <- MAPITR(X,y,Genes.Analysis,Covariates=PCs) 
@@ -132,22 +132,7 @@ for(i in 1:n.datasets) {
   print(proc.time() - ptm) #Stop clock
 #  print(head(MAPITR_Output$Results))
 
-seed.value <- as.numeric(as.character(args[11]))
-n.datasets <- as.numeric(as.character(args[12]))
-pve <- as.numeric(as.character(args[13]))
-rho <- as.numeric(as.character(args[14]))
-pc.var <- as.numeric(as.character(args[15]))
-#ngenes <- as.numeric(as.character(args[16]))
-#nsnps <- as.numeric(as.character(args[16]))
-ncausaltotal <- as.numeric(as.character(args[16]))
-ncausal1 <- as.numeric(as.character(args[17]))
-ncausal2 <- as.numeric(as.character(args[18]))
-ncausal3 <- as.numeric(as.character(args[19]))
-
-
-  stats <- c(); 
-  stats <- rbind(stats, c(seed.value, n.datasets, pve, rho, pc.var, ncausaltotal, ncausal1, ncausal2, ncausal3)); 
-  stats <- rbind(stats, dim(genes.pulled)); stats <- rbind(stats, length(s1)); stats <- rbind(stats, length(s2)); stats <- rbind(stats, length(s3));
+  stats <- c(); stats <- rbind(stats, c(seed.value, n.datasets, pve, rho, pc.var, ncausaltotal, ncausal1, ncausal2, ncausal3)); stats <- rbind(stats, dim(genes.pulled)); stats <- rbind(stats, length(s1)); stats <- rbind(stats, length(s2)); stats <- rbind(stats, length(s3));
 
   write.table(y, paste(Output1.File, ".Results.Pheno.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);
   write.table(genes.pulled, paste(Output1.File, ".Results.nGenes.txt", sep=""), quote=FALSE, col.name=FALSE, row.name=FALSE);

@@ -18866,31 +18866,37 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 15753606             63      batch  mturchin    default 2020-11-28T23:44:50 2020-11-29T03:30:54   00:04:59          1  NODE_FAIL      1:0                        Sims British.Ran4000 7 .6 .5 0 .5 10 40 50
 15753606.ba+      batch                         default 2020-11-29T03:25:55 2020-11-29T03:32:52   00:06:57          1     FAILED      0:0
 
+15826139             63      batch  mturchin    default 2020-12-06T03:03:13 2020-12-06T07:36:39   00:06:39          1 OUT_OF_ME+    0:125                              Sims African 16 .6 .8 0 .75 10 40 50 
+15826164             63      batch  mturchin    default 2020-12-06T03:03:13 2020-12-06T10:39:57   00:08:49          1 OUT_OF_ME+    0:125                                Sims African 16 .6 .8 0 1 10 30 60 
+15826189             63      batch  mturchin    default 2020-12-06T03:03:13 2020-12-06T11:16:30   00:04:49          1 OUT_OF_ME+    0:125                                Sims African 16 .6 .8 0 1 10 40 50 
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2`; do
+
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2 | tail -n 1`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 	echo $ancestry1 $ancestry2 $AncSeed1
 
-	for o in {1..25}; do
-		X_File1="/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz";
-		Genes_File1="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.perSNPs.noGeneDups.GenesFormat.Rformat.txt"
-		Covars_File1="/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt"
-		Genes_File2="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.perSNPs.noGeneDups.GenesFormat.Rformat.MAPITRformat.txt"
-		Seed1=`echo "$AncSeed1 + ($o * 2)" | bc -l`
-		Datasets1=1
-		PVE1=.6
-		Rho1=.8
-		PCs_var1=0
-		ncausaltotal1=.5
-		nCausal1a=10
-		nCausal2a=40
-		nCausal3a=50
-		Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
-		Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"
-
-		sbatch -t 72:00:00 --mem 12g -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims $ancestry2 $o $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
-#		echo Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a
-        done;
+	for pve2 in `cat <(echo ".6" | perl -lane 'print join("\n", @F);')`; do for rho2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);')`; do for ncaus2a2 in `cat <(echo "20 40 60 80" | perl -lane 'print join("\n", @F);') | tail -n 2`; do
+		for o in {1..25}; do
+			X_File1="/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz";
+			Genes_File1="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.perSNPs.noGeneDups.GenesFormat.Rformat.txt"
+			Covars_File1="/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt"
+			Genes_File2="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.perSNPs.noGeneDups.GenesFormat.Rformat.MAPITRformat.txt"
+			Seed1=`echo "$AncSeed1 + ($o * 2)" | bc -l`
+			Datasets1=1
+			PVE1=$pve2
+			Rho1=$rho2
+			PCs_var1=$pcvar2
+			ncausaltotal1=$ncaustot2
+			nCausal1a=20
+			nCausal2a=$ncaus2a2
+			nCausal3a=`echo "200 - $nCausal1a - $nCausal2a" | bc -l`
+			Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
+			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"
+	
+			sbatch -t 72:00:00 --mem 20g --account=ccmb-condo -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims $ancestry2 $o $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.dev.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
+#			echo Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a
+		done;
+        done; done; done; done; done;
 done
 
 #                PVE1=.6
@@ -18914,29 +18920,31 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 	echo $ancestry1 $ancestry2 $AncSeed1
 
-	for o in {1..25}; do
-		PVE1=.6
-		Rho1=.8
-		PCs_var1=0
-		ncausaltotal1=.25
-		nCausal1a=10
-		nCausal2a=40
-		nCausal3a=50
-		Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
-		Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"
-		GenesPulled1="${Output1_File1}.Simulation.nGenes.txt"
-		Results1="${Output1_File1}.Results.Output.txt"
+	for pve2 in `cat <(echo ".6" | perl -lane 'print join("\n", @F);')`; do for rho2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaustot2 in `cat <(echo ".1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);')`; do for ncaus2a2 in `cat <(echo "10 20 30 40" | perl -lane 'print join("\n", @F);') | tail -n 2`; do
+		for o in {1..25}; do
+			PVE1=.6
+			Rho1=.8
+			PCs_var1=0
+			ncausaltotal1=.25
+			nCausal1a=10
+			nCausal2a=40
+			nCausal3a=50
+			Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
+			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"
+			GenesPulled1="${Output1_File1}.Simulation.nGenes.txt"
+			Results1="${Output1_File1}.Results.Output.txt"
+	
+			NumGenes=`cat $Results1 | wc | awk '{ print $1 }'`
+			pValBonf=`echo ".05 / $NumGenes" | bc -l`;        
+	
+			TruePos=`join <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'` 
+			FalsePos=`join -v 1 <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'`
+			FalsePosAdd=`join <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Add | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'`
+	
+			echo $o $TruePos $FalsePos $FalsePosAdd
 
-		NumGenes=`cat $Results1 | wc | awk '{ print $1 }'`
-		pValBonf=`echo ".05 / $NumGenes" | bc -l`;        
-
-		TruePos=`join <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'` 
-		FalsePos=`join -v 1 <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'`
-		FalsePosAdd=`join <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Add | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'`
-
-		echo $o $TruePos $FalsePos $FalsePosAdd
-
-	done;
+		done;	
+	done; done; done; done; done;
 done
 
 
