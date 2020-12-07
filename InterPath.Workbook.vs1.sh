@@ -2838,6 +2838,21 @@ scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/data/ukbiobank_jun17/subsets/A
 15815878             63      batch  mturchin    default 2020-12-04T09:36:22 2020-12-04T11:58:11   04:42:22          2 OUT_OF_ME+    0:125                 Height British.Plus6000 ExonicPlus20kb 4641 perm0 
 15815878.ba+      batch                         default 2020-12-04T09:37:00 2020-12-04T11:58:11   04:42:22          2 OUT_OF_ME+    0:125                                                                   
 
+Height British British.Plus6000 ExonicPlus20kb
+Error in file(file, "rt") : cannot open the connection
+Calls: read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Plus6000/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v3.British.Plus6000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Paths561.Est.txt': No such file or directory
+Execution halted
+Error in file(file, "rt") : cannot open the connection
+Calls: read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '/users/mturchin/data/ukbiobank_jun17/subsets/British/British.Plus6000/mturchin20/Analyses/InterPath/Height/ExonicPlus20kb/ukb_chrAll_v3.British.Plus6000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.Height.ExonicPlus20kb.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Paths4641.Est.txt': No such file or directory
+Execution halted
+2 minutes and 34 seconds elapsed.
+
 
 #		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb KEGG75 KEGG50 KEGG25 KEGG10" | perl -lane 'print join("\n", @F);') | head -n 9 | tail -n 4 | head -n 4`; do
 #module load R/3.4.3_mkl mpi/openmpi_4.0.4_gcc gcc/8.3; for i in `cat <(echo "Height;1254 BMI;58923 WaistAdjBMI;82374 HipAdjBMI;6182" | perl -lane 'print join("\n", @F);') | grep -vE 'Waist;49|Hip;37' | head -n 1 | tail -n 1`; do
@@ -3010,8 +3025,8 @@ done
 #Vs2 Results Collection
 for (( permNum=1; permNum <= 10; permNum=permNum+1 )); do
 for i in `cat <(echo "Height BMI Waist Hip WaistAdjBMI HipAdjBMI" | perl -lane 'print join("\n", @F);') | grep -vwE 'Waist|Hip' | head -n 2 | tail -n 2`; do
-	for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | grep -vE 'Ran10000|Irish' | grep -v African`; do
-		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes PSMdrops PSMdropsComps" | perl -lane 'print join("\n", @F);') | head -n 13 | tail -n 1`; do
+	for j in `cat <(echo $UKBioBankPopsRev3 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 3`; do
+		for k in `cat <(echo "NonSyn Exonic ExonicPlus ExonicPlus20kb IntronicPlus20kb IntronicPlus20kb25 IntronicPlus20kb50 IntronicPlus20kb75 GD125000 GD500000 GD25000 Genes PSMdrops PSMdropsComps" | perl -lane 'print join("\n", @F);') | head -n 4 | tail -n 1`; do
 			SECONDS=0;
 			ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`
 			ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`
@@ -18884,6 +18899,7 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 
 #100 genes: 24g
 #200 genes: 24g (.1, .25, .5); 30g? (.75, 1)
+#a lot of 200 .75, 1 BritRan4000 jobs still fail at 30g
 
 module load R/3.4.3_mkl gcc mpi/openmpi_4.0.5_icc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2 | head -n 1`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
