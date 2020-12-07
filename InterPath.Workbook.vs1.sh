@@ -18885,7 +18885,7 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 #100 genes: 24g
 #200 genes: 24g (.1, .25, .5); 30g? (.75, 1)
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2 | tail -n 1`; do
+module load R/3.4.3_mkl gcc mpi/openmpi_4.0.5_icc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2 | head -n 1`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 	echo $ancestry1 $ancestry2 $AncSeed1
 
@@ -18907,7 +18907,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 			Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
 			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"
 	
-			sbatch -t 72:00:00 -n 2 -N 1-1 --mem 24g --account=ccmb-condo -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims $ancestry2 $o $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.dev.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
+			sbatch -t 72:00:00 -n 2 -N 1-1 --mem 30g -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims $ancestry2 $o $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.dev.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
 #			echo Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a
 		done;
         done; done; done; done; done;
