@@ -18896,6 +18896,15 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 15826355             63      batch  mturchin    default 2020-12-06T03:03:16 2020-12-06T20:22:48   00:07:11          1 OUT_OF_ME+    0:125                       Sims British.Ran4000 7 .6 .8 0 .75 10 30 60
 15826380             63      batch  mturchin    default 2020-12-06T03:03:17 2020-12-06T21:49:26   00:06:10          1 OUT_OF_ME+    0:125                       Sims British.Ran4000 7 .6 .8 0 .75 10 40 50
 
+15826419             63      batch  mturchin    default 2020-12-06T03:03:17 2020-12-07T03:15:52   00:03:06          1 OUT_OF_ME+    0:125                        Sims British.Ran4000 21 .6 .8 0 1 10 30 60 
+15826419.ba+      batch                         default 2020-12-07T03:12:46 2020-12-07T03:15:52   00:03:06          1 OUT_OF_ME+    0:125                                                                   
+15826430             63      batch  mturchin    default 2020-12-06T03:03:17 2020-12-07T03:38:38   00:04:18          1 OUT_OF_ME+    0:125                         Sims British.Ran4000 7 .6 .8 0 1 10 40 50 
+15826430.ba+      batch                         default 2020-12-07T03:34:20 2020-12-07T03:38:38   00:04:18          1 OUT_OF_ME+    0:125                                                                   
+15826434             63      batch  mturchin    default 2020-12-06T03:03:17 2020-12-07T03:49:17   00:03:36          1 OUT_OF_ME+    0:125                        Sims British.Ran4000 11 .6 .8 0 1 10 40 50 
+15826434.ba+      batch                         default 2020-12-07T03:45:41 2020-12-07T03:49:17   00:03:36          1 OUT_OF_ME+    0:125                                                                   
+15826444             63      batch  mturchin    default 2020-12-06T03:03:18 2020-12-07T04:00:42   00:02:48          1 OUT_OF_ME+    0:125                        Sims British.Ran4000 21 .6 .8 0 1 10 40 50 
+15826444.ba+      batch                         default 2020-12-07T03:57:54 2020-12-07T04:00:42   00:02:48          1 OUT_OF_ME+    0:125                                                                   
+
 
 #100 genes: 24g
 #200 genes: 24g (.1, .25, .5); 30g? (.75, 1)
