@@ -18905,6 +18905,13 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 15826444             63      batch  mturchin    default 2020-12-06T03:03:18 2020-12-07T04:00:42   00:02:48          1 OUT_OF_ME+    0:125                        Sims British.Ran4000 21 .6 .8 0 1 10 40 50 
 15826444.ba+      batch                         default 2020-12-07T03:57:54 2020-12-07T04:00:42   00:02:48          1 OUT_OF_ME+    0:125                                                                   
 
+15832360             63      batch  mturchin ccmb-condo 2020-12-06T23:12:59 2020-12-07T19:29:45   00:42:02          2 OUT_OF_ME+    0:125                               Sims African 16 .6 .8 0 1 20 60 120 
+15832360.ba+      batch                      ccmb-condo 2020-12-07T19:08:44 2020-12-07T19:29:45   00:42:02          2 OUT_OF_ME+    0:125                                                                   
+15832385             63      batch  mturchin ccmb-condo 2020-12-06T23:13:00 2020-12-07T19:24:15   00:30:56          2 OUT_OF_ME+    0:125                               Sims African 16 .6 .8 0 1 20 80 100 
+15832385.ba+      batch                      ccmb-condo 2020-12-07T19:08:47 2020-12-07T19:24:15   00:30:56          2 OUT_OF_ME+    0:125                                                                   
+15832386             63      batch  mturchin ccmb-condo 2020-12-06T23:13:00 2020-12-07T19:19:51   00:22:08          2 OUT_OF_ME+    0:125                               Sims African 17 .6 .8 0 1 20 80 100 
+15832386.ba+      batch                      ccmb-condo 2020-12-07T19:08:47 2020-12-07T19:19:51   00:22:08          2 OUT_OF_ME+    0:125                                                                   
+
 
 #100 genes: 24g
 #200 genes: 24g (.1, .25, .5); 30g? (.75, 1)
