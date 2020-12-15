@@ -19086,7 +19086,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 
 			echo $o $TruePos $FalsePos $FalsePosAdd $numEpi1SNPs $numEpi2SNPs $numAdd1SNPs $numEpiTotal $numSNPsTotal
 			
-			R -q -e "Data1 <- read.table(\"$Results1\", header=T); Data2 <- read.table(\"$GenesPulled1\", header=F); TrueGenes <- Data2[grep(\"Epi\", Data2[,2]),]; ROCresults <- c(); for (i in 1:nrow(Data1)) { TrueFlagTemp <- NA; if (Data1[i,1] %in% TrueGenes) { TrueFlagTemp <- 1; } else if (! Data1[i,1] %in% TrueGenes) { TrueFlagTemp <- 0; } else { TrueFlagTemp <- -9; }; TruePositive <- 0; TrueNegative <- 0; FalsePositive <- 0; FalseNegative <- 0; if (Data1[i,2] < $pValBonf) { if (TrueFlagTemp == 1) { TruePositive <- 1; } if (TrueFlag
+			R -q -e "Data1 <- read.table(\"$Results1\", header=T); Data2 <- read.table(\"$GenesPulled1\", header=F); TrueGenes <- Data2[grep(\"Epi\", Data2[,2]),]; ROCresults <- c(); for (i in 1:nrow(Data1)) { TrueFlag <- NA; if (Data1[i,1] %in% TrueGenes) { TrueFlag <- 1; } else if (! Data1[i,1] %in% TrueGenes) { TrueFlag <- 0; } else { TrueFlag <- -9; }; TruePositive <- 0; TrueNegative <- 0; FalsePositive <- 0; FalseNegative <- 0; if (Data1[i,2] < $pValBonf) { if (TrueFlag == 1) { TruePositive <- 1; } if (TrueFlag == 0) { FalsePositive <- 1; } } else { if (TrueFlag == 1) { FalseNegative <- 1; } if (TrueFlag == 0) { TrueNegative <- 1; } }; ROCresults <- rbind(ROCresults, c(TrueFlag, True};
 
 		done;	
 	done; done; done; done; done;
