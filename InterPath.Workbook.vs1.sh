@@ -19144,14 +19144,16 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 			GenesPulled1="${Output1_File1}.Results.nGenes.txt"
 			Results1="${Output1_File1}.Results.Output.txt"
 	
-			echo $o 
+			echo $pve2 $rho2 $pcvar2 $ncaustot2 $nCausal1a $nCausal2a $nCausal3a $o 
 
 			R -q -e "Data1 <- read.table(\"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", header=T); \
-				Data1 <- Data1[order(Data1[,2], decreasing=TRUE,]; for (i in 1:nrow(Data1)) { \
-					Data1.sub <- Data1[1:i,]; TP <- Data1.sub[
-
-			
-		  R -q -e "Data1 <- read.table(\"$Results1\", header=T); Data2 <- read.table(\"$GenesPulled1\", header=F); TrueGenes <- Data2[grep(\"Epi\", Data2[,2]),1]; ROCresults <- c(); print(TrueGenes); for (i in 1:nrow(Data1)) { TrueFlag <- NA; BonfFlag <- NA; if (Data1[i,1] %in% TrueGenes) { TrueFlag <- 1; } else if (! Data1[i,1] %in% TrueGenes) { TrueFlag <- 0; } else { TrueFlag <- -9; }; TruePositive <- 0; TrueNegative <- 0; FalsePositive <- 0; FalseNegative <- 0; if (Data1[i,2] < $pValBonf) { BonfFlag <- 1; } else if (Data1[i,2] >= $pValBonf) { BonfFlag <- 0 } else { BonfFlag <- NA }; if (BonfFlag == 1) { if (TrueFlag == 1) { TruePositive <- 1; }; if (TrueFlag == 0) { FalsePositive <- 1; }; } else { if (TrueFlag == 1) { FalseNegative <- 1; }; if (TrueFlag == 0) { TrueNegative <- 1; }; }; ROCresults <- rbind(ROCresults, c(TrueFlag, BonfFlag, TruePositive, FalsePositive, TrueNegative, FalseNegative)); }; NewResults <- cbind(Data1, ROCresults); colnames(NewResults)[5:10] <- c(\"TrueFlag\", \"BonfFlag\", \"TruePos\", \"FalsePos\", \"TrueNeg\", \"FalseNeg\"); write.table(NewResults, file=\"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE);"
+				Data1 <- Data1[order(Data1[,2], decreasing=TRUE,]; causalCount <- nrow(Data1[Data1[,5] == 1,]); noncausalCount <- nrow(Data1[Data1[,5] != 1,]); \
+				TPcumsum <- cumsum(Data1[,7]); FPcumsum <- cumsum(Data1[,8]); TPR <- TPcumsum / causalCount; FPR <- FPcumsum / noncausalCount; \ 
+				png(\"${Output1_ROCs1}.Results.Output.wROCinfo.plot.vs1.png\", height=2000, width=2000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2)); \
+				plot(FPR, TPR, main=\"Pop: $ancestry2, Run: $o, PVE: $pve2, rho: $rho2, PCs: $pcvar2,\\nPercentCausal: $ncaustot2, s1: $nCausal1a, s2: $nCausal2a, s3: $nCausal3a\", xlab=\"False Positive Rate\", ylab=\"True Positive Rate\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
+				abline(0,1, lwd=3, col=\"BLACK\"); \ 
+				dev.off(); \
+			"	
 
 		done;	
 	done; done; done; done; done;
