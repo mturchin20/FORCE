@@ -19097,34 +19097,34 @@ done
 
 #			Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; 
 
-conf_m_ave<-function(pvalues, causal_genes, noncausal_genes){
-  p_order=order(pvalues)
-  stats_matrix=matrix(0, nrow=5, ncol=length(pvalues))
-  for(i in 1:length(p_order)){
-    temp_causal=p_order[c(1:i)]
-    temp_noncausal=p_order[-c(1:i)]
-    TP=length(intersect(temp_causal, causal_genes))
-    FP=length(intersect(temp_causal, noncausal_genes))
-    TN=length(intersect(temp_noncausal, noncausal_genes))
-    FN=length(intersect(temp_noncausal, causal_genes))
-    #TPR 
-    TPR=TP/length(causal_genes)
-    #TNR
-    TNR=TN/length(noncausal_genes)
-    #FPR
-    FPR=FP/length(noncausal_genes)
-    #FNR
-    FNR=FN/length(causal_genes)
-    #precision
-    precision=TP/(TP+FP)
-    #recall
-    recall=TP/(TP+FN)
-    #FDR
-    FDR=1-precision
-    stats_matrix[,i]=c(TPR, FPR, precision, recall, FDR)
-  }
-  return(stats_matrix)
-}
+#conf_m_ave<-function(pvalues, causal_genes, noncausal_genes){
+#  p_order=order(pvalues)
+#  stats_matrix=matrix(0, nrow=5, ncol=length(pvalues))
+#  for(i in 1:length(p_order)){
+#    temp_causal=p_order[c(1:i)]
+#    temp_noncausal=p_order[-c(1:i)]
+#    TP=length(intersect(temp_causal, causal_genes))
+#    FP=length(intersect(temp_causal, noncausal_genes))
+#    TN=length(intersect(temp_noncausal, noncausal_genes))
+#    FN=length(intersect(temp_noncausal, causal_genes))
+#    #TPR 
+#    TPR=TP/length(causal_genes)
+#    #TNR
+#    TNR=TN/length(noncausal_genes)
+#    #FPR
+#    FPR=FP/length(noncausal_genes)
+#    #FNR
+#    FNR=FN/length(causal_genes)
+#    #precision
+#    precision=TP/(TP+FP)
+#    #recall
+#    recall=TP/(TP+FN)
+#    #FDR
+#    FDR=1-precision
+#    stats_matrix[,i]=c(TPR, FPR, precision, recall, FDR)
+#  }
+#  return(stats_matrix)
+#}
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
@@ -19147,7 +19147,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 			echo $pve2 $rho2 $pcvar2 $ncaustot2 $nCausal1a $nCausal2a $nCausal3a $o 
 
 			R -q -e "Data1 <- read.table(\"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", header=T); \
-				Data1 <- Data1[order(Data1[,2], decreasing=TRUE,]; causalCount <- nrow(Data1[Data1[,5] == 1,]); noncausalCount <- nrow(Data1[Data1[,5] != 1,]); \
+				Data1 <- Data1[order(Data1[,2], decreasing=TRUE),]; causalCount <- nrow(Data1[Data1[,5] == 1,]); noncausalCount <- nrow(Data1[Data1[,5] != 1,]); \
 				TPcumsum <- cumsum(Data1[,7]); FPcumsum <- cumsum(Data1[,8]); TPR <- TPcumsum / causalCount; FPR <- FPcumsum / noncausalCount; \ 
 				png(\"${Output1_ROCs1}.Results.Output.wROCinfo.plot.vs1.png\", height=2000, width=2000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2)); \
 				plot(FPR, TPR, main=\"Pop: $ancestry2, Run: $o, PVE: $pve2, rho: $rho2, PCs: $pcvar2,\\nPercentCausal: $ncaustot2, s1: $nCausal1a, s2: $nCausal2a, s3: $nCausal3a\", xlab=\"False Positive Rate\", ylab=\"True Positive Rate\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
@@ -19158,6 +19158,11 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		done;	
 	done; done; done; done; done;
 done
+
+#On MacBook Pro
+#mkdir /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs
+#mkdir /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs/Temp
+#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/*/ROCs/*Results.Output.wROCinfo.plot.vs1.png /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/Suppl/GeneCountTables/.
 
 
 
