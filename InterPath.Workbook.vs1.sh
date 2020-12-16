@@ -19179,13 +19179,14 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 
 		R -q -e "Data1 <- read.table(\"${Output1_ROCs1_noRun}.RunAll.Results.Output.wROCinfo.txt\", header=T); \
 			png(\"${Output1_ROCs1_noRun}.RunAll.Results.Output.wROCinfo.plot.vs1.png\", height=2000, width=2000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2)); \
-			plot(Data1[,2], Data1[,1], main=\"Pop: $ancestry2, Run: $o, PVE: $pve2, rho: $rho2, PCs: $pcvar2,\\nPercentCausal: $ncaustot2, s1: $nCausal1a, s2: $nCausal2a, s3: $nCausal3a\", xlab=\"False Positive Rate\", ylab=\"True Positive Rate\", xlim=c(0,.2), ylim=c(0,.2), type=\"l\", lwd=3, lty=2, col=\"BLUE\", cex=2, cex.main=1, cex.axis=2, cex.lab=2); \
-			abline(0,1, lwd=3, col=\"BLACK\"); \ 
+			plot(Data1[,2], Data1[,1], main=\"Pop: $ancestry2, PVE: $pve2, rho: $rho2, PCs: $pcvar2,\\nPercentCausal: $ncaustot2, s1: $nCausal1a, s2: $nCausal2a, s3: $nCausal3a\", xlab=\"False Positive Rate\", ylab=\"True Positive Rate\", xlim=c(0,.001), ylim=c(0,.2), type=\"l\", lwd=3, lty=2, col=\"BLUE\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
 			dev.off(); \
 		"	
 
 	done; done; done; done; done;
 done
+			
+#			abline(0,1, lwd=3, col=\"BLACK\"); \ 
 
 #On MacBook Pro
 #mkdir /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs
