@@ -19146,54 +19146,51 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		echo $pve2 $rho2 $pcvar2 $ncaustot2 $nCausal1a $nCausal2a $nCausal3a $o 
 
 		R -q -e "TPRs <- c(); FPRs <- c(); for (o in 1:5) { Data1 <- read.table(paste(\"${Output1_ROCs1_noRun}.Run\", o, \".Results.Output.wROCinfo.txt\", sep=\"\"), header=T); \
-				Data1 <- Data1[order(Data1[,2], decreasing=TRUE),]; causalCount <- nrow(Data1[Data1[,5] == 1,]); noncausalCount <- nrow(Data1[Data1[,5] != 1,]); \
+				Data1 <- Data1[order(Data1[,2], decreasing=FALSE),]; causalCount <- nrow(Data1[Data1[,5] == 1,]); noncausalCount <- nrow(Data1[Data1[,5] != 1,]); \
 				TPcumsum <- cumsum(Data1[,7]); FPcumsum <- cumsum(Data1[,8]); TPR <- TPcumsum / causalCount; FPR <- FPcumsum / noncausalCount; TPRs <- cbind(TPRs, TPR); FPRs <- cbind(FPRs, FPR); \ 
 			}; \
 			TPRs.Avg <- rowMeans(TPRs); FPRs.Avg <- rowMeans(FPRs); Output1 <- cbind(TPRs.Avg, FPRs.Avg); colnames(Output1) <- c(\"TPR\", \"FPR\"); \
-			write.table(cbind(TPRs, FPRs, Output1), \"${Output1_ROCs1_noRun}.RunAll.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE); \
+			write.table(Output1, \"${Output1_ROCs1_noRun}.RunAll.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE); \
 		"	
 
 	done; done; done; done; done;
 done
 
+#			write.table(cbind(TPRs, FPRs, Output1), \"${Output1_ROCs1_noRun}.RunAll.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE); \
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2 | tail -n 1`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 	echo $ancestry1 $ancestry2 $AncSeed1
 
-	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaus2a2 in `cat <(echo "2 5 7 12" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
-		for o in {1..1}; do
-			PVE1=$pve2
-			Rho1=$rho2
-			PCs_var1=$pcvar2
-			ncausaltotal1=$ncaustot2
-			nCausal1a=3
-			nCausal2a=$ncaus2a2
-			nCausal3a=`echo "25 - $nCausal1a - $nCausal2a" | bc -l`
-			Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
-			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; Output1_ROCs1="${Output1_Path}/ROCs/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}";
-			GenesPulled1="${Output1_File1}.Results.nGenes.txt"
-			Results1="${Output1_File1}.Results.Output.txt"
+	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | tail -n -1`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaus2a2 in `cat <(echo "2 5 7 12" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
+		PVE1=$pve2
+		Rho1=$rho2
+		PCs_var1=$pcvar2
+		ncausaltotal1=$ncaustot2
+		nCausal1a=3
+		nCausal2a=$ncaus2a2
+		nCausal3a=`echo "25 - $nCausal1a - $nCausal2a" | bc -l`
+		Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
+		Output1_ROCs1_noRun="${Output1_Path}/ROCs/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}";
+		GenesPulled1="${Output1_File1}.Results.nGenes.txt"
+		Results1="${Output1_File1}.Results.Output.txt"
 	
-			echo $pve2 $rho2 $pcvar2 $ncaustot2 $nCausal1a $nCausal2a $nCausal3a $o 
+		echo $pve2 $rho2 $pcvar2 $ncaustot2 $nCausal1a $nCausal2a $nCausal3a $o 
 
-			R -q -e "Data1 <- read.table(\"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", header=T); \
-				Data1 <- Data1[order(Data1[,2], decreasing=TRUE),]; causalCount <- nrow(Data1[Data1[,5] == 1,]); noncausalCount <- nrow(Data1[Data1[,5] != 1,]); \
-				TPcumsum <- cumsum(Data1[,7]); FPcumsum <- cumsum(Data1[,8]); TPR <- TPcumsum / causalCount; FPR <- FPcumsum / noncausalCount; \ 
-				png(\"${Output1_ROCs1}.Results.Output.wROCinfo.plot.vs1.png\", height=2000, width=2000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2)); \
-				plot(FPR, TPR, main=\"Pop: $ancestry2, Run: $o, PVE: $pve2, rho: $rho2, PCs: $pcvar2,\\nPercentCausal: $ncaustot2, s1: $nCausal1a, s2: $nCausal2a, s3: $nCausal3a\", xlab=\"False Positive Rate\", ylab=\"True Positive Rate\", cex=2, cex.main=2, cex.axis=2, cex.lab=2); \
-				abline(0,1, lwd=3, col=\"BLACK\"); \ 
-				dev.off(); \
-			"	
+		R -q -e "Data1 <- read.table(\"${Output1_ROCs1_noRun}.RunAll.Results.Output.wROCinfo.txt\", header=T); \
+			png(\"${Output1_ROCs1_noRun}.RunAll.Results.Output.wROCinfo.plot.vs1.png\", height=2000, width=2000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2)); \
+			plot(Data1[,2], Data1[,1], main=\"Pop: $ancestry2, Run: $o, PVE: $pve2, rho: $rho2, PCs: $pcvar2,\\nPercentCausal: $ncaustot2, s1: $nCausal1a, s2: $nCausal2a, s3: $nCausal3a\", xlab=\"False Positive Rate\", ylab=\"True Positive Rate\", xlim=c(0,.2), ylim=c(0,.2), type=\"l\", lwd=3, lty=2, col=\"BLUE\", cex=2, cex.main=1, cex.axis=2, cex.lab=2); \
+			abline(0,1, lwd=3, col=\"BLACK\"); \ 
+			dev.off(); \
+		"	
 
-		done;	
 	done; done; done; done; done;
 done
 
 #On MacBook Pro
 #mkdir /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs
 #mkdir /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs/Temp
-#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/*/ROCs/*Results.Output.wROCinfo.plot.vs1.png /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Tables/Suppl/GeneCountTables/.
+#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/*/ROCs/*RunAll.Results.Output.wROCinfo.plot.vs1.png /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs/Temp/.
 
 
 
