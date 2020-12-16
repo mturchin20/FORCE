@@ -19015,7 +19015,7 @@ module load R/3.4.3_mkl gcc mpi/openmpi_4.0.5_icc; for j in `cat <(echo $UKBioBa
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 	echo $ancestry1 $ancestry2 $AncSeed1
 
-	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);')`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 2`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | head -n 2`; do for ncaus2a2 in `cat <(echo "2 5 7 12 60 80" | perl -lane 'print join("\n", @F);') | tail -n 2`; do
+	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);')`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 2`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".05 .1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | head -n 3`; do for ncaus2a2 in `cat <(echo "2 5 7 12 20 40" | perl -lane 'print join("\n", @F);') | tail -n 2`; do
 		for o in {1..5}; do
 			X_File1="/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz";
 			Genes_File1="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.perSNPs.noGeneDups.GenesFormat.Rformat.txt"
@@ -19059,19 +19059,19 @@ done
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/African/ROCs
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/British.Ran4000/ROCs
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2 | tail -n 1`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 	echo $ancestry1 $ancestry2 $AncSeed1
 
-	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | tail -n -1`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaus2a2 in `cat <(echo "2 5 7 12" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
+	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);')`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 2`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | head -n 2`; do for ncaus2a2 in `cat <(echo "2 5 7 12 60 80" | perl -lane 'print join("\n", @F);') | tail -n 2`; do
 		for o in {1..5}; do
 			PVE1=$pve2
 			Rho1=$rho2
 			PCs_var1=$pcvar2
 			ncausaltotal1=$ncaustot2
-			nCausal1a=3
+			nCausal1a=20
 			nCausal2a=$ncaus2a2
-			nCausal3a=`echo "25 - $nCausal1a - $nCausal2a" | bc -l`
+			nCausal3a=`echo "200 - $nCausal1a - $nCausal2a" | bc -l`
 			Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
 			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; Output1_ROCs1="${Output1_Path}/ROCs/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}";
 			GenesPulled1="${Output1_File1}.Results.nGenes.txt"
@@ -19089,11 +19089,11 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 
 			echo $o $TruePos $FalsePos $FalsePosAdd $numEpi1SNPs $numEpi2SNPs $numAdd1SNPs $numEpiTotal $numSNPsTotal
 			
-		  R -q -e "Data1 <- read.table(\"$Results1\", header=T); Data2 <- read.table(\"$GenesPulled1\", header=F); TrueGenes <- Data2[grep(\"Epi\", Data2[,2]),1]; ROCresults <- c(); print(TrueGenes); for (i in 1:nrow(Data1)) { TrueFlag <- NA; BonfFlag <- NA; if (Data1[i,1] %in% TrueGenes) { TrueFlag <- 1; } else if (! Data1[i,1] %in% TrueGenes) { TrueFlag <- 0; } else { TrueFlag <- -9; }; TruePositive <- 0; TrueNegative <- 0; FalsePositive <- 0; FalseNegative <- 0; if (Data1[i,2] < $pValBonf) { BonfFlag <- 1; } else if (Data1[i,2] >= $pValBonf) { BonfFlag <- 0 } else { BonfFlag <- NA }; if (BonfFlag == 1) { if (TrueFlag == 1) { TruePositive <- 1; }; if (TrueFlag == 0) { FalsePositive <- 1; }; } else { if (TrueFlag == 1) { FalseNegative <- 1; }; if (TrueFlag == 0) { TrueNegative <- 1; }; }; ROCresults <- rbind(ROCresults, c(TrueFlag, BonfFlag, TruePositive, FalsePositive, TrueNegative, FalseNegative)); }; NewResults <- cbind(Data1, ROCresults); colnames(NewResults)[5:10] <- c(\"TrueFlag\", \"BonfFlag\", \"TruePos\", \"FalsePos\", \"TrueNeg\", \"FalseNeg\"); write.table(NewResults, file=\"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE);"
 
 		done;	
 	done; done; done; done; done;
 done
+		  R -q -e "Data1 <- read.table(\"$Results1\", header=T); Data2 <- read.table(\"$GenesPulled1\", header=F); TrueGenes <- Data2[grep(\"Epi\", Data2[,2]),1]; ROCresults <- c(); print(TrueGenes); for (i in 1:nrow(Data1)) { TrueFlag <- NA; BonfFlag <- NA; if (Data1[i,1] %in% TrueGenes) { TrueFlag <- 1; } else if (! Data1[i,1] %in% TrueGenes) { TrueFlag <- 0; } else { TrueFlag <- -9; }; TruePositive <- 0; TrueNegative <- 0; FalsePositive <- 0; FalseNegative <- 0; if (Data1[i,2] < $pValBonf) { BonfFlag <- 1; } else if (Data1[i,2] >= $pValBonf) { BonfFlag <- 0 } else { BonfFlag <- NA }; if (BonfFlag == 1) { if (TrueFlag == 1) { TruePositive <- 1; }; if (TrueFlag == 0) { FalsePositive <- 1; }; } else { if (TrueFlag == 1) { FalseNegative <- 1; }; if (TrueFlag == 0) { TrueNegative <- 1; }; }; ROCresults <- rbind(ROCresults, c(TrueFlag, BonfFlag, TruePositive, FalsePositive, TrueNegative, FalseNegative)); }; NewResults <- cbind(Data1, ROCresults); colnames(NewResults)[5:10] <- c(\"TrueFlag\", \"BonfFlag\", \"TruePos\", \"FalsePos\", \"TrueNeg\", \"FalseNeg\"); write.table(NewResults, file=\"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE);"
 
 #			Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; 
 
