@@ -19420,6 +19420,18 @@ cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Transfer/* /gpfs/data/sr
 
 
 
+#ForWei
+#20201216
+
+#Made file '/users/mturchin/LabMisc/RamachandranLab/InterPath/ForWei.ExampleCode.txt' for Wei, describing how I setup my SNP/gene/pathway annotation files and such
+ln -s /users/mturchin/LabMisc/RamachandranLab/InterPath/ForWei.ExampleCode.txt /users/mturchin/ForPeople/Wei/ANNOVAR.SNP_pathway_mapping.example.txt
+
+#On MacBook Pro
+#mkdir /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/ForPeople/Wei
+#scp -p mturchin@ssh.ccv.brown.edu:/users/mturchin/ForPeople/Wei/ANNOVAR.SNP_pathway_mapping.example.txt /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/ForPeople/Wei/. 
+
+
+
 
 
 
