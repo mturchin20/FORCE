@@ -23,7 +23,7 @@ ncausal3 <- as.numeric(as.character(args[19]))
 #ncausal3 = 1-(ncausal1+ncausal2) #Remaining SNPs to be allocated to G3
 #nmask <- as.numeric(as.character(args[20]))
 
-set.seed(seed.value)
+#set.seed(seed.value)
 
 X <- as.matrix(read.table(X.File, header=T));
 Genes <- read.table(Genes.File, header=F);
