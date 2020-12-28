@@ -23,7 +23,7 @@ ncausal3 <- as.numeric(as.character(args[19]))
 #ncausal3 = 1-(ncausal1+ncausal2) #Remaining SNPs to be allocated to G3
 #nmask <- as.numeric(as.character(args[20]))
 
-#set.seed(seed.value)
+set.seed(seed.value)
 
 X <- as.matrix(read.table(X.File, header=T));
 Genes <- read.table(Genes.File, header=F);
@@ -45,33 +45,33 @@ for(i in 1:n.datasets) {
   genes.ids = 1:nrow(Genes)
 #  s1.genes.ids <- sample(genes.ids, ncausal1, replace=F);
   s1.genes.ids <- genes.ids[1:ncausal1];
-  s2.gene.ids <- c(); for (z in 1:length(s1.genes.id)) { s2.genes.ids <- rbind(s2.genes.id, sample(genes.ids[-s1.genes.ids], ncausal2, replace=F)); }; s2.genes.ids.all <- c(s2.genes.ids);
-  s3.gene.ids <- c(); for (z in 1:length(s1.genes.id)) { s3.genes.ids <- rbind(s3.genes.id, sample(genes.ids[-s1.genes.ids,-s2.genes.ids.all, ncausal3, replace=F)); }; s3.genes.ids.all <- c(s3.genes.ids);
+  s2.genes.ids <- c(); for (z in 1:length(s1.genes.ids)) { s2.genes.ids <- rbind(s2.genes.ids, sample(genes.ids[-s1.genes.ids], ncausal2, replace=F)); }; s2.genes.ids.all <- c(s2.genes.ids); print(dim(s2.genes.ids)); print(length(s1.genes.ids));
+  s3.genes.ids <- c(); for (z in 1:length(s1.genes.ids)) { s3.genes.ids <- rbind(s3.genes.ids, sample(genes.ids[c(-s1.genes.ids,-s2.genes.ids.all)], ncausal3, replace=F)); }; s3.genes.ids.all <- c(s3.genes.ids);
   genes.pulled <- rbind(cbind(as.character(Genes[s1.genes.ids,1]), rep("Epi1", length(s1.genes.ids))), cbind(as.character(Genes[c(s2.genes.ids),1]), rep("Epi2", length(c(s2.genes.ids)))), cbind(as.character(Genes[c(s3.genes.ids),1]), rep("Add", length(c(s3.genes.ids)))));
-  s1 <- c(); s1.sizes <- c(); s2 <- c(); s2.sizes <- c(); s3 <- c(); s3.sizes <- c();
+  s1 <- list(); s1.sizes <- c(); s2 <- list(); s2.sizes <- c(); s3 <- list(); s3.sizes <- c();
   for (j in 1:length(s1.genes.ids)) {
 	gene.temp <- Genes[s1.genes.ids[j],];
 	gene.temp.SNPs <- unlist(strsplit(as.character(gene.temp[1,2]), ","));
   	gene.temp.SNPs.pulled <- sample(gene.temp.SNPs, round(ncausaltotal * length(gene.temp.SNPs)), replace=F);
-	s1 <- c(s1, gene.temp.SNPs.pulled); s1.sizes <- c(s1.sizes, length(gene.temp.SNPs.pulled));
+	s1[[j]] <- gene.temp.SNPs.pulled; s1.sizes <- c(s1.sizes, length(gene.temp.SNPs.pulled));
   }
-  for (z in 1:length(s1.genes.ids)) { s2.temp <- c(); s2.sizes.temp <- c(); for (j in 1:length(s2.genes.ids)) {
+  for (z in 1:length(s1.genes.ids)) { s2.temp <- c(); s2.sizes.temp <- c(); for (j in 1:ncol(s2.genes.ids)) {
 	gene.temp <- Genes[s2.genes.ids[z,j],];
 	gene.temp.SNPs <- unlist(strsplit(as.character(gene.temp[1,2]), ","));
   	gene.temp.SNPs.pulled <- sample(gene.temp.SNPs, round(ncausaltotal * length(gene.temp.SNPs)), replace=F);
 	s2.temp <- c(s2.temp, gene.temp.SNPs.pulled); s2.sizes.temp <- c(s2.sizes.temp, length(gene.temp.SNPs.pulled));
-  }; s2 <- rbind(s2, s2.temp); s2.sizes <- rbind(s2.sizes, s2.sizes.temp); }
-  for (z in 1:length(s1.genes.ids)) { s3.temp <- c(); s3.sizes.temp <- c(); for (j in 1:length(s3.genes.ids)) {
+  }; s2[[z]] <- s2.temp; s2.sizes <- rbind(s2.sizes, s2.sizes.temp); }
+  for (z in 1:length(s1.genes.ids)) { s3.temp <- c(); s3.sizes.temp <- c(); for (j in 1:ncol(s3.genes.ids)) {
 	gene.temp <- Genes[s3.genes.ids[z,j],];
 	gene.temp.SNPs <- unlist(strsplit(as.character(gene.temp[1,2]), ","));
   	gene.temp.SNPs.pulled <- sample(gene.temp.SNPs, round(ncausaltotal * length(gene.temp.SNPs)), replace=F);
 	s3.temp <- c(s3.temp, gene.temp.SNPs.pulled); s3.sizes.temp <- c(s3.sizes.temp, length(gene.temp.SNPs.pulled));
-  }; s3 <- rbind(s3, s3.temp); s3.sizes <- rbind(s3.sizes, s3.sizes.temp); }
+  }; s3[[z]] <- s3.temp; s3.sizes <- rbind(s3.sizes, s3.sizes.temp); }
   print(c(ncausaltotal,ncausal1,ncausal2,ncausal3,length(s1.genes.ids),length(s2.genes.ids),length(s3.genes.ids),length(s1),length(s2),length(s3)));
-  print(s1.sizes); print(s2.sizes); print(s3.sizes);
+#  print(s1.sizes); print(s2.sizes); print(s3.sizes);
   
   ### Simulate the Additive Effects ###
-  SNPs.additive = unique(c(s1,s2,s3));
+  SNPs.additive = unique(c(unlist(s1),unlist(s2),unlist(s3)));
 #  print(dim(X))
 #  print(SNPs.additive)
   Xmarginal = X[,SNPs.additive]
@@ -82,11 +82,13 @@ for(i in 1:n.datasets) {
   
   ### Simulate Pairwise Interaction matrix ###
   y_epi <- 0;
+  print(length(s2)); print(length(s1)); print(dim(X));
+  print(s1);
   if ((ncausal1 > 0) && (rho < 1)) { 
 	  Xepi = c(); b = c();
-	  for(j in 1:length(s1)){
-	      Xepi = cbind(Xepi,X[,s1[j]]*X[,s2[j,]]) 
-	  }
+	  for(j in 1:length(s1)){ print(j); for(k in 1:length(s1[[j]])) {
+	      Xepi = cbind(Xepi,X[,s1[[j]][k]]*X[,s2[[j]]]) 
+	  }}
 	  
 	  ### Simulate the Pairwise Effects ###
 	  beta=rnorm(dim(Xepi)[2])

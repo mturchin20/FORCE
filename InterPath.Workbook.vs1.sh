@@ -19205,6 +19205,26 @@ done
 #scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/*/ROCs/*RunAll.Results.Output.wROCinfo.plot.vs1.png /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs/Temp/.
 
 
+#Sim restart w/ Isabella runs
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2
+cd /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2
+cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Simulations.20201109_Lorin.zip /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/.
+#Unzipping again
+unzip Simulations.20201109_Lorin.zip
+mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Power\ Simulations /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/PowerSimulations
+mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/PopStruct\ Power\ Simulations/ /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/PopStructPowerSimulations 
+mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Null\ Simulations/ /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/NullSimulations
+
+
+#cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.wCovs.cpp /users/mturchin/LabMisc/RamachandranLab/MAPITR/src/MAPITR.cpp
+
+
+
+
+
+
+
 
 
 
