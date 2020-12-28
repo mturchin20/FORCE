@@ -18781,6 +18781,7 @@ cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs2.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R
 cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.dev.R
 cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs4.dev.R
+cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs4.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/SimulationMain.Revisions.Rnd2.vs1.dev.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs1.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.vs1.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.wPCs.vs1.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.wPCs.vs1.dev.R
@@ -18788,6 +18789,8 @@ ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMd
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.vs3.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.vs3.dev.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs4.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.vs4.dev.R
+ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/SimulationMain.Revisions.Rnd2.vs1.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.Rnd2.vs1.dev.R
+
 
 #From: https://stackoverflow.com/questions/56735768/how-can-i-pass-arguments-to-an-rscript-i-have-in-my-desktop, https://stackoverflow.com/questions/22906804/matrix-expression-causes-error-requires-numeric-complex-matrix-vector-arguments, https://swcarpentry.github.io/r-novice-inflammation/05-cmdline/, https://stackoverflow.com/questions/21969145/why-or-when-is-rscript-or-littler-better-than-r-cmd-batch, https://stackoverflow.com/questions/5234117/how-to-drop-columns-by-name-in-a-data-frame
 #Genes = Pathways, X SNPs across L genes, X SNPs across groups G1, G2, and G3, all three have additive effects, G1 and G2 have interaction effects
@@ -18856,6 +18859,7 @@ conda activate Simulations1
 conda install git
 #Add 'devtools' library to R and then do load_all for MAPITR too
 #install.packages(c("doParallel", "CompQuadForm"))
+#install.packages("RcppArmadillo")
 
 __conda_setup="$('/users/mturchin/data/mturchin/miniconda3RH/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"; eval "$__conda_setup"; unset __conda_setup;
 conda activate Simulations1
@@ -18899,6 +18903,7 @@ Rscript SimulationMain.Revisions.wPCs.vs1.dev.R /users/mturchin/data/ukbiobank_j
 Rscript SimulationMain.Revisions.wPCs.vs1.dev.R /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/Imputation/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.Rformat.txt /users/mturchin/data/ukbiobank_jun17/subsets/British/British.Ran4000/mturchin20/ukb_chrAll_v3.British.Ran4000.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.Rformat.MAPITRformat.txt Output1.txt 8633486 1 .6 .8 .1 20 .05 .15
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/African
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/African/slurm
@@ -18916,6 +18921,12 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Masked/Results/African/slurm
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Masked/Results/British.Ran4000
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Masked/Results/British.Ran4000/slurm
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/African
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/African/slurm
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/British.Ran4000
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/British.Ran4000/slurm
           
 -dff pop vrsns
 -gtalljbsrnng
@@ -18927,42 +18938,6 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 #nCausal1a/nCausal2a: % of nsnps that are g1 and g2 (g3 = 1 - nCausal1a - nCausal2a)
 
 /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.British.Ran4000.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.perSNPs.noGeneDups.GenesFormat.MAPITRformat.txt
-
-(InterPath) [  mturchin@login004  ~/LabMisc/RamachandranLab/InterPath]$sacct | grep FAIL
-15753606             63      batch  mturchin    default 2020-11-28T23:44:50 2020-11-29T03:30:54   00:04:59          1  NODE_FAIL      1:0                        Sims British.Ran4000 7 .6 .5 0 .5 10 40 50
-15753606.ba+      batch                         default 2020-11-29T03:25:55 2020-11-29T03:32:52   00:06:57          1     FAILED      0:0
-
-15824179             63      batch  mturchin    default 2020-12-05T21:30:57 2020-12-06T01:44:45   00:06:40          1 OUT_OF_ME+    0:125                              Sims African 16 .6 .8 0 .75 20 40 40 
-15824204             63      batch  mturchin    default 2020-12-05T21:30:57 2020-12-06T01:50:57   00:06:32          1 OUT_OF_ME+    0:125                                Sims African 16 .6 .8 0 1 20 30 50 
-15824205             63      batch  mturchin    default 2020-12-05T21:30:57 2020-12-06T01:50:49   00:06:24          1 OUT_OF_ME+    0:125                                Sims African 17 .6 .8 0 1 20 30 50 
-15824226             63      batch  mturchin    default 2020-12-05T21:30:58 2020-12-06T01:58:52   00:05:27          1 OUT_OF_ME+    0:125                                Sims African 13 .6 .8 0 1 20 40 40 
-15824229             63      batch  mturchin    default 2020-12-05T21:30:58 2020-12-06T02:05:48   00:05:41          1 OUT_OF_ME+    0:125                                Sims African 16 .6 .8 0 1 20 40 40 
-15824230             63      batch  mturchin    default 2020-12-05T21:30:58 2020-12-06T02:05:30   00:05:05          1 OUT_OF_ME+    0:125                                Sims African 17 .6 .8 0 1 20 40 40 
-15824238             63      batch  mturchin    default 2020-12-05T21:30:58 2020-12-06T02:38:22   00:03:26          1 OUT_OF_ME+    0:125                                Sims African 25 .6 .8 0 1 20 40 40 
-15826139             63      batch  mturchin    default 2020-12-06T03:03:13 2020-12-06T07:36:39   00:06:39          1 OUT_OF_ME+    0:125                              Sims African 16 .6 .8 0 .75 10 40 50 
-15826164             63      batch  mturchin    default 2020-12-06T03:03:13 2020-12-06T10:39:57   00:08:49          1 OUT_OF_ME+    0:125                                Sims African 16 .6 .8 0 1 10 30 60 
-15826189             63      batch  mturchin    default 2020-12-06T03:03:13 2020-12-06T11:16:30   00:04:49          1 OUT_OF_ME+    0:125                                Sims African 16 .6 .8 0 1 10 40 50 
-
-
-15826355             63      batch  mturchin    default 2020-12-06T03:03:16 2020-12-06T20:22:48   00:07:11          1 OUT_OF_ME+    0:125                       Sims British.Ran4000 7 .6 .8 0 .75 10 30 60
-15826380             63      batch  mturchin    default 2020-12-06T03:03:17 2020-12-06T21:49:26   00:06:10          1 OUT_OF_ME+    0:125                       Sims British.Ran4000 7 .6 .8 0 .75 10 40 50
-
-15826419             63      batch  mturchin    default 2020-12-06T03:03:17 2020-12-07T03:15:52   00:03:06          1 OUT_OF_ME+    0:125                        Sims British.Ran4000 21 .6 .8 0 1 10 30 60 
-15826419.ba+      batch                         default 2020-12-07T03:12:46 2020-12-07T03:15:52   00:03:06          1 OUT_OF_ME+    0:125                                                                   
-15826430             63      batch  mturchin    default 2020-12-06T03:03:17 2020-12-07T03:38:38   00:04:18          1 OUT_OF_ME+    0:125                         Sims British.Ran4000 7 .6 .8 0 1 10 40 50 
-15826430.ba+      batch                         default 2020-12-07T03:34:20 2020-12-07T03:38:38   00:04:18          1 OUT_OF_ME+    0:125                                                                   
-15826434             63      batch  mturchin    default 2020-12-06T03:03:17 2020-12-07T03:49:17   00:03:36          1 OUT_OF_ME+    0:125                        Sims British.Ran4000 11 .6 .8 0 1 10 40 50 
-15826434.ba+      batch                         default 2020-12-07T03:45:41 2020-12-07T03:49:17   00:03:36          1 OUT_OF_ME+    0:125                                                                   
-15826444             63      batch  mturchin    default 2020-12-06T03:03:18 2020-12-07T04:00:42   00:02:48          1 OUT_OF_ME+    0:125                        Sims British.Ran4000 21 .6 .8 0 1 10 40 50 
-15826444.ba+      batch                         default 2020-12-07T03:57:54 2020-12-07T04:00:42   00:02:48          1 OUT_OF_ME+    0:125                                                                   
-
-15832360             63      batch  mturchin ccmb-condo 2020-12-06T23:12:59 2020-12-07T19:29:45   00:42:02          2 OUT_OF_ME+    0:125                               Sims African 16 .6 .8 0 1 20 60 120 
-15832360.ba+      batch                      ccmb-condo 2020-12-07T19:08:44 2020-12-07T19:29:45   00:42:02          2 OUT_OF_ME+    0:125                                                                   
-15832385             63      batch  mturchin ccmb-condo 2020-12-06T23:13:00 2020-12-07T19:24:15   00:30:56          2 OUT_OF_ME+    0:125                               Sims African 16 .6 .8 0 1 20 80 100 
-15832385.ba+      batch                      ccmb-condo 2020-12-07T19:08:47 2020-12-07T19:24:15   00:30:56          2 OUT_OF_ME+    0:125                                                                   
-15832386             63      batch  mturchin ccmb-condo 2020-12-06T23:13:00 2020-12-07T19:19:51   00:22:08          2 OUT_OF_ME+    0:125                               Sims African 17 .6 .8 0 1 20 80 100 
-15832386.ba+      batch                      ccmb-condo 2020-12-07T19:08:47 2020-12-07T19:19:51   00:22:08          2 OUT_OF_ME+    0:125                                                                   
-
 
 #100 genes: 24g
 #200 genes: 24g (.1, .25, .5); 30g? (.75, 1)
@@ -18989,30 +18964,10 @@ British British.Ran4000 138503
 3 2 0 0 53 37 113 90 203
 4 2 3 0 9 66 123 75 198
 5 2 0 0 35 75 116 110 226
-1 1 0 0 49 90 84 139 223
-2 1 0 0 43 66 79 109 188
-3 1 0 0 53 94 27 147 174
-4 2 4 0 9 132 88 141 229
-5 1 0 0 35 132 79 167 246
-1 4 1 0 49 53 123 102 225
-2 2 0 0 43 56 117 99 216
-3 2 0 0 53 37 113 90 203
-4 4 10 0 9 66 123 75 198
-5 3 0 0 35 75 116 110 226
-1 1 1 0 49 90 84 139 223
-2 3 1 0 43 66 79 109 188
-3 1 0 0 53 94 27 147 174
-4 2 6 0 9 132 88 141 229
-5 1 0 0 35 132 79 167 246
-1 2 0 0 66 70 163 136 299
 2 3 0 0 57 76 157 133 290
 3 3 0 0 69 49 147 118 265
 4 5 6 0 12 89 166 101 267
 5 1 0 0 46 102 156 148 304
-1 3 0 0 66 119 112 185 297
-2 1 1 0 57 88 107 145 252
-3 3 0 0 69 125 33 194 227
-4 2 3 0 12 177 116 189 305
 5 4 0 0 46 178 107 224 331
 
 5th cont'd: switched to the 1:20 genes analyzed setup now. First run is with the: '.05/.1/.25 % causal, 10 and 20 w/ 100 max now' setup
@@ -19020,11 +18975,13 @@ British British.Ran4000 138503
 100 & 140 w/ 300 max; 40, 100 & 140, 350 max
 2, 5 * 10 w/ 30 max; 20, 300 & 400, 600 max
 
+#Rnd2 start
+
 module load R/3.4.3_mkl gcc mpi/openmpi_4.0.5_icc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 	echo $ancestry1 $ancestry2 $AncSeed1
 
-	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".05 .1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | head -n 3 | tail -n 1`; do for ncaus2a2 in `cat <(echo "2 5 7 40 60" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
+	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".05 .1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaus2a2 in `cat <(echo "10 20 30 40 50" | perl -lane 'print join("\n", @F);') | head -n 1`; do
 
 add in vs4.dev. thing
 		for o in {1..5}; do
@@ -19037,14 +18994,14 @@ add in vs4.dev. thing
 			Rho1=$rho2
 			PCs_var1=$pcvar2
 			ncausaltotal1=$ncaustot2
-			nCausal1a=10
+			nCausal1a=5
 			nCausal2a=$ncaus2a2
-			nCausal3a=`echo "100 - $nCausal1a - $nCausal2a" | bc -l`
+			nCausal3a=`echo "150 - $nCausal1a - $nCausal2a" | bc -l`
 			Seed1=`echo "$AncSeed1 + ($o * 2) + ($pve2 * 10) + ($rho2 * 10) + ($pcvar2 * 10) + ($ncaustot2 * 10) + ($ncaus2a2 * 10) + ($nCausal1a * 10)" | bc -l`
-			Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
+			Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/$ancestry2"
 			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"
 	
-			sbatch -t 72:00:00 -n 2 -N 1-1 --mem 30g --account=ccmb-condo -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims $ancestry2 $o $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs4.dev.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
+			sbatch -t 72:00:00 -n 2 -N 1-1 --mem 30g --account=ccmb-condo -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims $ancestry2 $o $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/SimulationMain.Revisions.Rnd2.vs1.dev.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
 #			echo Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs4.dev.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a
 		done;
         done; done; done; done; done;
@@ -19069,6 +19026,8 @@ done
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/African/ROCs
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/British.Ran4000/ROCs
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/African/ROCs
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/British.Ran4000/ROCs
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
@@ -19083,7 +19042,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 			nCausal1a=10
 			nCausal2a=$ncaus2a2
 			nCausal3a=`echo "100 - $nCausal1a - $nCausal2a" | bc -l`
-			Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
+			Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/$ancestry2"
 			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; Output1_ROCs1="${Output1_Path}/ROCs/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}";
 			GenesPulled1="${Output1_File1}.Results.nGenes.txt"
 			Results1="${Output1_File1}.Results.Output.txt"
@@ -19149,7 +19108,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		nCausal1a=3
 		nCausal2a=$ncaus2a2
 		nCausal3a=`echo "25 - $nCausal1a - $nCausal2a" | bc -l`
-		Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
+		Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/$ancestry2"
 		Output1_ROCs1_noRun="${Output1_Path}/ROCs/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}";
 		GenesPulled1="${Output1_File1}.Results.nGenes.txt"
 		Results1="${Output1_File1}.Results.Output.txt"
@@ -19181,7 +19140,7 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 		nCausal1a=3
 		nCausal2a=$ncaus2a2
 		nCausal3a=`echo "25 - $nCausal1a - $nCausal2a" | bc -l`
-		Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/$ancestry2"
+		Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/$ancestry2"
 		Output1_ROCs1_noRun="${Output1_Path}/ROCs/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}";
 		GenesPulled1="${Output1_File1}.Results.nGenes.txt"
 		Results1="${Output1_File1}.Results.Output.txt"
@@ -19202,7 +19161,7 @@ done
 #On MacBook Pro
 #mkdir /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs
 #mkdir /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs/Temp
-#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/*/ROCs/*RunAll.Results.Output.wROCinfo.plot.vs1.png /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs/Temp/.
+#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/*/ROCs/*RunAll.Results.Output.wROCinfo.plot.vs1.png /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs/Temp/.
 
 
 #Sim restart w/ Isabella runs
