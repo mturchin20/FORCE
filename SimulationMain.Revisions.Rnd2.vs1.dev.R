@@ -31,6 +31,25 @@ Covars <- read.table(Covars.File, header=T);
 Genes.Analysis <- read.table(Genes.Analysis.File, header=F);
 PCs <- as.matrix(Covars[,(ncol(Covars)-9):ncol(Covars)]);
 
+duplicated.snps <- duplicated(t(X)); print(dim(X));
+duplicated.snps.names <- colnames(X)[duplicated.snps]; print(length(duplicated.snps.names));
+#X.dedup <- X[,duplicated.snps==FALSE]; print(dim(X.dedup));
+
+print(nrow(Genes));
+Genes.QC.Keep <- c(); dup.genes.list <- c();
+for (i in 1:nrow(Genes)) { 
+	gene.temp.QC.SNPs <- unlist(strsplit(as.character(Genes[i,2]), ",")); gene.analysis.temp.QC.SNPs <- unlist(strsplit(as.character(Gene.Analysis[i,2]), ","));
+	gene.temp.QC.SNPs.keep <- c(); for (j in 1:length(gene.temp.QC.SNPs)) { gene.temp.QC.SNPs.keep <- c(gene.temp.QC.SNPs.keep, ! gene.temp.QC.SNPs[j] %in% duplicated.snps.names);}; 
+	if (FALSE %in% gene.temp.QC.SNPs.keep) { dup.genes.list <- rbind(c(i, length(gene.temp.QC.SNPs.keep), length(gene.temp.QC.SNPs.keep[gene.temp.QC.SNPs.keep==TRUE])); };
+	gene.temp.QC.SNPs.keep.collapse <- paste(gene.temp.QC.SNPs[gene.temp.QC.SNPs.keep], collapse=","); gene.analysis.temp.QC.SNPs.keep.collapse <- paste(gene.analysis.temp.QC.SNPs[gene.temp.QC.SNPs.keep], collapse=",");
+	Genes[i,2] <- gene.temp.QC.SNPs.keep.collapse; Genes.Analysis[i,2] <- gene.analysis.temp.QC.SNPs.keep.collapse;
+	if (length(gene.temp.QC.SNPs[gene.temp.QC.SNPs.keep]) > 1) { Genes.QC.Keep <- c(Genes.QC.Keep, i); };
+}
+Genes <- Genes[Genes.QC.Keep,];
+Genes.Analysis <- Genes.Analysis[Genes.QC.Keep,];
+print(c(length(Genes.QC.Keep), nrow(Genes)));
+print(dim(dup.genes.list)); print(head(dup.genes.list)); 
+
 #Genes <- Genes[1:20,]
 Genes.Analysis <- Genes.Analysis[1:20,]
 
@@ -101,7 +120,8 @@ for(i in 1:n.datasets) {
   print(s1.sizes); print(s2.sizes); print(s3.sizes);
   
   ### Simulate the Additive Effects ###
-  SNPs.additive = unique(c(unlist(s1),unlist(s2),unlist(s3)));
+#  SNPs.additive = unique(c(unlist(s1),unlist(s2),unlist(s3)));
+  SNPs.additive = c(s1,s2,s3);
 #  print(dim(X))
 #  print(SNPs.additive)
   Xmarginal = X[,SNPs.additive]
@@ -116,9 +136,12 @@ for(i in 1:n.datasets) {
   print(s1);
   if ((ncausal1 > 0) && (rho < 1)) { 
 	  Xepi = c(); b = c();
-	  for(j in 1:length(s1)){ print(j); for(k in 1:length(s1[[j]])) {
-	      Xepi = cbind(Xepi,X[,s1[[j]][k]]*X[,s2[[j]]]) 
-	  }}
+#	  for(j in 1:length(s1)){ print(j); for(k in 1:length(s1[[j]])) {
+#	      Xepi = cbind(Xepi,X[,s1[[j]][k]]*X[,s2[[j]]]) 
+#	  }}
+	  for(j in 1:length(s1)){
+	      Xepi = cbind(Xepi,X[,s1[j]]*X[,s2]) 
+	  }
 	  
 	  ### Simulate the Pairwise Effects ###
 	  beta=rnorm(dim(Xepi)[2])
@@ -160,8 +183,9 @@ for(i in 1:n.datasets) {
 #  print(c(X.dims, length(s1.s2.mask), dim(X)));
 
   ptm <- proc.time() #Start clock
-#  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis,Covariates=PCs) 
-  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis) 
+#  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis,Covariates=PCs,OpenMP=TRUE) 
+  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis,OpenMP=TRUE) 
+#  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis) 
   print(proc.time() - ptm) #Stop clock
 #  print(head(MAPITR_Output$Results))
 
