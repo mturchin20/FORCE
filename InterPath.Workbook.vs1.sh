@@ -18982,9 +18982,7 @@ module load R/3.4.3_mkl gcc mpi/openmpi_4.0.5_icc; for j in `cat <(echo $UKBioBa
 	echo $ancestry1 $ancestry2 $AncSeed1
 
 	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".05 .1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaus2a2 in `cat <(echo "10 20 30 40 50" | perl -lane 'print join("\n", @F);') | head -n 1`; do
-
-add in vs4.dev. thing
-		for o in {1..5}; do
+		for o in {1..1}; do
 			X_File1="/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz";
 			Genes_File1="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.perSNPs.noGeneDups.GenesFormat.Rformat.txt"
 			Covars_File1="/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.pruned.QCed.dropRltvs.noX.PCAdrop.flashpca.pcs.wFullCovars.wAC.txt"
