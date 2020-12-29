@@ -36,19 +36,27 @@ duplicated.snps.names <- colnames(X)[duplicated.snps]; print(length(duplicated.s
 #X.dedup <- X[,duplicated.snps==FALSE]; print(dim(X.dedup));
 
 print(nrow(Genes));
-Genes.QC.Keep <- c(); dup.genes.list <- c();
+print(head(Genes));
+print(head(Genes.Analysis));
+Genes.New <- c(); Genes.Analysis.New <- c(); Genes.QC.Keep <- c(); dup.genes.list <- c();
 for (i in 1:nrow(Genes)) { 
-	gene.temp.QC.SNPs <- unlist(strsplit(as.character(Genes[i,2]), ",")); gene.analysis.temp.QC.SNPs <- unlist(strsplit(as.character(Gene.Analysis[i,2]), ","));
+	gene.temp.QC.SNPs <- unlist(strsplit(as.character(Genes[i,2]), ",")); gene.analysis.temp.QC.SNPs <- unlist(strsplit(as.character(Genes.Analysis[i,2]), ","));
 	gene.temp.QC.SNPs.keep <- c(); for (j in 1:length(gene.temp.QC.SNPs)) { gene.temp.QC.SNPs.keep <- c(gene.temp.QC.SNPs.keep, ! gene.temp.QC.SNPs[j] %in% duplicated.snps.names);}; 
-	if (FALSE %in% gene.temp.QC.SNPs.keep) { dup.genes.list <- rbind(c(i, length(gene.temp.QC.SNPs.keep), length(gene.temp.QC.SNPs.keep[gene.temp.QC.SNPs.keep==TRUE])); };
+	if (FALSE %in% gene.temp.QC.SNPs.keep) { dup.genes.list <- rbind(c(i, length(gene.temp.QC.SNPs.keep), length(gene.temp.QC.SNPs.keep[gene.temp.QC.SNPs.keep==TRUE]))); };
 	gene.temp.QC.SNPs.keep.collapse <- paste(gene.temp.QC.SNPs[gene.temp.QC.SNPs.keep], collapse=","); gene.analysis.temp.QC.SNPs.keep.collapse <- paste(gene.analysis.temp.QC.SNPs[gene.temp.QC.SNPs.keep], collapse=",");
-	Genes[i,2] <- gene.temp.QC.SNPs.keep.collapse; Genes.Analysis[i,2] <- gene.analysis.temp.QC.SNPs.keep.collapse;
+#	Genes[i,2] <- gene.temp.QC.SNPs.keep.collapse; Genes.Analysis[i,2] <- gene.analysis.temp.QC.SNPs.keep.collapse;
+	Genes.New <- rbind(Genes.New, c(Genes[i,1], gene.temp.QC.SNPs.keep.collapse)); Genes.Analysis.New <- rbind(Genes.Analysis.New, c(Genes.Analysis[i,1], gene.analysis.temp.QC.SNPs.keep.collapse));
 	if (length(gene.temp.QC.SNPs[gene.temp.QC.SNPs.keep]) > 1) { Genes.QC.Keep <- c(Genes.QC.Keep, i); };
 }
+Genes <- data.frame(Genes.New); Genes.Analysis <- data.frame(Genes.Analysis.New); rm(Genes.New); rm(Genes.Analysis.New);
 Genes <- Genes[Genes.QC.Keep,];
 Genes.Analysis <- Genes.Analysis[Genes.QC.Keep,];
 print(c(length(Genes.QC.Keep), nrow(Genes)));
 print(dim(dup.genes.list)); print(head(dup.genes.list)); 
+print(head(Genes));
+print(head(Genes.Analysis));
+
+#print(warnings())
 
 #Genes <- Genes[1:20,]
 Genes.Analysis <- Genes.Analysis[1:20,]
@@ -118,12 +126,13 @@ for(i in 1:n.datasets) {
   }
   print(c(ncausaltotal,ncausal1,ncausal2,ncausal3,length(s1.genes.ids),length(s2.genes.ids),length(s3.genes.ids),length(s1),length(s2),length(s3)));
   print(s1.sizes); print(s2.sizes); print(s3.sizes);
-  
+#  print(s1); 
+
   ### Simulate the Additive Effects ###
 #  SNPs.additive = unique(c(unlist(s1),unlist(s2),unlist(s3)));
   SNPs.additive = c(s1,s2,s3);
 #  print(dim(X))
-#  print(SNPs.additive)
+  print(SNPs.additive)
   Xmarginal = X[,SNPs.additive]
   beta=rnorm(dim(Xmarginal)[2])
   y_marginal=c(Xmarginal%*%beta)
@@ -184,8 +193,8 @@ for(i in 1:n.datasets) {
 
   ptm <- proc.time() #Start clock
 #  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis,Covariates=PCs,OpenMP=TRUE) 
-  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis,OpenMP=TRUE) 
-#  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis) 
+#  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis,OpenMP=TRUE) 
+  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis) 
   print(proc.time() - ptm) #Stop clock
 #  print(head(MAPITR_Output$Results))
 
