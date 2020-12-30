@@ -3167,7 +3167,7 @@ module load R/3.4.3_mkl gcc; sleep 7200; for i in `cat <(echo "Height;1254 BMI;5
 #			NumPaths=82
 			echo $i $ancestry1 $ancestry2 $ancestry3 $k 
 
-			sbatch -t 72:00:00 -n 2 -N 1-1 --mem=34g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Mproj.All.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Mproj.All.slurm.error --comment "$Pheno1 $ancestry2 $k perm0" <(echo -e '#!/bin/sh';
+			sbatch -t 72:00:00 -n 32 -N 1-1 --mem=300g -o /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Mproj.All.slurm.output -e /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.c2.Exonic.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Mproj.All.slurm.error --comment "$Pheno1 $ancestry2 $k perm0" <(echo -e '#!/bin/sh';
 			echo -e "\nR -q -e \"library(\\\"data.table\\\"); library(\\\"devtools\\\"); devtools::load_all(\\\"/users/mturchin/LabMisc/RamachandranLab/MAPITR.Revs.Sim.Rnd2.dev\\\"); neg.is.na <- Negate(is.na); neg.is.true <- Negate(isTRUE); \ 
 			X <- fread(cmd=paste(\\\"zcat /users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz\\\", sep=\\\"\\\"), header=T); \
 			Y <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt\\\", header=T); \
@@ -3175,7 +3175,56 @@ module load R/3.4.3_mkl gcc; sleep 7200; for i in `cat <(echo "Height;1254 BMI;5
 			Pathways <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.Subsets.txt\\\", header=F); \
 			PermAdj <- 1; Y.Seed <- $AncSeed1 + $PhenoSeed1 + PermAdj; \
 			Y.Pheno <- Y\\\$$Pheno1; Y.Pheno.noNAs <- Y.Pheno[neg.is.na(Y.Pheno)]; X.Pheno.noNAs <- X[neg.is.na(Y.Pheno),]; Z.PCs.Pheno.noNAs <- Z[neg.is.na(Y.Pheno),(ncol(Z)-9):ncol(Z)]; \ 
-			X.dups.
+			X.Pheno.noNAs.dups.snps <- duplicated(t(X.Pheno.noNAs)); X.Pheno.noNAs.dups.snps.names <- colnames(X.Pheno.noNAs)[X.Pheno.noNAs.dups.snps]; print(c(dim(X.Pheno.noNAs), length(X.Pheno.noNAs.dups.snps.names))); \
+			Pathways.New <- c(); Pathways.QC.Keep <- c(); dup.pathways.list <- c(); for (i in 1:nrow(Pathways)) { \
+				pathway.temp.QC.SNPs <- unlist(strsplit(as.character(Pathways[i,2]), \\\",\\\")); pathway.temp.QC.SNPs.keep <- c(); for (j in 1:length(pathway.temp.QC.SNPs)) { pathway.temp.QC.SNPs.keep <- c(pathway.temp.QC.SNPs.keep, neg.is.true(pathway.temp.QC.SNPs[j] \\\%in\\\% duplicated.snps.names));}; if (FALSE \\\%in\\\% pathway.temp.QC.SNPs.keep) { dup.pathways.list <- rbind(c(i, length(pathway.temp.QC.SNPs.keep), length(pathway.temp.QC.SNPs.keep[pathway.temp.QC.SNPs.keep==TRUE]))); }; pathway.temp.QC.SNPs.keep.collapse <- paste(pathway.temp.QC.SNPs[pathway.temp.QC.SNPs.keep], collapse=\\\",\\\"); Pathways.New <- rbind(Pathways.New, c(Pathways[i,1], pathway.temp.QC.SNPs.keep.collapse)); if (length(pathway.temp.QC.SNPs[pathway.temp.QC.SNPs.keep]) > 1) { Pathways.QC.Keep <- c(Pathways.QC.Keep, i); }; \
+			}; \
+			Pathways <- data.frame(Pathways.New); rm(Pathways.New); Pathways <- Pathways[Pathways.QC.Keep,]; \
+			print(c(length(Pathways.QC.Keep), nrow(Pathways))); print(dim(dup.pathways.list)); print(head(dup.pathways.list)); \
+			#Genes <- Genes[1:20,]
+			MAPITR_Output <- MAPITR(X.Pheno.noNAs,Y.Pheno.noNAs,Pathways,OpenMP=TRUE);
+			write.table(MAPITR_Output, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Mproj.All.Results.txt.pre.gz\\\", quote=FALSE, row.name=FALSE, col.name=TRUE);\"")
+                        done; sleep 2
+                done;
+        done;
+done
+
+		
+
+
+
+
+	
+			write.table(InterPath.output\\\$Est, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK_perm1.ColCrct.localPCs.Paths${PathNum}.Est.txt\\\", quote=FALSE, row.name=FALSE, col.name=FALSE);	
+		
+			/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$i/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${i}.${k}.noDups.Vs2.GjDrop_wCov_GK.ColCrct.localPCs.AllPaths.Results.txt.pre.gz	
+
+
+  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis,OpenMP=TRUE)
+
+  write.table(MAPITR_Output$Results, paste(Output1.File, ".Results.Output.txt", sep=""), quote=FALSE, col.name=TRUE, row.name=FALSE);
+
+
+duplicated.snps <- duplicated(t(X)); print(dim(X));
+duplicated.snps.names <- colnames(X)[duplicated.snps]; print(length(duplicated.snps.names));
+
+Genes.New <- c(); Genes.Analysis.New <- c(); Genes.QC.Keep <- c(); dup.genes.list <- c();
+for (i in 1:nrow(Genes)) {
+        gene.temp.QC.SNPs <- unlist(strsplit(as.character(Genes[i,2]), ",")); gene.analysis.temp.QC.SNPs <- unlist(strsplit(as.character(Genes.Analysis[i,2]), ","));
+        gene.temp.QC.SNPs.keep <- c(); for (j in 1:length(gene.temp.QC.SNPs)) { gene.temp.QC.SNPs.keep <- c(gene.temp.QC.SNPs.keep, ! gene.temp.QC.SNPs[j] %in% duplicated.snps.names);};
+        if (FALSE %in% gene.temp.QC.SNPs.keep) { dup.genes.list <- rbind(c(i, length(gene.temp.QC.SNPs.keep), length(gene.temp.QC.SNPs.keep[gene.temp.QC.SNPs.keep==TRUE]))); };
+        gene.temp.QC.SNPs.keep.collapse <- paste(gene.temp.QC.SNPs[gene.temp.QC.SNPs.keep], collapse=","); gene.analysis.temp.QC.SNPs.keep.collapse <- paste(gene.analysis.temp.QC.SNPs[gene.temp.QC.SNPs.keep], collapse=",");
+#       Genes[i,2] <- gene.temp.QC.SNPs.keep.collapse; Genes.Analysis[i,2] <- gene.analysis.temp.QC.SNPs.keep.collapse;
+        Genes.New <- rbind(Genes.New, c(Genes[i,1], gene.temp.QC.SNPs.keep.collapse)); Genes.Analysis.New <- rbind(Genes.Analysis.New, c(Genes.Analysis[i,1], gene.analysis.temp.QC.SNPs.keep.collapse));
+        if (length(gene.temp.QC.SNPs[gene.temp.QC.SNPs.keep]) > 1) { Genes.QC.Keep <- c(Genes.QC.Keep, i); };
+}
+Genes <- data.frame(Genes.New); Genes.Analysis <- data.frame(Genes.Analysis.New); rm(Genes.New); rm(Genes.Analysis.New);
+Genes <- Genes[Genes.QC.Keep,];
+Genes.Analysis <- Genes.Analysis[Genes.QC.Keep,];
+print(c(length(Genes.QC.Keep), nrow(Genes)));
+print(dim(dup.genes.list)); print(head(dup.genes.list));
+print(head(Genes));
+print(head(Genes.Analysis));
 
 
 					Data1 <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.Phenos.Transformed.wthnPop.BMIAdj.yIntrcptFix.BMIage.wAC.txt\\\", header=T); Data3 <- read.table(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.AnnovarFormat.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.SemiColonSplit.wRowPos.Regions.c2.${k}.noDups.txt\\\", header=F); neg.is.na <- Negate(is.na); \
