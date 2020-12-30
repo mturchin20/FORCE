@@ -59,7 +59,7 @@ print(head(Genes.Analysis));
 #print(warnings())
 
 #Genes <- Genes[1:20,]
-Genes.Analysis <- Genes.Analysis[1:20,]
+#Genes.Analysis <- Genes.Analysis[1:20,]
 
 Xmean=apply(X, 2, mean); Xsd=apply(X, 2, sd); X=t((t(X)-Xmean)/Xsd)
 ind = nrow(X); nsnp = ncol(X)
@@ -99,10 +99,10 @@ for(i in 1:n.datasets) {
 ##  print(s1.sizes); print(s2.sizes); print(s3.sizes);
   
   genes.ids = 1:nrow(Genes)
-##  s1.genes.ids <- sample(genes.ids, ncausal1, replace=F);
-  s1.genes.ids <- genes.ids[1:ncausal1];
-##  s2.genes.ids <- sample(genes.ids[-s1.genes.ids], ncausal2, replace=F);
-  s2.genes.ids <- genes.ids[(ncausal1+1):(ncausal1+ncausal2)]; 
+  s1.genes.ids <- sample(genes.ids, ncausal1, replace=F);
+#  s1.genes.ids <- genes.ids[1:ncausal1];
+  s2.genes.ids <- sample(genes.ids[-s1.genes.ids], ncausal2, replace=F);
+#  s2.genes.ids <- genes.ids[(ncausal1+1):(ncausal1+ncausal2)]; 
   s3.genes.ids <- sample(genes.ids[c(-s1.genes.ids,-s2.genes.ids)], ncausal3, replace=F);
   genes.pulled <- rbind(cbind(as.character(Genes[s1.genes.ids,1]), rep("Epi1", length(s1.genes.ids))), cbind(as.character(Genes[s2.genes.ids,1]), rep("Epi2", length(s2.genes.ids))), cbind(as.character(Genes[s3.genes.ids,1]), rep("Add", length(s3.genes.ids))));
   s1 <- c(); s1.sizes <- c(); s2 <- c(); s2.sizes <- c(); s3 <- c(); s3.sizes <- c();
@@ -193,8 +193,8 @@ for(i in 1:n.datasets) {
 
   ptm <- proc.time() #Start clock
 #  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis,Covariates=PCs,OpenMP=TRUE) 
-#  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis,OpenMP=TRUE) 
-  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis) 
+  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis,OpenMP=TRUE) 
+#  MAPITR_Output <- MAPITR(X.Copy2,y,Genes.Analysis) 
   print(proc.time() - ptm) #Stop clock
 #  print(head(MAPITR_Output$Results))
 
