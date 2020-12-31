@@ -19267,7 +19267,7 @@ done
 
 #Sim restart w/ Isabella runs
 
-#From: https://stackoverflow.com/questions/15904668/remove-duplicated-columns-in-matrix
+#From: https://stackoverflow.com/questions/15904668/remove-duplicated-columns-in-matrix, https://stackoverflow.com/questions/55963059/matrix-not-symmetric-warning-in-armadillo-is-too-strict, https://stackoverflow.com/questions/51825401/rcpp-retrieve-and-replace-off-diagonal-values-of-a-square-matrix, https://stackoverflow.com/questions/17533948/r-directly-save-data-as-zip-file, https://stackoverflow.com/questions/37492800/extract-elements-from-a-matrix-based-on-the-row-and-column-indices-with-armadill
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2
 cd /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2
