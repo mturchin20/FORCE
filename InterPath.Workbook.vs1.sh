@@ -3189,7 +3189,7 @@ module load R/3.4.3_mkl gcc mpi/openmpi_4.0.5_icc; sleep 1; for i in `cat <(echo
 				Pathways.Formatted <- Pathways.Formatted[1:20,]; print(Pathways.Formatted[,1]); \
 				print(c(dim(X.Pheno.noNAs),length(Y.Pheno.noNAs),dim(Pathways.Formatted),dim(Z.PCs.Pheno.noNAs))); \
 				MAPITR_Output_noOpenMP <- MAPITR(X.Pheno.noNAs,Y.Pheno.noNAs,Pathways.Formatted); \
-				write.table(MAPITR_Output\_noOpenMP\\$Results, \\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Mproj.All.Results.txt.pre.gz\\\", quote=FALSE, row.name=FALSE, col.name=TRUE);\" \
+				write.table(MAPITR_Output_noOpenMP\\\$Results, gzfile(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Mproj.All.Results.txt.pre.gz\\\"), quote=FALSE, row.name=FALSE, col.name=TRUE);\" \
 			")
                 done;
         done;
