@@ -3203,7 +3203,7 @@ module load R/3.4.3_mkl gcc mpi/openmpi_4.0.5_icc; sleep 1; for i in `cat <(echo
 				}; print(pathway.temp.QC.SNPs.keep); \
 				Pathways.Formatted <- data.frame(Pathways.Formatted.New); rm(Pathways.Formatted.New); Pathways.Formatted <- Pathways.Formatted[Pathways.Formatted.QC.Keep,]; \
 				print(c(length(Pathways.Formatted.QC.Keep), nrow(Pathways.Formatted))); print(dim(dup.pathways.list)); print(head(dup.pathways.list)); \
-				Pathways.Formatted <- Pathways.Formatted[1:20,]; print(Pathways.Formatted[,1]); \
+				Pathways.Formatted <- Pathways.Formatted[1:nrow(Pathways.Formatted),]; print(Pathways.Formatted[,1]); \
 				print(c(dim(X.Pheno.noNAs),length(Y.Pheno.noNAs),dim(Pathways.Formatted),dim(Z.PCs.Pheno.noNAs))); \
 				MAPITR_Output_noOpenMP <- MAPITR(X.Pheno.noNAs,Y.Pheno.noNAs,Pathways.Formatted); \
 				write.table(MAPITR_Output_noOpenMP\\\$Results, gzfile(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/Revs1/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Mproj.only1s.All.Results.txt.pre.gz\\\"), quote=FALSE, row.name=FALSE, col.name=TRUE);\" \
@@ -3236,11 +3236,10 @@ module load R/3.4.3_mkl gcc mpi/openmpi_4.0.5_icc; sleep 1; for i in `cat <(echo
 				print(c(length(Pathways.Formatted.QC.Keep), nrow(Pathways.Formatted))); print(dim(dup.pathways.list)); print(head(dup.pathways.list)); \
 				Pathways.Formatted <- Pathways.Formatted[1:20,]; print(Pathways.Formatted[,1]); \
 				print(c(dim(X.Pheno.noNAs),length(Y.Pheno.noNAs),dim(Pathways.Formatted),dim(Z.PCs.Pheno.noNAs))); \
-				X.Pheno.noNAs <- cbind(X.Pheno.noNAs, X.Pheno.noNAs[,ncol(X.Pheno.noNAs)]); X.Pheno.noNAs <- cbind(X.Pheno.noNAs, X.Pheno.noNAs[,ncol(X.Pheno.noNAs)]); X.Pheno.noNAs <- cbind(X.Pheno.noNAs, X.Pheno.noNAs[,ncol(X.Pheno.noNAs)]); X.Pheno.noNAs <- cbind(X.Pheno.noNAs, X.Pheno.noNAs[,ncol(X.Pheno.noNAs)]); X.Pheno.noNAs <- cbind(X.Pheno.noNAs, X.Pheno.noNAs[,ncol(X.Pheno.noNAs)]); \ 
-				X.Pheno.noNAs[1,ncol(X.Pheno.noNAs)-5] <- 3; X.Pheno.noNAs[2,ncol(X.Pheno.noNAs)-4] <- 3; X.Pheno.noNAs[3,ncol(X.Pheno.noNAs)-3] <- 3; X.Pheno.noNAs[4,ncol(X.Pheno.noNAs)-2] <- 3; X.Pheno.noNAs[5,ncol(X.Pheno.noNAs)-1] <- 3; X.Pheno.noNAs[6,ncol(X.Pheno.noNAs)] <- 3; \
-				Pathways.Formatted <- data.frame(rbind(c(1, c(10,500,23498,ncol(X.Pheno.noNAs)-5, ncol(X.Pheno.noNAs)-4)),c(2, c(10,500,23498,ncol(X.Pheno.noNAs)-5, ncol(X.Pheno.noNAs)-3)),c(3, c(10,500,23498,ncol(X.Pheno.noNAs)-5, ncol(X.Pheno.noNAs)-2)),c(4, c(10,500,23498,ncol(X.Pheno.noNAs)-5, ncol(X.Pheno.noNAs)-1)),c(5, c(10,500,23498,ncol(X.Pheno.noNAs)-5, ncol(X.Pheno.noNAs))))); \
-				print(Pathways.Formatted); \
-				print(X.Pheno.noNAs[1:10,(ncol(X.Pheno.noNAs)-9):ncol(X.Pheno.noNAs)]); \
+				X.Pheno.noNAs <- as.matrix(X.Pheno.noNAs); X.Pheno.noNAs <- cbind(X.Pheno.noNAs, X.Pheno.noNAs[,ncol(X.Pheno.noNAs)]); X.Pheno.noNAs <- cbind(X.Pheno.noNAs, X.Pheno.noNAs[,ncol(X.Pheno.noNAs)-1]); X.Pheno.noNAs <- cbind(X.Pheno.noNAs, X.Pheno.noNAs[,ncol(X.Pheno.noNAs)]); X.Pheno.noNAs <- cbind(X.Pheno.noNAs, X.Pheno.noNAs[,ncol(X.Pheno.noNAs)]); X.Pheno.noNAs <- cbind(X.Pheno.noNAs, X.Pheno.noNAs[,ncol(X.Pheno.noNAs)]); \ 
+				X.Pheno.noNAs[2,ncol(X.Pheno.noNAs)-4] <- 3; X.Pheno.noNAs[3,ncol(X.Pheno.noNAs)-3] <- 3; X.Pheno.noNAs[4,ncol(X.Pheno.noNAs)-2] <- 3; X.Pheno.noNAs[5,ncol(X.Pheno.noNAs)-1] <- 3; \
+				Pathways.Formatted <- data.frame(rbind(c(1, paste(\\\"10,500,23498\\\",ncol(X.Pheno.noNAs)-5, ncol(X.Pheno.noNAs)-4, sep=\\\",\\\")), c(2, paste(\\\"10,500,23498\\\", ncol(X.Pheno.noNAs)-5, ncol(X.Pheno.noNAs)-3, sep=\\\",\\\")), c(3, paste(\\\"10,500,23498\\\", ncol(X.Pheno.noNAs)-5, ncol(X.Pheno.noNAs)-2, sep=\\\",\\\")), c(4, paste(\\\"10,500,23498\\\", ncol(X.Pheno.noNAs)-5, ncol(X.Pheno.noNAs)-1, sep=\\\",\\\")), c(5, paste(\\\"10,500,23498\\\", ncol(X.Pheno.noNAs)-5, ncol(X.Pheno.noNAs), sep=\\\",\\\")))); \
+				print(Pathways.Formatted); print(X.Pheno.noNAs[1:10,(ncol(X.Pheno.noNAs)-9):ncol(X.Pheno.noNAs)]); \
 				MAPITR_Output_noOpenMP <- MAPITR(X.Pheno.noNAs,Y.Pheno.noNAs,Pathways.Formatted); \
 				write.table(MAPITR_Output_noOpenMP\\\$Results, gzfile(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/Revs1/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Mproj.r2checks.All.Results.txt.pre.gz\\\"), quote=FALSE, row.name=FALSE, col.name=TRUE);\" \
 			")
@@ -3294,6 +3293,10 @@ library("data.table"); library("feather"); \
 #20191216 Mem updates after imputation move
 #Others: --mem 25g
 #Brit.Plus's & Southasian: -n 2 -N 1-1 --mem 34g 
+
+
+
+
 
 
 
