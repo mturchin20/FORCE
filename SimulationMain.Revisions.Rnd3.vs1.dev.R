@@ -157,7 +157,7 @@ for(i in 1:n.datasets) {
 
   ptm <- proc.time() #Start clock
 #  MAPITR_Output <- MAPITR(X,y,Genes.Analysis,Covariates=PCs) 
-  MAPITR_Output <- MAPITR(X,y,Genes.Analysis) 
+  MAPITR_Output <- MAPITR(X,y,Genes.Analysis,OpenMP=TRUE) 
   print(proc.time() - ptm) #Stop clock
 #  print(head(MAPITR_Output$Results))
 
