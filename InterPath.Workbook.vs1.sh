@@ -3159,6 +3159,7 @@ write.table(vals4, file="/users/mturchin/data/mturchin/Broad/MSigDB/c2.all.v6.1.
 #20201229 -- Rev1 reanalysis work
 
 #cp -rp MAPITR.Revs.Sim.Rnd2.dev MAPITR.Revs.Sim.Rnd2.dev2
+#20210125 NOTE -- material in 'MAPITR.Revs.Sim.Rnd2.dev' has the version where I moved from indices to SNP names for the proper steps needed for duplicate SNP removal. 'MAPITR.Revs.Sim.Rnd2.dev2' has the version for the SNP correlation tests, so a large number of the cout calls were commented (so the not-dev2 version could keep the cout setup that was currently there)
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | head -n 2`; do
         ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; ancestry3=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[2];'`; echo $pheno1 $ancestry1 $ancestry2 $ancestry3;
@@ -3215,11 +3216,12 @@ module load R/3.4.3_mkl gcc mpi/openmpi_4.0.5_icc; sleep 1; for i in `cat <(echo
 				}; print(pathway.temp.QC.SNPs.keep); \
 				Pathways.Formatted <- data.frame(Pathways.Formatted.New); rm(Pathways.Formatted.New); Pathways.Formatted <- Pathways.Formatted[Pathways.Formatted.QC.Keep,]; \
 				print(c(length(Pathways.Formatted.QC.Keep), nrow(Pathways.Formatted))); print(dim(dup.pathways.list)); print(dup.pathways.list); \
-				Pathways.Formatted <- Pathways.Formatted[1:20,]; print(Pathways.Formatted[,1]); \
+				Pathways.Formatted <- Pathways.Formatted[1:nrow(Pathways.Formatted),]; print(Pathways.Formatted[,1]); \
 				print(c(dim(X.Pheno.noNAs),length(Y.Pheno.noNAs),dim(Pathways.Formatted),dim(Z.PCs.Pheno.noNAs))); \
+				write.table(Pathways.Formatted, file=\\\"/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/blahblahblah1.txt\\\"); \
 		X.Pheno.noNAs.noDups <- as.matrix(X.Pheno.noNAs)[,sapply(X.Pheno.noNAs.dups.snps, neg.is.true)]; print(c(dim(X.Pheno.noNAs), dim(X.Pheno.noNAs.noDups))); print(table(sapply(X.Pheno.noNAs.dups.snps, neg.is.true))); \
-				MAPITR_Output_noOpenMP <- MAPITR(X.Pheno.noNAs.noDups,Y.Pheno.noNAs,Pathways.Formatted); \
-			write.table(MAPITR_Output_noOpenMP\\\$Results, gzfile(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/Revs1/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Mproj.noDups2.All.Results.txt.pre.gz\\\"), quote=FALSE, row.name=FALSE, col.name=TRUE);\" \
+				MAPITR_Output_noOpenMP <- MAPITR(X.Pheno.noNAs.noDups,Y.Pheno.noNAs,Pathways.Formatted,OpenMP=FALSE); print(\\\"yahyah we got here\\\"); \
+			write.table(MAPITR_Output_noOpenMP\\\$Results, gzfile(\\\"/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/mturchin20/Analyses/InterPath/$Pheno1/$k/Revs1/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.Regions.Exonic.c2.InterPath.vs1.${Pheno1}.${k}.Vs2.noDups.GjDrop_wCov_GK.ColCrct.localPCs.Mproj.noDups2.All.Results.txt.pre.gz\\\"), quote=FALSE, row.name=FALSE, col.name=TRUE); \" \
 			")
                 done;
         done;
@@ -18964,6 +18966,7 @@ cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.dev.R
 cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs4.dev.R
 cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs4.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/SimulationMain.Revisions.Rnd2.vs1.dev.R
+cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.Rnd3.vs1.dev.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs1.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.vs1.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.wPCs.vs1.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.wPCs.vs1.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.wPCs.vs1.dev.R
@@ -18972,6 +18975,7 @@ ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMd
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs3.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.vs3.dev.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs4.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.vs4.dev.R
 ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/SimulationMain.Revisions.Rnd2.vs1.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.Rnd2.vs1.dev.R
+ln /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.Rnd3.vs1.dev.R /users/mturchin/LabMisc/RamachandranLab/InterPath/SimulationMain.Revisions.Rnd3.vs1.dev.R
 
 
 #From: https://stackoverflow.com/questions/56735768/how-can-i-pass-arguments-to-an-rscript-i-have-in-my-desktop, https://stackoverflow.com/questions/22906804/matrix-expression-causes-error-requires-numeric-complex-matrix-vector-arguments, https://swcarpentry.github.io/r-novice-inflammation/05-cmdline/, https://stackoverflow.com/questions/21969145/why-or-when-is-rscript-or-littler-better-than-r-cmd-batch, https://stackoverflow.com/questions/5234117/how-to-drop-columns-by-name-in-a-data-frame
@@ -19158,6 +19162,8 @@ British British.Ran4000 138503
 2, 5 * 10 w/ 30 max; 20, 300 & 400, 600 max
 
 #Rnd2 start
+
+#Rnd3 start -- going back to regression setup
 
 module load R/3.4.3_mkl gcc mpi/openmpi_4.0.5_icc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
