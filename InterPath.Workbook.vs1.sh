@@ -19379,8 +19379,20 @@ mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMd
 mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/PopStruct\ Power\ Simulations/ /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/PopStructPowerSimulations 
 mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Null\ Simulations/ /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/NullSimulations
 
-
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/InterPath.Vs2.download2.wCovs.cpp /users/mturchin/LabMisc/RamachandranLab/MAPITR/src/MAPITR.cpp
+
+
+#20210204: Sim restart w/ Isabella runs (Rnd3)
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3
+cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Simulations.20201109_Lorin.zip /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/.
+unzip /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Simulations.20201109_Lorin.zip
+mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Power\ Simulations /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/PowerSimulations
+mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/PopStruct\ Power\ Simulations/ /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/PopStructPowerSimulations 
+mv /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Null\ Simulations/ /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/NullSimulations
+
+cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/PowerSimulations/Sim_rho5_S4.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/PowerSimulations/Sim_rho5_S4.mtEdits.R
+
 
 
 
