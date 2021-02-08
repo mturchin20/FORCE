@@ -66,10 +66,10 @@ List InterPath(mat X,vec y, mat regions,int cores = 1){
         //Pre-compute the Linear GSM
         uvec j = find_finite(regions.col(i));
     	
-	cout << "Here1" << endl;
-	cout << i << endl;
-	cout << j << endl;
-	cout << "" << endl;
+	//cout << "Here1" << endl;
+	//cout << i << endl;
+	//cout << j << endl;
+	//cout << "" << endl;
 
         //Compute K covariance matrices
         mat K = (GSM*nsnp-GetLinearKernel(X.rows(j))*j.n_elem)/(nsnp-j.n_elem-1);
