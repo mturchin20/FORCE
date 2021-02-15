@@ -19411,11 +19411,13 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 
 #MAPITRpkg: dev load_all with original loc; MAPITRpkg2: library update/install; MAPITRpkg3: new git clone dev load_all
 
-module load R/3.4.3_mkl gcc mpi/openmpi_4.0.1_gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+#20210215 CHECK_0 -- Prob: clean up input argument list for these new scripts once really start incrementing over them
+
+module load R/3.4.3_mkl gcc mpi/openmpi_4.0.1_gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 	echo $ancestry1 $ancestry2 $AncSeed1
 
-	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".05 .1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaus2a2 in `cat <(echo "1 5 10 25 50" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
+	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 2`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".05 .1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaus2a2 in `cat <(echo "1 5 10 25 50" | perl -lane 'print join("\n", @F);') | tail -n 4`; do
 		for (( RoundNum=1; RoundNum <= 20; RoundNum=RoundNum+10 )); do
 			X_File1="/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz";
 			Genes_File1="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.perSNPs.noGeneDups.GenesFormat.Rformat.txt"
@@ -19431,7 +19433,7 @@ module load R/3.4.3_mkl gcc mpi/openmpi_4.0.1_gcc; for j in `cat <(echo $UKBioBa
 			nCausal3a=`echo "150 - $nCausal1a - $nCausal2a" | bc -l`
 			Seed1=`echo "$AncSeed1 + ($RoundNum * 2) + ($pve2 * 10) + ($rho2 * 10) + ($pcvar2 * 10) + ($ncaustot2 * 10) + ($ncaus2a2 * 10) + ($nCausal1a * 10)" | bc -l`
 			Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/$ancestry2/Rnd1/Main"
-			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.MAPITRpkg3.Runs${RoundNum}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.MAPITRpkg3.Runs${RoundNum}";
+			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}";
 	
 			sbatch -t 72:00:00 -n 16 -N 1-1 --mem 60g -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims $ancestry2 $RoundNum $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/PowerSimulations/Sim_rho5_S4.mtEdits.vs2.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
 		done;
@@ -19462,11 +19464,7 @@ module load R/3.4.3_mkl gcc mpi/openmpi_4.0.1_gcc; for j in `cat <(echo $UKBioBa
 				nCausal3a=`echo "150 - $nCausal1a - $nCausal2a" | bc -l`
 				Seed1=`echo "$AncSeed1 + ($RoundNum * 2) + ($pve2 * 10) + ($rho2 * 10) + ($pcvar2 * 10) + ($ncaustot2 * 10) + ($ncaus2a2 * 10) + ($nCausal1a * 10)" | bc -l`
 				Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/$ancestry2/Rnd1/Main"
-				Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}";
-	
--rw-r--r-- 1 mturchin sramacha 136717 Feb 14 02:54 ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._.8_.5_0_1_5_50_95.MAPITRpkg3.Runs1.Results.pValues.txt
--rw-r--r-- 1 mturchin sramacha    356 Feb 14 02:54 ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._.8_.5_0_1_5_50_95.MAPITRpkg3.Runs1.Results.nCausal1.txt
--rw-r--r-- 1 mturchin sramacha   3451 Feb 14 02:54 ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._.8_.5_0_1_5_50_95.MAPITRpkg3.Runs1.Results.nCausal2.txt
+				Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.MAPITRpkg3.Runs${RoundNum}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.MAPITRpkg3.Runs${RoundNum}";
 			
 				Results1="${Output1_File1}.Results.pValues.txt"
 				nCausal1txt="${Output1_File1}.Results.nCausal1.txt"
@@ -19486,11 +19484,10 @@ module load R/3.4.3_mkl gcc mpi/openmpi_4.0.1_gcc; for j in `cat <(echo $UKBioBa
 				numEpi1SNPs=`cat $stats | head -n $column1genes | tail -n 1 | awk '{ print $1 }'`
 				numEpi2SNPs=`cat $stats | head -n $column1genes | tail -n 1 | awk '{ print $2 }'`
 				numAdd1SNPs=`cat $stats | head -n $column1genes | tail -n 1 | awk '{ print $3 }'`
-				numEpiSNPsTotal=`echo "$numEpi1SNPs + $numEpi2SNPs" | bc -l`; numSNPsTotal=`echo "$numEpiTotal + $numAdd1SNPs" | bc -l`;
+				numEpiSNPsTotal=`echo "$numEpi1SNPs + $numEpi2SNPs" | bc -l`; numSNPsTotal=`echo "$numEpiSNPsTotal + $numAdd1SNPs" | bc -l`;
 	
 				echo $RoundNum $TruePos $FalsePos $numEpi1Genes $numEpi2Genes $numAddGenes $numEpi1SNPs $numEpi2SNPs $numAdd1SNPs $numEpiSNPsTotal $numSNPsTotal 
 
-			  	R -q -e "Data1 <- read.table(\"$Results1\", header=T); Data2 <- read.table(\"$GenesPulled1\", header=F); TrueGenes <- Data2[grep(\"Epi\", Data2[,2]),1]; ROCresults <- c(); print(TrueGenes); for (i in 1:nrow(Data1)) { TrueFlag <- NA; BonfFlag <- NA; if (Data1[i,1] %in% TrueGenes) { TrueFlag <- 1; } else if (! Data1[i,1] %in% TrueGenes) { TrueFlag <- 0; } else { TrueFlag <- -9; }; TruePositive <- 0; TrueNegative <- 0; FalsePositive <- 0; FalseNegative <- 0; if (Data1[i,2] < $pValBonf) { BonfFlag <- 1; } else if (Data1[i,2] >= $pValBonf) { BonfFlag <- 0 } else { BonfFlag <- NA }; if (BonfFlag == 1) { if (TrueFlag == 1) { TruePositive <- 1; }; if (TrueFlag == 0) { FalsePositive <- 1; }; } else { if (TrueFlag == 1) { FalseNegative <- 1; }; if (TrueFlag == 0) { TrueNegative <- 1; }; }; ROCresults <- rbind(ROCresults, c(TrueFlag, BonfFlag, TruePositive, FalsePositive, TrueNegative, FalseNegative)); }; NewResults <- cbind(Data1, ROCresults); colnames(NewResults)[5:10] <- c(\"TrueFlag\", \"BonfFlag\", \"TruePos\", \"FalsePos\", \"TrueNeg\", \"FalseNeg\"); write.table(NewResults, file=\"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE);"
 	
 		done; done;
         done; done; done; done; done;
@@ -19498,6 +19495,15 @@ done
 
 
 
+			  	R -q -e "Data1a <- read.table(\"$Results1\", header=T); Data1 <- Data1a[,c(1,$Counter1)]; Data2a <- read.table(\"$nCausal1txt\", header=T); Data2b <- read.table(\"$nCausal2txt\", header=T); Data2 <- rbind(Data2a, Data2b); \
+				TrueGenes <- Data2[,$Counter1]; ROCresults <- c(); print(TrueGenes); \ 
+				for (i in 1:nrow(Data1)) { \
+					TrueFlag <- NA; BonfFlag <- NA; if (Data1[i,1] %in% TrueGenes) { TrueFlag <- 1; } else if (! Data1[i,1] %in% TrueGenes) { TrueFlag <- 0; } else { TrueFlag <- -9; }; \ 
+					TruePositive <- 0; TrueNegative <- 0; FalsePositive <- 0; FalseNegative <- 0; if (Data1[i,2] < $pValBonf) { BonfFlag <- 1; } else if (Data1[i,2] >= $pValBonf) { BonfFlag <- 0 } else { BonfFlag <- NA }; \ 
+					if (BonfFlag == 1) { if (TrueFlag == 1) { TruePositive <- 1; }; if (TrueFlag == 0) { FalsePositive <- 1; }; } else { if (TrueFlag == 1) { FalseNegative <- 1; }; if (TrueFlag == 0) { TrueNegative <- 1; }; }; \ 
+					ROCresults <- rbind(ROCresults, c(TrueFlag, BonfFlag, TruePositive, FalsePositive, TrueNegative, FalseNegative)); \ 
+				}; \
+				NewResults <- cbind(Data1, ROCresults); colnames(NewResults)[3:8] <- c(\"TrueFlag\", \"BonfFlag\", \"TruePos\", \"FalsePos\", \"TrueNeg\", \"FalseNeg\"); write.table(NewResults, file=\"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE);"
 
 
 
