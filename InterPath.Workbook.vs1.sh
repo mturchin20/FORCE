@@ -19050,15 +19050,36 @@ conda install git
 __conda_setup="$('/users/mturchin/data/mturchin/miniconda3RH/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"; eval "$__conda_setup"; unset __conda_setup;
 conda activate Simulations1
 
-name: R_mkl
-channels:
-  - conda-forge
-  - defaults
-dependencies:
-  - conda-forge::python=3.9
-  - conda-forge::r-essentials=3.6
-  - conda-forge::libblas=3.8.0=14_mkl
-Conda
+#name: R_mkl
+#channels:
+#  - conda-forge
+#  - defaults
+#dependencies:
+#  - conda-forge::python=3.9
+#  - conda-forge::r-essentials=3.6
+#  - conda-forge::libblas=3.8.0=14_mkl
+#Conda
+
+#20210215
+cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Simulations1.yml /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Simulations2.yml 
+#edited /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Simulations2.yml
+__conda_setup="$('/users/mturchin/data/mturchin/miniconda3RH/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"; eval "$__conda_setup"; unset __conda_setup;
+conda info --envs
+conda env create --file /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Simulations2.yml
+conda activate Simulations2
+conda update -n base -c defaults conda
+conda install armadillo eigen boost gcc_linux-64 gxx_linux-64 gfortran_linux-64
+conda install perl java-jdk git
+#conda install plink bedtools vcftools bcftools bwa samtools picard gatk imagemagick gnuplot eigensoft tabix fonts-anaconda bgen bgenix
+conda install plink bedtools vcftools bcftools bwa samtools picard gatk 
+conda install eigensoft tabix fonts-anaconda bgen bgenix
+#install.packages(c("doParallel", "CompQuadForm", "devtools", "Rcpp", "RcppParallel", "RcppArmadillo", "truncnorm", "rmarkdown"))
+
+__conda_setup="$('/users/mturchin/data/mturchin/miniconda3RH/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"; eval "$__conda_setup"; unset __conda_setup; conda activate Simulations2
+
+
+
+
 
 ##R -q -e "
 #library("data.table"); Data3 <- fread('zcat /users/mturchin/data/ukbiobank_jun17/subsets/African/African/Imputation/mturchin20/ukb_chrAll_v3.African.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.raw.edit.gz', header=T);
@@ -19412,6 +19433,8 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 #MAPITRpkg: dev load_all with original loc; MAPITRpkg2: library update/install; MAPITRpkg3: new git clone dev load_all
 
 #20210215 CHECK_0 -- Prob: clean up input argument list for these new scripts once really start incrementing over them
+#20210216 CHECK_0 -- Prob: make new conda install from scratch, including the new R versions that have the sped up BLAS libraries, and try again to see if these cause the same/new errors as before 
+clean up input argument list for these new scripts once really start incrementing over them
 
 module load R/3.4.3_mkl gcc mpi/openmpi_4.0.1_gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
@@ -19445,8 +19468,10 @@ done
 #                PCs_var1=0
 ##			echo Rscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/SimulationMain.Revisions.vs4.dev.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a
 
-mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/African/ROCs
-mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/British.Ran4000/ROCs
+#			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.MAPITRpkg3.Runs${RoundNum}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.MAPITRpkg3.Runs${RoundNum}";
+
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/African/Rnd1/Main/ROCs
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/British.Ran4000/Rnd1/MainROCs
 
 module load R/3.4.3_mkl gcc mpi/openmpi_4.0.1_gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
@@ -19464,8 +19489,8 @@ module load R/3.4.3_mkl gcc mpi/openmpi_4.0.1_gcc; for j in `cat <(echo $UKBioBa
 				nCausal3a=`echo "150 - $nCausal1a - $nCausal2a" | bc -l`
 				Seed1=`echo "$AncSeed1 + ($RoundNum * 2) + ($pve2 * 10) + ($rho2 * 10) + ($pcvar2 * 10) + ($ncaustot2 * 10) + ($ncaus2a2 * 10) + ($nCausal1a * 10)" | bc -l`
 				Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/$ancestry2/Rnd1/Main"
-				Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.MAPITRpkg3.Runs${RoundNum}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.MAPITRpkg3.Runs${RoundNum}";
-			
+				Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}"; Output1_ROCs1="${Output1_Path}/ROCs/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}";
+
 				Results1="${Output1_File1}.Results.pValues.txt"
 				nCausal1txt="${Output1_File1}.Results.nCausal1.txt"
 				nCausal2txt="${Output1_File1}.Results.nCausal2.txt"
@@ -19481,19 +19506,12 @@ module load R/3.4.3_mkl gcc mpi/openmpi_4.0.1_gcc; for j in `cat <(echo $UKBioBa
 				numEpi1Genes=$nCausal1a
 				numEpi2Genes=$nCaulsa2a
 				numAddGenes=$nCausal3a
-				numEpi1SNPs=`cat $stats | head -n $column1genes | tail -n 1 | awk '{ print $1 }'`
-				numEpi2SNPs=`cat $stats | head -n $column1genes | tail -n 1 | awk '{ print $2 }'`
-				numAdd1SNPs=`cat $stats | head -n $column1genes | tail -n 1 | awk '{ print $3 }'`
+#				numEpi1SNPs=`cat $stats | head -n $column1genes | tail -n 1 | awk '{ print $1 }'`
+#				numEpi2SNPs=`cat $stats | head -n $column1genes | tail -n 1 | awk '{ print $2 }'`
+#				numAdd1SNPs=`cat $stats | head -n $column1genes | tail -n 1 | awk '{ print $3 }'`
 				numEpiSNPsTotal=`echo "$numEpi1SNPs + $numEpi2SNPs" | bc -l`; numSNPsTotal=`echo "$numEpiSNPsTotal + $numAdd1SNPs" | bc -l`;
 	
 				echo $RoundNum $TruePos $FalsePos $numEpi1Genes $numEpi2Genes $numAddGenes $numEpi1SNPs $numEpi2SNPs $numAdd1SNPs $numEpiSNPsTotal $numSNPsTotal 
-
-	
-		done; done;
-        done; done; done; done; done;
-done
-
-
 
 			  	R -q -e "Data1a <- read.table(\"$Results1\", header=T); Data1 <- Data1a[,c(1,$Counter1)]; Data2a <- read.table(\"$nCausal1txt\", header=T); Data2b <- read.table(\"$nCausal2txt\", header=T); Data2 <- rbind(Data2a, Data2b); \
 				TrueGenes <- Data2[,$Counter1]; ROCresults <- c(); print(TrueGenes); \ 
@@ -19505,56 +19523,107 @@ done
 				}; \
 				NewResults <- cbind(Data1, ROCresults); colnames(NewResults)[3:8] <- c(\"TrueFlag\", \"BonfFlag\", \"TruePos\", \"FalsePos\", \"TrueNeg\", \"FalseNeg\"); write.table(NewResults, file=\"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE);"
 
-
-
-
-
-
-
-
-mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/African/ROCs
-mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Null/Results/British.Ran4000/ROCs
-mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/African/ROCs
-mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/British.Ran4000/ROCs
-
-
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2`; do
-	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
-	echo $ancestry1 $ancestry2 $AncSeed1
-
-	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".05 .1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 2`; do for ncaus2a2 in `cat <(echo "100 100 10 20 30" | perl -lane 'print join("\n", @F);') | tail -n 2`; do
-		echo $pve2 $rho2 $pcvar2 $ncaustot2 $ncaus2a2; for o in {6..9}; do
-			PVE1=$pve2
-			Rho1=$rho2
-			PCs_var1=$pcvar2
-			ncausaltotal1=$ncaustot2
-			nCausal1a=20
-			nCausal2a=$ncaus2a2
-			nCausal3a=`echo "100 - $nCausal1a - $nCausal2a" | bc -l`
-			Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin/Results/$ancestry2/Rnd3/Main"
-			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}"; Output1_ROCs1="${Output1_Path}/ROCs/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Run${o}";
-			GenesPulled1="${Output1_File1}.Results.nGenes.txt"
-			Results1="${Output1_File1}.Results.Output.txt"
-			Stats1="${Output1_File1}.Results.statistics.txt"
-
-			NumGenes=`cat $Results1 | wc | awk '{ print $1 }'`
-			pValBonf=`echo ".05 / $NumGenes" | bc -l`;        
 	
-			TruePos=`join <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'` 
-			FalsePos=`join -v 1 <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Epi | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'`
-			FalsePosAdd=`join <(cat $Results1 | sort -k 1,1) <(cat $GenesPulled1 | grep Add | awk '{ print $1 }' | sort ) | awk -v pValBonf=$pValBonf '{ if ($2 < pValBonf) { print $0 } } ' | wc | awk '{ print $1 }'`
-			numEpi1SNPs=`cat $Stats1 | head -n 3 | tail -n 1 | awk '{ print $1 }'`; numEpi2SNPs=`cat $Stats1 | head -n 4 | tail -n 1 | awk '{ print $1 }'`; numAdd1SNPs=`cat $Stats1 | head -n 5| tail -n 1| awk '{ print $1 }'` 
-			numEpiTotal=`echo "$numEpi1SNPs + $numEpi2SNPs" | bc -l`; numSNPsTotal=`echo "$numEpiTotal + $numAdd1SNPs" | bc -l`;
-
-			echo $o $TruePos $FalsePos $FalsePosAdd $numEpi1SNPs $numEpi2SNPs $numAdd1SNPs $numEpiTotal $numSNPsTotal
-			
-
-		done;	
-	done; done; done; done; done;
+		done; done;
+        done; done; done; done; done;
 done
 
 
 
+module load R/3.4.3_mkl gcc mpi/openmpi_4.0.1_gcc; for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
+	echo $ancestry1 $ancestry2 $AncSeed1
+
+	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".05 .1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaus2a2 in `cat <(echo "1 5 10 25 50" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
+		for (( RoundNum=1; RoundNum <= 20; RoundNum=RoundNum+10 )); do
+			for (( Counter1=1; Counter1 <= 10; Counter1=Counter1+1 )); do
+				PVE1=$pve2
+				Rho1=$rho2
+				PCs_var1=$pcvar2
+				ncausaltotal1=$ncaustot2
+				nCausal1a=5
+				nCausal2a=$ncaus2a2
+				nCausal3a=`echo "150 - $nCausal1a - $nCausal2a" | bc -l`
+				Seed1=`echo "$AncSeed1 + ($RoundNum * 2) + ($pve2 * 10) + ($rho2 * 10) + ($pcvar2 * 10) + ($ncaustot2 * 10) + ($ncaus2a2 * 10) + ($nCausal1a * 10)" | bc -l`
+				Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/$ancestry2/Rnd1/Main"
+				Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}"; Output1_ROCs1="${Output1_Path}/ROCs/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}";
+				Results1="${Output1_File1}.Results.pValues.txt"
+				nCausal1txt="${Output1_File1}.Results.nCausal1.txt"
+				nCausal2txt="${Output1_File1}.Results.nCausal2.txt"
+				stats="${Output1_File1}.Results.statistics.txt"
+				column1pvals=`echo "$Counter1 + 1" | bc -l`
+				column1genes=$Counter1
+				NumGenes=`cat $Results1 | tail -n +2 | awk -v column2pvals=$column1pvals '{ print $column2pvals }' | wc | awk '{ print $1 }'`
+				pValBonf=`echo ".05 / $NumGenes" | bc -l`;        
+
+#need to append somewhow, or produce 100 files and add at end...
+
+			  	R -q -e "Data1a <- read.table(\"$Results1\", header=T); Data1 <- Data1a[,c(1,$Counter1)]; Data2a <- read.table(\"$nCausal1txt\", header=T); Data2b <- read.table(\"$nCausal2txt\", header=T); Data2 <- rbind(Data2a, Data2b); \
+				TrueGenes <- Data2[,$Counter1]; ROCresults <- c(); print(TrueGenes); \ 
+				for (i in 1:nrow(Data1)) { \
+					TrueFlag <- NA; BonfFlag <- NA; if (Data1[i,1] %in% TrueGenes) { TrueFlag <- 1; } else if (! Data1[i,1] %in% TrueGenes) { TrueFlag <- 0; } else { TrueFlag <- -9; }; \ 
+					TruePositive <- 0; TrueNegative <- 0; FalsePositive <- 0; FalseNegative <- 0; if (Data1[i,2] < $pValBonf) { BonfFlag <- 1; } else if (Data1[i,2] >= $pValBonf) { BonfFlag <- 0 } else { BonfFlag <- NA }; \ 
+					if (BonfFlag == 1) { if (TrueFlag == 1) { TruePositive <- 1; }; if (TrueFlag == 0) { FalsePositive <- 1; }; } else { if (TrueFlag == 1) { FalseNegative <- 1; }; if (TrueFlag == 0) { TrueNegative <- 1; }; }; \ 
+					ROCresults <- rbind(ROCresults, c(TrueFlag, BonfFlag, TruePositive, FalsePositive, TrueNegative, FalseNegative)); \ 
+				}; \
+				NewResults <- cbind(Data1, ROCresults); colnames(NewResults)[3:8] <- c(\"TrueFlag\", \"BonfFlag\", \"TruePos\", \"FalsePos\", \"TrueNeg\", \"FalseNeg\"); write.table(NewResults, file=\"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE);"
+
+	
+		done; done;
+        done; done; done; done; done;
+done
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2 | tail -n 1`; do
+	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
+	echo $ancestry1 $ancestry2 $AncSeed1
+
+	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | tail -n -1`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaus2a2 in `cat <(echo "2 5 7 12" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
+		PVE1=$pve2
+		Rho1=$rho2
+		PCs_var1=$pcvar2
+		ncausaltotal1=$ncaustot2
+		nCausal1a=3
+		nCausal2a=$ncaus2a2
+		nCausal3a=`echo "25 - $nCausal1a - $nCausal2a" | bc -l`
+		Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/$ancestry2"
+		Output1_ROCs1_noRun="${Output1_Path}/ROCs/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}";
+		GenesPulled1="${Output1_File1}.Results.nGenes.txt"
+		Results1="${Output1_File1}.Results.Output.txt"
+	
+		echo $pve2 $rho2 $pcvar2 $ncaustot2 $nCausal1a $nCausal2a $nCausal3a $o 
+
+		R -q -e "Data1 <- read.table(\"${Output1_ROCs1_noRun}.RunAll.Results.Output.wROCinfo.txt\", header=T); \
+			png(\"${Output1_ROCs1_noRun}.RunAll.Results.Output.wROCinfo.plot.vs1.png\", height=2000, width=2000, res=300); par(oma=c(1,1,1,1), mar=c(5,5,4,2)); \
+			plot(Data1[,2], Data1[,1], main=\"Pop: $ancestry2, PVE: $pve2, rho: $rho2, PCs: $pcvar2,\\nPercentCausal: $ncaustot2, s1: $nCausal1a, s2: $nCausal2a, s3: $nCausal3a\", xlab=\"False Positive Rate\", ylab=\"True Positive Rate\", xlim=c(0,.001), ylim=c(0,.2), type=\"l\", lwd=3, lty=2, col=\"BLUE\", cex=1.5, cex.main=1.5, cex.axis=1.5, cex.lab=1.5); \
+			dev.off(); \
+		"	
+
+	done; done; done; done; done;
+done
+			
+#			abline(0,1, lwd=3, col=\"BLACK\"); \ 
+
+#On MacBook Pro
+#mkdir /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs
+#mkdir /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs/Temp
+#scp -p  mturchin@ssh.ccv.brown.edu:/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/*/ROCs/*RunAll.Results.Output.wROCinfo.plot.vs1.png /Users/michaelturchin/Documents/Work/LabMisc/RamachandranLab/InterPath/Vs1/Production/Manuscript/Figures/Suppl/ROCs/Temp/.
 
 
 
