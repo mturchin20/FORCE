@@ -19434,7 +19434,6 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 #MAPITRpkg: dev load_all with original loc; MAPITRpkg2: library update/install; MAPITRpkg3: new git clone dev load_all
 
 #20210215 CHECK_0 -- Prob: clean up input argument list for these new scripts once really start incrementing over them
-#20210216 20210216 CHECK_1 -- Prob: make new conda install from scratch, including the new R versions that have the sped up BLAS libraries, and try again to see if these cause the same/new errors as before; Soln: did this 
 
 #20210216 NOTE -- this is a final version that had the right MAPITR pakage setup edits; only used for checks, using proj matrix for now
 #cp -p /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/PowerSimulations/Sim_rho5_S4.mtEdits.vs2.R /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/PowerSimulations/Sim_rho5_S4.mtEdits.vs2.MAPITRpkg.R
@@ -19442,11 +19441,19 @@ mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2Additiv
 #module load R/3.4.3_mkl gcc mpi/openmpi_4.0.1_gcc; 
 __conda_setup="$('/users/mturchin/data/mturchin/miniconda3RH/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"; eval "$__conda_setup"; unset __conda_setup; conda activate Simulations2
 
+427867               63      batch  mturchin ccmb-condo 2021-02-15T13:05:04 2021-02-15T17:04:24 1-23:36:32         16 OUT_OF_ME+    0:125                          Sims British.Ran4000 1 .6 .8 0 1 5 50 95
+427867.batch      batch                      ccmb-condo 2021-02-15T14:05:52 2021-02-15T17:04:24 1-23:36:32         16 OUT_OF_ME+    0:125
+427868               63      batch  mturchin ccmb-condo 2021-02-15T13:05:04 2021-02-15T14:10:12   01:09:20         16 OUT_OF_ME+    0:125                         Sims British.Ran4000 11 .6 .8 0 1 5 50 95
+427868.batch      batch                      ccmb-condo 2021-02-15T14:05:52 2021-02-15T14:10:12   01:09:20         16 OUT_OF_ME+    0:125
+427875               63      batch  mturchin ccmb-condo 2021-02-15T13:05:04 2021-02-15T14:33:52   19:41:20         16 OUT_OF_ME+    0:125                          Sims British.Ran4000 1 .8 .5 0 1 5 50 95
+427875.batch      batch                      ccmb-condo 2021-02-15T13:20:02 2021-02-15T14:33:52   19:41:20         16 OUT_OF_ME+    0:125
+
+
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 	echo $ancestry1 $ancestry2 $AncSeed1
 
-	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 2`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 2`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".05 .1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaus2a2 in `cat <(echo "1 5 10 25 50" | perl -lane 'print join("\n", @F);') | tail -n 4`; do
+	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".05 .1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaus2a2 in `cat <(echo "1 5 10 25 50" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
 		for (( RoundNum=1; RoundNum <= 20; RoundNum=RoundNum+10 )); do
 			X_File1="/users/mturchin/data/ukbiobank_jun17/subsets/$ancestry1/$ancestry2/Imputation/mturchin20/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.raw.edit.Rheaders.gz";
 			Genes_File1="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/Data/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.bim.TableAnnovar.AAFix.hg19_multianno.GeneSNPs.wRowPos.Regions.ExonicPlus20kb.SimFormat.Chr16.perSNPs.noGeneDups.GenesFormat.Rformat.txt"
@@ -19462,9 +19469,9 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 			nCausal3a=`echo "150 - $nCausal1a - $nCausal2a" | bc -l`
 			Seed1=`echo "$AncSeed1 + ($RoundNum * 2) + ($pve2 * 10) + ($rho2 * 10) + ($pcvar2 * 10) + ($ncaustot2 * 10) + ($ncaus2a2 * 10) + ($nCausal1a * 10)" | bc -l`
 			Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/$ancestry2/Rnd1/Main"
-			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.MAPITRpkg3.Runs${RoundNum}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.MAPITRpkg3.Runs${RoundNum}";
+			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.errorMsg.Runs${RoundNum}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.errorMsg.Runs${RoundNum}";
 	
-			sbatch -t 72:00:00 -n 16 -N 1-1 --mem 60g -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims $ancestry2 $RoundNum $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/PowerSimulations/Sim_rho5_S4.mtEdits.vs2.MAPITRpkg.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
+			sbatch -t 72:00:00 -n 16 -N 1-1 --mem 60g -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims $ancestry2 $RoundNum $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/PowerSimulations/Sim_rho5_S4.mtEdits.vs2.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
 		done;
         done; done; done; done; done;
 done
@@ -19481,6 +19488,13 @@ done
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/African/Rnd1/Main/ROCs
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/British.Ran4000/Rnd1/MainROCs
+
+#20210215 to dos:
+# - figure out and print out those problem matrices for the projection set up; send to Lorin
+# - need to append somewhow, or produce 100 files and add at end...
+# - print out ROC curves for all three versions, the twenty rounds only so far
+# - expand to 100 under which circumstances? how else explore?
+# - create simulation setup for british/african smash, 2k + 2k each
 
 for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
