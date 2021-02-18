@@ -19579,10 +19579,8 @@ for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | 
 				NumGenes=`cat $Results1 | tail -n +2 | awk -v column2pvals=$column1pvals '{ print $column2pvals }' | wc | awk '{ print $1 }'`
 				pValBonf=`echo ".05 / $NumGenes" | bc -l`;        
 
-#need to append somewhow, or produce 100 files and add at end...
-
-			  	R -q -e "Data1a <- read.table(\"$Results1\", header=T); Data1 <- Data1a[,c(1,$Counter1)]; Data2a <- read.table(\"$nCausal1txt\", header=T); Data2b <- read.table(\"$nCausal2txt\", header=T); Data2 <- rbind(Data2a, Data2b); \
-				TrueGenes <- Data2[,$Counter1]; ROCresults <- c(); print(TrueGenes); \ 
+			  	R -q -e "Data1a <- read.table(\"$Results1\", header=T, row.names=NULL); Data1 <- Data1a[,c(1,$Counter1)]; Data2a <- read.table(\"$nCausal1txt\", header=T); Data2b <- read.table(\"$nCausal2txt\", header=T); Data2 <- rbind(Data2a, Data2b); \
+				TrueGenes <- Data2[,$Counter1]; ROCresults <- c(); print(head(Data1)); print(head(Data1a)); print(TrueGenes); \ 
 				for (i in 1:nrow(Data1)) { \
 					TrueFlag <- NA; BonfFlag <- NA; if (Data1[i,1] %in% TrueGenes) { TrueFlag <- 1; } else if (! Data1[i,1] %in% TrueGenes) { TrueFlag <- 0; } else { TrueFlag <- -9; }; \ 
 					TruePositive <- 0; TrueNegative <- 0; FalsePositive <- 0; FalseNegative <- 0; if (Data1[i,2] < $pValBonf) { BonfFlag <- 1; } else if (Data1[i,2] >= $pValBonf) { BonfFlag <- 0 } else { BonfFlag <- NA }; \ 

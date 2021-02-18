@@ -61,14 +61,15 @@ List InterPath(mat X,vec y, mat regions,int cores = 1){
     mat GSM = GetLinearKernel(X);
     
     omp_set_num_threads(cores);
-#pragma omp parallel for schedule(dynamic)
+//#pragma omp parallel for schedule(dynamic)
     for(i=0; i<p; i++){
         //Pre-compute the Linear GSM
         uvec j = find_finite(regions.col(i));
     	
 	//cout << "Here1" << endl;
-	//cout << i << endl;
-	//cout << j << endl;
+	cout << i << endl;
+	cerr << i << endl;
+	cout << j << endl;
 	//cout << "" << endl;
 
         //Compute K covariance matrices
@@ -76,10 +77,10 @@ List InterPath(mat X,vec y, mat regions,int cores = 1){
         mat G = GetLinearKernel(X.rows(j))%K;
         
         //Transform K and G using projection M
-//        mat b = zeros(n,j.n_elem+1);
-//        b.col(0) = ones<vec>(n); b.cols(1,j.n_elem) = trans(X.rows(j));
-	arma::mat b = zeros(n);
-	b.col(0) = ones<vec>(n);
+        mat b = zeros(n,j.n_elem+1);
+        b.col(0) = ones<vec>(n); b.cols(1,j.n_elem) = trans(X.rows(j));
+//	arma::mat b = zeros(n);
+//	b.col(0) = ones<vec>(n);
 	mat btb_inv = inv(b.t()*b);
         mat Kc = K-b*btb_inv*(b.t()*K)-(K*b)*btb_inv*b.t()+b*btb_inv*(b.t()*(K*b))*btb_inv*b.t();
         mat Gc = G-b*btb_inv*(b.t()*G)-(G*b)*btb_inv*b.t()+b*btb_inv*(b.t()*(G*b))*btb_inv*b.t();
