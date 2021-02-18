@@ -19487,7 +19487,7 @@ done
 #			sbatch -t 72:00:00 -n 16 -N 1-1 --mem 60g -o ${Output1_Slurm1}.slurm.output -e ${Output1_Slurm1}.slurm.error --comment "Sims $ancestry2 $RoundNum $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a" <(echo -e '#!/bin/sh'; echo -e "\nRscript /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/PowerSimulations/Sim_rho5_S4.mtEdits.vs2.MAPITRpkg.R $X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a")
 
 mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/African/Rnd1/Main/ROCs
-mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/British.Ran4000/Rnd1/MainROCs
+mkdir /users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/British.Ran4000/Rnd1/Main/ROCs
 
 #20210215 to dos:
 # - figure out and print out those problem matrices for the projection set up; send to Lorin
@@ -19553,52 +19553,92 @@ done
 
 
 
-for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 1`; do
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2 | tail -n 1`; do
 	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
 	echo $ancestry1 $ancestry2 $AncSeed1
 
 	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | head -n 2 | tail -n 1`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".05 .1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaus2a2 in `cat <(echo "1 5 10 25 50" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
 		for (( RoundNum=1; RoundNum <= 20; RoundNum=RoundNum+10 )); do
-			for (( Counter1=1; Counter1 <= 10; Counter1=Counter1+1 )); do
-				PVE1=$pve2
-				Rho1=$rho2
-				PCs_var1=$pcvar2
-				ncausaltotal1=$ncaustot2
-				nCausal1a=5
-				nCausal2a=$ncaus2a2
-				nCausal3a=`echo "150 - $nCausal1a - $nCausal2a" | bc -l`
-				Seed1=`echo "$AncSeed1 + ($RoundNum * 2) + ($pve2 * 10) + ($rho2 * 10) + ($pcvar2 * 10) + ($ncaustot2 * 10) + ($ncaus2a2 * 10) + ($nCausal1a * 10)" | bc -l`
-				Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/$ancestry2/Rnd1/Main"
-				Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}"; Output1_ROCs1="${Output1_Path}/ROCs/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}";
-				Results1="${Output1_File1}.Results.pValues.txt"
-				nCausal1txt="${Output1_File1}.Results.nCausal1.txt"
-				nCausal2txt="${Output1_File1}.Results.nCausal2.txt"
-				stats="${Output1_File1}.Results.statistics.txt"
-				column1pvals=`echo "$Counter1 + 1" | bc -l`
-				column1genes=$Counter1
-				NumGenes=`cat $Results1 | tail -n +2 | awk -v column2pvals=$column1pvals '{ print $column2pvals }' | wc | awk '{ print $1 }'`
-				pValBonf=`echo ".05 / $NumGenes" | bc -l`;        
-
-			  	R -q -e "Data1a <- read.table(\"$Results1\", header=T, row.names=NULL); Data1 <- Data1a[,c(1,$Counter1)]; Data2a <- read.table(\"$nCausal1txt\", header=T); Data2b <- read.table(\"$nCausal2txt\", header=T); Data2 <- rbind(Data2a, Data2b); \
-				TrueGenes <- Data2[,$Counter1]; ROCresults <- c(); print(head(Data1)); print(head(Data1a)); print(TrueGenes); \ 
-				for (i in 1:nrow(Data1)) { \
-					TrueFlag <- NA; BonfFlag <- NA; if (Data1[i,1] %in% TrueGenes) { TrueFlag <- 1; } else if (! Data1[i,1] %in% TrueGenes) { TrueFlag <- 0; } else { TrueFlag <- -9; }; \ 
-					TruePositive <- 0; TrueNegative <- 0; FalsePositive <- 0; FalseNegative <- 0; if (Data1[i,2] < $pValBonf) { BonfFlag <- 1; } else if (Data1[i,2] >= $pValBonf) { BonfFlag <- 0 } else { BonfFlag <- NA }; \ 
-					if (BonfFlag == 1) { if (TrueFlag == 1) { TruePositive <- 1; }; if (TrueFlag == 0) { FalsePositive <- 1; }; } else { if (TrueFlag == 1) { FalseNegative <- 1; }; if (TrueFlag == 0) { TrueNegative <- 1; }; }; \ 
-					ROCresults <- rbind(ROCresults, c(TrueFlag, BonfFlag, TruePositive, FalsePositive, TrueNegative, FalseNegative)); \ 
+			PVE1=$pve2
+			Rho1=$rho2
+			PCs_var1=$pcvar2
+			ncausaltotal1=$ncaustot2
+			nCausal1a=5
+			nCausal2a=$ncaus2a2
+			nCausal3a=`echo "150 - $nCausal1a - $nCausal2a" | bc -l`
+			Seed1=`echo "$AncSeed1 + ($RoundNum * 2) + ($pve2 * 10) + ($rho2 * 10) + ($pcvar2 * 10) + ($ncaustot2 * 10) + ($ncaus2a2 * 10) + ($nCausal1a * 10)" | bc -l`
+			Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd3/Results/$ancestry2/Rnd1/Main"
+			Output1_File1="${Output1_Path}/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}"; Output1_Slurm1="${Output1_Path}/slurm/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}"; Output1_ROCs1="${Output1_Path}/ROCs/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Rnd3.Rnd1.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}.Runs${RoundNum}";
+			Results1="${Output1_File1}.Results.pValues.txt"
+			nCausal1txt="${Output1_File1}.Results.nCausal1.txt"
+			nCausal2txt="${Output1_File1}.Results.nCausal2.txt"
+			stats="${Output1_File1}.Results.statistics.txt"
+			NumGenes=`cat $Results1 | tail -n +2 | wc | awk '{ print $1 }'`
+			pValBonf=`echo ".05 / $NumGenes" | bc -l`;        
+		
+			R -q -e "TPRs <- c(); FPRs <- c(); for (o in 1:5) { Data1 <- read.table(paste(\"${Output1_ROCs1_noRun}.Run\", o, \".Results.Output.wROCinfo.txt\", sep=\"\"), header=T); \
+					Data1 <- Data1[order(Data1[,2], decreasing=FALSE),]; causalCount <- nrow(Data1[Data1[,5] == 1,]); noncausalCount <- nrow(Data1[Data1[,5] != 1,]); \
+					TPcumsum <- cumsum(Data1[,7]); FPcumsum <- cumsum(Data1[,8]); TPR <- TPcumsum / causalCount; FPR <- FPcumsum / noncausalCount; TPRs <- cbind(TPRs, TPR); FPRs <- cbind(FPRs, FPR); \ 
 				}; \
-				NewResults <- cbind(Data1, ROCresults); colnames(NewResults)[3:8] <- c(\"TrueFlag\", \"BonfFlag\", \"TruePos\", \"FalsePos\", \"TrueNeg\", \"FalseNeg\"); write.table(NewResults, file=\"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE);"
+				TPRs.Avg <- rowMeans(TPRs); FPRs.Avg <- rowMeans(FPRs); Output1 <- cbind(TPRs.Avg, FPRs.Avg); colnames(Output1) <- c(\"TPR\", \"FPR\"); \
+				write.table(Output1, \"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE); \
+			"	
 
+			R -q -e "Data1a <- read.table(\"$Results1\", header=T, row.names=NULL); Data2a <- read.table(\"$nCausal1txt\", header=T); Data2b <- read.table(\"$nCausal2txt\", header=T); Data2 <- rbind(Data2a, Data2b); \
+				ROCresults <- c(); for (i in 1:10) { Data1 <- Data1a[,c(1,(i+1))]; TrueGenes <- Data2[,i]; ROCresults.temp <- c(); print(TrueGenes); \ 
+					for (j in 1:nrow(Data1)) { \
+						ResultFlag <- NA; TrueFlag <- NA; BonfFlag <- NA; if (Data1[j,1] %in% TrueGenes) { TrueFlag <- 1; } else if (! Data1[j,1] %in% TrueGenes) { TrueFlag <- 0; } else { TrueFlag <- -9; }; \ 
+						if (Data1[j,2] < $pValBonf) { BonfFlag <- 1; } else if (Data1[j,2] >= $pValBonf) { BonfFlag <- 0 } else { BonfFlag <- -9 }; \ 
+						if (BonfFlag == 1) { if (TrueFlag == 1) { ResultFlag <- 1; }; if (TrueFlag == 0) { ResultFlag <- 2; }; } else { if (TrueFlag == 1) { ResultFlag <- 3; }; if (TrueFlag == 0) { ResultFlag <- 4; }; }; \ 
+						ROCresults.temp <- c(ROCresults.temp, ResultFlag); \ 
+					}; ROCresults <- cbind(ROCresults, ROCresults.temp); \
+				}; \
+			write.table(ROCresults, file=\"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=FALSE, row.names=FALSE);"
 	
-		done; done;
+		done;
         done; done; done; done; done;
 done
 
+#			ResultFlag interpretations: TruePositive == 1, FalsePositive == 2, FalseNegative == 3, TrueNegative == 4;
+
+#			for (( Counter1=1; Counter1 <= 10; Counter1=Counter1+1 )); do
+#					if (BonfFlag == 1) { if (TrueFlag == 1) { TruePositive <- 1; }; if (TrueFlag == 0) { FalsePositive <- 1; }; } else { if (TrueFlag == 1) { FalseNegative <- 1; }; if (TrueFlag == 0) { TrueNegative <- 1; }; }; \ 
+#					ROCresults <- rbind(ROCresults, c(TrueFlag, BonfFlag, TruePositive, FalsePositive, TrueNegative, FalseNegative)); \ 
+#				NewResults <- cbind(Data1, ROCresults); colnames(NewResults)[3:8] <- c(\"TrueFlag\", \"BonfFlag\", \"TruePos\", \"FalsePos\", \"TrueNeg\", \"FalseNeg\"); write.table(NewResults, file=\"${Output1_ROCs1}.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE);"
 
 
 
 
 
+for j in `cat <(echo $UKBioBankPopsRnd2 | perl -lane 'print join("\n", @F);') | head -n 8 | head -n 8 | tail -n 8 | head -n 2 | tail -n 1`; do
+	ancestry1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[0];'`; ancestry2=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[1];'`; AncSeed1=`echo $j | perl -ane 'my @vals1 = split(/;/, $F[0]); print $vals1[3];'`
+	echo $ancestry1 $ancestry2 $AncSeed1
+
+	for pve2 in `cat <(echo ".6 .8" | perl -lane 'print join("\n", @F);') | tail -n -1`; do for rho2 in `cat <(echo ".5 .8" | perl -lane 'print join("\n", @F);') | head -n 1`; do for pcvar2 in `cat <(echo "0 .1" | perl -lane 'print join("\n", @F);') | head -n 1`; do for ncaustot2 in `cat <(echo ".1 .25 .5 .75 1" | perl -lane 'print join("\n", @F);') | tail -n 1`; do for ncaus2a2 in `cat <(echo "2 5 7 12" | perl -lane 'print join("\n", @F);') | tail -n 1`; do
+		PVE1=$pve2
+		Rho1=$rho2
+		PCs_var1=$pcvar2
+		ncausaltotal1=$ncaustot2
+		nCausal1a=3
+		nCausal2a=$ncaus2a2
+		nCausal3a=`echo "25 - $nCausal1a - $nCausal2a" | bc -l`
+		Output1_Path="/users/mturchin/LabMisc/RamachandranLab/InterPath/Vs1/Analyses/Rnd2AdditiveMdls/Simulations/20201109Lorin.Rnd2/Results/$ancestry2"
+		Output1_ROCs1_noRun="${Output1_Path}/ROCs/ukb_chrAll_v3.${ancestry2}.QCed.reqDrop.QCed.dropRltvs.PCAdrop.sort.ImptHRC.dose.100geno.ForSimulations.chr16.Results._${PVE1}_${Rho1}_${PCs_var1}_${ncausaltotal1}_${nCausal1a}_${nCausal2a}_${nCausal3a}";
+		GenesPulled1="${Output1_File1}.Results.nGenes.txt"
+		Results1="${Output1_File1}.Results.Output.txt"
+
+		echo $pve2 $rho2 $pcvar2 $ncaustot2 $nCausal1a $nCausal2a $nCausal3a $o 
+
+		R -q -e "TPRs <- c(); FPRs <- c(); for (o in 1:5) { Data1 <- read.table(paste(\"${Output1_ROCs1_noRun}.Run\", o, \".Results.Output.wROCinfo.txt\", sep=\"\"), header=T); \
+				Data1 <- Data1[order(Data1[,2], decreasing=FALSE),]; causalCount <- nrow(Data1[Data1[,5] == 1,]); noncausalCount <- nrow(Data1[Data1[,5] != 1,]); \
+				TPcumsum <- cumsum(Data1[,7]); FPcumsum <- cumsum(Data1[,8]); TPR <- TPcumsum / causalCount; FPR <- FPcumsum / noncausalCount; TPRs <- cbind(TPRs, TPR); FPRs <- cbind(FPRs, FPR); \ 
+			}; \
+			TPRs.Avg <- rowMeans(TPRs); FPRs.Avg <- rowMeans(FPRs); Output1 <- cbind(TPRs.Avg, FPRs.Avg); colnames(Output1) <- c(\"TPR\", \"FPR\"); \
+			write.table(Output1, \"${Output1_ROCs1_noRun}.RunAll.Results.Output.wROCinfo.txt\", quote=FALSE, col.names=TRUE, row.names=FALSE); \
+		"	
+
+	done; done; done; done; done;
+done
 
 
 
