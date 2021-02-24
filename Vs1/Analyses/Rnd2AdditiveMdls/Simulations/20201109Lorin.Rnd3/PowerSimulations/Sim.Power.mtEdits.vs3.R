@@ -36,6 +36,7 @@ args <- commandArgs()
 X.File <- args[6]
 Genes.File <- args[7]
 #Covars.File <- args[8]
+##old genes file was here <- args[9]
 Output1.File <- args[10]
 seed.value <- as.numeric(as.character(args[11]))
 rounds.start <- as.numeric(as.character(args[12]))
@@ -166,18 +167,22 @@ for(j in rounds.start:(rounds.start+9)) {
   
   ### Simulate Pairwise Interaction matrix ###
   Xepi = c(); b = c()
-  causal_pthwys = gene_list[c(s1,s2,s3)]
+  ##causal_pthwys = gene_list[c(s1,s2,s3)]
   snps.s1.use.total <- c();
   snps.s2.use.total <- c();
   for (k in 1:ncausal2) { 
   	snps.s2.full.temp = unlist(gene_list[s2[k]])
 	snps.s2.use.total <- c(snps.s2.use.total, sample(snps.s2.full.temp, ceiling(length(snps.s2.full.temp) * ncausaltot), replace=F))
   }
+  print(head(snps.s2.use.total))
+  print("yaya1")
   for(i in 1:ncausal1){
     snps.s1.full = unlist(gene_list[s1[i]])
     snps.s1.use = sample(snps.s1.full, ceiling(length(snps.s1.full) * ncausaltot), replace=F)
+    print(head(snps.s1.full)); print(head(snps.s1.use));
+    print("yaya2")
     for(k in 1:length(snps.s1.use)){
-      Xepi = cbind(Xepi,X[,snps.s1.use]*X[,snps.s2.use.total]) 
+      Xepi = cbind(Xepi,X[,snps.s1.use[k]]*X[,snps.s2.use.total]) 
     }
     snps.s1.use.total <- c(snps.s1.use.total, snps.s1.use)
   }
@@ -204,60 +209,59 @@ for(j in rounds.start:(rounds.start+9)) {
   ######################################################################################
   
   ### Rewrite the Pathway List to Give Column IDs Instead of SNP Names ###
-  regions = matrix(nrow = nsnp, ncol = length(gene_list))
-  rownames(regions) = colnames(X)
-  colnames(regions) = names(gene_list)
-#  regions <- c();
-#  X.seq <- seq(1,ncol(X),by=1);
+#  regions = matrix(nrow = nsnp, ncol = length(gene_list))
+#  rownames(regions) = colnames(X)
+#  colnames(regions) = names(gene_list)
+  regions <- c();
+  X.seq <- seq(1,ncol(X),by=1);
   for(i in 1:length(gene_list)){
-      regions[which(colnames(X)%in%gene_list[[i]]),i] = 1
-#  	regions <- rbind(regions, c(names(gene_list)[i], paste(X.seq[which(colnames(X)%in%gene_list[[i]])], collapse=",")));
+#      regions[which(colnames(X)%in%gene_list[[i]]),i] = 1
+  	regions <- rbind(regions, c(names(gene_list)[i], paste(X.seq[which(colnames(X)%in%gene_list[[i]])], collapse=",")));
   }
   print(gene_list[[1]])
   print(regions[1,])
   print(gene_list[[2]])
   print(regions[2,])
-  regions.vs2 <- regions[,130:180]
+##  regions.vs2 <- regions[,130:180]
 
   ######################################################################################
   ######################################################################################
   ######################################################################################
   
   ### Set the number of cores ###
-  cores = detectCores()
+#  cores = detectCores()
   
   ### Run InterPath ###
   ptm <- proc.time() #Start clock
-  vc.mod = InterPath(t(X),y,regions.vs2,cores = cores)
-#  vc.mod = MAPITR(X,y,regions,OpenMP=TRUE)
-##  MAPITR_Output <- MAPITR(X.Copy,y,Genes.Analysis,OpenMP=TRUE)
+#  vc.mod = InterPath(t(X),y,regions.vs2,cores = cores)
+  vc.mod = MAPITR(X,y,regions,OpenMP=TRUE)
   proc.time() - ptm #Stop clock
   
-  ### Apply Davies Exact Method ###
-  vc.ts = vc.mod$Est
-  names(vc.ts) = colnames(regions.vs2)
-  
-  pvals = c()
-  for(i in 1:length(vc.ts)){
-      lambda = sort(vc.mod$Eigenvalues[,i],decreasing = T)
-      Davies_Method = davies(vc.mod$Est[i], lambda = lambda, acc=1e-8)
-      pvals[i] = 2*min(1-Davies_Method$Qq,Davies_Method$Qq)
-      names(pvals)[i] = names(vc.ts[i])
-  }
-#  pvals <- vc.mod$Results[,2]
-#  names(pvals) <- vc.mod$Results[,1]
+#  ### Apply Davies Exact Method ###
+#  vc.ts = vc.mod$Est
+#  names(vc.ts) = colnames(regions.vs2)
+#  
+#  pvals = c()
+#  for(i in 1:length(vc.ts)){
+#      lambda = sort(vc.mod$Eigenvalues[,i],decreasing = T)
+#      Davies_Method = davies(vc.mod$Est[i], lambda = lambda, acc=1e-8)
+#      pvals[i] = 2*min(1-Davies_Method$Qq,Davies_Method$Qq)
+#      names(pvals)[i] = names(vc.ts[i])
+#  }
+  pvals <- vc.mod$Results[,2]
+  names(pvals) <- vc.mod$Results[,1]
 
   ######################################################################################
   ######################################################################################
   ######################################################################################
   
   ### Find power for the first group of SNPs ###
-  Pthwys_1 = colnames(regions)[s1]
-#  Pthwys_1 = regions[s1,1]
+#  Pthwys_1 = colnames(regions)[s1]
+  Pthwys_1 = regions[s1,1]
   
   ### Find power for the second group of SNPs ###
-  Pthwys_2 = colnames(regions)[s2]
-#  Pthwys_2 = regions[s2,1]
+#  Pthwys_2 = colnames(regions)[s2]
+  Pthwys_2 = regions[s2,1]
   
   ######################################################################################
   ######################################################################################
