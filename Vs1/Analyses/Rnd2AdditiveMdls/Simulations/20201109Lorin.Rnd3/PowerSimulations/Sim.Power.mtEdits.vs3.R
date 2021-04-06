@@ -238,8 +238,8 @@ for(j in rounds.start:(rounds.start+9)) {
   ### Run InterPath ###
   ptm <- proc.time() #Start clock
 ##  vc.mod = InterPath(t(X),y,regions.vs2,cores = cores)
-  vc.mod = MAPITR(X,y,regions,OpenMP=TRUE)
-#  vc.mod = MAPITR(X,y,regions,Covariates=Covars.PCs,OpenMP=TRUE)
+#  vc.mod = MAPITR(X,y,regions,OpenMP=TRUE)
+  vc.mod = MAPITR(X,y,regions,Covariates=Covars.PCs,OpenMP=TRUE)
   proc.time() - ptm #Stop clock
   
 #  ### Apply Davies Exact Method ###
