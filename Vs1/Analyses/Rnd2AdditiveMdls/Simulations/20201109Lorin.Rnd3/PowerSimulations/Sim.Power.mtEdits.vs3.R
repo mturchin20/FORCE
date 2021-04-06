@@ -35,7 +35,7 @@ args <- commandArgs()
 #print(args)
 X.File <- args[6]
 Genes.File <- args[7]
-#Covars.File <- args[8]
+Covars.File <- args[8]
 ##old genes file was here <- args[9]
 Output1.File <- args[10]
 seed.value <- as.numeric(as.character(args[11]))
@@ -47,6 +47,10 @@ ncausaltot <- as.numeric(as.character(args[16]))
 ncausal1 <- as.numeric(as.character(args[17]))
 ncausal2 <- as.numeric(as.character(args[18]))
 ncausal3 <- as.numeric(as.character(args[19]))
+
+Covars <- read.table(Covars.File, header=T);
+Covars.PCs <- Covars[,(ncol(Covars)-9):ncol(Covars)];
+print(head(Covars.PCs))
 
 #6	7		8		9	10		11	12	13	14	15	16		17		18	19
 #$X_File1 $Genes_File1 $Covars_File1 $Genes_File2 $Output1_File1 $Seed1 $Datasets1 $PVE1 $Rho1 $PCs_var1 $ncausaltotal1 $nCausal1a $nCausal2a $nCausal3a"
@@ -233,8 +237,9 @@ for(j in rounds.start:(rounds.start+9)) {
   
   ### Run InterPath ###
   ptm <- proc.time() #Start clock
-#  vc.mod = InterPath(t(X),y,regions.vs2,cores = cores)
+##  vc.mod = InterPath(t(X),y,regions.vs2,cores = cores)
   vc.mod = MAPITR(X,y,regions,OpenMP=TRUE)
+#  vc.mod = MAPITR(X,y,regions,Covariates=Covars.PCs,OpenMP=TRUE)
   proc.time() - ptm #Stop clock
   
 #  ### Apply Davies Exact Method ###
