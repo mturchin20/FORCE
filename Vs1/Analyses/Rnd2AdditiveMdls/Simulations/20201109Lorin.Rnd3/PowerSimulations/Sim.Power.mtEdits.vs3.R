@@ -234,12 +234,19 @@ for(j in rounds.start:(rounds.start+9)) {
   
   ### Set the number of cores ###
 #  cores = detectCores()
-  
+
+	y.old <- y
+	y.lm <- lm(y ~ as.matrix(Covars.PCs) - 1)
+	y.new <- residuals(y.lm)
+	y <- y.new
+
+#	print(head(y.old)); print(head(y.new)); print(head(y)); print(head(as.matrix(Covars.PCs))); print(y.lm); print(summary(y.lm));
+
   ### Run InterPath ###
   ptm <- proc.time() #Start clock
 ##  vc.mod = InterPath(t(X),y,regions.vs2,cores = cores)
 #  vc.mod = MAPITR(X,y,regions,OpenMP=TRUE)
-  vc.mod = MAPITR(X,y,regions,Covariates=Covars.PCs,OpenMP=TRUE)
+  vc.mod = MAPITR(X,y,regions,Covariates=as.matrix(Covars.PCs),OpenMP=TRUE)
   proc.time() - ptm #Stop clock
   
 #  ### Apply Davies Exact Method ###
