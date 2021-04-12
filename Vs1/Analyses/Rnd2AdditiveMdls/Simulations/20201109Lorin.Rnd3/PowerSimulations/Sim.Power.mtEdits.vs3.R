@@ -235,10 +235,10 @@ for(j in rounds.start:(rounds.start+9)) {
   ### Set the number of cores ###
 #  cores = detectCores()
 
-	y.old <- y
-	y.lm <- lm(y ~ as.matrix(Covars.PCs) - 1)
-	y.new <- residuals(y.lm)
-	y <- y.new
+#	y.old <- y
+#	y.lm <- lm(y ~ as.matrix(Covars.PCs) - 1)
+#	y.new <- residuals(y.lm)
+#	y <- y.new
 
 #	print(head(y.old)); print(head(y.new)); print(head(y)); print(head(as.matrix(Covars.PCs))); print(y.lm); print(summary(y.lm));
 
